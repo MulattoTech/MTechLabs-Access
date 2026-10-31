@@ -198,8 +198,10 @@ default because its large HTML response needs a CPU-budget check. Official Disco
 reading requires an authorized bot; the owner’s manual-submission form is available
 for announcements that cannot be collected automatically.
 
-Cron is configured as `*/30 * * * *`. A real owner-triggered production scan
-succeeded; observing a timer-triggered invocation is a separate acceptance check.
+Cron is configured as `*/30 * * * *`. Cloudflare recorded a successful scheduled
+invocation in the 02:00 UTC window on October 31, 2026. The last manual scan's
+global cooldown lasted until 02:01:40 UTC, so that timer correctly did not create
+another scan. A full source scan initiated by Cron remains to be observed.
 A second live manual scan completed successfully. A second browser tab immediately
 requested another scan and received cached data with the active cooldown; only one
 new scan was recorded. The visible refresh button uses a server-enforced 15-minute global cooldown and an
@@ -296,7 +298,7 @@ ongoing metrics and the actual account bill. Failed/stale scans must remain visi
 do not bypass authorization or silently purchase a higher plan to hide a limit.
 
 Outstanding acceptance items include real Google credentials/login tests, Ashley’s
-confirmed account and chosen grants, observation of scheduled execution, live
+confirmed account and chosen grants, observation of a full scheduled source scan, live
 guild verification/activation by the owner, billing confirmation, and the previously
 unavailable Fleet/preview origins. Full details are tracked in
 [docs/acceptance.md](docs/acceptance.md).
