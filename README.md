@@ -11,6 +11,10 @@ Cloudflare owner authentication remains available, and its original identity
 provider and owner policies were preserved. See [the acceptance record](docs/acceptance.md)
 for the exact boundary between deployed, tested and unfinished work.
 
+**Protected Code Watch is currently usable only by the owner.** Google sign-in is
+not yet configured and shared guild access remains disabled until the owner sets
+its passphrase. The guild rollout therefore remains incomplete.
+
 ## Open the services
 
 | Interface | Address |
@@ -230,7 +234,9 @@ npm run check
 npm run build
 ```
 
-The verified suite currently passes **69 tests**, covering JWT signatures and
+The verified suite passes **69 tests** in the development environment and from the
+GitHub clone at `C:\Tools\Dev\MTechLabs-Access` on the owner's Windows machine,
+covering JWT signatures and
 audiences, CSRF, owner boundaries, application isolation, revocation, guild sessions,
 code evidence, parsing, concurrency and snapshot write budgets. Actual Worker
 request tests verify Viewer report denial, retained personal checklist/refresh,

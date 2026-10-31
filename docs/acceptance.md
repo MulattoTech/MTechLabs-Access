@@ -11,6 +11,9 @@ deterministic source monitoring, and automated security/coordination tests.
 provider has been created. No genuine non-owner Google login, Ashley login or
 Google cross-application access test has been completed.
 
+**Current audience:** only the owner can use protected Code Watch. Guild access
+is disabled and Google is not configured, so the member rollout is not complete.
+
 ## Production evidence
 
 | Item | Observed result |
@@ -30,6 +33,7 @@ Google cross-application access test has been completed.
 | Rollback | Owner-root gateway removal/restoration tested; original owner Access configuration retained |
 | Runtime measurements | Successful standard-usage executions: baseline scan 66 ms CPU, code list 33 ms, owner bootstrap 17 ms, authentication 8 ms |
 | Hosted GitHub checks | Workflow run 41157411508 did not start: GitHub reported failed recent payments or a spending-limit restriction. No code test step ran there; local 69-test result is separate |
+| Independent Windows verification | The private repository was cloned to `C:\Tools\Dev\MTechLabs-Access` on MulattoTechBox. All 69 tests passed there with zero failures and process exit code 0 |
 | Cost inspection | Zone Free plan verified; account default and Worker usage model are standard. Billing/subscription lookup returned 403, so exact account billing is unverified |
 
 “Corroborated” means publication evidence from multiple independent domains.
@@ -119,6 +123,15 @@ monitoring.
 execute real SQLite behind a D1-compatible interface; they do not substitute
 hard-coded SQL results.
 
+The same suite also passed from the GitHub clone on the owner's Windows machine:
+**69 tests, zero failures, exit code 0**. The development environment used Node.js
+24; the Windows machine had Node.js `v27.0.0-alpha.0.0.0` installed. Its npm version
+printed a compatibility warning but the test process completed successfully. No
+system Node installation or GitHub billing setting was changed.
+The Windows clone tested implementation commit
+`3246e07cc268eb8da663eb369628b09304074d82`; subsequent changes only update handoff
+documentation and do not alter the deployed source or test suite.
+
 Coverage includes forged/wrong-audience/expired tokens, key rotation and redirect
 handling, real external-evaluation protocol shapes, exact-origin CSRF, owner-only
 routes, default deny, group precedence, per-app separation, session/guild revocation,
@@ -163,3 +176,5 @@ references; see [the README](../README.md) for operations and recovery steps.
 6. **Existing origins:** repair or independently verify Fleet and the preview origin
    before declaring those applications healthy. Their prior faults are recorded
    separately from authentication and gateway behavior.
+7. **Recovery:** rehearse a D1 restore and the remaining origin-recovery procedures
+   against an isolated copy before treating full disaster recovery as verified.
