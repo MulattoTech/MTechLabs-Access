@@ -1,0 +1,628 @@
+{
+  "at": "2026-10-31T01:00:00Z",
+  "accountId": "9e18ebcb3c1a920c9ef58a3d61b8d6b6",
+  "zoneId": "8bd58c3aba1973a88d32ae09ccca9595",
+  "owner": "dylanmellor@gmail.com",
+  "organization": {
+    "auth_domain": "broken-breeze-d0bb.cloudflareaccess.com",
+    "created_at": "2026-06-25T18:52:15Z",
+    "login_design": {},
+    "name": "broken-breeze-d0bb.cloudflareaccess.com",
+    "updated_at": "2026-06-25T18:52:15Z",
+    "is_ui_read_only": false,
+    "has_migrated_private_apps": true,
+    "allow_authenticate_via_warp": false,
+    "warp_auth_non_browser_401": false,
+    "cache_device_posture": true,
+    "disable_end_user_app_creation": false,
+    "deny_unmatched_requests": false,
+    "strict_service_token_auth": false,
+    "deny_unmatched_requests_exempted_zone_names": [],
+    "service_token_inactivity": {
+      "enabled": false,
+      "inactivity_threshold_days": null,
+      "action": null
+    },
+    "trusted_accounts": []
+  },
+  "idp": {
+    "id": "7ce61789-b506-4480-bf8d-7138a1765165",
+    "type": "cloudflare",
+    "uid": "7ce61789-b506-4480-bf8d-7138a1765165",
+    "name": "",
+    "version": "8eebb3157bb055174fe7262e5dad1f17",
+    "config": {
+      "redirect_url": "https://broken-breeze-d0bb.cloudflareaccess.com/cdn-cgi/access/callback",
+      "restrict_to_account_members": true
+    },
+    "scim_config": {
+      "enabled": false,
+      "user_deprovision": false,
+      "seat_deprovision": false,
+      "group_member_deprovision": false
+    }
+  },
+  "accessPolicies": [
+    {
+      "app_id": "5c9dd630-dc21-4f47-bc5c-242b181206ce",
+      "domain": "tracker-preview.m-techlabs.com",
+      "name": "BabyTracker Preview — Synthetic Data",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-30T19:13:43Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "c8194dcf-17b2-4193-8fc2-cc1544f5aec3",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "Same owner allowlist as family tracker",
+          "require": [],
+          "uid": "c8194dcf-17b2-4193-8fc2-cc1544f5aec3",
+          "updated_at": "2026-10-30T19:13:43Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "aba1be79-7579-462b-b433-d73dcacdb27d",
+      "domain": "fleet.m-techlabs.com",
+      "name": "Fleet Control Hub — Owner Only",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-28T16:00:57Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "7d1bf97f-ffbe-4818-b451-9a30e329fb12",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "Fleet Owner Only",
+          "require": [],
+          "uid": "7d1bf97f-ffbe-4818-b451-9a30e329fb12",
+          "updated_at": "2026-10-28T16:00:57Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "c80d6e84-9941-4577-a328-24c1c44bdecc",
+      "name": "Signal Salvage Academy — Owner Only",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-26T14:53:25Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "6ad80447-9712-4abd-8968-17ce4eeeacaf",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "Signal Salvage Academy owner only",
+          "require": [],
+          "uid": "6ad80447-9712-4abd-8968-17ce4eeeacaf",
+          "updated_at": "2026-10-26T14:53:25Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "be47b6dc-c4f4-4d11-adfb-8f30c14d13bf",
+      "domain": "portainer.m-techlabs.com",
+      "name": "M-TechLabs Portainer Admin",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-25T02:03:46Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "d10a3c5a-6241-4657-b139-4773521c12fb",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MTechLabs Owner Only",
+          "require": [],
+          "uid": "d10a3c5a-6241-4657-b139-4773521c12fb",
+          "updated_at": "2026-10-25T02:03:46Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "25a6f204-92bf-421a-a2a0-b2cdd5070f87",
+      "domain": "tracker.m-techlabs.com",
+      "name": "M-TechLabs Family Tracker",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-25T02:03:46Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "55c9d312-90b4-4a65-b5e8-21c5f206ef91",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MTechLabs Owner Only",
+          "require": [],
+          "uid": "55c9d312-90b4-4a65-b5e8-21c5f206ef91",
+          "updated_at": "2026-10-25T02:03:46Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "c52f63f0-e718-4a1e-b5e7-55a066f38e8a",
+      "domain": "homebox.m-techlabs.com",
+      "name": "M-TechLabs HomeBox",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-25T02:03:45Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "684b6857-4a5d-49eb-b052-4dd69a5b093d",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MTechLabs Owner Only",
+          "require": [],
+          "uid": "684b6857-4a5d-49eb-b052-4dd69a5b093d",
+          "updated_at": "2026-10-25T02:03:45Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "992d48e2-459d-4fa2-a93c-a3bc87a3cf93",
+      "domain": "www.m-techlabs.com",
+      "name": "M-TechLabs WWW Hub",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-25T02:03:45Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "62562062-cebd-4e88-9188-7fcad1bb2b40",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MTechLabs Owner Only",
+          "require": [],
+          "uid": "62562062-cebd-4e88-9188-7fcad1bb2b40",
+          "updated_at": "2026-10-25T02:03:45Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "b1a2621b-3375-488e-97f2-2627808ee68a",
+      "domain": "m-techlabs.com",
+      "name": "M-TechLabs Owner Hub",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-25T02:03:44Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "31ce118b-5c07-4603-a72a-bbd1b08edc50",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MTechLabs Owner Only",
+          "require": [],
+          "uid": "31ce118b-5c07-4603-a72a-bbd1b08edc50",
+          "updated_at": "2026-10-25T02:03:44Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    },
+    {
+      "app_id": "42dd8b4c-89c6-4944-b2c9-4e47a158e982",
+      "domain": "mjobs.m-techlabs.com",
+      "name": "MJobs Personal Preview",
+      "success": true,
+      "policies": [
+        {
+          "created_at": "2026-10-24T04:40:28Z",
+          "decision": "allow",
+          "exclude": [],
+          "id": "7a24c69f-f626-433a-b7c7-7917359690f7",
+          "include": [
+            {
+              "email": {
+                "email": "dylanmellor@gmail.com"
+              }
+            }
+          ],
+          "name": "MJobs owner only",
+          "require": [],
+          "uid": "7a24c69f-f626-433a-b7c7-7917359690f7",
+          "updated_at": "2026-10-24T04:40:28Z",
+          "reusable": false,
+          "precedence": 1
+        }
+      ]
+    }
+  ],
+  "hubTunnel": {
+    "tunnel_id": "b790464f-ec87-492e-a13b-e534fee9e71d",
+    "version": 2,
+    "config": {
+      "ingress": [
+        {
+          "service": "http://mtechlabs-hub:80",
+          "hostname": "m-techlabs.com",
+          "originRequest": {
+            "access": {
+              "audTag": [
+                "07ab5d3b657038e3da3af279994f36c3e8deb8cb1c79adcc43e01e3df6ccb785"
+              ],
+              "required": true,
+              "teamName": "broken-breeze-d0bb"
+            }
+          }
+        },
+        {
+          "service": "http://mtechlabs-hub:80",
+          "hostname": "www.m-techlabs.com",
+          "originRequest": {
+            "access": {
+              "audTag": [
+                "93af1e9708c76cc4ce4fe950765bc2f9f941a90fca79994d6e08ba43fe192b54"
+              ],
+              "required": true,
+              "teamName": "broken-breeze-d0bb"
+            }
+          }
+        },
+        {
+          "service": "http://host.docker.internal:3100",
+          "hostname": "homebox.m-techlabs.com",
+          "originRequest": {
+            "access": {
+              "audTag": [
+                "fbb192a5e22df68216082014bb82e26e78d009ea76d2864f4d56abbd2036285e"
+              ],
+              "required": true,
+              "teamName": "broken-breeze-d0bb"
+            }
+          }
+        },
+        {
+          "service": "http://host.docker.internal:3123",
+          "hostname": "tracker.m-techlabs.com",
+          "originRequest": {
+            "access": {
+              "audTag": [
+                "332a7a1b72e1ddd81dcba41da849a8da0305e6cbfc10eb129f42ce8e1c0f9156"
+              ],
+              "required": true,
+              "teamName": "broken-breeze-d0bb"
+            }
+          }
+        },
+        {
+          "service": "https://host.docker.internal:9443",
+          "hostname": "portainer.m-techlabs.com",
+          "originRequest": {
+            "access": {
+              "audTag": [
+                "9ee574cd3e18bf0b57dc93f67b36adc0fb4d5fdc221abd43aa58fe5a96b493b4"
+              ],
+              "required": true,
+              "teamName": "broken-breeze-d0bb"
+            },
+            "noTLSVerify": true
+          }
+        },
+        {
+          "service": "http://host.docker.internal:3124",
+          "hostname": "tracker-preview.m-techlabs.com"
+        },
+        {
+          "service": "http_status:404"
+        }
+      ],
+      "warp-routing": {
+        "enabled": false
+      }
+    },
+    "source": "cloudflare",
+    "created_at": "2026-10-30T19:13:56.184574Z"
+  },
+  "workerDomains": [
+    {
+      "id": "3fb3cb271941f29d97ac61e09154a2b215bcfa95",
+      "zone_id": "8bd58c3aba1973a88d32ae09ccca9595",
+      "zone_name": "m-techlabs.com",
+      "hostname": "codexpro-widgets.m-techlabs.com",
+      "service": "codexpro-widget-origin",
+      "environment": "production",
+      "cert_id": "57bca086-8013-4fc8-8c12-301ec5eac6cb",
+      "previews_enabled": false,
+      "enabled": true
+    },
+    {
+      "id": "64f07bc41c5516a28550f991bbff819381e30c0b",
+      "zone_id": "8bd58c3aba1973a88d32ae09ccca9595",
+      "zone_name": "m-techlabs.com",
+      "hostname": "academy.m-techlabs.com",
+      "service": "signal-salvage-academy",
+      "environment": "production",
+      "cert_id": "c9d52c46-c761-4540-98e8-20edcbf8b8a0",
+      "previews_enabled": false,
+      "enabled": true
+    },
+    {
+      "id": "7e9b679a3ad8b7c7a4aa1663b0e16a92a120d078",
+      "zone_id": "8bd58c3aba1973a88d32ae09ccca9595",
+      "zone_name": "m-techlabs.com",
+      "hostname": "feeds.m-techlabs.com",
+      "service": "satele-family-sync",
+      "environment": "production",
+      "cert_id": "4e9f431c-b830-4625-98d4-4e103b70ca18",
+      "previews_enabled": false,
+      "enabled": true
+    }
+  ],
+  "originalRoutes": [],
+  "dns": [
+    {
+      "id": "6811be5059c9cdcc0e57b828ff7a52dc",
+      "name": "codexpro-oaksight.m-techlabs.com",
+      "type": "CNAME",
+      "content": "25787bee-026e-4a38-84a6-77ddb104ea46.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": null,
+      "tags": [],
+      "created_on": "2026-06-25T18:56:32.903462Z",
+      "modified_on": "2026-06-25T18:56:32.903462Z"
+    },
+    {
+      "id": "c176e38289e2de5aa2fb0d82793a84ab",
+      "name": "fleet.m-techlabs.com",
+      "type": "CNAME",
+      "content": "27c6a2b0-4565-4372-b9fb-32e393a9b3fd.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "Owner-only Fleet Control Hub tunnel",
+      "tags": [],
+      "created_on": "2026-10-28T16:02:13.973134Z",
+      "modified_on": "2026-10-28T16:02:13.973134Z",
+      "comment_modified_on": "2026-10-28T16:02:13.973134Z"
+    },
+    {
+      "id": "7e771653df2b14c242319dac78d5fd9d",
+      "name": "homebox.m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MTechLabs owner-only Access-gated service portal; retain existing MX/TXT",
+      "tags": [],
+      "created_on": "2026-10-25T02:05:21.075048Z",
+      "modified_on": "2026-10-25T02:05:21.075048Z",
+      "comment_modified_on": "2026-10-25T02:05:21.075048Z"
+    },
+    {
+      "id": "17906c6a59158fb878e3ef656c72e29b",
+      "name": "mjobs.m-techlabs.com",
+      "type": "CNAME",
+      "content": "ddb113a0-e987-40aa-b849-b96b3c4bb0a1.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MJobs authenticated preview; Cloudflare Access and dedicated tunnel",
+      "tags": [],
+      "created_on": "2026-10-24T04:46:32.993205Z",
+      "modified_on": "2026-10-24T05:26:52.852137Z",
+      "comment_modified_on": "2026-10-24T04:46:32.993205Z"
+    },
+    {
+      "id": "a27cedceef76460ff835103c8dc917a9",
+      "name": "m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MTechLabs owner-only Access-gated service portal; retain existing MX/TXT",
+      "tags": [],
+      "created_on": "2026-10-25T02:05:20.66842Z",
+      "modified_on": "2026-10-25T02:05:20.66842Z",
+      "comment_modified_on": "2026-10-25T02:05:20.66842Z"
+    },
+    {
+      "id": "b4f739bf4e3dc5d1eb3adf8537ecf212",
+      "name": "portainer.m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MTechLabs owner-only Access-gated service portal; retain existing MX/TXT",
+      "tags": [],
+      "created_on": "2026-10-25T02:05:21.437098Z",
+      "modified_on": "2026-10-25T02:05:21.437098Z",
+      "comment_modified_on": "2026-10-25T02:05:21.437098Z"
+    },
+    {
+      "id": "e422832b78e512ec4afee08fe2ca1d7e",
+      "name": "tracker.m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MTechLabs owner-only Access-gated service portal; retain existing MX/TXT",
+      "tags": [],
+      "created_on": "2026-10-25T02:05:21.266162Z",
+      "modified_on": "2026-10-25T02:05:21.266162Z",
+      "comment_modified_on": "2026-10-25T02:05:21.266162Z"
+    },
+    {
+      "id": "3e3049c1f135ed1ba5b8a784526b7c4a",
+      "name": "tracker-preview.m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "BabyTracker isolated synthetic preview; Cloudflare Access required.",
+      "tags": [],
+      "created_on": "2026-10-30T19:13:57.286661Z",
+      "modified_on": "2026-10-30T19:13:57.286661Z",
+      "comment_modified_on": "2026-10-30T19:13:57.286661Z"
+    },
+    {
+      "id": "55d8a0296f990773acd6a0283810de4f",
+      "name": "www.m-techlabs.com",
+      "type": "CNAME",
+      "content": "b790464f-ec87-492e-a13b-e534fee9e71d.cfargotunnel.com",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {
+        "flatten_cname": false
+      },
+      "meta": {},
+      "comment": "MTechLabs owner-only Access-gated service portal; retain existing MX/TXT",
+      "tags": [],
+      "created_on": "2026-10-25T02:05:20.858394Z",
+      "modified_on": "2026-10-25T02:05:20.858394Z",
+      "comment_modified_on": "2026-10-25T02:05:20.858394Z"
+    },
+    {
+      "id": "ec6a7b16c77e72fcfd6c9a194d0b7aff",
+      "name": "academy.m-techlabs.com",
+      "type": "AAAA",
+      "content": "100::",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {},
+      "meta": {
+        "origin_worker_id": "64f07bc41c5516a28550f991bbff819381e30c0b",
+        "read_only": true
+      },
+      "comment": null,
+      "tags": [],
+      "created_on": "2026-10-26T14:55:48.080499Z",
+      "modified_on": "2026-10-26T14:55:48.080499Z"
+    },
+    {
+      "id": "86d935b4fc7f375adb2044ca6cbc3ad9",
+      "name": "codexpro-widgets.m-techlabs.com",
+      "type": "AAAA",
+      "content": "100::",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {},
+      "meta": {
+        "origin_worker_id": "3fb3cb271941f29d97ac61e09154a2b215bcfa95",
+        "read_only": true
+      },
+      "comment": null,
+      "tags": [],
+      "created_on": "2026-06-28T06:07:43.484114Z",
+      "modified_on": "2026-06-28T06:07:43.484114Z"
+    },
+    {
+      "id": "c5dad4ad32651cbcccf713150b5c5535",
+      "name": "feeds.m-techlabs.com",
+      "type": "AAAA",
+      "content": "100::",
+      "proxiable": true,
+      "proxied": true,
+      "ttl": 1,
+      "settings": {},
+      "meta": {
+        "origin_worker_id": "7e9b679a3ad8b7c7a4aa1663b0e16a92a120d078",
+        "read_only": true
+      },
+      "comment": null,
+      "tags": [],
+      "created_on": "2026-10-30T17:24:21.805534Z",
+      "modified_on": "2026-10-30T17:24:21.805534Z"
+    }
+  ]
+}

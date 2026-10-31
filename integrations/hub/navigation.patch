@@ -1,0 +1,28 @@
+--- site/index.html.before
++++ site/index.html
+@@ -45,6 +45,12 @@
+     <section class="section" aria-label="Access and administration" data-section>
+       <div class="section-top"><h2>Access &amp; administration</h2><small>Remote tools and owner-only admin consoles</small></div>
+       <div class="cards">
++        <article id="access-management-card" class="card" data-category="remote" data-search="access users permissions accounts google guild administrator">
++          <div class="card-top"><span class="glyph blue">AC</span><span class="status">Owner only</span></div>
++          <h3>Access Management</h3>
++          <p>Approve individual accounts, assign application permissions, review access activity, and manage the guild passphrase.</p>
++          <div class="card-actions"><a class="link-primary" href="/admin/access">Manage Access <span aria-hidden="true">&rarr;</span></a></div>
++        </article>
+         <article class="card" data-category="remote" data-search="rustdesk remote desktop open launch control connect">
+           <div class="card-top"><span class="glyph">RD</span><span class="status">Ready to launch</span></div>
+           <h3>RustDesk</h3>
+@@ -62,6 +68,12 @@
+     <section class="section" aria-label="Apps and fleet control" data-section>
+       <div class="section-top"><h2>Apps &amp; fleet control</h2><small>Hosted services and upcoming learning</small></div>
+       <div class="cards">
++        <article id="tacticus-code-watch-card" class="card" data-category="apps" data-search="tacticus codes warhammer 420k guild rewards redemption">
++          <div class="card-top"><span class="glyph gold">CW</span><span class="status">Cloud hosted</span></div>
++          <h3>Tacticus Code Watch</h3>
++          <p>Code discovery, source evidence, and personal redeemed tracking for Warhammer 420k. Scheduled checks run independently of this PC.</p>
++          <div class="card-actions"><a class="link-primary" href="https://codes.m-techlabs.com">Open Code Watch <span aria-hidden="true">&rarr;</span></a></div>
++        </article>
+         <article id="fleet-mission-control-card" class="card" data-category="apps" data-search="codex orchestrator fleet mission control agents launch board quota dispatch status">
+           <div class="card-top"><span class="glyph blue">FC</span><span class="status">Live status</span></div>
+           <h3>Fleet &amp; Mission Control</h3>

@@ -1,0 +1,204 @@
+{
+  "accountId": "9e18ebcb3c1a920c9ef58a3d61b8d6b6",
+  "zoneId": "8bd58c3aba1973a88d32ae09ccca9595",
+  "databaseId": "ec35af84-1df1-4559-ace8-1db42f3b1b5c",
+  "workerName": "mtechlabs-access-codes",
+  "ownerEmail": "dylanmellor@gmail.com",
+  "accessTeam": "broken-breeze-d0bb.cloudflareaccess.com",
+  "cloudflareIdp": "7ce61789-b506-4480-bf8d-7138a1765165",
+  "applications": [
+    {
+      "id": "tracker-preview",
+      "name": "BabyTracker Preview",
+      "hostname": "tracker-preview.m-techlabs.com",
+      "access_app_id": "5c9dd630-dc21-4f47-bc5c-242b181206ce",
+      "audience": "f468dbf895a0c55f8fbcba32f2b4bcf0f095771072f0300bbb97b0e7658c5e92",
+      "access_mode": "gate",
+      "description": "Isolated synthetic-data preview.",
+      "limitation": "Access gate only; this is separate from the production tracker.",
+      "managed": 1
+    },
+    {
+      "id": "fleet",
+      "name": "Fleet Control Hub",
+      "hostname": "fleet.m-techlabs.com",
+      "access_app_id": "aba1be79-7579-462b-b433-d73dcacdb27d",
+      "audience": "d778ebfad64ec460f319c2109617656f504a190e5b723d1f99d193a591a55931",
+      "access_mode": "gate",
+      "description": "Dedicated fleet control endpoint; tunnel was offline during discovery.",
+      "limitation": "Access grants allow entry; internal operations and existing live connections remain the application\u2019s responsibility.",
+      "managed": 1
+    },
+    {
+      "id": "portainer",
+      "name": "Portainer",
+      "hostname": "portainer.m-techlabs.com",
+      "access_app_id": "be47b6dc-c4f4-4d11-adfb-8f30c14d13bf",
+      "audience": "9ee574cd3e18bf0b57dc93f67b36adc0fb4d5fdc221abd43aa58fe5a96b493b4",
+      "access_mode": "gate",
+      "description": "Docker administration with a separate Portainer login.",
+      "limitation": "Granting application access does not assign a Portainer role or bypass its login.",
+      "managed": 1
+    },
+    {
+      "id": "tracker",
+      "name": "BabyTracker",
+      "hostname": "tracker.m-techlabs.com",
+      "access_app_id": "25a6f204-92bf-421a-a2a0-b2cdd5070f87",
+      "audience": "332a7a1b72e1ddd81dcba41da849a8da0305e6cbfc10eb129f42ce8e1c0f9156",
+      "access_mode": "gate",
+      "description": "Family tracking service.",
+      "limitation": "Access gate only; the tracker retains its own family/account roles.",
+      "managed": 1
+    },
+    {
+      "id": "homebox",
+      "name": "HomeBox",
+      "hostname": "homebox.m-techlabs.com",
+      "access_app_id": "c52f63f0-e718-4a1e-b5e7-55a066f38e8a",
+      "audience": "fbb192a5e22df68216082014bb82e26e78d009ea76d2864f4d56abbd2036285e",
+      "access_mode": "gate",
+      "description": "Household inventory service.",
+      "limitation": "Internal HomeBox roles remain under HomeBox. This gate controls entry only.",
+      "managed": 1
+    },
+    {
+      "id": "www-hub",
+      "name": "M-TechLabs WWW Hub",
+      "hostname": "www.m-techlabs.com",
+      "access_app_id": "992d48e2-459d-4fa2-a93c-a3bc87a3cf93",
+      "audience": "93af1e9708c76cc4ce4fe950765bc2f9f941a90fca79994d6e08ba43fe192b54",
+      "access_mode": "owner_only",
+      "description": "Alternate address for the owner hub.",
+      "limitation": "Owner-only recovery surface.",
+      "managed": 0
+    },
+    {
+      "id": "owner-hub",
+      "name": "M-TechLabs Owner Hub",
+      "hostname": "m-techlabs.com",
+      "access_app_id": "b1a2621b-3375-488e-97f2-2627808ee68a",
+      "audience": "07ab5d3b657038e3da3af279994f36c3e8deb8cb1c79adcc43e01e3df6ccb785",
+      "access_mode": "owner_only",
+      "description": "Private hub, mission control, and owner administration.",
+      "limitation": "Owner-only recovery surface. It is not delegated through this dashboard.",
+      "managed": 0
+    },
+    {
+      "id": "mjobs",
+      "name": "MJobs",
+      "hostname": "mjobs.m-techlabs.com",
+      "access_app_id": "42dd8b4c-89c6-4944-b2c9-4e47a158e982",
+      "audience": "f8d73039d3056254634b02b6f2c60d82aa958d9db17b2f773b149d8af7c0b340",
+      "access_mode": "gate",
+      "description": "Job-search workspace with its own service and database.",
+      "limitation": "Internal roles remain under MJobs. This gate controls entry only.",
+      "managed": 1
+    },
+    {
+      "id": "academy",
+      "name": "Signal Salvage Academy",
+      "hostname": "academy.m-techlabs.com",
+      "access_app_id": "c80d6e84-9941-4577-a328-24c1c44bdecc",
+      "audience": "a7ace41d3b2a4158eae61a1bdfa21edd4ea04d556b4f77da63ff7a0e3ab965cb",
+      "access_mode": "owner_only",
+      "description": "Existing learning Worker protected by worker-level Access.",
+      "limitation": "Owner-only until a separately tested route integration is available.",
+      "managed": 0
+    },
+    {
+      "id": "codes",
+      "name": "Tacticus Code Watch",
+      "hostname": "codes.m-techlabs.com",
+      "access_app_id": "1fd54b5b-4f51-4055-b242-37ad3c517371",
+      "audience": "39668ed9cf0056b18b7324f1b7a393ca70af70175c93635aa4cd2a4e61010111",
+      "access_mode": "native",
+      "description": "Warhammer 420k code discovery, evidence, and individual tracking.",
+      "limitation": "Guild and viewer roles can browse and maintain a personal checklist. Owner manages sources and guild access. Shared guild sessions cannot submit global player reports.",
+      "managed": 1
+    },
+    {
+      "id": "feeds",
+      "name": "Satele Family Sync",
+      "hostname": "feeds.m-techlabs.com",
+      "access_app_id": null,
+      "audience": null,
+      "access_mode": "external",
+      "description": "Existing paired-device family bottle journal.",
+      "limitation": "Existing device-pairing authentication retained; dashboard grants do not add or revoke paired devices.",
+      "managed": 0
+    },
+    {
+      "id": "widgets",
+      "name": "CodexPro Widgets",
+      "hostname": "codexpro-widgets.m-techlabs.com",
+      "access_app_id": null,
+      "audience": null,
+      "access_mode": "external",
+      "description": "Existing public widget origin.",
+      "limitation": "Public widget surface; not an application account or a delegated private app.",
+      "managed": 0
+    },
+    {
+      "id": "codexpro",
+      "name": "CodexPro OakSight",
+      "hostname": "codexpro-oaksight.m-techlabs.com",
+      "access_app_id": null,
+      "audience": null,
+      "access_mode": "external",
+      "description": "Legacy MCP origin; tunnel was offline during discovery.",
+      "limitation": "Separate existing service authentication; not delegated here.",
+      "managed": 0
+    }
+  ],
+  "adminRoutes": [
+    {
+      "id": "d506fff012a64daf9ac30b33d192c23a",
+      "pattern": "m-techlabs.com/admin/access*"
+    },
+    {
+      "id": "eaed00778e1c410cb772cef00c98df3a",
+      "pattern": "www.m-techlabs.com/admin/access*"
+    }
+  ],
+  "codePolicyId": "f4074f9f-05f5-461b-814e-875d3e450a39",
+  "codeDomainId": "f2cdbe68d705e366f194f4a35099c33d01d93e04",
+  "gates": [
+    {
+      "appId": "tracker-preview",
+      "routeId": "c2f4cd3c7d4e4631868cab9813ddef36",
+      "pattern": "tracker-preview.m-techlabs.com/*",
+      "policyId": "1bba30cc-b98a-4404-83c1-a353f91a70a1"
+    },
+    {
+      "appId": "fleet",
+      "routeId": "327b5239790342f5b1aeb591c94cc7ad",
+      "pattern": "fleet.m-techlabs.com/*",
+      "policyId": "c72a3383-656f-4c57-9192-13fbdc1c3268"
+    },
+    {
+      "appId": "portainer",
+      "routeId": "ffe86282222048dfa7e91f8c46d441b4",
+      "pattern": "portainer.m-techlabs.com/*",
+      "policyId": "1f215533-7855-4595-8745-5b7100911ed0"
+    },
+    {
+      "appId": "tracker",
+      "routeId": "48b0b68891c2410e9ed52414f823b9f2",
+      "pattern": "tracker.m-techlabs.com/*",
+      "policyId": "d9fe5462-1483-402b-afd2-daa992f2c25b"
+    },
+    {
+      "appId": "homebox",
+      "routeId": "a692b0a52a654f88b8b769e22820c48b",
+      "pattern": "homebox.m-techlabs.com/*",
+      "policyId": "cceb8f47-d607-4f42-9746-a941fc23c770"
+    },
+    {
+      "appId": "mjobs",
+      "routeId": "d4228f68552945d39bf6ecb2f706ce05",
+      "pattern": "mjobs.m-techlabs.com/*",
+      "policyId": "594ea2d2-a893-4334-a1c3-13c5be3cb604"
+    }
+  ]
+}
