@@ -1,0 +1,17 @@
+{
+  "name": "mtechlabs-access-codes",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {
+    "ACCESS_TEAM": "broken-breeze-d0bb.cloudflareaccess.com",
+    "OWNER_EMAIL": "dylanmellor@gmail.com",
+    "CODE_HOST": "codes.m-techlabs.com",
+    "HUB_HOST": "m-techlabs.com",
+    "ACCOUNT_ID": "9e18ebcb3c1a920c9ef58a3d61b8d6b6"
+  },
+  "d1_databases": [{"binding":"DB","database_name":"mtechlabs-access-codes","database_id":"ec35af84-1df1-4559-ace8-1db42f3b1b5c","migrations_dir":"migrations"}],
+  "triggers": {"crons":["*/30 * * * *"]},
+  "observability": {"enabled":true,"head_sampling_rate":1,"logs":{"enabled":true,"invocation_logs":true},"redact_query_string":true}
+}

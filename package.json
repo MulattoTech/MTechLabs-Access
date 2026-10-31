@@ -1,0 +1,15 @@
+{
+  "name": "mtechlabs-access-codes",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "M-TechLabs central application authorization and deterministic Tacticus code monitor",
+  "scripts": {
+    "test": "node --test --test-isolation=none tests/*.test.js",
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/index.js && node --check public/app.js && node --check public/admin.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
