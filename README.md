@@ -217,6 +217,10 @@ and [security responsibilities](docs/security.md).
 
 ## Development, deployment and recovery
 
+GitHub source: [MulattoTech/MTechLabs-Access](https://github.com/MulattoTech/MTechLabs-Access) (private).
+Implementation review: [pull request #1](https://github.com/MulattoTech/MTechLabs-Access/pull/1).
+The hosted workflow could not start because GitHub reported an account payment/spending-limit restriction; its failure is not a failing code test. No account billing settings were changed.
+
 Node.js 24 or newer is required for the SQLite-backed tests. There are no runtime
 package dependencies or required model API keys.
 

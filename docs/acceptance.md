@@ -29,6 +29,7 @@ Google cross-application access test has been completed.
 | Existing origin faults | Fleet tunnel was offline beforehand. Preview returned an HTTP failure before and after gating. These are not verified healthy applications |
 | Rollback | Owner-root gateway removal/restoration tested; original owner Access configuration retained |
 | Runtime measurements | Successful standard-usage executions: baseline scan 66 ms CPU, code list 33 ms, owner bootstrap 17 ms, authentication 8 ms |
+| Hosted GitHub checks | Workflow run 41157411508 did not start: GitHub reported failed recent payments or a spending-limit restriction. No code test step ran there; local 69-test result is separate |
 | Cost inspection | Zone Free plan verified; account default and Worker usage model are standard. Billing/subscription lookup returned 403, so exact account billing is unverified |
 
 “Corroborated” means publication evidence from multiple independent domains.
@@ -158,6 +159,7 @@ references; see [the README](../README.md) for operations and recovery steps.
 4. **Operating verification:** confirm account billing, measure the guild hash path
    on the actual deployment. Desktop and mobile layouts are verified. Current standard
    usage works, but observed CPU exceeds Free limits on several paths.
-5. **Existing origins:** repair or independently verify Fleet and the preview origin
+5. **GitHub hosted CI:** resolve the account billing/spending-limit restriction and rerun the workflow. The failed hosted job did not execute the test suite. No spending limit or payment setting was changed.
+6. **Existing origins:** repair or independently verify Fleet and the preview origin
    before declaring those applications healthy. Their prior faults are recorded
    separately from authentication and gateway behavior.
