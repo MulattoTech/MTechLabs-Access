@@ -26,7 +26,7 @@ is disabled and Google is not configured, so the member rollout is not complete.
 | Stored code inventory | 811 distinct codes: 163 corroborated, 44 disputed, 552 expired, 14 likely active, 38 unverified |
 | Independence of evidence | Four adapters represent three independent domains; both wiki pages count once |
 | Historical suppression | All 13 required historical codes seeded; initial backlog suppressed; no new-code notifications from the import |
-| Cron configuration | `*/30 * * * *` configured; timer-triggered execution has not yet been observed in this record |
+| Cron configuration | `*/30 * * * *` configured; Cloudflare recorded one `scheduled` invocation with outcome `ok` in the 02:00 UTC window on October 31. The shared manual cooldown lasted until 02:01:40 UTC, so no new scan was created |
 | Guild access | Disabled, version 0, no stored hash. Automated live setup was blocked by Cloudflare WAF 1010; owner-UI live login/rotation remains unverified |
 | Legacy gateway routes | Fleet, HomeBox, Portainer, BabyTracker, BabyTracker Preview and MJobs registered and gated |
 | Existing origin faults | Fleet tunnel was offline beforehand. Preview returned an HTTP failure before and after gating. These are not verified healthy applications |
@@ -52,7 +52,7 @@ inventory is not 811 codes verified by successful redemption.
 | Revoke access at relevant backends | **Implemented; automated verification** | Current user/grant/session state checked per HTTP request. Live Google revocation remains untested; existing legacy WebSockets/native sessions require origin controls |
 | Guild users cannot reach private dashboards/APIs | **Implemented; automated verification** | Host/audience checks, owner-only admin and Code Watch-scoped guild sessions tested; final live guild verification pending here |
 | Functional standalone Code Watch | **Verified live** | Website, successful production import and persistent code data available independently of the local PC |
-| Scheduled checks run without AI | **Configured; timer observation pending** | Cron and deterministic scheduled handler deployed. Same scan path ran through an owner trigger; actual Cron invocation not yet observed |
+| Scheduled checks run without AI | **Timer dispatch verified; full scheduled scan pending** | Real scheduled invocation returned `ok` and respected the current global cooldown. The deterministic scan path succeeded through owner/manual triggers; a full source scan initiated by Cron still needs observation |
 | Manual refresh global cooldown | **Implemented; automated verification** | Atomic 15-minute shared lease/cooldown; 50 simultaneous callers produce one scan. Live manual scan plus a second browser-tab request produced one scan and an explicit cached/cooldown response; no production load test claimed |
 | Known codes never reannounced as new | **Verified in import and tests** | Seeds, whole initial baseline, delayed first-success source imports and later-enabled sources suppressed |
 | Honest source failures | **Implemented and tested** | Failure/backoff health retained; cached evidence preserved; missing listings do not become invented expirations |
@@ -166,9 +166,10 @@ references; see [the README](../README.md) for operations and recovery steps.
 2. **Guild access:** use the owner UI to set the passphrase, then complete live
    sign-in/rotation/isolation checks. It remains disabled with no hash until that
    intentional activation; the automated attempt stopped at WAF 1010.
-3. **Unattended checks:** observe a timer-triggered Cron invocation and its persisted
-   result after propagation. The successful owner-triggered scan proves the scan
-   path, not the timer event itself.
+3. **Unattended checks:** observe a full source scan initiated by Cron and its
+   persisted result. The 02:00 UTC timer invocation succeeded and respected the
+   manual cooldown, which ended at 02:01:40 UTC. The next configured slot is
+   02:30 UTC, subject to the shared cooldown and source backoff.
 4. **Operating verification:** confirm account billing, measure the guild hash path
    on the actual deployment. Desktop and mobile layouts are verified. Current standard
    usage works, but observed CPU exceeds Free limits on several paths.
