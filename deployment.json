@@ -113,7 +113,7 @@
       "access_app_id": "1fd54b5b-4f51-4055-b242-37ad3c517371",
       "audience": "39668ed9cf0056b18b7324f1b7a393ca70af70175c93635aa4cd2a4e61010111",
       "access_mode": "native",
-      "description": "Warhammer 420k code discovery, evidence, and individual tracking.",
+      "description": "Tacticus code discovery, evidence, and individual tracking for players and communities.",
       "limitation": "Guild and viewer roles can browse and maintain a personal checklist. Owner manages sources and guild access. Shared guild sessions cannot submit global player reports.",
       "managed": 1
     },

@@ -2,7 +2,7 @@
 
 A deployed Cloudflare Worker and D1 database provide an owner access dashboard,
 application authorization gates, and a deterministic Tacticus code tracker for
-**Warhammer 420k**. Normal operation makes no OpenAI, Codex, Claude, Gemini or other
+**Warhammer 40,000: Tacticus players**. Normal operation makes no OpenAI, Codex, Claude, Gemini or other
 model-inference calls.
 
 **The owner dashboard and Code Watch are live. Google sign-in is not configured:**

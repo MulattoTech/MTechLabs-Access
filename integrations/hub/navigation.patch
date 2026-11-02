@@ -17,10 +17,10 @@
      <section class="section" aria-label="Apps and fleet control" data-section>
        <div class="section-top"><h2>Apps &amp; fleet control</h2><small>Hosted services and upcoming learning</small></div>
        <div class="cards">
-+        <article id="tacticus-code-watch-card" class="card" data-category="apps" data-search="tacticus codes warhammer 420k guild rewards redemption">
++        <article id="tacticus-code-watch-card" class="card" data-category="apps" data-search="tacticus codes warhammer 40k guild rewards redemption">
 +          <div class="card-top"><span class="glyph gold">CW</span><span class="status">Cloud hosted</span></div>
 +          <h3>Tacticus Code Watch</h3>
-+          <p>Code discovery, source evidence, and personal redeemed tracking for Warhammer 420k. Scheduled checks run independently of this PC.</p>
++          <p>Code discovery, source evidence, and personal redeemed tracking for Tacticus players. Scheduled checks run independently of this PC.</p>
 +          <div class="card-actions"><a class="link-primary" href="https://codes.m-techlabs.com">Open Code Watch <span aria-hidden="true">&rarr;</span></a></div>
 +        </article>
          <article id="fleet-mission-control-card" class="card" data-category="apps" data-search="codex orchestrator fleet mission control agents launch board quota dispatch status">
