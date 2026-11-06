@@ -116,13 +116,22 @@ test('one flooding process cannot overtake another queued client', async t => {
 });
 
 test('a timed-out call blocks a different process until its late definitive response', async t => {
-  const f = await processFixture(t, ['a-native', 'b-remote'], { requestTimeoutMs: 150, queueTimeoutMs: 1500 });
+  const f = await processFixture(t, ['a-native', 'b-remote'], { requestTimeoutMs: 150, queueTimeoutMs: 10000 });
   const [a, b] = f.handles;
   a.send('slow', 'read_file', { barrier: 'timeout' });
-  await waitFor(async () => (await readCoordinatorStatus(f.config.stateDirectory)).inflight === 1);
+  await waitFor(() => a.messages.some(message => message.method === 'notifications/test-started' &&
+    message.params?.requestId === 'slow' && message.params?.barrier === 'timeout'));
   b.send('waiting', 'read_file', { delayMs: 5 });
   assert.equal((await a.response('slow')).error.code, -32002);
-  const status = await readCoordinatorStatus(f.config.stateDirectory);
+  // The timeout frame and durable accounting update cross different process
+  // boundaries. Observe both the retained uncertainty and queued follower before
+  // releasing the held tool; no short wall-clock duration establishes ordering.
+  const status = await waitFor(async () => {
+    const observed = await readCoordinatorStatus(f.config.stateDirectory);
+    return observed.available && observed.inflight === 1 && observed.uncertain === 1 && observed.queued === 1
+      ? observed : undefined;
+  });
+  assert.equal(status.inflight, 1);
   assert.equal(status.uncertain, 1);
   assert.equal(status.queued, 1);
   assert.equal(b.messages.some(message => message.id === 'waiting'), false);

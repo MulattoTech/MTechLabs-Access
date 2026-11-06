@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
 import {EXPECTED_LOCAL_TOOLS} from './verify-clients.mjs';
+import {hasConfigurationObject} from './lib/verification-results.mjs';
 
 const root = 'H:\\MTechLabs\\MCP';
 const startedAt = new Date().toISOString();
@@ -96,9 +97,7 @@ try {
   await check('usage statistics',()=>call('get_usage_stats'));
   await check('configuration read without reporting values',async()=>{
     const result=await call('get_config');
-    let value;
-    try { value=JSON.parse(getText(result)); } catch { throw new Error('Configuration response was not JSON'); }
-    assert(value&&typeof value==='object'&&!Array.isArray(value),'Configuration response was not an object');
+    assert(hasConfigurationObject(result),'Configuration response did not contain a configuration object');
   });
   await check('bounded recent metadata-call history without reporting values',async()=>{
     const schema=manifest.find(tool=>tool.name==='get_recent_tool_calls')?.inputSchema;
