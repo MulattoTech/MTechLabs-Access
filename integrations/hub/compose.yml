@@ -1,0 +1,55 @@
+name: mtechlabs-portal
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: mtechlabs-hub
+    restart: unless-stopped
+    user: "101:101"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs:
+      - /var/cache/nginx:rw,uid=101,gid=101,mode=0700
+      - /var/run:rw,uid=101,gid=101,mode=0700
+    volumes:
+      - type: bind
+        source: ./site
+        target: /usr/share/nginx/html
+        read_only: true
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+    ports:
+      - "127.0.0.1:20800:80"
+    networks: [hub]
+  tunnel:
+    image: cloudflare/cloudflared@sha256:faa8e0a1475f137c910be6025f43c8e4092fdd35461b31e19fd1390657a1ff39
+    container_name: mtechlabs-hub-cloudflared
+    restart: unless-stopped
+    read_only: true
+    user: "65532:65532"
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    command: ["tunnel", "--no-autoupdate", "run", "--token-file", "/run/secrets/token"]
+    volumes:
+      - type: bind
+        source: ${MTECH_HUB_TOKEN_FILE:?Protected tunnel token file required}
+        target: /run/secrets/token
+        read_only: true
+    depends_on: [web]
+    networks: [hub, sprout, sprout_preview, homebox]
+networks:
+  hub:
+    external: true
+    name: mtechlabs-hub
+  sprout:
+    external: true
+    name: babytracker_default
+  sprout_preview:
+    external: true
+    name: babytracker-ocr-staging_default
+  homebox:
+    external: true
+    name: homebox_default
