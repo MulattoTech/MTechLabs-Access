@@ -187,10 +187,13 @@ test('remote backend status is projected without inventing browser sign-in evide
   assert.equal(unknown.state,'unknown');assert.equal(unknown.endpoint,null);assert.equal(unknown.sdkLoaded,null);assert.equal(unknown.activeHttpRequests,null);
 });
 
-test('connect instructions expose only the self-hosted endpoint and leave client sign-in unverified',async()=>{
+test('connect instructions link the private ChatGPT connector without claiming individual OAuth status',async()=>{
   const html=await readFile(new URL('../public/mcp.html',import.meta.url),'utf8');
   assert.match(html,/https:\/\/mcp\.m-techlabs\.com\/mcp/);assert.match(html,/dynamic client registration \(DCR\)/);
-  assert.equal((html.match(/Manual sign-in pending/g)||[]).length,2);assert.match(html,/does not replace or modify your hosted Remote Desktop Commander connection/);
+  assert.match(html,/href="https:\/\/chatgpt\.com\/plugins\/plugins_6aed1a85300481919559498b458ed278" target="_blank" rel="noopener noreferrer"/);
+  assert.match(html,/href="https:\/\/claude\.ai" target="_blank" rel="noopener noreferrer"/);assert.match(html,/OAuth with automatic client registration/);
+  assert.match(html,/This page does not track individual client OAuth sign-in/);assert.equal(html.includes('Manual sign-in pending'),false);
+  assert.match(html,/does not replace or modify your hosted Remote Desktop Commander connection/);
   assert.match(html,/not proof of completed ChatGPT or Claude OAuth sign-in/);assert.equal(html.includes(SERVICE_TOKEN),false);
 });
 
