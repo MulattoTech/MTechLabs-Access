@@ -71,8 +71,10 @@ so no signed-in browser or camera-playback acceptance is claimed.
 ## Adaptive directory rollout — 2026-11-06
 
 The current source includes an identity-filtered Worker-backed directory and
-an owner-only Homepage visibility tab. Its canonical app list is
-`src/hub-catalog.js`, not the older static HTML snapshot. Update the Worker
+an owner-only Homepage visibility tab with global and per-approved-person
+switches. Individual hides are stricter than (and cannot override) global hides
+or app access grants. Its canonical app list is `src/hub-catalog.js`, not the
+older static HTML snapshot. Update the Worker
 first, then deploy just the three reviewed hub assets. The Worker uses the
 existing `settings` D1 table and existing `/admin/access*` routes; no new
 public route, OAuth provider, Access policy, secret, or database migration is

@@ -17,10 +17,13 @@ user-facing apps and owner developer/integration services, including **MBody**
 (`tacticus.m-techlabs.com`). Synthetic previews and non-interactive APIs
 are explicitly identified; raw ingest endpoints are not linked.
 
-The owner dashboard's **Homepage visibility** tab stores each on/off choice in
-the existing D1 `settings` table, under `hub_visible:<card-id>`. All new cards
-default to shown. Hiding is global, and never changes Cloudflare or origin
-authorization. The owner can restore any hidden card in that admin tab. A
+The owner dashboard's **Homepage visibility** tab supports both site-wide
+defaults and per-person hide/show choices. These are stored in the existing D1
+`settings` table under `hub_visible:<card-id>` and
+`hub_user_visible:<user-id>:<card-id>`; all new cards default to shown.
+A site-wide hide always wins, then a person-specific hide can further narrow
+the list. Neither setting changes Cloudflare or origin authorization.
+The owner can restore any hidden card in the same tab. A
 non-owner who is *separately permitted onto the hub* sees only enabled cards
 whose registered application permission is also granted; owner-only and
 unmanaged integrations never leak through the API. **The hub Cloudflare Access

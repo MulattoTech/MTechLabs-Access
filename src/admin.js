@@ -3,7 +3,7 @@ import {HttpError,ownerIdentity,readSession,createSession,requireCsrf,ADMIN_COOK
 import {hashPassphrase} from './security.js';
 import {acquireScan,executeScan,recomputeStatuses} from './codes.js';
 import {MCP_MANAGEMENT_CATALOG} from './mcp-catalog.js';
-import {HUB_CARDS,HUB_CARD_IDS,visibilityKey} from './hub-catalog.js';
+import {HUB_CARDS,HUB_CARD_IDS,visibilityKey,userVisibilityKey} from './hub-catalog.js';
 
 const states=new Set(['pending','approved','denied','suspended','revoked']);
 export async function jsonBody(request,max=16384) {
@@ -39,15 +39,16 @@ export async function adminApi(request,env,ctx,path) {
       cookie=sessionCookie(ADMIN_COOKIE,created.token,created.age);
       session={csrf:created.csrf};
     }
-    const [users,apps,grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,homeVisibility]=await Promise.all([
+    const [users,apps,grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,homeVisibility,homePersonVisibility]=await Promise.all([
       rows(db,'SELECT * FROM users ORDER BY is_owner DESC,created_at DESC'),rows(db,'SELECT * FROM apps ORDER BY name'),rows(db,'SELECT * FROM grants'),
       rows(db,'SELECT * FROM groups ORDER BY name'),rows(db,'SELECT * FROM group_members'),rows(db,'SELECT * FROM group_grants'),rows(db,'SELECT * FROM default_grants'),
       rows(db,'SELECT * FROM audit ORDER BY id DESC LIMIT 150'),rows(db,'SELECT id,kind,user_id,created_at,expires_at,last_seen,revoked_at FROM sessions WHERE expires_at>? ORDER BY created_at DESC LIMIT 100',now),
       one(db,'SELECT enabled,version,updated_at FROM guild_access WHERE id=1'),rows(db,'SELECT * FROM app_activity'),rows(db,"SELECT key,value FROM settings WHERE key IN ('google_idp_id','google_status','deployment_version')"),
       rows(db,'SELECT * FROM scan_runs ORDER BY started_at DESC LIMIT 10'),
-      rows(db,"SELECT key,value FROM settings WHERE key LIKE 'hub_visible:%'")
+      rows(db,"SELECT key,value FROM settings WHERE key LIKE 'hub_visible:%'"),
+      rows(db,"SELECT key,value FROM settings WHERE key LIKE 'hub_user_visible:%'")
     ]);
-    return json({owner:owner.email,csrf:session.csrf,users,apps,management:[MCP_MANAGEMENT_CATALOG],grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,homeCards:HUB_CARDS.map(({id,name,category,audience})=>({id,name,category,audience})),homeHidden:homeVisibility.filter(x=>x.value==='0').map(x=>x.key.slice('hub_visible:'.length)),
+    return json({owner:owner.email,csrf:session.csrf,users,apps,management:[MCP_MANAGEMENT_CATALOG],grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,homeCards:HUB_CARDS.map(({id,name,category,audience})=>({id,name,category,audience})),homeHidden:homeVisibility.filter(x=>x.value==='0').map(x=>x.key.slice('hub_visible:'.length)),homeUserHidden:homePersonVisibility.filter(x=>x.value==='0').map(x=>{const key=x.key.slice('hub_user_visible:'.length).split(':');return {userId:key[0],id:key[1]};}),
       google:{configured:settings.some(x=>x.key==='google_idp_id'&&x.value),callback:`https://${env.ACCESS_TEAM}/cdn-cgi/access/callback`,setupUrl:'https://one.dash.cloudflare.com/'+env.ACCOUNT_ID+'/settings/authentication',requires:'Google OAuth client ID and client secret; keep the Cloudflare owner provider enabled.'},serverTime:now},200,cookie?{'Set-Cookie':cookie}:{});
   }
   if(request.method!=='POST')throw new HttpError(405,'Method not allowed.');
@@ -56,11 +57,19 @@ export async function adminApi(request,env,ctx,path) {
   const body=await jsonBody(request),actor=owner.email;
   if(path==='/homepage') {
     if(typeof body.id!=='string'||!HUB_CARD_IDS.has(body.id)||typeof body.visible!=='boolean')throw new HttpError(400,'Choose a registered homepage card and a visibility setting.');
+    const scoped=Object.hasOwn(body,'userId');
+    let target=null;
+    if(scoped) {
+      if(typeof body.userId!=='string'||!body.userId)throw new HttpError(400,'Choose an approved person.');
+      target=await one(db,'SELECT id,status FROM users WHERE id=?',body.userId);
+      if(!target||target.status!=='approved')throw new HttpError(400,'The selected person is not approved.');
+    }
+    const key=scoped?userVisibilityKey(target.id,body.id):visibilityKey(body.id);
     await db.batch([
-      statement(db,'INSERT INTO settings(key,value,updated_at) VALUES(?,?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at',visibilityKey(body.id),body.visible?'1':'0',now),
-      aStmt(db,actor,'homepage.visibility',body.id,{visible:body.visible})
+      statement(db,'INSERT INTO settings(key,value,updated_at) VALUES(?,?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at',key,body.visible?'1':'0',now),
+      aStmt(db,actor,scoped?'homepage.person_visibility':'homepage.visibility',body.id,{visible:body.visible,userId:target?.id||null})
     ]);
-    return json({ok:true,message:body.visible?'App is now shown on the homepage for eligible viewers.':'App is now hidden from the homepage. Direct access rules are unchanged.'});
+    return json({ok:true,message:scoped?'Person-specific homepage display saved. App permissions have not changed.':body.visible?'App is now shown on the homepage for eligible viewers.':'App is now hidden from the homepage. Direct access rules are unchanged.'});
   }
   if(path==='/users') {
     let email;try{email=normalizeEmail(body.email);}catch(e){throw new HttpError(400,e.message);}

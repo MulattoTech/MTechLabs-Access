@@ -1,7 +1,7 @@
 import test, {before} from 'node:test';
 import assert from 'node:assert/strict';
 import {createDB,seedAuth} from './helpers/d1.js';
-import {HUB_CARDS,visibilityKey} from '../src/hub-catalog.js';
+import {HUB_CARDS,visibilityKey,userVisibilityKey} from '../src/hub-catalog.js';
 import {homepageApi} from '../src/homepage.js';
 import {adminApi} from '../src/admin.js';
 import {createSession,ADMIN_COOKIE} from '../src/auth.js';
@@ -75,6 +75,33 @@ test('unverified and suspended visitors cannot obtain the catalog',async t=>{
   const env=await fixture(t);
   await assert.rejects(homepageApi(new Request('https://m-techlabs.com/admin/access/api/homepage'),env),err=>err.status===401);
   await assert.rejects(homepageApi(await request('suspended@example.com'),env),err=>err.status===403);
+});
+
+test('person-specific visibility hides only that viewer and cannot bypass global or app grants',async t=>{
+  const env=await fixture(t),owner=await one(env.DB,'SELECT * FROM users WHERE id=?','owner');
+  const session=await createSession(env,{kind:'owner',user:owner});
+  await run(env.DB,'INSERT INTO grants(user_id,app_id,role,updated_at) VALUES(?,?,?,?)','alice','codes','viewer',1);
+  const before=await (await homepageApi(await request('alice@example.com'),env)).json();
+  assert.ok(before.cards.some(x=>x.id==='tacticus-code-watch'));
+  const hide=await adminApi(await request('owner@example.com','POST',{id:'tacticus-code-watch',visible:false,userId:'alice'},session),env,{},'/homepage');
+  assert.equal(hide.status,200);
+  assert.equal((await one(env.DB,'SELECT value FROM settings WHERE key=?',userVisibilityKey('alice','tacticus-code-watch'))).value,'0');
+  const after=await (await homepageApi(await request('alice@example.com'),env)).json();
+  assert.ok(!after.cards.some(x=>x.id==='tacticus-code-watch'));
+  const ownerCards=await (await homepageApi(await request('owner@example.com'),env)).json();
+  assert.ok(ownerCards.cards.some(x=>x.id==='tacticus-code-watch'));
+  const bootstrapReq=new Request('https://m-techlabs.com/admin/access/api/bootstrap',{headers:{'Cf-Access-Jwt-Assertion':await token(),'Cookie':ADMIN_COOKIE+'='+session.token}});
+  const bootstrap=await (await adminApi(bootstrapReq,env,{},'/bootstrap')).json();
+  assert.deepEqual(bootstrap.homeUserHidden,[{userId:'alice',id:'tacticus-code-watch'}]);
+  await assert.rejects(adminApi(await request('owner@example.com','POST',{id:'tacticus-code-watch',visible:false,userId:'unknown'},session),env,{},'/homepage'),err=>err.status===400);
+  await assert.rejects(adminApi(await request('owner@example.com','POST',{id:'tacticus-code-watch',visible:false,userId:'suspended'},session),env,{},'/homepage'),err=>err.status===400);
+  await adminApi(await request('owner@example.com','POST',{id:'tacticus-code-watch',visible:true,userId:'alice'},session),env,{},'/homepage');
+  const restored=await (await homepageApi(await request('alice@example.com'),env)).json();
+  assert.ok(restored.cards.some(x=>x.id==='tacticus-code-watch'));
+  await adminApi(await request('owner@example.com','POST',{id:'tacticus-code-watch',visible:false},session),env,{},'/homepage');
+  const globallyHidden=await (await homepageApi(await request('alice@example.com'),env)).json();
+  assert.ok(!globallyHidden.cards.some(x=>x.id==='tacticus-code-watch'));
+  assert.equal((await one(env.DB,'SELECT role FROM grants WHERE user_id=? AND app_id=?','alice','codes')).role,'viewer');
 });
 
 test('owner switch persists globally without changing app grants or entry policies',async t=>{

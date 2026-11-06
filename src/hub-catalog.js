@@ -30,3 +30,4 @@ export const HUB_CARDS = [
 
 export const HUB_CARD_IDS = new Set(HUB_CARDS.map(card => card.id));
 export const visibilityKey = id => 'hub_visible:' + id;
+export const userVisibilityKey = (userId,id) => 'hub_user_visible:' + userId + ':' + id;
