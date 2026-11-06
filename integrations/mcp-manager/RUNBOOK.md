@@ -31,9 +31,10 @@ guarantee faster builds.
 
 Remote endpoint: `https://mcp.m-techlabs.com/mcp`
 
-- ChatGPT: use the private **M-TechLabs Desktop** plugin if it has been saved to
-  the account, or add the endpoint as a custom MCP connection. Select OAuth
-  and automatic/DCR client registration. Complete the Cloudflare owner login.
+- ChatGPT: open the private [M-TechLabs Desktop connection](https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278),
+  add/connect it, and complete the Cloudflare owner login. Enable the connection
+  in the conversation. If configuring the endpoint manually instead, choose
+  OAuth and automatic/DCR client registration.
 - Claude: **Customize → Connectors → Add custom connector**. Enter the endpoint,
   select sign-in/OAuth and **Register automatically**, then authorize using the
   owner Google account. Enable the connector for the conversation.
@@ -46,6 +47,11 @@ The origin transport and tools are tested independently of client account
 authorization. A healthy backend does not prove either personal account has
 finished its OAuth consent. Leave the original hosted connector installed until
 the new connection has passed a real task in each client.
+
+The private ChatGPT package is version 0.1.0, ID
+`plugins_6aed1a85300481919559498b458ed278`. It is private to the owner's account,
+not a public app listing. Creating the package does not complete its OAuth
+consent or connect the Claude account.
 
 ## Local clients
 
