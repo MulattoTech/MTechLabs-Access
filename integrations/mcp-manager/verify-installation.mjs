@@ -4,8 +4,10 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
+import {EXPECTED_LOCAL_TOOLS} from './verify-clients.mjs';
 
 const root = 'H:\\MTechLabs\\MCP';
+const startedAt = new Date().toISOString();
 const directory = await fs.mkdtemp(path.join(root,'state','verification-'));
 const config = JSON.parse(await fs.readFile(path.join(root,'state','manager.json'),'utf8'));
 config.stateDirectory = directory;
@@ -19,26 +21,32 @@ const transport = new StdioClientTransport({command:config.nodePath,args:[fileUR
 transport.stderr?.on('data',()=>{});
 const results = [];
 const ownedPids = new Set();
+const successfulTools = new Set();
+const deniedTools = new Set();
 const getText = result => (result.content||[]).filter(item=>item.type==='text').map(item=>item.text).join('\n');
 async function call(name,args={}) {
   const result = await client.callTool({name,arguments:args});
-  assert.equal(result.isError===true,false,name+' returned an error: '+getText(result).slice(0,400));
+  assert.equal(result.isError===true,false,'Tool returned an error');
+  successfulTools.add(name);
   return result;
 }
 async function check(name,fn) {
   try { await fn(); results.push({name,pass:true}); }
-  catch (error) { results.push({name,pass:false,error:String(error.message).slice(0,600)}); }
+  // Assertions and SDK errors can contain raw config/history/tool contents.
+  catch (error) { results.push({name,pass:false,error:'verification_check_failed',...(Number.isInteger(error?.code)?{rpcErrorCode:error.code}:{})}); }
 }
 async function rejected(name,args,pattern) {
   let rejected=false;
   try { const result=await client.callTool({name,arguments:args}); rejected=result.isError===true && pattern.test(getText(result)); }
   catch (error) { rejected=pattern.test(error.message); }
   assert(rejected,'Expected managed policy rejection');
+  deniedTools.add(name);
 }
 let manifest=[];
 try {
   await client.connect(transport);
-  console.log(JSON.stringify({capabilities:client.getServerCapabilities()}));
+  const capabilities=client.getServerCapabilities()??{};
+  console.log(JSON.stringify({capabilities:{tools:!!capabilities.tools,resources:!!capabilities.resources,prompts:!!capabilities.prompts}}));
   manifest=(await client.listTools()).tools;
   assert.equal(manifest.length,25);
   results.push({name:'MCP initialize and all 25 tool definitions',pass:true});
@@ -86,6 +94,18 @@ try {
   }
   await check('process listing',()=>call('list_processes'));
   await check('usage statistics',()=>call('get_usage_stats'));
+  await check('configuration read without reporting values',async()=>{
+    const result=await call('get_config');
+    let value;
+    try { value=JSON.parse(getText(result)); } catch { throw new Error('Configuration response was not JSON'); }
+    assert(value&&typeof value==='object'&&!Array.isArray(value),'Configuration response was not an object');
+  });
+  await check('bounded recent metadata-call history without reporting values',async()=>{
+    const schema=manifest.find(tool=>tool.name==='get_recent_tool_calls')?.inputSchema;
+    assert(schema?.properties?.maxResults&&schema.properties.since&&schema.properties.toolName,'Expected bounded history parameters');
+    const result=await call('get_recent_tool_calls',{maxResults:1,since:startedAt,toolName:'get_file_info'});
+    assert(getText(result).trim().length>0,'History response was empty');
+  });
   await check('DOCX write and read',async()=>{
     const file=path.join(files,'test.docx');await call('write_file',{path:file,content:'# MCP document test\n\nMTECH_DOCX_OK',mode:'rewrite'});
     assert.match(getText(await call('read_file',{path:file})),/MTECH_DOCX_OK/);
@@ -105,12 +125,25 @@ try {
   await fs.writeFile(config.policyPath,JSON.stringify({...policy,enabled:false}));
   await check('pause blocks new reads',()=>rejected('get_file_info',{path:moved},/paused/));
   await check('pause does not break MCP tool discovery',async()=>assert.equal((await client.listTools()).tools.length,25));
+} catch(error) {
+  results.push({name:'MCP verification harness completion',pass:false,error:'protocol_or_harness_failed',...(Number.isInteger(error?.code)?{rpcErrorCode:error.code}:{})});
 } finally {
   // Only PIDs returned for processes launched by this test are eligible cleanup targets.
   if(ownedPids.size)await fs.writeFile(config.policyPath,JSON.stringify(policy));
   for(const pid of ownedPids)await client.callTool({name:'force_terminate',arguments:{pid}}).catch(()=>{});
   await client.close();
-  const report={testedAt:new Date().toISOString(),fixtureDirectory:directory,toolCount:manifest.length,passed:results.filter(r=>r.pass).length,failed:results.filter(r=>!r.pass).length,results};
+  const expectedNames=new Set(EXPECTED_LOCAL_TOOLS);
+  const successful=EXPECTED_LOCAL_TOOLS.filter(name=>successfulTools.has(name));
+  const denied=EXPECTED_LOCAL_TOOLS.filter(name=>deniedTools.has(name));
+  const toolResponseCoverage={
+    successful,denied,denialOnly:denied.filter(name=>!successfulTools.has(name)),
+    notExercised:EXPECTED_LOCAL_TOOLS.filter(name=>!successfulTools.has(name)&&!deniedTools.has(name)),
+    successfulSharedCoreCount:successful.filter(name=>name!=='give_feedback_to_desktop_commander').length,
+    expectedAdvertisedCount:manifest.filter(tool=>expectedNames.has(tool.name)).length,
+    unexpectedAdvertisedCount:manifest.filter(tool=>!expectedNames.has(tool.name)).length,
+    note:'Successful tool responses and explicit policy denials are separate. Schema coverage does not prove full hosted-product parity.',
+  };
+  const report={testedAt:new Date().toISOString(),fixtureDirectory:directory,toolCount:manifest.length,passed:results.filter(r=>r.pass).length,failed:results.filter(r=>!r.pass).length,toolResponseCoverage,results};
   await fs.writeFile(path.join(directory,'report.json'),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report));
   if(report.failed)process.exitCode=1;

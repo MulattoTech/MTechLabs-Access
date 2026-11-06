@@ -3,14 +3,15 @@ import path from 'node:path';
 import os from 'node:os';
 import { readBoundedJson } from './config.mjs';
 import { readPolicy, QUEUE_CAPACITY } from './policy.mjs';
+import { readCoordinatorStatus } from './coordinator.mjs';
 
-export const MANAGER_VERSION = '0.1.0';
+export const MANAGER_VERSION = '0.2.0';
 const ID = /^[a-zA-Z0-9_.-]{1,64}$/;
 const LABEL = /^[a-zA-Z0-9][a-zA-Z0-9 _().-]{0,79}$/;
 export const BOUNDARIES = [
   'Management applies only to enrolled native clients and the authenticated remote bridge using this managed gateway.',
   'Website permissions do not restrict separately configured native or hosted MCP connections.',
-  'Concurrency limits count in-flight tool requests per instance, not detached commands or CPU usage.',
+  'The shared coordinator limits in-flight tool requests across enrolled gateways, not detached commands or CPU usage.',
   'Pausing rejects new tool calls; existing commands are not terminated.',
   'Desktop Commander folder and command restrictions are guardrails, not an OS security sandbox.',
   'The self-hosted remote MCP route needs upstream OAuth authorization; native stdio and existing vendor-hosted connections remain separate.',
@@ -21,6 +22,18 @@ export const BOUNDARIES = [
 
 function isoOrNull(input) {
   return typeof input === 'string' && Number.isFinite(Date.parse(input)) ? new Date(input).toISOString() : null;
+}
+
+async function readDeployment(stateDirectory) {
+  try {
+    const value = await readBoundedJson(path.join(stateDirectory, 'deployment.json'), 16 * 1024);
+    return {
+      sourceCommit: typeof value.sourceCommit === 'string' && /^[a-f0-9]{40}$/.test(value.sourceCommit) ? value.sourceCommit : null,
+      installedAt: isoOrNull(value.completedAt),
+      workerVersion: typeof value.cloudflare?.version === 'string' && /^[a-f0-9-]{36}$/.test(value.cloudflare.version) ? value.cloudflare.version : null,
+      evidence: 'installation-record',
+    };
+  } catch { return null; }
 }
 
 export function sanitizeInventory(input) {
@@ -65,6 +78,8 @@ async function readInstances(stateDirectory) {
         inflight: Number.isInteger(value.inflight) ? Math.min(64, Math.max(0, value.inflight)) : 0,
         queued: Number.isInteger(value.queued) ? Math.min(QUEUE_CAPACITY, Math.max(0, value.queued)) : 0,
         initialized: value.initialized === true,
+        managerVersion: typeof value.managerVersion === 'string' && /^\d+\.\d+\.\d+$/.test(value.managerVersion) ? value.managerVersion : null,
+        residentBytes: Number.isSafeInteger(value.residentBytes) && value.residentBytes >= 0 ? value.residentBytes : null,
       };
     } catch {
       return null;
@@ -103,6 +118,10 @@ export async function collectStatus(config, startedAt = Date.now()) {
   }
   const freeMemoryBytes = os.freemem();
   const lowMemoryFloorBytes = config.minimumFreeMemoryMiB * 1024 * 1024;
+  const lowDiskFloorBytes = (config.minimumFreeDiskMiB ?? 10240) * 1024 * 1024;
+  const processMemory = process.memoryUsage();
+  const coordinator = await readCoordinatorStatus(config.stateDirectory, { policyPath: config.policyPath });
+  if (!coordinator.available) warnings.push('The shared admission coordinator is unavailable; managed tool execution fails closed.');
   return {
     schemaVersion: 1,
     service: {
@@ -114,18 +133,26 @@ export async function collectStatus(config, startedAt = Date.now()) {
     policy,
     policyValid: policy !== null,
     runtime: { nodeVersion: process.version, packageVersion, installed },
+    deployment: await readDeployment(config.stateDirectory),
     resources: {
       freeMemoryBytes,
       totalMemoryBytes: os.totalmem(),
       lowMemoryFloorBytes,
-      admissionOpen: policy !== null && policy.enabled && !policy.readOnly && freeMemoryBytes >= lowMemoryFloorBytes,
+      lowDiskFloorBytes,
+      managerResidentBytes: processMemory.rss,
+      managerHeapUsedBytes: processMemory.heapUsed,
+      admissionOpen: policy !== null && policy.enabled && !policy.readOnly && freeMemoryBytes >= lowMemoryFloorBytes && disk !== null && disk.freeBytes >= lowDiskFloorBytes && coordinator.available && coordinator.uncertain < policy.maxInflight,
       disk,
     },
     limits: {
+      scope: 'shared-state-directory',
+      maxInflightGlobal: policy?.maxInflight ?? 1,
+      queueCapacityGlobal: 64,
       maxInflightPerInstance: policy?.maxInflight ?? 1,
       queueCapacityPerInstance: QUEUE_CAPACITY,
       detachedJobsCapped: false,
     },
+    coordinator,
     instances,
     inventory,
     boundaries: [...BOUNDARIES],

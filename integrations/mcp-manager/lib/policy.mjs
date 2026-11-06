@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { closeSync, fstatSync, openSync, readSync } from 'node:fs';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { readBoundedJson } from './config.mjs';
@@ -16,7 +17,7 @@ export const READ_ONLY_TOOLS = new Set([
   'get_more_search_results',
   'get_usage_stats',
 ]);
-export const RESOURCE_GATED_TOOLS = new Set(['start_process', 'start_search']);
+export const RESOURCE_GATED_TOOLS = new Set(['start_process', 'start_search', 'interact_with_process', 'write_pdf']);
 
 export function validatePolicy(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input) ||
@@ -29,8 +30,36 @@ export function validatePolicy(input) {
   return { enabled: input.enabled, readOnly: input.readOnly, maxInflight: input.maxInflight };
 }
 
+function validateStoredPolicy(input) {
+  // This private marker fences older gateways, whose strict three-field
+  // validator fails closed. The public policy API still has exactly 3 fields.
+  if (input && typeof input === 'object' && !Array.isArray(input) && Object.hasOwn(input, 'coordinationVersion')) {
+    if (input.coordinationVersion !== 1) throw new Error('invalid_policy');
+    const { coordinationVersion, ...policy } = input;
+    return validatePolicy(policy);
+  }
+  return validatePolicy(input);
+}
+
 export async function readPolicy(filePath) {
-  return validatePolicy(await readBoundedJson(filePath, 4096));
+  return validateStoredPolicy(await readBoundedJson(filePath, 4096));
+}
+
+// Admission reads the current policy while holding the SQLite transaction.
+// A bounded synchronous read keeps that transaction short and avoids an await
+// allowing another connection in this process to wait on our own write lock.
+export function readPolicySync(filePath) {
+  const descriptor = openSync(filePath, 'r');
+  try {
+    const stat = fstatSync(descriptor);
+    if (!stat.isFile() || stat.size > 4096) throw new Error('invalid_policy');
+    const bytes = Buffer.alloc(4097);
+    const count = readSync(descriptor, bytes, 0, bytes.length, 0);
+    if (count > 4096) throw new Error('invalid_policy');
+    return validateStoredPolicy(JSON.parse(bytes.subarray(0, count).toString('utf8').replace(/^\uFEFF/, '')));
+  } finally {
+    closeSync(descriptor);
+  }
 }
 
 export function checkToolPolicy(policy, name, args = {}, resources = {}) {
@@ -46,9 +75,15 @@ export function checkToolPolicy(policy, name, args = {}, resources = {}) {
       Array.isArray(args?.paths) && args.paths.some(value => typeof value === 'string' && /^[a-z][a-z0-9+.-]*:\/\//i.test(value))) {
     return { code: -32011, message: 'Read-only policy permits local file reads only.' };
   }
-  if (RESOURCE_GATED_TOOLS.has(name) && Number.isFinite(resources.freeMemoryBytes) &&
-      resources.freeMemoryBytes < resources.lowMemoryFloorBytes) {
-    return { code: -32012, message: 'Available memory is below the admission threshold. No new process or search was started.' };
+  if (RESOURCE_GATED_TOOLS.has(name)) {
+    if (!Number.isFinite(resources.freeMemoryBytes) || !Number.isFinite(resources.lowMemoryFloorBytes) ||
+        resources.freeMemoryBytes < resources.lowMemoryFloorBytes) {
+      return { code: -32012, message: 'Available memory is below the admission threshold or could not be measured. This request was not executed.' };
+    }
+    if (!Number.isFinite(resources.freeDiskBytes) || !Number.isFinite(resources.lowDiskFloorBytes) ||
+        resources.freeDiskBytes < resources.lowDiskFloorBytes) {
+      return { code: -32018, message: 'Available disk space is below the admission threshold or could not be measured. This request was not executed.' };
+    }
   }
   return null;
 }

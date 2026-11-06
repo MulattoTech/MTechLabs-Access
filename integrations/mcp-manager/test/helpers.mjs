@@ -24,6 +24,7 @@ export async function fixture(test, { cleanup = true } = {}) {
     tokenPath: path.join(directory, 'admin-token'),
     inventoryPath: path.join(directory, 'inventory.json'),
     minimumFreeMemoryMiB: 256,
+    minimumFreeDiskMiB: 256,
   };
   await fs.writeFile(config.serverPackageJsonPath, JSON.stringify({ version: '0.3.1' }));
   await fs.writeFile(config.policyPath, JSON.stringify({ enabled: true, readOnly: false, maxInflight: 1 }));

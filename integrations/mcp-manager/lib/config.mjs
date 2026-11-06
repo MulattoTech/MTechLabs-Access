@@ -5,7 +5,7 @@ const REQUIRED_PATHS = [
   'nodePath', 'serverPath', 'serverPackageJsonPath', 'stateDirectory',
   'policyPath', 'tokenPath', 'inventoryPath',
 ];
-const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB']);
+const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB', 'minimumFreeDiskMiB']);
 
 export function parseArguments(argv, allowed = ['config', 'client']) {
   const result = {};
@@ -50,8 +50,11 @@ export async function loadConfig(configPath) {
   const minimumFreeMemoryMiB = input.minimumFreeMemoryMiB ?? 4096;
   if (!Number.isInteger(minimumFreeMemoryMiB) ||
       minimumFreeMemoryMiB < 256 || minimumFreeMemoryMiB > 65536) throw new Error('invalid_config');
+  const minimumFreeDiskMiB = input.minimumFreeDiskMiB ?? 10240;
+  if (!Number.isInteger(minimumFreeDiskMiB) ||
+      minimumFreeDiskMiB < 256 || minimumFreeDiskMiB > 1048576) throw new Error('invalid_config');
   if (new Set(REQUIRED_PATHS.map(key => path.resolve(input[key]))).size !== REQUIRED_PATHS.length) {
     throw new Error('overlapping_config_paths');
   }
-  return Object.freeze({ ...input, minimumFreeMemoryMiB });
+  return Object.freeze({ ...input, minimumFreeMemoryMiB, minimumFreeDiskMiB });
 }

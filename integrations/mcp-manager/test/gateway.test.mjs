@@ -2,9 +2,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
 import { atomicWriteJson } from '../lib/policy.mjs';
 import { collectStatus } from '../lib/status.mjs';
+import { readCoordinatorStatus } from '../lib/coordinator.mjs';
 import { gatewayFixture } from './helpers.mjs';
+
+async function waitFor(predicate, timeout = 4000) {
+  const deadline = Date.now() + timeout;
+  while (Date.now() < deadline) {
+    if (await predicate()) return;
+    await new Promise(resolve => setTimeout(resolve, 5));
+  }
+  throw new Error('gateway_test_condition_timeout');
+}
+
+function releaseBarrier(fixture, barrier) {
+  fixture.input.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/test-release', params: { barrier } }) + '\n');
+}
 
 test('gateway preserves initialization and fragmented concurrent JSON-RPC requests', async t => {
   const f = await gatewayFixture(t);
@@ -42,7 +57,7 @@ test('pause rejects queued work without killing an already dispatched command', 
   assert.equal((await f.response(2)).error.code, -32010);
 });
 
-test('low memory blocks only new process/search admission and policy corruption fails closed', async t => {
+test('low memory blocks heavy admission and policy corruption fails closed', async t => {
   const f = await gatewayFixture(t, { freeMemory: () => 1 });
   f.send(1, 'start_process');
   f.send(2, 'start_search');
@@ -55,12 +70,52 @@ test('low memory blocks only new process/search admission and policy corruption 
   assert.equal((await f.response(4)).error.code, -32014);
 });
 
+test('low or unknown disk blocks heavy work while safe reads remain available', async t => {
+  let disk = 1;
+  const f = await gatewayFixture(t, { freeDisk: () => disk });
+  for (const [index, name] of ['start_process', 'start_search', 'interact_with_process', 'write_pdf'].entries()) {
+    f.send(index + 1, name);
+    assert.equal((await f.response(index + 1)).error.code, -32018);
+  }
+  disk = NaN;
+  f.send(5, 'start_process');
+  assert.equal((await f.response(5)).error.code, -32018);
+  f.send(6, 'read_file');
+  assert.equal((await f.response(6)).result.ordinal, 1);
+});
+
 test('configured limit two permits concurrency but does not exceed it', async t => {
   const f = await gatewayFixture(t);
   await atomicWriteJson(f.config.policyPath, { enabled: true, readOnly: false, maxInflight: 2 });
-  for (let id = 1; id <= 5; id++) f.send(id, 'read_file', { delayMs: 40 });
+  for (let id = 1; id <= 5; id++) f.send(id, 'read_file', { delayMs: 40, barrier: 'two-active' });
+  await waitFor(() => f.messages.filter(message => message.method === 'notifications/test-started').length === 2);
+  releaseBarrier(f, 'two-active');
   const responses = await Promise.all([1, 2, 3, 4, 5].map(id => f.response(id)));
   assert.equal(Math.max(...responses.map(result => result.result.greatestActive)), 2);
+});
+
+test('transient SQLite contention queues safely and retries completion accounting without redispatch', async t => {
+  const f = await gatewayFixture(t);
+  const locker = new DatabaseSync(path.join(f.config.stateDirectory, 'admission.sqlite'));
+  try {
+    locker.exec('BEGIN IMMEDIATE');
+    f.send(1, 'read_file', { barrier: 'accounting' });
+    assert.equal(f.messages.some(message => message.id === 1), false, 'a known busy lock does not reject the call');
+    locker.exec('ROLLBACK');
+    await waitFor(() => f.messages.some(message => message.method === 'notifications/test-started'));
+    locker.exec('BEGIN IMMEDIATE');
+    releaseBarrier(f, 'accounting');
+    const result = await f.response(1);
+    assert.equal(result.result.ordinal, 1);
+    assert.equal((await readCoordinatorStatus(f.config.stateDirectory)).inflight, 1, 'busy completion keeps its reservation');
+    locker.exec('ROLLBACK');
+    f.send(2, 'read_file');
+    assert.equal((await f.response(2)).result.ordinal, 2, 'only the original two tool calls were sent');
+    assert.equal((await readCoordinatorStatus(f.config.stateDirectory)).inflight, 0);
+  } finally {
+    try { locker.exec('ROLLBACK'); } catch { /* no transaction remains on success */ }
+    locker.close();
+  }
 });
 
 test('queue is bounded and tool calls without IDs cannot bypass admission', async t => {
@@ -74,13 +129,28 @@ test('queue is bounded and tool calls without IDs cannot bypass admission', asyn
 
 test('timed-out tool keeps its admission slot and is not silently retried', async t => {
   const f = await gatewayFixture(t, { requestTimeoutMs: 40, queueTimeoutMs: 500 });
-  f.send(1, 'start_process', { delayMs: 120 });
-  await new Promise(resolve => setTimeout(resolve, 10));
+  f.send(1, 'start_process', { barrier: 'timeout' });
   f.send(2, 'read_file');
   assert.equal((await f.response(1)).error.code, -32002);
+  const uncertain = await readCoordinatorStatus(f.config.stateDirectory);
+  assert.equal(uncertain.inflight, 1);
+  assert.equal(uncertain.uncertain, 1);
+  releaseBarrier(f, 'timeout');
   assert.equal((await f.response(2)).result.greatestActive, 1);
   assert.equal((await f.response(2)).result.ordinal, 2);
   assert.equal(f.messages.filter(message => message.id === 1).length, 1);
+  assert.equal((await readCoordinatorStatus(f.config.stateDirectory)).inflight, 0);
+});
+
+test('an exited child leaves its unresolved reservation for explicit reconciliation', async t => {
+  const f = await gatewayFixture(t);
+  f.send(1, 'read_file', { exitBeforeReply: true });
+  assert.equal((await f.response(1)).error.code, -32020);
+  await f.gateway.completed;
+  const status = await readCoordinatorStatus(f.config.stateDirectory);
+  assert.equal(status.inflight, 1);
+  assert.equal(status.uncertain, 1);
+  assert.equal(status.queued, 0);
 });
 
 test('a cancelled queued request is never dispatched and protocol discovery works while paused', async t => {

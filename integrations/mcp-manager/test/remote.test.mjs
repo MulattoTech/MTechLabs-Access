@@ -107,6 +107,10 @@ test('real SDK HTTP initialize/list/call forwards actual tools, resources, promp
   assert.equal(status.remoteMcp.clientIdentityTracked, false);
   assert.equal(status.remoteMcp.resourceSupport, true);
   assert.ok(status.remoteMcp.lastSuccessfulToolAt);
+  assert.equal(status.remoteMcp.observedClients.length, 1);
+  assert.equal(status.remoteMcp.observedClients[0].name, 'integration-test');
+  assert.equal(status.remoteMcp.observedClients[0].evidence, 'protocol-initialize');
+  assert.ok(status.remoteMcp.observedClients[0].lastInitializedAt);
 });
 
 test('remote calls preserve read-only and pause policy; protocol discovery remains available', async t => {

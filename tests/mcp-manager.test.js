@@ -203,3 +203,56 @@ test('admin and manager UI retain separate permissions, controlled refresh and n
   assert.match(client,/30000/);assert.match(client,/!document.hidden && !dirty/);assert.match(client,/maxInflight:Number/);
   assert.equal(client.includes('MCP_MANAGER_TOKEN'),false);assert.equal(client.includes('Authorization'),false);assert.equal(client.includes(ORIGIN),false);
 });
+
+test('shared scheduling, resource use and installation records retain only bounded safe evidence',()=>{
+  const raw=sample();
+  raw.resources={...raw.resources,lowDiskFloorBytes:10*1073741824,managerResidentBytes:80*1048576,managerHeapUsedBytes:20*1048576,processCommand:'SECRET'};
+  raw.limits={...raw.limits,scope:'shared-state-directory',maxInflightGlobal:2,queueCapacityGlobal:64};
+  raw.coordinator={available:true,scope:'shared-state-directory',inflight:2,queued:3,uncertain:1,queueCapacity:64,
+    clients:[{client:'claude-code',inflight:1,queued:2,uncertain:1,token:'SECRET'}],
+    recentEvents:[{time:'2026-11-06T01:00:00Z',type:'uncertain',client:'claude-code',toolName:'start_process',arguments:{command:'SECRET'},requestId:'SECRET'}],
+    databasePath:'C:\\private\\scheduler.sqlite',reason:'SECRET'};
+  raw.deployment={sourceCommit:'a'.repeat(40),installedAt:'2026-11-06T01:00:00Z',workerVersion:'e56424fb-e0a5-4710-a4c2-206fa18787c6',evidence:'installation-record',privatePath:'SECRET'};
+  raw.instances[0]={...raw.instances[0],managerVersion:'0.2.0',residentBytes:50*1048576};
+  const projected=projectManagerStatus(raw);
+  assert.equal(projected.resources.lowDiskFloorBytes,10*1073741824);assert.equal(projected.resources.managerResidentBytes,80*1048576);assert.equal(projected.resources.managerHeapUsedBytes,20*1048576);
+  assert.equal(projected.limits.maxInflightGlobal,2);assert.equal(projected.limits.scope,'shared-state-directory');
+  assert.deepEqual(projected.coordinator,{available:true,scope:'shared-state-directory',inflight:2,queued:3,uncertain:1,queueCapacity:64,
+    clients:[{client:'claude-code',inflight:1,queued:2,uncertain:1}],recentEvents:[{time:'2026-11-06T01:00:00.000Z',type:'uncertain',client:'claude-code',toolName:'start_process'}]});
+  assert.equal(projected.deployment.sourceCommit,'a'.repeat(40));assert.equal(projected.deployment.evidence,'installation-record');assert.equal(projected.instances[0].managerVersion,'0.2.0');assert.equal(projected.instances[0].residentBytes,50*1048576);
+  assert.equal(JSON.stringify(projected).includes('SECRET'),false);assert.equal(JSON.stringify(projected).includes('private'),false);
+  raw.coordinator.recentEvents[0].type='reconciled';assert.equal(projectManagerStatus(raw).coordinator.recentEvents[0].type,'reconciled');
+});
+
+test('legacy, unavailable and malformed scheduler evidence never establishes a shared healthy limit',()=>{
+  const legacy=projectManagerStatus(sample());assert.equal(legacy.coordinator,null);assert.equal(legacy.limits.maxInflightGlobal,null);assert.equal(legacy.limits.queueCapacityGlobal,null);assert.equal(legacy.limits.scope,'unknown');assert.equal(legacy.deployment,null);
+  const raw=sample();raw.limits={scope:'machine-wide',maxInflightGlobal:2,queueCapacityGlobal:64};
+  raw.coordinator={available:false,scope:'shared-state-directory',inflight:-1,queued:'0',uncertain:NaN,queueCapacity:Infinity,clients:[{client:'C:\\private',inflight:-3}],recentEvents:[{type:'SECRET',time:'invalid'}]};
+  raw.resources={managerResidentBytes:-1,managerHeapUsedBytes:'0',lowDiskFloorBytes:Infinity};
+  raw.deployment={evidence:'installation-record',sourceCommit:'malformed',workerVersion:'not-a-version',installedAt:'invalid'};
+  const projected=projectManagerStatus(raw);assert.equal(projected.limits.maxInflightGlobal,null);assert.equal(projected.coordinator.available,false);assert.equal(projected.coordinator.inflight,null);assert.equal(projected.coordinator.queued,null);assert.equal(projected.coordinator.uncertain,null);assert.equal(projected.coordinator.queueCapacity,null);assert.deepEqual(projected.coordinator.clients,[]);assert.deepEqual(projected.coordinator.recentEvents,[]);
+  assert.equal(projected.resources.managerResidentBytes,null);assert.equal(projected.resources.managerHeapUsedBytes,null);assert.equal(projected.resources.lowDiskFloorBytes,null);assert.equal(projected.deployment.sourceCommit,null);assert.equal(projected.deployment.workerVersion,null);assert.equal(projected.deployment.installedAt,null);
+  raw.deployment.evidence='live-cloudflare-check';assert.equal(projectManagerStatus(raw).deployment,null);
+  raw.coordinator={...raw.coordinator,inflight:0,queued:0,uncertain:0,queueCapacity:64};
+  const unavailable=projectManagerStatus(raw).coordinator;assert.equal(unavailable.inflight,null);assert.equal(unavailable.queued,null);assert.equal(unavailable.uncertain,null);assert.equal(unavailable.queueCapacity,64);
+  raw.coordinator.available=true;assert.equal(projectManagerStatus(raw).coordinator.clients[0].client,'unknown');
+});
+
+test('remote client labels prove only protocol initialization and discard arbitrary identity fields',()=>{
+  const raw=sample();raw.remoteMcp={state:'ready',clientIdentityTracked:true,observedClients:[
+    {name:'ChatGPT',version:'1.0.0',lastInitializedAt:'2026-11-06T01:00:00Z',evidence:'protocol-initialize',email:'SECRET',oauthConnected:true},
+    {name:'<script>SECRET</script>',version:'1.0.0',evidence:'protocol-initialize'},
+    {name:'Claude',version:'SECRET/path',lastInitializedAt:'not-a-date',evidence:'protocol-initialize'},
+    {name:'Fake OAuth account',evidence:'verified-login'},
+  ]};
+  const remote=projectManagerStatus(raw).remoteMcp;
+  assert.equal(remote.clientIdentityTracked,false);
+  assert.deepEqual(remote.observedClients,[{name:'ChatGPT',version:'1.0.0',lastInitializedAt:'2026-11-06T01:00:00.000Z',evidence:'protocol-initialize'},{name:'Claude',version:null,lastInitializedAt:null,evidence:'protocol-initialize'}]);
+  assert.equal(JSON.stringify(remote).includes('SECRET'),false);assert.equal(Object.hasOwn(remote.observedClients[0],'oauthConnected'),false);
+});
+
+test('scheduler and initialization histories are bounded before browser projection',()=>{
+  const raw=sample();raw.coordinator={available:true,scope:'shared-state-directory',clients:Array.from({length:100},()=>({client:'local',inflight:0,queued:0,uncertain:0})),recentEvents:Array.from({length:150},()=>({time:'2026-11-06T01:00:00Z',type:'queued',client:'local',toolName:'read_file'}))};
+  raw.remoteMcp={observedClients:Array.from({length:20},()=>({name:'Test client',version:'1',lastInitializedAt:'2026-11-06T01:00:00Z',evidence:'protocol-initialize'}))};
+  const projected=projectManagerStatus(raw);assert.equal(projected.coordinator.clients.length,64);assert.equal(projected.coordinator.recentEvents.length,100);assert.equal(projected.remoteMcp.observedClients.length,8);
+});

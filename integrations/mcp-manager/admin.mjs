@@ -85,7 +85,10 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
           request.resume();
           return failure(response, 400, 'invalid_policy', 'Send exactly enabled, readOnly, and maxInflight (1 or 2) as JSON.');
         }
-        const write = writeChain.then(() => atomicWriteJson(config.policyPath, policy));
+        // Older gateways reject the additional persisted field, so an upgrade
+        // cannot leave an already-loaded per-instance scheduler admitting new
+        // work outside the shared coordinator. The external API stays three fields.
+        const write = writeChain.then(() => atomicWriteJson(config.policyPath, { ...policy, coordinationVersion: 1 }));
         writeChain = write.catch(() => {});
         try {
           await write;

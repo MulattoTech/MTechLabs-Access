@@ -14,6 +14,8 @@ const POLICY_DENIALS = new Map([
   [-32013, 'The managed request capacity is full. This request was not executed.'],
   [-32014, 'Managed policy is unavailable or invalid. This request was not executed.'],
   [-32016, 'The queued request expired before execution.'],
+  [-32017, 'Shared admission coordination is unavailable. This request was not executed.'],
+  [-32018, 'Available installation-volume disk space is below the admission threshold or could not be verified. This request was not executed.'],
   [-32800, 'The request was cancelled before execution.'],
 ]);
 
@@ -64,6 +66,7 @@ export function createRemoteMcp(config, {
   let lastToolListCount = null;
   let lastSuccessfulRequestAt = null;
   let lastSuccessfulToolAt = null;
+  const observedClients = new Map();
 
   function status() {
     return {
@@ -75,6 +78,7 @@ export function createRemoteMcp(config, {
       clientIdentityTracked: false,
       resourceSupport: backend ? Boolean(backend.capabilities.resources) : null,
       promptSupport: backend ? Boolean(backend.capabilities.prompts) : null,
+      observedClients: [...observedClients.values()],
     };
   }
 
@@ -166,7 +170,7 @@ export function createRemoteMcp(config, {
     try {
       const result = await operation();
       lastSuccessfulRequestAt = new Date().toISOString();
-      if (toolName) lastSuccessfulToolAt = lastSuccessfulRequestAt;
+      if (toolName && result?.isError !== true) lastSuccessfulToolAt = lastSuccessfulRequestAt;
       if (MAY_START_BACKGROUND_WORK.has(toolName)) mayHaveDetachedJobs = true;
       return result;
     } catch (cause) {
@@ -249,6 +253,19 @@ export function createRemoteMcp(config, {
       });
       await transport.handleRequest(request, response, body);
       await finished;
+      // Initialize reports a client label, not an identity or an OAuth grant.
+      // Keep a bounded, sanitized observation so the dashboard can distinguish
+      // a configured connection from a client that actually reached the bridge.
+      if (body.method === 'initialize' && response.statusCode === 200) {
+        const info = server.getClientVersion();
+        if (info && typeof info.name === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9 _.@()-]{0,79}$/.test(info.name)) {
+          const version = typeof info.version === 'string' && /^[a-zA-Z0-9_.+-]{1,40}$/.test(info.version) ? info.version : null;
+          const key = info.name + ':' + (version ?? 'unknown');
+          observedClients.delete(key);
+          observedClients.set(key, { name: info.name, version, lastInitializedAt: new Date().toISOString(), evidence: 'protocol-initialize' });
+          if (observedClients.size > 8) observedClients.delete(observedClients.keys().next().value);
+        }
+      }
     } catch {
       failure(response, 503, -32020, 'The local MCP bridge is unavailable. No automatic tool retry was attempted.');
     } finally {
