@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { checkToolPolicy, validatePolicy, atomicWriteJson, readPolicy, READ_ONLY_TOOLS } from '../lib/policy.mjs';
+import { checkToolPolicy, validatePolicy, atomicWriteJson, readPolicy, readPolicySync, READ_ONLY_TOOLS, RESOURCE_GATED_TOOLS } from '../lib/policy.mjs';
 import { createLineFramer } from '../lib/framing.mjs';
 import { loadConfig } from '../lib/config.mjs';
 import { fixture } from './helpers.mjs';
@@ -40,6 +40,35 @@ test('pause and low-memory admission never claim to stop existing commands', () 
   assert.equal(checkToolPolicy(policy, 'read_file', {}, resources), null);
 });
 
+test('heavy tools require measured memory and disk above both floors', () => {
+  const policy = { enabled: true, readOnly: false, maxInflight: 1 };
+  const resources = { freeMemoryBytes: 300, lowMemoryFloorBytes: 200, freeDiskBytes: 600, lowDiskFloorBytes: 500 };
+  for (const name of RESOURCE_GATED_TOOLS) {
+    assert.equal(checkToolPolicy(policy, name, {}, resources), null, name);
+    assert.equal(checkToolPolicy(policy, name, {}, { ...resources, freeMemoryBytes: undefined }).code, -32012, name);
+    assert.equal(checkToolPolicy(policy, name, {}, { ...resources, freeMemoryBytes: 100 }).code, -32012, name);
+    assert.equal(checkToolPolicy(policy, name, {}, { ...resources, freeDiskBytes: NaN }).code, -32018, name);
+    assert.equal(checkToolPolicy(policy, name, {}, { ...resources, freeDiskBytes: 100 }).code, -32018, name);
+  }
+  assert.equal(checkToolPolicy(policy, 'read_file', {}, {}), null);
+});
+
+test('stored coordination marker fences legacy readers without widening public policy', async t => {
+  const { config } = await fixture(t);
+  const publicPolicy = { enabled: true, readOnly: true, maxInflight: 2 };
+  await atomicWriteJson(config.policyPath, { ...publicPolicy, coordinationVersion: 1 });
+  assert.deepEqual(await readPolicy(config.policyPath), publicPolicy);
+  assert.deepEqual(readPolicySync(config.policyPath), publicPolicy);
+  assert.throws(() => validatePolicy({ ...publicPolicy, coordinationVersion: 1 }), /invalid_policy/);
+  for (const coordinationVersion of [0, 2, '1', null]) {
+    await atomicWriteJson(config.policyPath, { ...publicPolicy, coordinationVersion });
+    await assert.rejects(readPolicy(config.policyPath), /invalid_policy/);
+    assert.throws(() => readPolicySync(config.policyPath), /invalid_policy/);
+  }
+  await atomicWriteJson(config.policyPath, { ...publicPolicy, coordinationVersion: 1, extra: true });
+  await assert.rejects(readPolicy(config.policyPath), /invalid_policy/);
+});
+
 test('atomic policy replacement preserves unrelated files and rejects symlinks', async t => {
   const { config, directory } = await fixture(t);
   const unrelated = path.join(directory, 'existing-client-config.json');
@@ -73,6 +102,14 @@ test('configuration requires absolute distinct paths and known fields', async t 
   const configPath = path.join(directory, 'manager.json');
   await fs.writeFile(configPath, JSON.stringify(config));
   assert.equal((await loadConfig(configPath)).minimumFreeMemoryMiB, 256);
+  assert.equal((await loadConfig(configPath)).minimumFreeDiskMiB, 256);
+  const { minimumFreeDiskMiB, ...legacyConfig } = config;
+  await fs.writeFile(configPath, JSON.stringify(legacyConfig));
+  assert.equal((await loadConfig(configPath)).minimumFreeDiskMiB, 10240);
+  for (const floor of [0, 255, 1048577, 256.5, '10240']) {
+    await fs.writeFile(configPath, JSON.stringify({ ...config, minimumFreeDiskMiB: floor }));
+    await assert.rejects(loadConfig(configPath), /invalid_config/);
+  }
   await fs.writeFile(configPath, JSON.stringify({ ...config, tokenPath: config.policyPath }));
   await assert.rejects(loadConfig(configPath), /overlapping_config_paths/);
   await fs.writeFile(configPath, JSON.stringify({ ...config, arbitraryCommand: 'not-supported' }));

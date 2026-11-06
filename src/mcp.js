@@ -42,6 +42,9 @@ export function projectManagerStatus(value) {
   const runtime=object(value.runtime)?value.runtime:{},resources=object(value.resources)?value.resources:{};
   const limits=object(value.limits)?value.limits:{},inventory=object(value.inventory)?value.inventory:{};
   const remote=object(value.remoteMcp)?value.remoteMcp:null;
+  const coordinator=object(value.coordinator)?value.coordinator:null;
+  const coordinatorAvailable=coordinator?.available===true&&coordinator.scope==='shared-state-directory';
+  const deployment=object(value.deployment)&&value.deployment.evidence==='installation-record'?value.deployment:null;
   const policy=projectedPolicy(value.policy);
   const version=value=>typeof value==='string' && /^v?\d[0-9A-Za-z.+-]{0,63}$/.test(value)?value:null;
   return {
@@ -49,14 +52,38 @@ export function projectManagerStatus(value) {
     service:{name:'M-TechLabs MCP Manager',version:version(value.service.version),state:'running',uptimeSeconds:count(value.service.uptimeSeconds)},
     policy,policyValid:value.policyValid===true && policy!==null,
     runtime:{nodeVersion:version(runtime.nodeVersion),packageVersion:version(runtime.packageVersion),installed:bool(runtime.installed)},
+    deployment:deployment?{
+      sourceCommit:typeof deployment.sourceCommit==='string'&&/^[a-f0-9]{40}$/.test(deployment.sourceCommit)?deployment.sourceCommit:null,
+      installedAt:date(deployment.installedAt),
+      workerVersion:typeof deployment.workerVersion==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(deployment.workerVersion)?deployment.workerVersion:null,
+      evidence:'installation-record',
+    }:null,
     resources:{freeMemoryBytes:count(resources.freeMemoryBytes),totalMemoryBytes:count(resources.totalMemoryBytes),
       lowMemoryFloorBytes:count(resources.lowMemoryFloorBytes),admissionOpen:bool(resources.admissionOpen),
+      lowDiskFloorBytes:count(resources.lowDiskFloorBytes),managerResidentBytes:count(resources.managerResidentBytes),managerHeapUsedBytes:count(resources.managerHeapUsedBytes),
       disk:object(resources.disk)?{freeBytes:count(resources.disk.freeBytes),totalBytes:count(resources.disk.totalBytes)}:null},
-    limits:{maxInflightPerInstance:[1,2].includes(limits.maxInflightPerInstance)?limits.maxInflightPerInstance:null,
+    limits:{scope:choice(limits.scope,['shared-state-directory']),
+      maxInflightGlobal:limits.scope==='shared-state-directory'&&[1,2].includes(limits.maxInflightGlobal)?limits.maxInflightGlobal:null,
+      queueCapacityGlobal:limits.scope==='shared-state-directory'?count(limits.queueCapacityGlobal):null,
+      maxInflightPerInstance:[1,2].includes(limits.maxInflightPerInstance)?limits.maxInflightPerInstance:null,
       queueCapacityPerInstance:count(limits.queueCapacityPerInstance),detachedJobsCapped:bool(limits.detachedJobsCapped)},
+    coordinator:coordinator?{
+      available:bool(coordinator.available),scope:choice(coordinator.scope,['shared-state-directory']),
+      inflight:coordinatorAvailable?count(coordinator.inflight):null,queued:coordinatorAvailable?count(coordinator.queued):null,
+      uncertain:coordinatorAvailable?count(coordinator.uncertain):null,queueCapacity:count(coordinator.queueCapacity),
+      clients:(coordinatorAvailable&&Array.isArray(coordinator.clients)?coordinator.clients:[]).slice(0,64).filter(object).map(item=>({
+        client:typeof item.client==='string'&&/^[a-zA-Z0-9_.-]{1,80}$/.test(item.client)?item.client:'unknown',inflight:count(item.inflight),queued:count(item.queued),uncertain:count(item.uncertain),
+      })),
+      recentEvents:(coordinatorAvailable&&Array.isArray(coordinator.recentEvents)?coordinator.recentEvents:[]).slice(0,100).filter(item=>object(item)&&['queued','admitted','completed','cancelled','expired','rejected','uncertain','orphaned','reconciled'].includes(item.type)).map(item=>({
+        time:date(item.time),type:item.type,
+        client:typeof item.client==='string'&&/^[a-zA-Z0-9_.-]{1,80}$/.test(item.client)?item.client:'unknown',
+        toolName:typeof item.toolName==='string'&&/^[a-zA-Z0-9_.:-]{1,100}$/.test(item.toolName)?item.toolName:null,
+      })),
+    }:null,
     instances:(Array.isArray(value.instances)?value.instances:[]).slice(0,64).filter(object).map(item=>({
       id:text(item.id,80),client:text(item.client,80),state:choice(item.state,['active','stale']),
       startedAt:date(item.startedAt),lastSeenAt:date(item.lastSeenAt),inflight:count(item.inflight),queued:count(item.queued),initialized:bool(item.initialized),
+      managerVersion:version(item.managerVersion),residentBytes:count(item.residentBytes),
     })),
     inventory:{generatedAt:date(inventory.generatedAt),entries:(Array.isArray(inventory.entries)?inventory.entries:[]).slice(0,100).filter(object).map(item=>({
       id:text(item.id,80),name:text(item.name,100),client:text(item.client,80),transport:choice(item.transport,['stdio','http','unknown']),
@@ -73,6 +100,10 @@ export function projectManagerStatus(value) {
       lastToolListCount:count(remote.lastToolListCount),lastSuccessfulRequestAt:date(remote.lastSuccessfulRequestAt),
       lastSuccessfulToolAt:date(remote.lastSuccessfulToolAt),clientIdentityTracked:false,
       resourceSupport:bool(remote.resourceSupport),promptSupport:bool(remote.promptSupport),
+      observedClients:(Array.isArray(remote.observedClients)?remote.observedClients:[]).slice(0,8).filter(item=>object(item)&&item.evidence==='protocol-initialize'&&typeof item.name==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9 _.@()-]{0,79}$/.test(item.name)).map(item=>({
+        name:item.name,version:typeof item.version==='string'&&/^[a-zA-Z0-9_.+-]{1,40}$/.test(item.version)?item.version:null,
+        lastInitializedAt:date(item.lastInitializedAt),evidence:'protocol-initialize',
+      })),
     }:null,
     // Diagnostic text may contain paths/command arguments. Keep counts only;
     // detailed diagnostics remain on the owner's PC.

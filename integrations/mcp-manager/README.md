@@ -28,13 +28,21 @@ origin. It does not create or rotate hosted accounts.
 - The explicit read-only allowlist is in lib/policy.mjs. It includes local file
   reads, directory/file metadata, existing session/output/search result reads,
   and usage statistics. Remote-URL file reads are denied in read-only mode.
-- The request limit is per gateway instance, not a global PC budget. It counts
-  in-flight requests, not running or detached commands. Queue capacity is 16.
+- The request limit is global across managed gateways sharing the same private
+  state directory. It counts in-flight requests, not running or detached
+  commands. The shared queue accepts 64 waiting tickets globally and 16 per
+  client label. Each gateway also bounds its local pending buffer at 16,
+  including requests awaiting registration during brief database contention.
+  Admission is FIFO within a label and round robin between waiting labels.
   A native command may keep running after Desktop Commander returns a response.
-- Low available physical memory blocks admission of start_process/start_search.
+- Low available physical memory or low/unverifiable installation-volume disk
+  space blocks admission of start_process, start_search, interact_with_process, and write_pdf.
   It does not kill existing work and is not a hard memory, CPU, or GPU cap.
 - A tool response timeout does not kill or retry the operation. Its admission
-  slot remains held until the upstream reply arrives or that child exits.
+  slot remains held until a definitive upstream reply arrives. Abandoned active
+  permits remain uncertain and block replacement work; inspect their outcome
+  before recovery using the local recover-admission.mjs helper documented in RUNBOOK.md. Neither a timeout nor an expired heartbeat is proof that a
+  command stopped.
 - Policy changes affect subsequent/queued calls, never terminate live commands.
 - There is no global process kill, arbitrary administration shell API, package
   installer, or account-authentication endpoint in this service. Authorized MCP
@@ -54,8 +62,9 @@ connection that is still in use. Browser login must be verified separately.
 ## Paths and installation
 
 Verified upstream stable release when implemented: Desktop Commander 0.3.1.
-Its package engines require Node >=22.12.0. Verify the installed Node and npm
-metadata before installation; marketing pages may state an older Node minimum.
+The upstream package requires Node >=22.12.0; manager 0.2.0 requires **Node 24
+or later** for its built-in SQLite admission coordinator. Verify installed Node
+and npm metadata before installation. No separate database service is needed.
 
 The intended deployment layout is:
 
@@ -67,7 +76,9 @@ Paths are examples, not auto-created global settings. Copy example-config.json
 to the chosen state location and replace nodePath and package paths with verified
 absolute paths. Config accepts exactly its documented fields; policy/inventory
 and token paths must be distinct. minimumFreeMemoryMiB defaults to 4096 and can
-be 256..65536. No environment home-directory overrides are used.
+be 256..65536. minimumFreeDiskMiB defaults to 10240. These floors apply to new
+heavy-tool admission on the state volume, not every output path or the eventual allocation of running commands. No
+environment home-directory overrides are used.
 
 The upstream 0.3.1 source does not expose an alternate config/log-root setting.
 Its native configuration and local logs remain under:
@@ -85,6 +96,12 @@ their growth and review any retention plan separately. Do not erase existing log
 Create policy.json from policy.example.json. Initial safe policy:
 
     {"enabled":true,"readOnly":true,"maxInflight":1}
+
+Manager policy writes also persist `coordinationVersion:1`. The external API
+continues accepting exactly the three policy controls above. A previously loaded
+0.1.0 gateway rejects this marker and stops admitting new work until its client
+is reopened; active commands are not killed. This prevents an old per-instance
+gateway from silently bypassing the shared limit after an update.
 
 Create inventory.json from actual nonsecret client configuration metadata using
 inventory.example.json as the schema. Set configured/tested true only after the
@@ -172,7 +189,8 @@ origin management endpoints in a tool manifest.
 Remote transport is stateless Streamable HTTP with JSON responses. POST handles
 one JSON-RPC message; GET/DELETE return 405 (no persistent SSE stream or MCP
 session). Bodies are capped at 1 MiB and HTTP concurrency at eight requests.
-The underlying gateway still enforces maxInflight 1..2 and its bounded queue.
+The gateway participates in the shared maxInflight 1..2 budget and bounded
+queue with native clients.
 No tool call is automatically retried. Cancellation across separate stateless
 requests, progress streaming, subscriptions, sampling, and task APIs are not
 advertised or implemented. HTTP disconnect does not kill a tool or prove that
@@ -245,19 +263,34 @@ restart or new session creation may be needed; do not kill unrelated sessions.
 ## Status contract
 
 The UI gets schemaVersion:1 plus service, policy, policyValid, runtime,
-resources, limits, instances, inventory, boundaries, warnings, and remoteMcp.
+resources, limits, coordinator, instances, inventory, deployment, boundaries,
+warnings, and remoteMcp.
 
 runtime exposes only Node version, verified package version, and installation
 presence. resources contains available/total physical memory, the configured
-launch-admission threshold, and free/total bytes of the state volume if readable.
-admissionOpen refers to process/search launch admission, not permission for all
+memory/disk launch-admission thresholds, manager RSS/heap, and free/total bytes
+of the state volume if readable. Deployment includes only a recorded source
+commit, installation time and Worker version; it does not expose local paths.
+admissionOpen refers to heavy-tool admission, not permission for all
 safe reads. There is no fabricated CPU hard cap or GPU utilization value.
 
 instances are sanitized heartbeat records of wrappers launched by this code:
 id, client, active/stale state, timestamps, request/queue counts, and successful
-MCP initialization state. A heartbeat older than 45 seconds is stale; it is not
+MCP initialization state, manager version, and gateway RSS. A heartbeat older
+than 45 seconds is stale; it is not
 auto-killed. On clean exit a wrapper removes only its own UUID metadata file.
 No existing process or unrelated file is deleted.
+
+The coordinator uses transactional SQLite in WAL mode with full durability on
+the local private state volume to
+serialize admission across independent gateway processes. Global queue counts,
+active permits and uncertain permits are reported separately. It does not
+retry an uncertain request, reclaim active work just because a heartbeat is
+old, or impose an OS process/memory limit. Confirmed rolled-back lock contention
+retries admission bookkeeping only; it never repeats an executed tool call.
+Keep the database and any WAL/shared-memory sidecars together. Use an offline
+backup after gateway connections have closed; copying only a live main database
+file is not a complete backup. Network-shared state directories are unsupported.
 
 Inventory labels are bounded and sanitize away raw paths/URLs. Its connection
 is unknown unless a matching managed client has a fresh initialized heartbeat.
@@ -287,7 +320,9 @@ remoteMcp contains only sanitized protocol/service observations:
 state is idle, starting, ready, closing, unavailable, or stopped. The tool count
 is the most recent tools/list page, not an inferred total across pagination.
 Timestamps prove only an origin operation succeeded, not which browser account
-logged in. Client identity and OAuth evidence belong to the edge authentication
+logged in. A bounded observedClients list records sanitized client-reported
+initialize labels only; it is not a live account/session list. Client identity
+and OAuth evidence belong to the edge authentication
 layer and must not be inferred from an initialized shared backend.
 
 ## Tests and rollback
@@ -302,7 +337,8 @@ duplicate package tree. Do not copy node_modules or test state into the runtime.
 Tests use temporary fixtures and fake local stdio children with the real SDK.
 They cover
 authentication, Host/Origin rejection, policy validation, secret minimization,
-read-only/paused/low-memory admission, request concurrency and queue limits,
+read-only/paused/low-memory/low-disk admission, shared request concurrency and
+queue limits,
 framing, timeouts without retry, preservation of unrelated files, real HTTP MCP
 initialize/list/call, resource/prompt/UI metadata forwarding, lazy idle shutdown,
 bounded HTTP requests, unavailable SDK, and safe handling of unsupported UI.

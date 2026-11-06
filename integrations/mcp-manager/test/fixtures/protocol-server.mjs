@@ -52,7 +52,7 @@ export function startProtocolFixture({ resources = true, initializationDelayMs =
           name: params.name, echo: params.arguments?.echo ?? null,
           greatestActive, ordinal: callOrdinal,
         }) }],
-        isError: false,
+        isError: params.arguments?.returnToolError === true,
       });
     }, params.arguments?.delayMs ?? 0);
   });

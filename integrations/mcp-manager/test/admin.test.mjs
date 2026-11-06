@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import http from 'node:http';
+import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { createAdminServer, loadTokenDigest } from '../admin.mjs';
 import { fixture, TEST_TOKEN } from './helpers.mjs';
@@ -74,6 +75,20 @@ test('status is sanitized and distinguishes configured inventory from a live con
   assert.equal(result.headers['cache-control'], 'no-store');
   await fs.writeFile(f.config.policyPath, JSON.stringify({ enabled: true, readOnly: true, maxInflight: 1 }));
   assert.equal((await f.request()).body.resources.admissionOpen, false);
+  assert.ok(result.body.resources.managerResidentBytes > 0);
+  assert.ok(result.body.resources.managerHeapUsedBytes > 0);
+  assert.equal(result.body.deployment, null);
+  await fs.writeFile(path.join(f.config.stateDirectory, 'deployment.json'), JSON.stringify({
+    sourceCommit: 'a'.repeat(40), completedAt: '2026-11-06T04:00:00.000Z',
+    cloudflare: { version: '12345678-1234-1234-1234-123456789abc', credential: TEST_TOKEN },
+    sourceManifest: { privatePath: f.config.tokenPath },
+  }));
+  const deployed = await f.request();
+  assert.deepEqual(deployed.body.deployment, {
+    sourceCommit: 'a'.repeat(40), installedAt: '2026-11-06T04:00:00.000Z',
+    workerVersion: '12345678-1234-1234-1234-123456789abc', evidence: 'installation-record',
+  });
+  assert.doesNotMatch(deployed.text, /test-bearer|privatePath|credential/);
 });
 
 test('policy writes require exact validated fields and cannot mutate unrelated configuration', async t => {

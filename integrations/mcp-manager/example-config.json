@@ -7,5 +7,6 @@
   "policyPath": "H:\\MTechLabs\\MCP\\state\\policy.json",
   "tokenPath": "H:\\MTechLabs\\MCP\\state\\admin-token.sha256",
   "inventoryPath": "H:\\MTechLabs\\MCP\\state\\inventory.json",
-  "minimumFreeMemoryMiB": 4096
+  "minimumFreeMemoryMiB": 4096,
+  "minimumFreeDiskMiB": 10240
 }
