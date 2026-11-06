@@ -7,7 +7,19 @@ const bool=value=>value===true?'Yes':value===false?'No':'Unknown';
 const memory=value=>typeof value==='number'?(value<1073741824?(value/1048576).toFixed(1)+' MiB':(value/1073741824).toFixed(1)+' GiB'):'Unknown';
 const amount=value=>Number.isInteger(value)?String(value):'Unknown';
 const metric=(label,value)=>`<dt>${esc(label)}</dt><dd>${esc(value)}</dd>`;
-const shared=status=>status?.limits?.scope==='shared-state-directory'&&[1,2].includes(status.limits.maxInflightGlobal);
+const shared=status=>status?.limits?.scope==='shared-state-directory'&&Number.isInteger(status.limits.maxInflightGlobal)&&status.limits.maxInflightGlobal>=1&&status.limits.maxInflightGlobal<=64;
+function updateConcurrencyPreview(){
+  const value=Number($('#mcp-inflight').value);
+  $('#mcp-inflight-value').textContent=Number.isInteger(value)?String(value):'—';
+  document.querySelectorAll('[data-mcp-capacity]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.mcpCapacity)===value)));
+  const warning=$('#mcp-capacity-warning');
+  const oldGateways=(snapshot?.status?.instances||[]).filter(item=>item.state==='active'&&item.managerVersion!==snapshot?.status?.service?.version).length;
+  const upgradeWarning=value>2&&oldGateways?`Reconnect ${oldGateways} active older gateway(s) before saving above 2, or those clients may reject new tools. `:'';
+  const resourceWarning=value>=32?'High parallelism: CPU, disk and detached jobs are not capped. RAM/disk checks protect admission only; lower this if your PC becomes sluggish.':value>=16?'More simultaneous calls can increase CPU and disk pressure. Detached commands may continue after their tool calls complete.':'Lower concurrency keeps your PC more responsive. Connected chats do not consume a slot until they call a tool.';
+  warning.textContent=upgradeWarning+resourceWarning;
+  warning.classList.toggle('is-high',value>=32||Boolean(upgradeWarning));
+}
+function markPolicyDirty(){dirty=true;$('#mcp-policy-state').textContent='Unsaved edits. Background refresh is paused.';$('#mcp-policy-state').classList.add('mcp-policy-dirty');}
 function notice(message,error=false,kind='policy'){const node=$('#mcp-notice');node.textContent=message;node.classList.remove('hidden');node.classList.toggle('error',error);noticeKind=kind;}
 async function api(path,body){const response=await fetch('/admin/mcp/api'+path,body===undefined?{cache:'no-store'}:{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':csrf||''},body:JSON.stringify(body),cache:'no-store'});const value=await response.json();if(!response.ok)throw Error(value.error||'The request could not be completed.');return value;}
 function evidence(label,state,detail){return `<article><h3>${esc(label)}</h3><span class="mcp-state" data-state="${state===true?'yes':state===false?'no':'unknown'}">${state===true?'Verified':state===false?'Not verified':'Unknown'}</span><p class="small muted">${esc(detail)}</p></article>`;}
@@ -51,6 +63,7 @@ function render(){
     evidence('Recorded client tests',entries.length?tested>0:null,entries.length?`${tested} of ${entries.length} inventory entries have recorded passing tests. These do not verify current browser sign-in.`:'No client test evidence has been returned.');
   $('#mcp-policy-fields').disabled=busy||!value?.connected||!status?.policyValid;
   if(!dirty&&status?.policy){$('#mcp-enabled').checked=status.policy.enabled;$('#mcp-readonly').checked=status.policy.readOnly;$('#mcp-inflight').value=String(status.policy.maxInflight);}
+  updateConcurrencyPreview();
   $('#mcp-inflight-label').textContent=isShared?'Simultaneous tool calls across enrolled gateways':'Simultaneous tool calls per managed instance (legacy)';
   $('#mcp-policy-scope').textContent=isShared?'The shared limit applies across upgraded local clients and the remote bridge. It does not cap CPU use or detached background jobs.':'Shared coordination is not verified. This older status reports only per-instance limits; it does not establish a combined request cap.';
   $('#mcp-policy-state').textContent=dirty?'Unsaved edits. Background refresh is paused.':!value?.connected?'Policy is unavailable. Refresh status before sending or retrying a change.':!status?.policyValid?'Local policy is invalid. Repair it on the PC before making changes here.':`Current policy: ${status.policy.enabled?(isShared&&status.coordinator?.available!==true?'enabled, execution blocked until shared admission is verified':'accepting new calls'):'paused'}, ${status.policy.readOnly?'read-only tools':'write-capable tools'}, up to ${status.policy.maxInflight} concurrent call(s) ${isShared?'across enrolled gateways':'per instance (legacy)'}.`;
@@ -68,9 +81,17 @@ function render(){
 async function refresh(){if(busy)return;busy=true;$('#mcp-refresh').disabled=true;try{snapshot=await api('/status');csrf=snapshot.csrf;if(!snapshot.connected)notice(snapshot.configured?'Local manager is unavailable. Policy state could not be verified; check its PC service and private route before retrying.':'Private manager connection is not configured. Status is unavailable and controls are disabled.',true,'connection');else if(noticeKind==='connection'){$('#mcp-notice').classList.add('hidden');noticeKind=null;}}catch(error){snapshot=null;csrf=null;notice(error.message,true,'connection');}finally{busy=false;$('#mcp-refresh').disabled=false;render();}}
 $('#mcp-refresh').addEventListener('click',()=>refresh());
 $('#mcp-copy-endpoint').addEventListener('click',async()=>{const input=$('#mcp-endpoint');try{await navigator.clipboard.writeText(input.value);notice('Endpoint URL copied. Complete OAuth owner sign-in separately in each AI client.');}catch{input.focus();input.select();notice('Select and copy the endpoint URL, then complete owner sign-in separately in each AI client.');}});
-$('#mcp-policy').addEventListener('change',()=>{dirty=true;$('#mcp-policy-state').textContent='Unsaved edits. Background refresh is paused.';$('#mcp-policy-state').classList.add('mcp-policy-dirty');});
+$('#mcp-policy').addEventListener('change',markPolicyDirty);
+$('#mcp-inflight').addEventListener('input',()=>{updateConcurrencyPreview();markPolicyDirty();});
+document.querySelectorAll('[data-mcp-capacity]').forEach(button=>button.addEventListener('click',()=>{
+  $('#mcp-inflight').value=button.dataset.mcpCapacity;
+  updateConcurrencyPreview();
+  markPolicyDirty();
+}));
 $('#mcp-policy').addEventListener('submit',async event=>{event.preventDefault();if(busy||!csrf||!snapshot?.connected||!snapshot.status?.policyValid)return;
   const policy={enabled:$('#mcp-enabled').checked,readOnly:$('#mcp-readonly').checked,maxInflight:Number($('#mcp-inflight').value)};
+  const oldGateways=(snapshot.status.instances||[]).filter(item=>item.state==='active'&&item.managerVersion!==snapshot.status.service?.version).length;
+  if(policy.maxInflight>2&&oldGateways&&!confirm(`${oldGateways} older gateway(s) are still active. They may reject tool calls after raising the limit above 2 until their Codex/Claude sessions are reopened. Continue anyway?`))return;
   if(!policy.readOnly&&snapshot.status.policy.readOnly&&!confirm('Allow write-capable tools in managed local Desktop Commander clients? This can permit file changes and terminal commands within their existing local permissions. Hosted and unmanaged clients are unaffected.'))return;
   busy=true;$('#mcp-policy-fields').disabled=true;$('#mcp-refresh').disabled=true;
   try{await api('/policy',policy);dirty=false;notice('Policy verified by the local manager. It applies to new managed tool calls; running commands were not interrupted.');}

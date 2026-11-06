@@ -7,13 +7,15 @@ import { createLineFramer } from '../lib/framing.mjs';
 import { loadConfig } from '../lib/config.mjs';
 import { fixture } from './helpers.mjs';
 
-test('policy requires exactly three typed fields and a 1..2 request limit', () => {
+test('policy requires exactly three typed fields and a 1..64 request limit', () => {
   assert.deepEqual(validatePolicy({ enabled: true, readOnly: true, maxInflight: 1 }),
     { enabled: true, readOnly: true, maxInflight: 1 });
+  assert.equal(validatePolicy({ enabled: true, readOnly: false, maxInflight: 64 }).maxInflight, 64);
+  assert.equal(validatePolicy({ enabled: true, readOnly: false, maxInflight: 32 }).maxInflight, 32);
   for (const value of [
     null, [], {}, { enabled: 'true', readOnly: true, maxInflight: 1 },
     { enabled: true, readOnly: true, maxInflight: 0 },
-    { enabled: true, readOnly: true, maxInflight: 3 },
+    { enabled: true, readOnly: true, maxInflight: 65 },
     { enabled: true, readOnly: true, maxInflight: 1.5 },
     { enabled: true, readOnly: true, maxInflight: 1, command: 'extra' },
   ]) assert.throws(() => validatePolicy(value), /invalid_policy/);

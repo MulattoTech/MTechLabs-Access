@@ -4,8 +4,8 @@ import { DatabaseSync } from 'node:sqlite';
 import { setTimeout as delay } from 'node:timers/promises';
 import { readPolicySync } from './policy.mjs';
 
-export const GLOBAL_QUEUE_CAPACITY = 64;
-export const CLIENT_QUEUE_CAPACITY = 16;
+export const GLOBAL_QUEUE_CAPACITY = 128;
+export const CLIENT_QUEUE_CAPACITY = 64;
 const EVENT_CAPACITY = 100;
 const MAX_DATABASE_BYTES = 16 * 1024 * 1024;
 const IDENTIFIER = /^[a-zA-Z0-9_.-]{1,100}$/;

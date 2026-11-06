@@ -62,7 +62,7 @@ connection that is still in use. Browser login must be verified separately.
 ## Paths and installation
 
 Verified upstream stable release when implemented: Desktop Commander 0.3.1.
-The upstream package requires Node >=22.12.0; manager 0.2.0 requires **Node 24
+The upstream package requires Node >=22.12.0; manager 0.3.0 requires **Node 24
 or later** for its built-in SQLite admission coordinator. Verify installed Node
 and npm metadata before installation. No separate database service is needed.
 
@@ -148,7 +148,8 @@ Supported endpoints:
     POST /v1/policy
     POST /mcp
 
-POST accepts exactly enabled:boolean, readOnly:boolean, maxInflight:1|2.
+POST accepts exactly enabled:boolean, readOnly:boolean, maxInflight:integer 1..64.
+The owner dashboard provides an immediate slider preview and quick presets (4, 8, 16, 32, 64). Choose **32 · Fleet** for roughly 30 concurrent tool calls, then press **Save policy**; the manager confirms the applied change. This is a shared *in-flight tool request* budget, not a chat count, CPU quota, or background-process cap.
 It writes the policy atomically and returns:
 
     {
@@ -188,9 +189,15 @@ origin management endpoints in a tool manifest.
 
 Remote transport is stateless Streamable HTTP with JSON responses. POST handles
 one JSON-RPC message; GET/DELETE return 405 (no persistent SSE stream or MCP
-session). Bodies are capped at 1 MiB and HTTP concurrency at eight requests.
-The gateway participates in the shared maxInflight 1..2 budget and bounded
-queue with native clients.
+session). Bodies are capped at 1 MiB and HTTP concurrency at 64 requests.
+The gateway participates in the shared maxInflight 1..64 budget and bounded
+queue with native clients (128 tickets globally, 64 per client and per gateway;
+128 pending requests per gateway). Heavy parallel execution can saturate the PC:
+resource checks gate *new heavy calls* but do not govern CPU usage or detached
+background processes. Existing 0.2.0 gateways continue using their original
+validator and can reject policies above 2. Finish ongoing work and reopen each
+Codex/Claude connection normally to load manager 0.3.0 before increasing the
+shared policy above 2; never force-close an in-progress client to upgrade.
 No tool call is automatically retried. Cancellation across separate stateless
 requests, progress streaming, subscriptions, sampling, and task APIs are not
 advertised or implemented. HTTP disconnect does not kill a tool or prove that

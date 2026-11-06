@@ -120,8 +120,9 @@ test('transient SQLite contention queues safely and retries completion accountin
 
 test('queue is bounded and tool calls without IDs cannot bypass admission', async t => {
   const f = await gatewayFixture(t);
-  for (let id = 1; id <= 24; id++) f.send(id, 'read_file', { delayMs: 20 });
-  const responses = await Promise.all(Array.from({ length: 24 }, (_, index) => f.response(index + 1)));
+  const burstSize = 72; // one active call, 64 queued calls, and overflow
+  for (let id = 1; id <= burstSize; id++) f.send(id, 'read_file', { delayMs: 20 });
+  const responses = await Promise.all(Array.from({ length: burstSize }, (_, index) => f.response(index + 1, 10000)));
   assert.ok(responses.some(result => result.error?.code === -32013));
   f.input.write(JSON.stringify({ jsonrpc: '2.0', method: 'tools/call', params: { name: 'start_process' } }) + '\n');
   assert.equal((await f.response(null)).error.code, -32600);
