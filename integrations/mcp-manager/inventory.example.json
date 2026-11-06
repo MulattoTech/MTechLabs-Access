@@ -1,0 +1,45 @@
+{
+  "generatedAt": null,
+  "entries": [
+    {
+      "id": "claude-local",
+      "name": "Desktop Commander local",
+      "client": "claude-desktop",
+      "transport": "stdio",
+      "management": "managed",
+      "configured": false,
+      "connection": "unknown",
+      "tested": false
+    },
+    {
+      "id": "codex-local",
+      "name": "Desktop Commander local",
+      "client": "codex",
+      "transport": "stdio",
+      "management": "managed",
+      "configured": false,
+      "connection": "unknown",
+      "tested": false
+    },
+    {
+      "id": "self-hosted-remote",
+      "name": "Desktop Commander self hosted",
+      "client": "remote-web",
+      "transport": "http",
+      "management": "managed",
+      "configured": false,
+      "connection": "unknown",
+      "tested": false
+    },
+    {
+      "id": "hosted-remote",
+      "name": "Remote Desktop Commander",
+      "client": "browser",
+      "transport": "http",
+      "management": "hosted",
+      "configured": false,
+      "connection": "unknown",
+      "tested": false
+    }
+  ]
+}

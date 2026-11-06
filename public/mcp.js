@@ -1,0 +1,48 @@
+'use strict';
+const $=selector=>document.querySelector(selector);
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let snapshot=null,csrf=null,busy=false,dirty=false,noticeKind=null;
+const time=value=>value?new Date(value).toLocaleString():'Unknown';
+const bool=value=>value===true?'Yes':value===false?'No':'Unknown';
+const memory=value=>typeof value==='number'?(value/1073741824).toFixed(1)+' GB':'Unknown';
+const amount=value=>Number.isInteger(value)?String(value):'Unknown';
+function notice(message,error=false,kind='policy'){const node=$('#mcp-notice');node.textContent=message;node.classList.remove('hidden');node.classList.toggle('error',error);noticeKind=kind;}
+async function api(path,body){const response=await fetch('/admin/mcp/api'+path,body===undefined?{cache:'no-store'}:{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':csrf||''},body:JSON.stringify(body),cache:'no-store'});const value=await response.json();if(!response.ok)throw Error(value.error||'The request could not be completed.');return value;}
+function evidence(label,state,detail){return `<article><h3>${esc(label)}</h3><span class="mcp-state" data-state="${state===true?'yes':state===false?'no':'unknown'}">${state===true?'Verified':state===false?'Not verified':'Unknown'}</span><p class="small muted">${esc(detail)}</p></article>`;}
+function remoteStatus(remote){
+  if(!remote)return '<p class="muted">Remote protocol status is unknown. No client sign-in or endpoint health has been assumed.</p>';
+  return `<dl class="mcp-metrics"><dt>Local backend state</dt><dd>${esc(remote.state)}</dd><dt>Streamable HTTP SDK loaded</dt><dd>${bool(remote.sdkLoaded)}</dd><dt>Shared backend</dt><dd>${bool(remote.sharedBackend)}</dd><dt>Active / maximum HTTP requests</dt><dd>${amount(remote.activeHttpRequests)} / ${amount(remote.maxHttpRequests)}</dd><dt>Active upstream requests</dt><dd>${amount(remote.activeUpstreamRequests)}</dd><dt>Idle timeout (seconds)</dt><dd>${amount(remote.idleTimeoutSeconds)}</dd><dt>Idle teardown deferred</dt><dd>${bool(remote.idleTeardownDeferred)}</dd><dt>Last tool-list page size</dt><dd>${amount(remote.lastToolListCount)}</dd><dt>Resource support reported</dt><dd>${bool(remote.resourceSupport)}</dd><dt>Prompt support reported</dt><dd>${bool(remote.promptSupport)}</dd><dt>Last successful protocol request</dt><dd>${time(remote.lastSuccessfulRequestAt)}</dd><dt>Last successful tool request</dt><dd>${time(remote.lastSuccessfulToolAt)}</dd></dl>`;
+}
+function render(){
+  const value=snapshot,status=value?.status,entries=status?.inventory?.entries||[],tested=entries.filter(item=>item.tested===true).length;
+  $('#mcp-owner').textContent=value?`Signed in as ${value.owner}. Local tool management remains owner-only.`:'Owner session unavailable.';
+  $('#mcp-observed').textContent=value?`Checked ${time(value.observedAt)}`:'Not checked';
+  $('#mcp-evidence').innerHTML=evidence('Service configuration',value?.configured, value?.configured?'The Worker has an approved fixed origin and protected service credential.':'The private local-manager connection is not configured.')+
+    evidence('Manager connection',value?.connected,value?.connected?'The local manager returned a valid status response.':'The PC, manager or private route may be unavailable. Controls remain disabled.')+
+    evidence('Client smoke tests',entries.length?tested>0:null,entries.length?`${tested} of ${entries.length} inventory entries have recorded passing tests. See the table for each client.`:'No client test evidence has been returned.');
+  $('#mcp-policy-fields').disabled=busy || !value?.connected || !status?.policyValid;
+  if(!dirty && status?.policy){$('#mcp-enabled').checked=status.policy.enabled;$('#mcp-readonly').checked=status.policy.readOnly;$('#mcp-inflight').value=String(status.policy.maxInflight);}
+  $('#mcp-policy-state').textContent=dirty?'Unsaved edits. Background refresh is paused.':!value?.connected?'Policy is unavailable. Refresh status before sending or retrying a change.':!status?.policyValid?'Local policy is invalid. Repair it on the PC before making changes here.':`Current policy: ${status.policy.enabled?'accepting new calls':'paused'}, ${status.policy.readOnly?'read-only tools':'write-capable tools'}, up to ${status.policy.maxInflight} concurrent call(s) per instance.`;
+  $('#mcp-policy-state').classList.toggle('mcp-policy-dirty',dirty);
+  $('#mcp-remote-status').innerHTML=remoteStatus(status?.remoteMcp);
+  const resources=status?.resources,limits=status?.limits;
+  $('#mcp-resources').innerHTML=status?`<dl class="mcp-metrics"><dt>Available / total RAM</dt><dd>${memory(resources?.freeMemoryBytes)} / ${memory(resources?.totalMemoryBytes)}</dd><dt>Memory admission floor</dt><dd>${memory(resources?.lowMemoryFloorBytes)}</dd><dt>New process/search admission</dt><dd>${bool(resources?.admissionOpen)}</dd><dt>Manager disk free / total</dt><dd>${memory(resources?.disk?.freeBytes)} / ${memory(resources?.disk?.totalBytes)}</dd><dt>Queue capacity per instance</dt><dd>${amount(limits?.queueCapacityPerInstance)}</dd><dt>Detached jobs capped</dt><dd>${bool(limits?.detachedJobsCapped)}</dd><dt>Desktop Commander installed</dt><dd>${bool(status.runtime?.installed)}</dd><dt>Desktop Commander version</dt><dd>${esc(status.runtime?.packageVersion||'Unknown')}</dd></dl>${status.diagnosticCounts?.warnings?'<p class="notice">The local manager reported '+amount(status.diagnosticCounts.warnings)+' warning(s). Detailed diagnostics stay on the PC.</p>':''}`:'<p class="muted">Resources are unknown while the local manager is offline. No zero or healthy value has been assumed.</p>';
+  $('#mcp-inventory').innerHTML=entries.length?`<table><thead><tr><th>Server / client</th><th>Route</th><th>Managed policy</th><th>Configured</th><th>Connection</th><th>Tested</th></tr></thead><tbody>${entries.map(item=>`<tr><td class="mcp-client-name"><strong>${esc(item.name||item.id)}</strong><span class="small">${esc(item.client)}</span></td><td>${esc(item.transport)}</td><td>${item.management==='managed'?'Managed local':item.management==='hosted'?'Hosted — own controls':'Unmanaged — own controls'}</td><td>${bool(item.configured)}</td><td>${esc(item.connection)}</td><td>${bool(item.tested)}</td></tr>`).join('')}</tbody></table><p class="small muted">Inventory captured ${time(status.inventory.generatedAt)}. Hosted and unmanaged entries are informational, not controlled by this page.</p>`:'<p class="muted">No inventory evidence is available. This does not mean no other MCP servers exist.</p>';
+  const instances=status?.instances||[];
+  $('#mcp-instances').innerHTML=instances.length?`<table><thead><tr><th>Client</th><th>Heartbeat</th><th>Initialized</th><th>In flight</th><th>Queued</th><th>Last seen</th></tr></thead><tbody>${instances.map(item=>`<tr><td class="mcp-client-name">${esc(item.client||item.id)}</td><td>${esc(item.state)}</td><td>${bool(item.initialized)}</td><td>${amount(item.inflight)}</td><td>${amount(item.queued)}</td><td>${time(item.lastSeenAt)}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">No managed instance heartbeats reported. Local clients normally start their MCP processes on demand.</p>';
+}
+async function refresh(){if(busy)return;busy=true;$('#mcp-refresh').disabled=true;try{snapshot=await api('/status');csrf=snapshot.csrf;if(!snapshot.connected)notice(snapshot.configured?'Local manager is unavailable. Policy state could not be verified; check its PC service and private route before retrying.':'Private manager connection is not configured. Status is unavailable and controls are disabled.',true,'connection');else if(noticeKind==='connection'){$('#mcp-notice').classList.add('hidden');noticeKind=null;}}catch(error){snapshot=null;csrf=null;notice(error.message,true,'connection');}finally{busy=false;$('#mcp-refresh').disabled=false;render();}}
+$('#mcp-refresh').addEventListener('click',()=>refresh());
+$('#mcp-copy-endpoint').addEventListener('click',async()=>{const input=$('#mcp-endpoint');try{await navigator.clipboard.writeText(input.value);notice('Endpoint URL copied. Complete OAuth owner sign-in separately in each AI client.');}catch{input.focus();input.select();notice('Select and copy the endpoint URL, then complete owner sign-in separately in each AI client.');}});
+$('#mcp-policy').addEventListener('change',()=>{dirty=true;$('#mcp-policy-state').textContent='Unsaved edits. Background refresh is paused.';$('#mcp-policy-state').classList.add('mcp-policy-dirty');});
+$('#mcp-policy').addEventListener('submit',async event=>{event.preventDefault();if(busy||!csrf||!snapshot?.connected||!snapshot.status?.policyValid)return;
+  const policy={enabled:$('#mcp-enabled').checked,readOnly:$('#mcp-readonly').checked,maxInflight:Number($('#mcp-inflight').value)};
+  if(!policy.readOnly && snapshot.status.policy.readOnly && !confirm('Allow write-capable tools in managed local Desktop Commander clients? This can permit file changes and terminal commands within their existing local permissions. Hosted and unmanaged clients are unaffected.'))return;
+  busy=true;$('#mcp-policy-fields').disabled=true;$('#mcp-refresh').disabled=true;
+  try{await api('/policy',policy);dirty=false;notice('Policy verified by the local manager. It applies to new managed tool calls; running commands were not interrupted.');}
+  catch(error){notice(error.message,true);dirty=false;}
+  finally{busy=false;$('#mcp-refresh').disabled=false;await refresh();}
+});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden && !dirty)refresh();});
+setInterval(()=>{if(!document.hidden && !dirty && !busy)refresh();},30000);
+refresh();

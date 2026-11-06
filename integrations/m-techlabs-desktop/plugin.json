@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "m-techlabs-desktop",
+  "version": "0.1.0",
+  "description": "Owner-authorized local file, document, search, and terminal tools through M-TechLabs Desktop MCP.",
+  "author": { "name": "M-TechLabs" },
+  "homepage": "https://m-techlabs.com/admin/mcp",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "M-TechLabs Desktop",
+        "shortDescription": "Your private PC tools",
+        "longDescription": "Connect to Dylan's self-hosted Desktop Commander MCP through Cloudflare owner sign-in. The server provides local file and directory operations, searches, documents, and terminal processes. Manage pause, read-only access, request limits, and connection health at M-TechLabs.com/admin/mcp. This private connection uses the free local Desktop Commander runtime, not pooled hosted accounts. The PC must be on and signed in. Read-only policy blocks writes and process launches until the owner explicitly changes it. Existing hosted Remote Desktop Commander accounts and AI subscriptions remain separate.",
+        "developerName": "M-TechLabs",
+        "category": "Developer Tools",
+        "capabilities": ["Interactive"],
+        "defaultPrompt": "Check my managed local Desktop Commander connection and help me safely work on my PC.",
+        "logo": "assets/icon.svg",
+        "composerIcon": "assets/icon.svg"
+      }
+    }
+  }
+}

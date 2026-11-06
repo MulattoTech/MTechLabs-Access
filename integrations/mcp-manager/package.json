@@ -1,0 +1,15 @@
+{
+  "name": "m-techlabs-mcp-manager",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "start": "node admin.mjs",
+    "gateway": "node gateway.mjs"
+  },
+  "peerDependencies": { "@modelcontextprotocol/sdk": "1.32.2" },
+  "peerDependenciesMeta": { "@modelcontextprotocol/sdk": { "optional": true } },
+  "devDependencies": { "@modelcontextprotocol/sdk": "1.32.2" }
+}
