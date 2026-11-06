@@ -68,7 +68,25 @@ successful application login. Origin HTTP checks prove the route and response,
 not every application workflow. The originating Brave session is unavailable,
 so no signed-in browser or camera-playback acceptance is claimed.
 
-## Navigation update
+## Adaptive directory rollout — 2026-11-06
+
+The current source includes an identity-filtered Worker-backed directory and
+an owner-only Homepage visibility tab. Its canonical app list is
+`src/hub-catalog.js`, not the older static HTML snapshot. Update the Worker
+first, then deploy just the three reviewed hub assets. The Worker uses the
+existing `settings` D1 table and existing `/admin/access*` routes; no new
+public route, OAuth provider, Access policy, secret, or database migration is
+needed. No medical records or credentials enter the directory manifest.
+
+Before copying static files: verify active host mount and live file hashes,
+back up the exact originals, and compare for concurrent edits. After copying:
+check the signed-in homepage, MBody launch link, owner visibility toggles,
+the non-owner denied catalog test, search filters, and all original
+Mission Control links. Preserve `mission-control` content and all unrelated
+containers. A homepage API outage must show a recovery message, not a
+client-side leak of private app links.
+
+## Historical navigation update
 
 The current index includes a Fortnite Studio private-preview shortcut and a
 separate Sprout Track Preview shortcut in Apps. It preserves all 14 previous

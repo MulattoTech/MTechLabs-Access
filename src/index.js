@@ -2,6 +2,7 @@ import {one,rows,run,rateLimit,audit,permission,normalizeEmail,nowSeconds} from 
 import {verifyPassphrase,sha256,sameOrigin,externalEvaluation,evaluationPublicKeys} from './security.js';
 import {HttpError,ownerIdentity,accessIdentity,createSession,codeIdentity,requireCsrf,sessionCookie,CODE_COOKIE,cookieValue,gateway} from './auth.js';
 import {adminApi,jsonBody} from './admin.js';
+import {homepageApi} from './homepage.js';
 import {mcpApi} from './mcp.js';
 import {remoteMcp} from './mcp-remote.js';
 import {acquireScan,executeScan,codeList,recomputeStatuses} from './codes.js';
@@ -42,6 +43,7 @@ async function handle(request,env,ctx) {
       if(request.method!=='GET')throw new HttpError(405,'Method not allowed.');
       await ownerIdentity(request,env);return asset(...mcpAssets[path]);
     }
+    if(path==='/admin/access/api/homepage'&&request.method==='GET')return homepageApi(request,env);
     if(path.startsWith('/admin/access/api/'))return adminApi(request,env,ctx,path.slice('/admin/access/api'.length));
     if(path==='/admin/access/assets/admin.js') {await ownerIdentity(request,env);return asset(ADMIN_JS,'application/javascript; charset=utf-8');}
     if(path==='/admin/access/assets/style.css') {await ownerIdentity(request,env);return asset(CSS,'text/css; charset=utf-8');}

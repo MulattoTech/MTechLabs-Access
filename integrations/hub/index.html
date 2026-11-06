@@ -20,141 +20,49 @@
       <div>
         <p class="overline">ONE HOME. ALL YOUR TOOLS.</p>
         <h1>Your projects.<br><span>One control center.</span></h1>
-        <p>Launch remote-access tools, open your running apps, and explore your projects from one protected address. Nothing here exposes the Docker daemon, PC desktop, or camera feed directly to the internet.</p>
+        <p>Find every active app, integration and project in one place. The directory only shows services permitted for your signed-in account; opening an app still requires its own authorization.</p>
       </div>
       <aside class="hero-panel" aria-label="Security summary">
         <span class="panel-heading">Your secure gateway</span>
         <strong>Built for the things you run.</strong>
-        <small>Cloudflare Access protects each hosted service. RustDesk opens its native client on the device you're using; it is not a remote desktop stream inside this page.</small>
+        <small>Cloudflare Access protects hosted services independently. Homepage visibility does not change account permissions or publish local PC, Docker, or camera access.</small>
         <div class="panel-tags"><span>Cloudflare Access</span><span>Windows Docker</span><span>HTTPS</span></div>
       </aside>
     </section>
     <div class="toolbar">
       <label class="search" aria-label="Find a service">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input id="search" type="search" autocomplete="off" placeholder="Search services, apps, and projects…" aria-label="Search services">
+        <input id="search" type="search" autocomplete="off" placeholder="Search services, apps, and projects…" aria-label="Search services" disabled>
       </label>
       <nav class="filters" aria-label="Service categories">
         <button class="filter active" data-filter="all" aria-pressed="true">All</button>
         <button class="filter" data-filter="remote" aria-pressed="false">Remote</button>
         <button class="filter" data-filter="apps" aria-pressed="false">Apps</button>
+        <button class="filter" data-filter="services" aria-pressed="false">Services</button>
         <button class="filter" data-filter="projects" aria-pressed="false">Projects</button>
       </nav>
+      <a class="link-secondary" id="manage-visibility" href="/admin/access#homepage" hidden>Customize visibility</a>
     </div>
-    <div id="empty" class="empty hidden" role="status">No matching tools. Try another search.</div>
-    <section class="section" aria-label="Access and administration" data-section>
+    <div id="loading" class="empty" role="status">Loading your approved apps…</div>
+    <div id="empty" class="empty hidden" role="status">No matching tools. Try another search or category.</div>
+    <div id="directory-error" class="empty hidden" role="alert">The app directory is temporarily unavailable. <a href="/admin/access">Open Access Management</a> or try refreshing.</div>
+    <section class="section hidden" aria-label="Access and administration" data-section="remote">
       <div class="section-top"><h2>Access &amp; administration</h2><small>Remote tools and owner-only admin consoles</small></div>
-      <div class="cards">
-        <article id="access-management-card" class="card" data-category="remote" data-search="access users permissions accounts google guild administrator">
-          <div class="card-top"><span class="glyph blue">AC</span><span class="status">Owner only</span></div>
-          <h3>Access Management</h3>
-          <p>Approve individual accounts, assign application permissions, review access activity, and manage the guild passphrase.</p>
-          <div class="card-actions"><a class="link-primary" href="/admin/access">Manage Access <span aria-hidden="true">&rarr;</span></a></div>
-        </article>
-        <article id="mcp-manager-card" class="card" data-category="remote" data-search="mcp desktop commander claude chatgpt codex local tools permissions processes">
-          <div class="card-top"><span class="glyph blue">MCP</span><span class="status">Owner only</span></div>
-          <h3>MCP &amp; Desktop Commander</h3>
-          <p>Manage shared local tools, read-only access, request limits, and connection health. Connect ChatGPT or Claude using your owner sign-in.</p>
-          <div class="card-actions"><a class="link-primary" href="/admin/mcp">Open MCP Manager <span aria-hidden="true">&rarr;</span></a><a class="link-secondary" href="/admin/access">Permissions</a></div>
-        </article>
-        <article class="card" data-category="remote" data-search="rustdesk remote desktop open launch control connect">
-          <div class="card-top"><span class="glyph">RD</span><span class="status">Ready to launch</span></div>
-          <h3>RustDesk</h3>
-          <p>Open RustDesk 1.5 on your current device using its registered desktop protocol. Your browser may ask permission the first time.</p>
-          <div class="card-actions"><a class="link-primary" href="rustdesk:///" id="rustdesk-launch">Launch RustDesk <span aria-hidden="true">↗</span></a><a class="link-secondary" href="https://rustdesk.com/web" target="_blank" rel="noopener noreferrer">Web option</a></div>
-        </article>
-        <article class="card" data-category="remote" data-search="portainer docker compose containers administration">
-          <div class="card-top"><span class="glyph blue">▣</span><span class="status">Protected admin</span></div>
-          <h3>Portainer</h3>
-          <p>Manage Docker containers and services. Separate owner-only Cloudflare Access plus Portainer's own login.</p>
-          <div class="card-actions"><a class="link-primary" href="https://portainer.m-techlabs.com">Open Portainer <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </div>
+      <div class="cards" data-cards="remote"></div>
     </section>
-    <section class="section" aria-label="Apps and fleet control" data-section>
-      <div class="section-top"><h2>Apps &amp; fleet control</h2><small>Hosted services and upcoming learning</small></div>
-      <div class="cards">
-        <article id="fortnite-studio-card" class="card" data-category="apps" data-search="fortnite tracker intelligence replay studio matches stats performance players">
-          <div class="card-top"><span class="glyph blue">FN</span><span class="status preview">Private preview</span></div>
-          <h3>Fortnite Intelligence &amp; Replay Studio</h3>
-          <p>Open your private Fortnite replay archive, evidence views, map tools, and player workspace.</p>
-          <div class="card-actions"><a class="link-primary" href="https://fortnite.m-techlabs.com">Open Fortnite Tracker <span aria-hidden="true">&rarr;</span></a></div>
-        </article>
-        <article id="tacticus-code-watch-card" class="card" data-category="apps" data-search="tacticus codes warhammer 40k guild rewards redemption">
-          <div class="card-top"><span class="glyph gold">CW</span><span class="status">Cloud hosted</span></div>
-          <h3>Tacticus Code Watch</h3>
-          <p>Code discovery, source evidence, and personal redeemed tracking for Tacticus players. Scheduled checks run independently of this PC.</p>
-          <div class="card-actions"><a class="link-primary" href="https://codes.m-techlabs.com">Open Code Watch <span aria-hidden="true">&rarr;</span></a></div>
-        </article>
-        <article id="fleet-mission-control-card" class="card" data-category="apps" data-search="codex orchestrator fleet overview mission control mjobs babytracker baby tracker projects agents quota status atlas grafana turns tokens">
-          <div class="card-top"><span class="glyph blue">FC</span><span class="status">Owner protected</span></div>
-          <h3>Fleet Overview &amp; Mission Control</h3>
-          <p>One workspace for MJobs, BabyTracker, project tracking, and live telemetry. Starting agent work remains a separate, explicit action.</p>
-          <div class="card-actions"><a class="link-primary" href="https://fleet.m-techlabs.com/">Open Fleet Overview <span aria-hidden="true">↗</span></a><a class="link-secondary" href="/mission-control/">Mission Control</a><a class="link-secondary" href="/mission-control/analytics/">Turns &amp; tokens</a><a class="link-secondary" href="/mission-control/grafana/">Grafana</a><a class="link-secondary" href="https://github.com/MulattoTech/Fleet-Control-Hub" target="_blank" rel="noopener noreferrer">Source</a></div>
-        </article>
-
-        <article class="card" data-category="apps" data-search="mjobs job finder career automation matching interview">
-          <div class="card-top"><span class="glyph blue">MJ</span><span class="status">Access protected</span></div>
-          <h3>MJobs</h3>
-          <p>Your full-stack job search workspace, running on the Windows Docker Desktop host. Keeps its own deployment and database.</p>
-          <div class="card-actions"><a class="link-primary" href="https://mjobs.m-techlabs.com">Open MJobs <span aria-hidden="true">↗</span></a><a class="link-secondary" href="https://github.com/MulattoTech/MJobs" target="_blank" rel="noopener noreferrer">Source</a></div>
-        </article>
-        <article class="card" data-category="apps" data-search="sprout track baby tracker infant feed diaper sleep">
-          <div class="card-top"><span class="glyph purple">ST</span><span class="status">Private data</span></div>
-          <h3>Sprout Track</h3>
-          <p>Family tracking workspace with its own isolated service. Owner-only Cloudflare login is required before reaching the app.</p>
-          <div class="card-actions"><a class="link-primary" href="https://tracker.m-techlabs.com">Open Tracker <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article id="sprout-preview-card" class="card" data-category="apps" data-search="sprout track baby tracker preview test staging infant feed diaper sleep">
-          <div class="card-top"><span class="glyph purple">SP</span><span class="status preview">Preview</span></div>
-          <h3>Sprout Track Preview</h3>
-          <p>Try the separate Sprout preview workspace. Use the main Sprout Track app for your family's everyday tracking.</p>
-          <div class="card-actions"><a class="link-primary" href="https://tracker-preview.m-techlabs.com">Open Sprout Preview <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="card" data-category="apps" data-search="homebox home inventory household assets equipment">
-          <div class="card-top"><span class="glyph">HB</span><span class="status">Access protected</span></div>
-          <h3>HomeBox</h3>
-          <p>Household equipment and inventory management, privately routed through your existing HomeBox container.</p>
-          <div class="card-actions"><a class="link-primary" href="https://homebox.m-techlabs.com">Open HomeBox <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="card" data-category="apps" data-search="signal salvage academy learning courses education">
-          <div class="card-top"><span class="glyph gold">SA</span><span class="status">Private course</span></div>
-          <h3>Signal Salvage Academy</h3>
-          <p>Private learning and course service. Cloudflare Access sign-in is required to enter.</p>
-          <div class="card-actions"><a class="link-primary" href="https://academy.m-techlabs.com">Open Academy <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </div>
+    <section class="section hidden" aria-label="Apps and fleet control" data-section="apps">
+      <div class="section-top"><h2>Apps &amp; fleet control</h2><small>Interactive applications and private workspaces</small></div>
+      <div class="cards" data-cards="apps"></div>
     </section>
-    <section class="section" aria-label="Projects and experiments" data-section>
+    <section class="section hidden" aria-label="Connected services" data-section="services">
+      <div class="section-top"><h2>Connected services</h2><small>Integrations, APIs and staging tools — not all offer a browser UI</small></div>
+      <div class="cards" data-cards="services"></div>
+    </section>
+    <section class="section hidden" aria-label="Projects and experiments" data-section="projects">
       <div class="section-top"><h2>Projects &amp; experiments</h2><small>Development links and safe previews</small></div>
-      <div class="cards">
-        <article class="card" data-category="projects" data-search="monai camera baby camera monitor rtc rtsp webrtc media">
-          <div class="card-top"><span class="glyph purple">MC</span><span class="status preview">Live video unverified</span></div>
-          <h3>Monai Camera</h3>
-          <p>Camera bridge, PTZ, video relay and browser dashboard project. Live browser playback still needs verification.</p>
-          <div class="card-actions"><a class="link-primary" href="/monai.html">Camera Project <span aria-hidden="true">↗</span></a><a class="link-secondary" href="https://github.com/MulattoTech/Monai-RTC" target="_blank" rel="noopener noreferrer">Source</a></div>
-        </article>
-        <article class="card" data-category="projects" data-search="mraiders arc raiders companion native qt map">
-          <div class="card-top"><span class="glyph gold">AR</span><span class="status internal">Development</span></div>
-          <h3>MRaiders</h3>
-          <p>Native Qt companion and progression workspace for ARC Raiders. Repository link; no public web service is claimed.</p>
-          <div class="card-actions"><a class="link-secondary" href="https://github.com/MulattoTech/MRaiders" target="_blank" rel="noopener noreferrer">Open Repository <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="card" data-category="projects" data-search="devfleet orchestrator agents software development github">
-          <div class="card-top"><span class="glyph blue">DF</span><span class="status internal">Local control plane</span></div>
-          <h3>DevFleet</h3>
-          <p>Development infrastructure and control plane. Its local management endpoint is deliberately not published to the internet.</p>
-          <div class="card-actions"><a class="link-secondary" href="https://github.com/MulattoTech/DevFleet" target="_blank" rel="noopener noreferrer">Open Repository <span aria-hidden="true">↗</span></a></div>
-        </article>
-        <article class="card" data-category="projects" data-search="realm grinder dragon tamer hud scripts">
-          <div class="card-top"><span class="glyph gold">RG</span><span class="status internal">Project</span></div>
-          <h3>Realm Grinder HUD</h3>
-          <p>Game companion tooling and control HUD. Follow project development through the repository.</p>
-          <div class="card-actions"><a class="link-secondary" href="https://github.com/MulattoTech/Realm_Grinder_Dragon_Tamer_Control_HUD" target="_blank" rel="noopener noreferrer">Open Repository <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </div>
+      <div class="cards" data-cards="projects"></div>
     </section>
-    <aside class="notice"><strong>Private by default.</strong> This portal is protected by your Cloudflare account login. The launch button uses <code>rustdesk:///</code> on your own device; it does not create a public RustDesk server. Monai live viewing needs its separate media service restored and tested before it can be safely made available remotely. Some project links are source repositories rather than hosted apps.</aside>
+    <aside class="notice"><strong>Private by default.</strong> MBody and owner administration are only listed to the verified owner. Hiding a card never changes the actual app access policy. RustDesk uses <code>rustdesk:///</code> on your device; Monai live playback and some integration endpoints may require separate work.</aside>
     <footer class="footer"><span>M-TechLabs · A home for your projects</span><span>Powered by your Docker host + Cloudflare Access · <a href="/monai.html">Camera status</a></span></footer>
   </div>
 </body>
