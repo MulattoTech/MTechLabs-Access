@@ -146,7 +146,7 @@ test('concurrent cold-start clients wait for the same complete upstream initiali
 });
 
 test('concurrent HTTP requests share one gateway, unique upstream IDs, bounded admission and sanitized status', async t => {
-  const f = await remoteFixture(t);
+  const f = await remoteFixture(t, { maxHttpRequests: 8 });
   const client = await f.client();
   await client.listTools();
   const calls = Array.from({ length: 9 }, (_, index) => f.raw({
@@ -163,6 +163,26 @@ test('concurrent HTTP requests share one gateway, unique upstream IDs, bounded a
   const status = await f.getStatus();
   assert.equal(status.instances.filter(instance => instance.client === 'remote-web').length, 1);
   assert.doesNotMatch(JSON.stringify(status), /test-bearer|diagnosticSecret|TOP-SECRET|admin-token/);
+});
+
+test('a 32-session remote burst passes through the higher HTTP and shared admission limits', async t => {
+  const f = await remoteFixture(t);
+  await fs.writeFile(f.config.policyPath, JSON.stringify({ enabled: true, readOnly: false, maxInflight: 32, coordinationVersion: 1 }));
+  const client = await f.client();
+  await client.listTools();
+  assert.equal((await f.getStatus()).remoteMcp.maxHttpRequests, 64);
+  const responses = await Promise.all(Array.from({ length: 32 }, (_, index) => f.raw({
+    jsonrpc: '2.0', id: 7, method: 'tools/call',
+    params: { name: 'read_file', arguments: { delayMs: 125, echo: index } },
+  })));
+  assert.ok(responses.every(response => response.status === 200));
+  const replies = await Promise.all(responses.map(response => response.json()));
+  const accepted = replies.map(reply => JSON.parse(reply.result.content[0].text));
+  assert.equal(new Set(accepted.map(result => result.echo)).size, 32);
+  assert.ok(accepted.some(result => result.greatestActive > 8), 'requests execute beyond the former 8-request ceiling');
+  const status = await f.getStatus();
+  assert.equal(status.coordinator.inflight, 0);
+  assert.equal(status.coordinator.queued, 0);
 });
 
 test('idle read-only backend closes gracefully; possible background work defers automatic teardown', async t => {

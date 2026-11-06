@@ -10,8 +10,12 @@ MJobs, Fleet Control, and any particular source repository.
 The initial policy is enabled, **read-only**, one in-flight tool request shared across
 managed gateways. After confirming the status is connected, turn off **Read-only
 tool set** and save when you want an AI client to edit files or run commands.
-Keep the global limit at one initially; two allows limited parallelism. This is
-a tool-request admission limit; it does not impose CPU or detached-process caps. Use **Allow new managed tool calls** to
+The **Simultaneous tool calls** slider spans **1–64** with quick presets (4, 8,
+16, **32 · Fleet**, 64). For a 30+ ChatGPT Pro fleet, click **32 · Fleet** and
+**Save policy**. Preview updates immediately; only saving changes the live limit.
+This is a shared tool-request admission limit, not a limit on connected chats, and
+it does not impose CPU or detached-process caps. Begin with a lower value if many
+calls start builds or other heavy programs, and monitor PC responsiveness. Use **Allow new managed tool calls** to
 pause/resume. Changes apply to queued and future tool calls, not commands that
 are already running. They do not revoke OAuth tokens.
 
@@ -83,6 +87,13 @@ one. The website cannot start a PC that is powered off or a process that is not
 running. Do not restart the manager while it owns active background commands.
 
 ## Footprint and limits
+
+Manager **0.3.0** admits up to 64 active calls, with a maximum of 64 concurrent
+remote HTTP requests, a global queue of 128, and per-client/per-gateway queues
+of 64. A connected chat consumes no slot until it starts an actual tool call.
+Existing manager 0.2.0 processes reject policies above two; after upgrade, finish
+existing work and reopen Codex/Claude clients normally so they load the updated
+gateway before setting the live limit above two. Do not terminate ongoing sessions.
 
 The pinned upstream package is Desktop Commander **0.3.1** and the installed MCP
 SDK is **1.32.2**. Runtime and dependencies are on H:, with a single reused

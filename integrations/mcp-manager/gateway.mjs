@@ -105,7 +105,7 @@ export async function startGateway({
       id, client, pid: process.pid, serverPid: child.pid ?? null, startedAt,
       lastSeenAt: new Date().toISOString(), initialized,
       inflight: activeTools, queued: queue.length,
-      managerVersion: '0.2.0', coordinationVersion: 1,
+      managerVersion: '0.3.0', coordinationVersion: 1,
       residentBytes: process.memoryUsage().rss,
     };
     metadataChain = metadataChain.then(() => atomicWriteJson(instancePath, snapshot)).catch(diagnostic);

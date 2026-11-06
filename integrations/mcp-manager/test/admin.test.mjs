@@ -95,10 +95,10 @@ test('policy writes require exact validated fields and cannot mutate unrelated c
   const f = await adminFixture(t);
   const beforeInventory = await fs.readFile(f.config.inventoryPath, 'utf8');
   const beforeToken = await fs.readFile(f.config.tokenPath, 'utf8');
-  const input = { enabled: false, readOnly: true, maxInflight: 2 };
+  const input = { enabled: false, readOnly: true, maxInflight: 64 };
   assert.equal((await f.request({ method: 'POST', url: '/v1/policy', body: input, bearer: null })).status, 401);
   for (const body of [
-    {}, '{broken', { ...input, maxInflight: 3 }, { ...input, readOnly: 'true' }, { ...input, command: 'launch' },
+    {}, '{broken', { ...input, maxInflight: 65 }, { ...input, readOnly: 'true' }, { ...input, command: 'launch' },
     { ...input, tokenPath: '/elsewhere' }, 'x'.repeat(5000),
   ]) assert.equal((await f.request({ method: 'POST', url: '/v1/policy', body })).status, 400);
   const result = await f.request({ method: 'POST', url: '/v1/policy', body: input });

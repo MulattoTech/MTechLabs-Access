@@ -83,7 +83,7 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
           policy = await readPolicyBody(request);
         } catch {
           request.resume();
-          return failure(response, 400, 'invalid_policy', 'Send exactly enabled, readOnly, and maxInflight (1 or 2) as JSON.');
+          return failure(response, 400, 'invalid_policy', 'Send exactly enabled, readOnly, and maxInflight (1..64) as JSON.');
         }
         // Older gateways reject the additional persisted field, so an upgrade
         // cannot leave an already-loaded per-instance scheduler admitting new

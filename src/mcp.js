@@ -23,8 +23,8 @@ export function validatePolicy(value) {
   if(!object(value) || Object.keys(value).length!==3 ||
      !['enabled','readOnly','maxInflight'].every(key=>Object.hasOwn(value,key)) ||
      typeof value.enabled!=='boolean' || typeof value.readOnly!=='boolean' ||
-     !Number.isInteger(value.maxInflight) || value.maxInflight<1 || value.maxInflight>2) {
-    throw new HttpError(400,'Use only enabled, readOnly and maxInflight (1 or 2).');
+     !Number.isInteger(value.maxInflight) || value.maxInflight<1 || value.maxInflight>64) {
+    throw new HttpError(400,'Use only enabled, readOnly and maxInflight (1..64).');
   }
   return {enabled:value.enabled,readOnly:value.readOnly,maxInflight:value.maxInflight};
 }
@@ -63,9 +63,9 @@ export function projectManagerStatus(value) {
       lowDiskFloorBytes:count(resources.lowDiskFloorBytes),managerResidentBytes:count(resources.managerResidentBytes),managerHeapUsedBytes:count(resources.managerHeapUsedBytes),
       disk:object(resources.disk)?{freeBytes:count(resources.disk.freeBytes),totalBytes:count(resources.disk.totalBytes)}:null},
     limits:{scope:choice(limits.scope,['shared-state-directory']),
-      maxInflightGlobal:limits.scope==='shared-state-directory'&&[1,2].includes(limits.maxInflightGlobal)?limits.maxInflightGlobal:null,
+      maxInflightGlobal:limits.scope==='shared-state-directory'&&Number.isInteger(limits.maxInflightGlobal)&&limits.maxInflightGlobal>=1&&limits.maxInflightGlobal<=64?limits.maxInflightGlobal:null,
       queueCapacityGlobal:limits.scope==='shared-state-directory'?count(limits.queueCapacityGlobal):null,
-      maxInflightPerInstance:[1,2].includes(limits.maxInflightPerInstance)?limits.maxInflightPerInstance:null,
+      maxInflightPerInstance:Number.isInteger(limits.maxInflightPerInstance)&&limits.maxInflightPerInstance>=1&&limits.maxInflightPerInstance<=64?limits.maxInflightPerInstance:null,
       queueCapacityPerInstance:count(limits.queueCapacityPerInstance),detachedJobsCapped:bool(limits.detachedJobsCapped)},
     coordinator:coordinator?{
       available:bool(coordinator.available),scope:choice(coordinator.scope,['shared-state-directory']),

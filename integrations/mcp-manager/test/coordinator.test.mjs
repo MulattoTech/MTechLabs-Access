@@ -5,7 +5,7 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { atomicWriteJson } from '../lib/policy.mjs';
-import { createCoordinator, readCoordinatorStatus, GLOBAL_QUEUE_CAPACITY } from '../lib/coordinator.mjs';
+import { createCoordinator, readCoordinatorStatus, GLOBAL_QUEUE_CAPACITY, CLIENT_QUEUE_CAPACITY } from '../lib/coordinator.mjs';
 import { fixture } from './helpers.mjs';
 
 function ticket(name = 'read_file', lifetime = 30000) {
@@ -73,15 +73,15 @@ test('independent coordinators share permits, FIFO and client round robin', asyn
 
 test('global and per-client queue capacity are bounded without deleting active work', async t => {
   const { config, instances } = await coordinators(t, ['a', 'b', 'c', 'd', 'e']);
-  for (const instance of instances.slice(0, 4)) {
-    for (let count = 0; count < 16; count++) assert.equal(instance.enqueue(ticket()).accepted, true);
+  for (const instance of instances.slice(0, 2)) {
+    for (let count = 0; count < CLIENT_QUEUE_CAPACITY; count++) assert.equal(instance.enqueue(ticket()).accepted, true);
     assert.equal(instance.enqueue(ticket()).error.code, -32013);
   }
-  assert.equal(instances[4].enqueue(ticket()).error.code, -32013);
+  assert.equal(instances[2].enqueue(ticket()).error.code, -32013);
   const status = await readCoordinatorStatus(config.stateDirectory);
   assert.equal(status.queued, GLOBAL_QUEUE_CAPACITY);
   assert.equal(status.inflight, 0);
-  assert.equal(status.clients.length, 4);
+  assert.equal(status.clients.length, 2);
   assert.ok(status.recentEvents.length <= 100);
 });
 

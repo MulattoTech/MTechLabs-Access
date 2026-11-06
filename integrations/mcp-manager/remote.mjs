@@ -4,7 +4,7 @@ import { readJsonBody } from './lib/http-body.mjs';
 import { ManagedStdioTransport } from './lib/managed-transport.mjs';
 import { MANAGER_VERSION } from './lib/status.mjs';
 
-const MAX_HTTP_REQUESTS = 8;
+const MAX_HTTP_REQUESTS = 64;
 const MAX_BODY_BYTES = 1024 * 1024;
 const MAY_START_BACKGROUND_WORK = new Set(['start_process', 'start_search', 'interact_with_process']);
 const POLICY_DENIALS = new Map([
@@ -48,8 +48,10 @@ export function createRemoteMcp(config, {
   configPath,
   idleTimeoutMs = 5 * 60 * 1000,
   upstreamTimeoutMs = 125000,
+  maxHttpRequests = MAX_HTTP_REQUESTS,
   sdkLoader = loadSdk,
 } = {}) {
+  if (!Number.isInteger(maxHttpRequests) || maxHttpRequests < 1 || maxHttpRequests > MAX_HTTP_REQUESTS) throw new Error('invalid_http_concurrency');
   const configured = typeof configPath === 'string' && path.isAbsolute(configPath);
   const gatewayPath = fileURLToPath(new URL('./gateway.mjs', import.meta.url));
   let sdk;
@@ -72,7 +74,7 @@ export function createRemoteMcp(config, {
     return {
       transport: 'streamable-http', endpoint: '/mcp', state, sdkLoaded: Boolean(sdk),
       sharedBackend: true, activeHttpRequests, activeUpstreamRequests,
-      maxHttpRequests: MAX_HTTP_REQUESTS, idleTimeoutSeconds: idleTimeoutMs / 1000,
+      maxHttpRequests, idleTimeoutSeconds: idleTimeoutMs / 1000,
       idleTeardownDeferred: mayHaveDetachedJobs,
       lastToolListCount, lastSuccessfulRequestAt, lastSuccessfulToolAt,
       clientIdentityTracked: false,
@@ -228,7 +230,7 @@ export function createRemoteMcp(config, {
       request.resume();
       return failure(response, 503, -32020, 'The local MCP bridge is unavailable.');
     }
-    if (activeHttpRequests >= MAX_HTTP_REQUESTS || activeUpstreamRequests >= MAX_HTTP_REQUESTS) {
+    if (activeHttpRequests >= maxHttpRequests || activeUpstreamRequests >= maxHttpRequests) {
       request.resume();
       return failure(response, 429, -32013, 'The remote MCP request capacity is full. This request was not executed.');
     }

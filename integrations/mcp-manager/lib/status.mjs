@@ -3,9 +3,9 @@ import path from 'node:path';
 import os from 'node:os';
 import { readBoundedJson } from './config.mjs';
 import { readPolicy, QUEUE_CAPACITY } from './policy.mjs';
-import { readCoordinatorStatus } from './coordinator.mjs';
+import { readCoordinatorStatus, GLOBAL_QUEUE_CAPACITY } from './coordinator.mjs';
 
-export const MANAGER_VERSION = '0.2.0';
+export const MANAGER_VERSION = '0.3.0';
 const ID = /^[a-zA-Z0-9_.-]{1,64}$/;
 const LABEL = /^[a-zA-Z0-9][a-zA-Z0-9 _().-]{0,79}$/;
 export const BOUNDARIES = [
@@ -147,7 +147,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
     limits: {
       scope: 'shared-state-directory',
       maxInflightGlobal: policy?.maxInflight ?? 1,
-      queueCapacityGlobal: 64,
+      queueCapacityGlobal: GLOBAL_QUEUE_CAPACITY,
       maxInflightPerInstance: policy?.maxInflight ?? 1,
       queueCapacityPerInstance: QUEUE_CAPACITY,
       detachedJobsCapped: false,

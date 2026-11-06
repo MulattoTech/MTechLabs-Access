@@ -4,8 +4,10 @@ import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { readBoundedJson } from './config.mjs';
 
-export const QUEUE_CAPACITY = 16;
-export const MAX_PENDING_REQUESTS = 64;
+export const MIN_INFLIGHT = 1;
+export const MAX_INFLIGHT = 64;
+export const QUEUE_CAPACITY = 64;
+export const MAX_PENDING_REQUESTS = 128;
 export const READ_ONLY_TOOLS = new Set([
   'read_file',
   'read_multiple_files',
@@ -24,7 +26,7 @@ export function validatePolicy(input) {
       Object.keys(input).length !== 3 ||
       !['enabled', 'readOnly', 'maxInflight'].every(key => Object.hasOwn(input, key)) ||
       typeof input.enabled !== 'boolean' || typeof input.readOnly !== 'boolean' ||
-      !Number.isInteger(input.maxInflight) || input.maxInflight < 1 || input.maxInflight > 2) {
+      !Number.isInteger(input.maxInflight) || input.maxInflight < MIN_INFLIGHT || input.maxInflight > MAX_INFLIGHT) {
     throw new Error('invalid_policy');
   }
   return { enabled: input.enabled, readOnly: input.readOnly, maxInflight: input.maxInflight };

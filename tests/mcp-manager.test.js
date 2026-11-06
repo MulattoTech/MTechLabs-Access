@@ -105,7 +105,7 @@ test('redirects, non-JSON, oversized responses and failures remain offline witho
 });
 
 test('verified owner policy update relays only three fields and records safe audit events',async t=>{
-  const env=await fixture(t),policy={enabled:false,readOnly:true,maxInflight:2};
+  const env=await fixture(t),policy={enabled:false,readOnly:true,maxInflight:32};
   const calls=mockNetwork(t,()=>Response.json({ok:true,policy,appliesTo:'new_tool_calls',runningCommandsInterrupted:false,secret:SERVICE_TOKEN}));
   const response=await post(env,policy),data=await response.json();assert.equal(response.status,200);assert.deepEqual(data.policy,policy);assert.equal(data.runningCommandsInterrupted,false);
   assert.equal(calls.length,1);assert.equal(calls[0].url,ORIGIN+'/v1/policy');assert.equal(calls[0].options.method,'POST');assert.deepEqual(JSON.parse(calls[0].options.body),policy);
@@ -115,7 +115,7 @@ test('verified owner policy update relays only three fields and records safe aud
 
 test('invalid or expanded policy payloads never reach the local API',async t=>{
   const env=await fixture(t),calls=mockNetwork(t);
-  for(const body of [null,[],{}, {enabled:true,readOnly:true,maxInflight:0},{enabled:true,readOnly:true,maxInflight:3},
+  for(const body of [null,[],{}, {enabled:true,readOnly:true,maxInflight:0},{enabled:true,readOnly:true,maxInflight:65},
     {enabled:true,readOnly:true,maxInflight:'2'},{enabled:'true',readOnly:true,maxInflight:1},{enabled:true,readOnly:false,maxInflight:1,command:'whoami'},
     {enabled:true,readOnly:true,maxInflight:1,url:'https://evil.invalid'}, {enabled:true,readOnly:true}]){
     assert.equal((await post(env,body)).status,400);
@@ -201,6 +201,11 @@ test('admin and manager UI retain separate permissions, controlled refresh and n
   const [admin,html,client]=await Promise.all(['admin.js','admin.html','mcp.js'].map(file=>readFile(new URL('../public/'+file,import.meta.url),'utf8')));
   assert.match(admin,/mcpPermissionNote\(\)/);assert.match(admin,/mcpManagementCard\(\)/);assert.match(html,/href="\/admin\/mcp"/);
   assert.match(client,/30000/);assert.match(client,/!document.hidden && !dirty/);assert.match(client,/maxInflight:Number/);
+  assert.match(client,/updateConcurrencyPreview/);assert.match(client,/data-mcp-capacity/);
+  assert.match(client,/older gateway\(s\)/);assert.match(client,/Continue anyway\?/);
+  const managerHtml=await readFile(new URL('../public/mcp.html',import.meta.url),'utf8');
+  assert.match(managerHtml,/type="range" min="1" max="64"/);assert.match(managerHtml,/data-mcp-capacity="32">32 · Fleet/);
+  assert.match(managerHtml,/id="mcp-capacity-warning" aria-live="polite"/);
   assert.equal(client.includes('MCP_MANAGER_TOKEN'),false);assert.equal(client.includes('Authorization'),false);assert.equal(client.includes(ORIGIN),false);
 });
 
@@ -222,6 +227,17 @@ test('shared scheduling, resource use and installation records retain only bound
   assert.equal(projected.deployment.sourceCommit,'a'.repeat(40));assert.equal(projected.deployment.evidence,'installation-record');assert.equal(projected.instances[0].managerVersion,'0.2.0');assert.equal(projected.instances[0].residentBytes,50*1048576);
   assert.equal(JSON.stringify(projected).includes('SECRET'),false);assert.equal(JSON.stringify(projected).includes('private'),false);
   raw.coordinator.recentEvents[0].type='reconciled';assert.equal(projectManagerStatus(raw).coordinator.recentEvents[0].type,'reconciled');
+});
+
+test('expanded fleet concurrency and bounded remote capacity survive Worker projection',()=>{
+  const raw=sample();raw.policy={enabled:true,readOnly:false,maxInflight:64};
+  raw.limits={scope:'shared-state-directory',maxInflightGlobal:64,maxInflightPerInstance:64,
+    queueCapacityGlobal:128,queueCapacityPerInstance:64,detachedJobsCapped:false};
+  raw.remoteMcp={state:'ready',transport:'streamable-http',endpoint:'/mcp',activeHttpRequests:32,maxHttpRequests:64};
+  const projected=projectManagerStatus(raw);
+  assert.equal(projected.policy.maxInflight,64);assert.equal(projected.limits.maxInflightGlobal,64);
+  assert.equal(projected.limits.queueCapacityGlobal,128);assert.equal(projected.limits.queueCapacityPerInstance,64);
+  assert.equal(projected.remoteMcp.maxHttpRequests,64);assert.equal(projected.remoteMcp.activeHttpRequests,32);
 });
 
 test('legacy, unavailable and malformed scheduler evidence never establishes a shared healthy limit',()=>{
