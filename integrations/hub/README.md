@@ -6,24 +6,41 @@ read-only into the existing `mtechlabs-hub` nginx container. Its host listener i
 This source was verified through Docker mounts. The `MulattoTech/M-TechLabs`
 repository was not assumed to be the deployed website.
 
-`navigation.patch` records exactly two inserted cards: Access Management and
-Tacticus Code Watch. `index.html` is the resulting deployed snapshot. Existing
-styling, scripts and application links were retained. No container restart was
-required because the existing static bind mount serves the updated file.
+## Current navigation snapshot
 
-The original file was backed up on the Windows host before editing:
+`index.html` preserves the live hub navigation captured on 2026-11-06 and adds:
 
-```text
-C:\Tools\Dev\MTechLabs-Hub\backups\index.pre-access-codes-20261031.html
-```
+- **Fortnite Intelligence & Replay Studio** at `https://fortnite.m-techlabs.com`,
+  as the first card in Apps & fleet control. Search for Fortnite, tracker,
+  intelligence, replay, matches, stats, or players.
+- **Sprout Track Preview** at `https://tracker-preview.m-techlabs.com`, as a
+  separate card immediately after Sprout Track. It is explicitly labeled
+  Preview and points to the preview host, while the production card keeps
+  `https://tracker.m-techlabs.com`.
 
-To undo only the navigation change, restore that backup to the served
-`site\index.html` after reviewing any subsequent site edits. The access Worker,
-its dashboard and the Code Watch domain have separate recovery steps in
-`docs/operations.md`; removing a navigation card does not revoke access.
+Both cards use the existing Apps filter, search behavior, styles, and link
+pattern. All existing cards and navigation links are retained, including MCP
+Manager and Fleet Overview / Mission Control. Status labels describe access or
+preview context; they are not service-health probes. This navigation change
+does not alter access policies or application permissions.
 
-Verified deployed index SHA-256:
+Deploy only `index.html` to the served `site\index.html` after backing up and
+comparing the current live file. No container restart is required for this
+static bind mount. If live navigation has changed since the snapshot, preserve
+those newer changes before deployment. Restoring a reviewed backup removes
+navigation changes only; it does not revoke access or change service routing.
 
-```text
-50b93260c99fc6176615520efbdb49576a8662835657eb697d7c9c78329e309d
-```
+## Historical Access / Code Watch integration
+
+`navigation.patch` records the original two-card Access Management and Tacticus
+Code Watch addition. It is retained as historical evidence and is not the patch
+for the current snapshot.
+
+The original file was backed up on the Windows host before that earlier edit:
+`C:\Tools\Dev\MTechLabs-Hub\backups\index.pre-access-codes-20261031.html`.
+
+The earlier deployed index SHA-256 was:
+`50b93260c99fc6176615520efbdb49576a8662835657eb697d7c9c78329e309d`.
+
+The access Worker, its dashboard and the Code Watch domain have separate
+recovery steps in `docs/operations.md`.
