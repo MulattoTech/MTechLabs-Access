@@ -64,7 +64,7 @@ a:focus-visible,button:focus-visible,.search input:focus-visible{outline:3px sol
 .footer{border-top:1px solid #283547;padding:24px 0 45px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#8193a8;font-size:12px}
 .footer a{color:#a8d9d1;text-decoration:underline;text-underline-offset:3px}
 .empty{padding:25px;color:#c2d0de;border:1px dashed #34465c;border-radius:12px}
-.hidden{display:none!important}
+.hidden,#manage-visibility[hidden]{display:none!important}
 .page-content{max-width:850px;margin:56px auto 70px;background:linear-gradient(145deg,#142334,#0f1925);padding:clamp(24px,5vw,44px);border:1px solid #334454;border-radius:20px}
 .page-content h1{font-size:37px;letter-spacing:-1.5px}
 .page-content p,.page-content li{color:#b1c2d0;line-height:1.8}
