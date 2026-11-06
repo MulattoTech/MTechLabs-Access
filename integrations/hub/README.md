@@ -24,11 +24,16 @@ Manager and Fleet Overview / Mission Control. Status labels describe access or
 preview context; they are not service-health probes. This navigation change
 does not alter access policies or application permissions.
 
-Deploy only `index.html` to the served `site\index.html` after backing up and
+Deploy the reviewed `index.html` and any explicitly changed companion page to
+the served `site` directory after backing up and
 comparing the current live file. No container restart is required for this
 static bind mount. If live navigation has changed since the snapshot, preserve
 those newer changes before deployment. Restoring a reviewed backup removes
 navigation changes only; it does not revoke access or change service routing.
+
+[OPERATIONS.md](OPERATIONS.md) records the current Compose/nginx deployment
+snapshots, preserved companion assets, direct Docker origin repair for Sprout,
+Sprout preview and HomeBox, exact validation scope, and recovery locations.
 
 ## Historical Access / Code Watch integration
 
