@@ -9,7 +9,9 @@
     "OWNER_EMAIL": "dylanmellor@gmail.com",
     "CODE_HOST": "codes.m-techlabs.com",
     "HUB_HOST": "m-techlabs.com",
-    "ACCOUNT_ID": "9e18ebcb3c1a920c9ef58a3d61b8d6b6"
+    "ACCOUNT_ID": "9e18ebcb3c1a920c9ef58a3d61b8d6b6",
+    "MCP_MANAGER_ORIGIN": "https://mcp-origin.m-techlabs.com",
+    "MCP_ACCESS_AUD": "612c93cbe84d09d5060064f94b20a19cfdabed8aae39f8a7fbe89bbc831fe569"
   },
   "d1_databases": [{"binding":"DB","database_name":"mtechlabs-access-codes","database_id":"ec35af84-1df1-4559-ace8-1db42f3b1b5c","migrations_dir":"migrations"}],
   "triggers": {"crons":["*/30 * * * *"]},

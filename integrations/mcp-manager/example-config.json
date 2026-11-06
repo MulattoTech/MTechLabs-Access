@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "nodePath": "C:\\Program Files\\nodejs\\node.exe",
+  "serverPath": "H:\\MTechLabs\\MCP\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+  "serverPackageJsonPath": "H:\\MTechLabs\\MCP\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+  "stateDirectory": "H:\\MTechLabs\\MCP\\state",
+  "policyPath": "H:\\MTechLabs\\MCP\\state\\policy.json",
+  "tokenPath": "H:\\MTechLabs\\MCP\\state\\admin-token.sha256",
+  "inventoryPath": "H:\\MTechLabs\\MCP\\state\\inventory.json",
+  "minimumFreeMemoryMiB": 4096
+}

@@ -2,8 +2,10 @@ import {one,rows,run,rateLimit,audit,permission,normalizeEmail,nowSeconds} from 
 import {verifyPassphrase,sha256,sameOrigin,externalEvaluation,evaluationPublicKeys} from './security.js';
 import {HttpError,ownerIdentity,accessIdentity,createSession,codeIdentity,requireCsrf,sessionCookie,CODE_COOKIE,cookieValue,gateway} from './auth.js';
 import {adminApi,jsonBody} from './admin.js';
+import {mcpApi} from './mcp.js';
+import {remoteMcp} from './mcp-remote.js';
 import {acquireScan,executeScan,codeList,recomputeStatuses} from './codes.js';
-import {PUBLIC_HTML,ADMIN_HTML,PUBLIC_JS,ADMIN_JS,CSS} from './ui.generated.js';
+import {PUBLIC_HTML,ADMIN_HTML,PUBLIC_JS,ADMIN_JS,CSS,MCP_HTML,MCP_JS,MCP_CSS} from './ui.generated.js';
 
 const json=(body,status=200,headers={})=>Response.json(body,{status,headers});
 const asset=(text,type)=>new Response(text,{headers:{'Content-Type':type}});
@@ -17,6 +19,9 @@ async function abuseLimit(request,env,scope,limit=20,period=900) {
 }
 async function handle(request,env,ctx) {
   const url=new URL(request.url),path=url.pathname,db=env.DB;
+  // The dedicated MCP host has its own Access audience and owner check. It
+  // never enters the website's D1 application-grant or legacy-gateway paths.
+  if(url.hostname==='mcp.m-techlabs.com')return remoteMcp(request,env,ctx);
   const isCodes=url.hostname===env.CODE_HOST;
   const isHub=[env.HUB_HOST,`www.${env.HUB_HOST}`].includes(url.hostname);
   if(!isCodes&&!isHub){
@@ -25,6 +30,18 @@ async function handle(request,env,ctx) {
     return gateway(request,env,ctx,app);
   }
   if(isHub) {
+    if(path.startsWith('/admin/mcp/api/'))return mcpApi(request,env,ctx,path.slice('/admin/mcp/api'.length));
+    const mcpAssets={
+      '/admin/mcp':[MCP_HTML,'text/html; charset=utf-8'],
+      '/admin/mcp/':[MCP_HTML,'text/html; charset=utf-8'],
+      '/admin/mcp/assets/mcp.js':[MCP_JS,'application/javascript; charset=utf-8'],
+      '/admin/mcp/assets/mcp.css':[MCP_CSS,'text/css; charset=utf-8'],
+      '/admin/mcp/assets/style.css':[CSS,'text/css; charset=utf-8'],
+    };
+    if(Object.hasOwn(mcpAssets,path)) {
+      if(request.method!=='GET')throw new HttpError(405,'Method not allowed.');
+      await ownerIdentity(request,env);return asset(...mcpAssets[path]);
+    }
     if(path.startsWith('/admin/access/api/'))return adminApi(request,env,ctx,path.slice('/admin/access/api'.length));
     if(path==='/admin/access/assets/admin.js') {await ownerIdentity(request,env);return asset(ADMIN_JS,'application/javascript; charset=utf-8');}
     if(path==='/admin/access/assets/style.css') {await ownerIdentity(request,env);return asset(CSS,'text/css; charset=utf-8');}

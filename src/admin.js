@@ -2,6 +2,7 @@ import {one,rows,run,statement,nowSeconds,normalizeEmail,validRole} from './db.j
 import {HttpError,ownerIdentity,readSession,createSession,requireCsrf,ADMIN_COOKIE,sessionCookie} from './auth.js';
 import {hashPassphrase} from './security.js';
 import {acquireScan,executeScan,recomputeStatuses} from './codes.js';
+import {MCP_MANAGEMENT_CATALOG} from './mcp-catalog.js';
 
 const states=new Set(['pending','approved','denied','suspended','revoked']);
 export async function jsonBody(request,max=16384) {
@@ -44,7 +45,7 @@ export async function adminApi(request,env,ctx,path) {
       one(db,'SELECT enabled,version,updated_at FROM guild_access WHERE id=1'),rows(db,'SELECT * FROM app_activity'),rows(db,"SELECT key,value FROM settings WHERE key IN ('google_idp_id','google_status','deployment_version')"),
       rows(db,'SELECT * FROM scan_runs ORDER BY started_at DESC LIMIT 10')
     ]);
-    return json({owner:owner.email,csrf:session.csrf,users,apps,grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,
+    return json({owner:owner.email,csrf:session.csrf,users,apps,management:[MCP_MANAGEMENT_CATALOG],grants,groups,members,groupGrants,defaults,events,sessions,guild,activity,settings,scans,
       google:{configured:settings.some(x=>x.key==='google_idp_id'&&x.value),callback:`https://${env.ACCESS_TEAM}/cdn-cgi/access/callback`,setupUrl:'https://one.dash.cloudflare.com/'+env.ACCOUNT_ID+'/settings/authentication',requires:'Google OAuth client ID and client secret; keep the Cloudflare owner provider enabled.'},serverTime:now},200,cookie?{'Set-Cookie':cookie}:{});
   }
   if(request.method!=='POST')throw new HttpError(405,'Method not allowed.');
