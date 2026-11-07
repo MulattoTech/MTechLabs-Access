@@ -1,7 +1,7 @@
 'use strict';
 const $=selector=>document.querySelector(selector);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let snapshot=null,csrf=null,busy=false,dirty=false,noticeKind=null;
+let snapshot=null,csrf=null,busy=false,dirty=false,toolkitDirty=false,noticeKind=null;
 const time=value=>value?new Date(value).toLocaleString():'Unknown';
 const bool=value=>value===true?'Yes':value===false?'No':'Unknown';
 const memory=value=>typeof value==='number'?(value<1073741824?(value/1048576).toFixed(1)+' MiB':(value/1073741824).toFixed(1)+' GiB'):'Unknown';
@@ -54,6 +54,49 @@ function deploymentStatus(status){
   const record=status.deployment;
   return `<dl class="mcp-metrics">${metric('Running manager version',status.service?.version||'Unknown')}${metric('Node.js version',status.runtime?.nodeVersion||'Unknown')}${metric('Desktop Commander version',status.runtime?.packageVersion||'Unknown')}${metric('Desktop Commander installed',bool(status.runtime?.installed))}${metric('Manager uptime (seconds)',amount(status.service?.uptimeSeconds))}${metric('Recorded source commit',record?.sourceCommit||'No installation record')}${metric('Recorded installed time',time(record?.installedAt))}${metric('Recorded Worker version',record?.workerVersion||'No installation record')}</dl>`;
 }
+function updateJobForm(){
+  const kind=$('#mcp-job-kind').value,requiresRepo=kind!=='vm_inventory';
+  $('#mcp-job-repo-fields').hidden=!requiresRepo;
+  $('#mcp-job-command-wrap').hidden=kind!=='run_tests';
+  $('#mcp-job-root').required=requiresRepo;
+  $('#mcp-job-relative').required=requiresRepo;
+}
+function renderToolkit(status) {
+  const toolkit=status?.toolkit,jobs=status?.toolkitJobs,fieldset=$('#mcp-toolkit-fields');
+  fieldset.disabled=busy||!snapshot?.connected||!toolkit;
+  const allowed=!!snapshot?.connected&&status?.policy?.enabled===true&&
+    status.policy.readOnly===false&&toolkit?.capabilities?.jobs===true;
+  $('#mcp-job-submit-fields').disabled=busy||!allowed;
+  $('#mcp-job-submit-state').textContent=!snapshot?.connected?'The manager is offline. Job submission is disabled.':
+    !toolkit?.capabilities?.jobs?'Enable durable jobs in the toolkit and save that setting first.':
+    status?.policy?.readOnly!==false||status?.policy?.enabled!==true?'Unpause managed tools and explicitly enable write-capable calls to submit jobs.':
+    'Jobs run under local resource limits, with explicit cancellation and no automatic retry.';
+  const rootSelect=$('#mcp-job-root'),previousRoot=rootSelect.value;
+  rootSelect.replaceChildren(...(toolkit?.roots||[]).map(id=>new Option(id,id)));
+  if((toolkit?.roots||[]).includes(previousRoot))rootSelect.value=previousRoot;
+  updateJobForm();
+  if(toolkit&&!toolkitDirty){
+    document.querySelectorAll('[data-mcp-capability]').forEach(node=>{node.checked=toolkit.capabilities[node.dataset.mcpCapability]===true;});
+    $('#mcp-job-limit').value=String(toolkit.maxConcurrentJobs);
+    $('#mcp-job-timeout').value=String(toolkit.jobTimeoutSeconds);
+  }
+  $('#mcp-job-limit-value').textContent=$('#mcp-job-limit').value;
+  $('#mcp-toolkit-summary').textContent=toolkitDirty?'Toolkit changes are unsaved; automatic refresh is paused.':toolkit?
+    'Approved repository identifiers: '+(toolkit.roots.length?toolkit.roots.join(', '):'none — configure roots locally')+
+    '. Durable jobs: '+toolkit.maxConcurrentJobs+' concurrent, '+toolkit.jobTimeoutSeconds+'s timeout.':
+    'Toolkit status unavailable. No permissions have been assumed.';
+  if(!jobs||jobs.available!==true){$('#mcp-jobs').innerHTML='<p class="muted">Durable job history is unavailable. No queue status has been assumed.</p>';return;}
+  const counts=jobs.counts||{};
+  const metrics=['queued','running','succeeded','failed','cancelled','interrupted'].map(state=>metric(state,amount(counts[state]))).join('');
+  const rows=jobs.recent||[];
+  $('#mcp-jobs').innerHTML='<dl class="mcp-metrics">'+metrics+'</dl>'+
+    (rows.length?'<div class="table-wrap"><table><thead><tr><th>Job ID</th><th>Type</th><th>State</th><th>Submitted</th><th>Control</th></tr></thead><tbody>'+
+      rows.map(job=>{const cancellable=['queued','running'].includes(job.state),resumable=['failed','interrupted','cancelled'].includes(job.state);
+        const action=cancellable?'cancel':resumable?'resume':null;
+        return '<tr><td><code>'+esc(job.id.slice(0,8))+'</code></td><td>'+esc(job.kind)+'</td><td>'+esc(job.state)+(job.cancelRequested?' · cancel requested':'')+'</td><td>'+esc(time(job.createdAt))+'</td><td>'+
+          (action?'<button class="button secondary" type="button" data-mcp-job-action="'+action+'" data-mcp-job-id="'+esc(job.id)+'">'+(action==='cancel'?'Cancel':'Resume')+'</button>':'—')+'</td></tr>';
+      }).join('')+'</tbody></table></div>':'<p class="muted">No durable jobs have been submitted.</p>');
+}
 function render(){
   const value=snapshot,status=value?.status,entries=status?.inventory?.entries||[],tested=entries.filter(item=>item.tested===true).length,isShared=shared(status);
   $('#mcp-owner').textContent=value?`Signed in as ${value.owner}. Local tool management remains owner-only.`:'Owner session unavailable.';
@@ -77,6 +120,7 @@ function render(){
   const instances=status?.instances||[],older=instances.filter(item=>item.state==='active'&&item.managerVersion!==status?.service?.version);
   $('#mcp-instances').innerHTML=(instances.length?`<table><thead><tr><th>Client</th><th>Heartbeat</th><th>Initialized</th><th>Manager version</th><th>Resident memory</th><th>In flight</th><th>Queued</th><th>Last seen</th></tr></thead><tbody>${instances.map(item=>`<tr><td class="mcp-client-name">${esc(item.client||item.id)}</td><td>${esc(item.state)}</td><td>${bool(item.initialized)}</td><td>${esc(item.managerVersion||'Unknown')}</td><td>${memory(item.residentBytes)}</td><td>${amount(item.inflight)}</td><td>${amount(item.queued)}</td><td>${esc(time(item.lastSeenAt))}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">No managed instance heartbeats reported. Local clients normally start their MCP processes on demand.</p>')+
     (older.length?`<p class="notice">${older.length} active instance(s) report an older or unknown manager version. Their shared scheduling is not verified. Finish existing work, then reopen those client connections to load the current gateway.</p>`:'');
+  renderToolkit(status);
 }
 async function refresh(){if(busy)return;busy=true;$('#mcp-refresh').disabled=true;try{snapshot=await api('/status');csrf=snapshot.csrf;if(!snapshot.connected)notice(snapshot.configured?'Local manager is unavailable. Policy state could not be verified; check its PC service and private route before retrying.':'Private manager connection is not configured. Status is unavailable and controls are disabled.',true,'connection');else if(noticeKind==='connection'){$('#mcp-notice').classList.add('hidden');noticeKind=null;}}catch(error){snapshot=null;csrf=null;notice(error.message,true,'connection');}finally{busy=false;$('#mcp-refresh').disabled=false;render();}}
 $('#mcp-refresh').addEventListener('click',()=>refresh());
@@ -98,6 +142,57 @@ $('#mcp-policy').addEventListener('submit',async event=>{event.preventDefault();
   catch(error){notice(error.message,true);dirty=false;}
   finally{busy=false;$('#mcp-refresh').disabled=false;await refresh();}
 });
-document.addEventListener('visibilitychange',()=>{if(!document.hidden && !dirty)refresh();});
-setInterval(()=>{if(!document.hidden && !dirty && !busy)refresh();},30000);
+$('#mcp-toolkit').addEventListener('change',()=>{toolkitDirty=true;$('#mcp-toolkit-summary').textContent='Toolkit settings have unsaved changes.';});
+$('#mcp-job-limit').addEventListener('input',()=>{$('#mcp-job-limit-value').textContent=$('#mcp-job-limit').value;toolkitDirty=true;});
+$('#mcp-toolkit').addEventListener('submit',async event=>{
+  event.preventDefault();const current=snapshot?.status?.toolkit;
+  if(busy||!csrf||!snapshot?.connected||!current)return;
+  const capabilities={};
+  document.querySelectorAll('[data-mcp-capability]').forEach(node=>{capabilities[node.dataset.mcpCapability]=node.checked;});
+  const settings={capabilities,maxConcurrentJobs:Number($('#mcp-job-limit').value),jobTimeoutSeconds:Number($('#mcp-job-timeout').value)};
+  const elevated=['testRun','repoWrite','vmPower','jobs'].filter(key=>settings.capabilities[key]&&!current.capabilities[key]);
+  if(elevated.length&&!confirm('Enable additional local execution permissions: '+elevated.join(', ')+
+    '? The global read-only policy must also be disabled for write-capable tools. These permissions affect new calls from connected AI clients.'))return;
+  busy=true;fieldsetStatus(true);
+  try{await api('/toolkit',settings);toolkitDirty=false;notice('Toolkit settings verified by the local manager.');}
+  catch(error){notice(error.message,true);}
+  finally{busy=false;await refresh();}
+});
+function fieldsetStatus(disabled){$('#mcp-toolkit-fields').disabled=disabled;$('#mcp-refresh').disabled=disabled;}
+$('#mcp-job-kind').addEventListener('change',updateJobForm);
+$('#mcp-job-submit').addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(busy||!csrf||!snapshot?.connected||$('#mcp-job-submit-fields').disabled)return;
+  const kind=$('#mcp-job-kind').value;
+  const body={kind};
+  if(kind!=='vm_inventory'){
+    body.rootId=$('#mcp-job-root').value;
+    body.relativePath=$('#mcp-job-relative').value;
+    if(!body.rootId||!body.relativePath){notice('Choose an approved root and the repository-relative directory.',true);return;}
+    if(kind==='run_tests')body.command=$('#mcp-job-command').value;
+  }
+  if(kind==='run_tests'&&!confirm('Run the selected project test? Package scripts may execute arbitrary code inside this approved local repository.'))return;
+  if(!['vm_inventory','repo_diagnostics','run_tests'].includes(kind))return;
+  busy=true;$('#mcp-job-submit-fields').disabled=true;
+  try{
+    const result=await api('/jobs/submit',body);
+    notice('Queued '+kind+' as '+result.job.id.slice(0,8)+'. Watch its state below.');
+  }catch(error){notice(error.message,true);}
+  finally{busy=false;await refresh();}
+});
+$('#mcp-jobs').addEventListener('click',async event=>{
+  const button=event.target.closest('[data-mcp-job-action]');
+  if(!button||busy||!snapshot?.connected||!csrf)return;
+  const action=button.dataset.mcpJobAction,id=button.dataset.mcpJobId;
+  if(!/^[a-f0-9-]{36}$/.test(id)||!['cancel','resume'].includes(action))return;
+  const caution=action==='resume'?'Confirm you inspected the previous outcome. Resuming may repeat effects from an interrupted job.':
+    'Cancel this job? A running command may still need separate verification after cancellation.';
+  if(!confirm(caution))return;
+  busy=true;button.disabled=true;
+  try{await api('/jobs/'+action,action==='resume'?{id,confirm:true}:{id});notice('Job '+action+' request acknowledged by the local manager.');}
+  catch(error){notice(error.message,true);}
+  finally{busy=false;await refresh();}
+});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden && !dirty && !toolkitDirty)refresh();});
+setInterval(()=>{if(!document.hidden && !dirty && !toolkitDirty && !busy)refresh();},30000);
 refresh();

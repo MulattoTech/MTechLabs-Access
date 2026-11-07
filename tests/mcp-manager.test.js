@@ -156,6 +156,46 @@ test('owner session revocation blocks a policy write before the local API',async
   assert.equal((await worker.fetch(request,env,{})).status,401);assert.equal(calls.length,0);
 });
 
+test('toolkit status projects capability gates and durable jobs without local paths or job output',()=>{
+  const raw=sample();
+  const capabilities={math:true,systemRead:true,vmRead:true,codeRead:true,testRun:false,repoWrite:false,vmPower:false,jobs:false};
+  raw.toolkit={schemaVersion:1,capabilities,roots:['dev','C:\\private\\source'],maxConcurrentJobs:2,jobTimeoutSeconds:600,token:SERVICE_TOKEN};
+  raw.toolkitJobs={available:true,counts:{queued:1,running:0,succeeded:0,failed:0,cancelled:0,interrupted:0},
+    recent:[{id:'12345678-1234-1234-1234-123456789abc',kind:'repo_diagnostics',state:'queued',createdAt:'2026-11-06T12:00:00Z',
+      rootId:'dev',path:'C:\\secret\\file',result:'SECRET'}]};
+  const safe=projectManagerStatus(raw);
+  assert.deepEqual(safe.toolkit.roots,['dev']);
+  assert.equal(safe.toolkit.capabilities.vmPower,false);
+  assert.equal(safe.toolkitJobs.counts.queued,1);
+  assert.equal(safe.toolkitJobs.recent[0].state,'queued');
+  assert.equal(JSON.stringify(safe).includes('C:\\'),false);
+  assert.equal(JSON.stringify(safe).includes('SECRET'),false);
+});
+
+test('toolkit controls are owner-only, CSRF guarded and verify exact capability persistence',async t=>{
+  const env=await fixture(t),controls={capabilities:{math:true,systemRead:true,vmRead:true,codeRead:true,
+    testRun:false,repoWrite:false,vmPower:false,jobs:true},maxConcurrentJobs:3,jobTimeoutSeconds:300};
+  const calls=mockNetwork(t,()=>Response.json({ok:true,toolkit:{schemaVersion:1,...controls,roots:['dev']},appliesTo:'new_tool_calls'}));
+  assert.equal((await post(env,{...controls,roots:['private']},{},'/admin/mcp/api/toolkit')).status,400);
+  assert.equal((await post(env,controls,{'X-CSRF-Token':''},'/admin/mcp/api/toolkit')).status,403);
+  const response=await post(env,controls,{},'/admin/mcp/api/toolkit'),data=await response.json();
+  assert.equal(response.status,200);assert.equal(data.toolkit.maxConcurrentJobs,3);
+  assert.deepEqual(calls.map(call=>call.url),[ORIGIN+'/v1/toolkit']);
+  assert.deepEqual(JSON.parse(calls[0].options.body),controls);
+  assert.equal(JSON.stringify(data).includes(SERVICE_TOKEN),false);
+});
+
+test('owner can request bounded job cancel and resume without arbitrary origin routes',async t=>{
+  const env=await fixture(t),id='12345678-1234-1234-1234-123456789abc';
+  const calls=mockNetwork(t,(url)=>Response.json({ok:true,job:{id,state:url.endsWith('cancel')?'cancelled':'queued'}}));
+  assert.equal((await post(env,{id,command:'powershell'}, {},'/admin/mcp/api/jobs/cancel')).status,400);
+  const cancelled=await post(env,{id},{},'/admin/mcp/api/jobs/cancel');
+  assert.equal(cancelled.status,200);assert.equal((await cancelled.json()).job.state,'cancelled');
+  const resumed=await post(env,{id,confirm:true},{},'/admin/mcp/api/jobs/resume');
+  assert.equal(resumed.status,200);assert.equal((await resumed.json()).job.state,'queued');
+  assert.deepEqual(calls.map(call=>call.url),[ORIGIN+'/v1/jobs/cancel',ORIGIN+'/v1/jobs/resume']);
+});
+
 test('owner page assets use existing security headers and explain real control boundaries',async t=>{
   const env=await fixture(t);mockNetwork(t);
   const response=await get(env,'/admin/mcp'),html=await response.text();assert.equal(response.status,200);assert.match(html,/managed local wrappers only/);assert.match(html,/Website application grants do not authorize/);assert.match(html,/Codex\/Claude built-in tools and separately connected hosted services are not controlled by this MCP policy/);assert.match(html,/do not interrupt commands already running/);assert.match(html,/href="\/admin\/access"/);
@@ -271,4 +311,24 @@ test('scheduler and initialization histories are bounded before browser projecti
   const raw=sample();raw.coordinator={available:true,scope:'shared-state-directory',clients:Array.from({length:100},()=>({client:'local',inflight:0,queued:0,uncertain:0})),recentEvents:Array.from({length:150},()=>({time:'2026-11-06T01:00:00Z',type:'queued',client:'local',toolName:'read_file'}))};
   raw.remoteMcp={observedClients:Array.from({length:20},()=>({name:'Test client',version:'1',lastInitializedAt:'2026-11-06T01:00:00Z',evidence:'protocol-initialize'}))};
   const projected=projectManagerStatus(raw);assert.equal(projected.coordinator.clients.length,64);assert.equal(projected.coordinator.recentEvents.length,100);assert.equal(projected.remoteMcp.observedClients.length,8);
+});
+
+test('job submission is owner-scoped, strictly typed, verified and never accepts shell payloads',async t=>{
+  const env=await fixture(t),job={kind:'repo_diagnostics',rootId:'dev',relativePath:'MyRepo'};
+  const calls=mockNetwork(t,(url,options)=>Response.json({ok:true,job:{id:'123e4567-e89b-42d3-a456-426614174000',
+    kind:JSON.parse(options.body).kind,state:'queued',privatePath:'C:\\SECRET'}}));
+  for(const input of [
+    {kind:'unknown'}, {kind:'vm_inventory',command:'npm-test'},
+    {kind:'run_tests',rootId:'dev',relativePath:'.',command:'powershell -enc ...'},
+    {kind:'repo_diagnostics',rootId:'../outside',relativePath:'.'},
+    {kind:'repo_diagnostics',rootId:'dev',relativePath:'.',shell:'cmd'},
+  ])assert.equal((await post(env,input,{},'/admin/mcp/api/jobs/submit')).status,400);
+  assert.equal(calls.length,0);
+  const result=await post(env,job,{},'/admin/mcp/api/jobs/submit');
+  assert.equal(result.status,200);assert.deepEqual(JSON.parse(calls[0].options.body),job);
+  assert.equal(calls[0].url,ORIGIN+'/v1/jobs/submit');
+  const response=await result.json();assert.equal(response.job.state,'queued');assert.equal(response.job.kind,'repo_diagnostics');
+  assert.equal(JSON.stringify(response).includes('SECRET'),false);
+  const events=await rows(env.DB,"SELECT * FROM audit WHERE target='mcp-manager' ORDER BY id");
+  assert.deepEqual(events.map(x=>x.outcome),['requested','allowed']);assert.equal(JSON.stringify(events).includes('MyRepo'),false);
 });

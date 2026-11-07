@@ -18,8 +18,17 @@ export const READ_ONLY_TOOLS = new Set([
   'list_searches',
   'get_more_search_results',
   'get_usage_stats',
+  'mterm_math_evaluate', 'mterm_math_solve', 'mterm_math_verify', 'mterm_math_convert_units',
+  'mterm_system_inventory', 'mterm_container_list',
+  'mterm_vm_list', 'mterm_vm_inspect', 'mterm_vm_network_map', 'mterm_vm_disk_health',
+  'mterm_vm_diagnostics', 'mterm_vm_change_plan',
+  'mterm_repo_inspect', 'mterm_code_diagnostics', 'mterm_code_review_diff',
+  'mterm_code_symbols', 'mterm_code_references',
+  'mterm_job_status', 'mterm_job_logs',
 ]);
-export const RESOURCE_GATED_TOOLS = new Set(['start_process', 'start_search', 'interact_with_process', 'write_pdf']);
+export const RESOURCE_GATED_TOOLS = new Set(['start_process', 'start_search', 'interact_with_process', 'write_pdf',
+  'mterm_code_diagnostics', 'mterm_test_run', 'mterm_git_worktree_create',
+  'mterm_vm_start', 'mterm_vm_checkpoint_create']);
 
 export function validatePolicy(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input) ||

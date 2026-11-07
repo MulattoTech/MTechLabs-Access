@@ -23,7 +23,8 @@ test('policy requires exactly three typed fields and a 1..64 request limit', () 
 
 test('read-only explicitly permits safe reads and denies writes, configuration, launch and unknown tools', () => {
   const policy = { enabled: true, readOnly: true, maxInflight: 1 };
-  for (const name of READ_ONLY_TOOLS) assert.equal(checkToolPolicy(policy, name), null, name);
+  const enoughResources = { freeMemoryBytes: 1000, lowMemoryFloorBytes: 200, freeDiskBytes: 1000, lowDiskFloorBytes: 200 };
+  for (const name of READ_ONLY_TOOLS) assert.equal(checkToolPolicy(policy, name, {}, enoughResources), null, name);
   for (const name of [
     'write_file', 'write_pdf', 'edit_block', 'move_file', 'create_directory', 'set_config_value', 'get_config',
     'start_process', 'interact_with_process', 'start_search', 'force_terminate', 'kill_process', 'shutdown',

@@ -10,6 +10,7 @@ import { loadConfig, parseArguments } from './lib/config.mjs';
 import { atomicWriteJson, checkToolPolicy, RESOURCE_GATED_TOOLS, QUEUE_CAPACITY, MAX_PENDING_REQUESTS } from './lib/policy.mjs';
 import { createCoordinator, coordinationError, isCoordinationBusy } from './lib/coordinator.mjs';
 import { createLineFramer, errorResponse, requestKey } from './lib/framing.mjs';
+import { ENGINEERING_TOOLS, isEngineeringTool, executeEngineeringTool } from './lib/engineering-tools.mjs';
 
 export async function startGateway({
   config,
@@ -192,7 +193,13 @@ export async function startGateway({
     pending.set(recordKey, record);
     if (isTool) activeTools += 1;
     try {
-      sendToChild(message);
+      if (isTool && isEngineeringTool(message.params.name)) {
+        void executeEngineeringTool(config, message.params.name, message.params.arguments ?? {})
+          .then(result => receiveChildLine(JSON.stringify({ jsonrpc: '2.0', id: message.id, result })))
+          .catch(() => receiveChildLine(JSON.stringify(errorResponse(message.id, -32020, 'Engineering tool failed.'))));
+      } else {
+        sendToChild(message);
+      }
     } catch {
       if (isTool) {
         // A failed stream write can still have reached the child. Keep the
@@ -409,6 +416,11 @@ export async function startGateway({
       updateReservation(record.ticketId, 'release');
     }
     if (record.message.method === 'initialize' && Object.hasOwn(message, 'result') && !message.error) initialized = true;
+    if (record.message.method === 'tools/list' && !record.message.params?.cursor &&
+        Array.isArray(message.result?.tools)) {
+      const known = new Set(message.result.tools.map(item => item.name));
+      message.result.tools = [...message.result.tools, ...ENGINEERING_TOOLS.filter(item => !known.has(item.name))];
+    }
     if (!record.timedOut) send(message);
     touch();
     void pump();

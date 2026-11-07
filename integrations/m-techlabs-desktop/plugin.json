@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "m-techlabs-desktop",
-  "version": "0.1.2",
-  "description": "MTerm-CLI private workstation tools, currently powered by the managed Desktop Commander bridge.",
+  "version": "0.2.0",
+  "description": "MTerm-CLI owner-managed workstation tools with engineering and operations controls.",
   "author": { "name": "M-TechLabs" },
   "homepage": "https://m-techlabs.com/admin/mcp",
   "extensions": {
@@ -10,7 +10,7 @@
       "interface": {
         "displayName": "MTerm-CLI",
         "shortDescription": "Your private workstation tools",
-        "longDescription": "MTerm-CLI connects to Dylan's self-hosted Desktop Commander bridge through Cloudflare owner sign-in. The standalone MTerm-CLI codebase and staging service remain separate until a tested migration. The server provides local file and directory operations, searches, documents, and terminal processes. Manage pause, read-only access, request limits, and connection health at M-TechLabs.com/admin/mcp. This private connection uses the free local Desktop Commander runtime, not pooled hosted accounts. The PC must be on and signed in. Read-only policy blocks writes and process launches until the owner explicitly changes it. Existing hosted Remote Desktop Commander accounts and AI subscriptions remain separate.",
+        "longDescription": "MTerm-CLI connects to Dylan's private, owner-authenticated managed Desktop Commander bridge. In addition to file, search and terminal functions, the manager offers bounded math, system and Hyper-V inspection, repository diagnostics, approved tests and a durable job queue. New execution and VM power operations require explicit capability permission and the global write gate. Control fleet concurrency (1–64 active calls), toolkit switches and jobs at M-TechLabs.com/admin/mcp. Repository paths stay local; connected chats and other hosted accounts remain separate. The standalone MTerm-CLI staging codebase has not replaced this proven bridge. The PC must be on and the manager running.",
         "developerName": "M-TechLabs",
         "category": "Developer Tools",
         "capabilities": ["Interactive"],

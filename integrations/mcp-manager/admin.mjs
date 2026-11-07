@@ -8,6 +8,8 @@ import { atomicWriteJson, validatePolicy } from './lib/policy.mjs';
 import { collectStatus } from './lib/status.mjs';
 import { readJsonBody } from './lib/http-body.mjs';
 import { createRemoteMcp } from './remote.mjs';
+import { readToolkit, writeToolkit, projectToolkit, validateToolkitUpdate } from './lib/toolkit-config.mjs';
+import { startJobRunner, submitJob, cancelJob, resumeJob } from './lib/jobs.mjs';
 
 const ALLOWED_HOSTS = new Set([
   '127.0.0.1:19740', 'localhost:19740',
@@ -77,6 +79,57 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
         return respond(response, 200, { ...await collectStatus(config, startedAt), remoteMcp: remote.status() });
       }
       if (request.url === '/mcp') return remote.handle(request, response);
+      if (request.url === '/v1/toolkit' && request.method === 'GET') {
+        request.resume();
+        try { return respond(response, 200, { toolkit: projectToolkit(await readToolkit(config)) }); }
+        catch { return failure(response, 503, 'toolkit_unavailable', 'Toolkit configuration is unavailable.'); }
+      }
+      if (request.url === '/v1/toolkit' && request.method === 'POST') {
+        let updated;
+        try {
+          const previous = await readToolkit(config);
+          updated = validateToolkitUpdate(await readJsonBody(request, MAX_BODY_BYTES), previous);
+        } catch {
+          request.resume();
+          return failure(response, 400, 'invalid_toolkit', 'Invalid capability or job settings; no update was applied.');
+        }
+        const write = writeChain.then(() => writeToolkit(config, updated));
+        writeChain = write.catch(() => {});
+        try { await write; }
+        catch { return failure(response, 503, 'toolkit_write_failed', 'Toolkit settings were not saved.'); }
+        return respond(response, 200, { ok: true, toolkit: projectToolkit(updated), appliesTo: 'new_tool_calls' });
+      }
+      if (request.url === '/v1/jobs/submit' && request.method === 'POST') {
+        let created;
+        try {
+          const body = await readJsonBody(request, MAX_BODY_BYTES);
+          const expected = body?.kind === 'vm_inventory' ? 'kind' :
+            body?.kind === 'repo_diagnostics' ? 'kind,relativePath,rootId' :
+              body?.kind === 'run_tests' ? 'command,kind,relativePath,rootId' : '';
+          if (!body || typeof body !== 'object' || Array.isArray(body) ||
+              Object.keys(body).sort().join(',') !== expected) throw new Error('invalid_job_request');
+          created = await submitJob(config, body);
+        } catch {
+          request.resume();
+          return failure(response, 400, 'invalid_job_request', 'Only approved and enabled job kinds can be queued.');
+        }
+        return respond(response, 200, { ok: true, job: created });
+      }
+      if ((request.url === '/v1/jobs/cancel' || request.url === '/v1/jobs/resume') && request.method === 'POST') {
+        let action;
+        try {
+          const body = await readJsonBody(request, MAX_BODY_BYTES);
+          if (!body || typeof body !== 'object' || Array.isArray(body) ||
+              typeof body.id !== 'string' || !/^[a-f0-9-]{36}$/.test(body.id) ||
+              (request.url.endsWith('/cancel') ? Object.keys(body).length !== 1 :
+                Object.keys(body).length !== 2 || body.confirm !== true)) throw new Error('invalid_job_action');
+          action = request.url.endsWith('/cancel') ? await cancelJob(config, body.id) : await resumeJob(config, body.id, body.confirm);
+        } catch {
+          request.resume();
+          return failure(response, 400, 'invalid_job_action', 'Invalid job operation or job state.');
+        }
+        return respond(response, 200, { ok: true, job: action });
+      }
       if (request.url === '/v1/policy' && request.method === 'POST') {
         let policy;
         try {
@@ -103,7 +156,8 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
         });
       }
       request.resume();
-      if (request.url === '/v1/status' || request.url === '/v1/policy') {
+      if (request.url === '/v1/status' || request.url === '/v1/policy' || request.url === '/v1/toolkit' ||
+          request.url === '/v1/jobs/cancel' || request.url === '/v1/jobs/resume' || request.url === '/v1/jobs/submit') {
         return failure(response, 405, 'method_not_allowed', 'This method is not supported.');
       }
       return failure(response, 404, 'not_found', 'No such management endpoint.');
@@ -120,7 +174,9 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
   });
   // Local lifecycle hook only. There is no HTTP endpoint that kills processes.
   server.closeManagedMcp = () => remote.close();
-  server.once('close', () => { void remote.close().catch(() => {}); });
+  let jobRunner;
+  server.once('listening', () => { try { jobRunner = startJobRunner(config); } catch { /* fail closed */ } });
+  server.once('close', () => { jobRunner?.close(); void remote.close().catch(() => {}); });
   return server;
 }
 

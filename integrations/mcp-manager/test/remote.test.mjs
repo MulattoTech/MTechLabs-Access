@@ -8,6 +8,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { createAdminServer } from '../admin.mjs';
 import { fixture, TEST_TOKEN } from './helpers.mjs';
+import { ENGINEERING_TOOLS } from '../lib/engineering-tools.mjs';
 
 const HEADERS = {
   Host: '127.0.0.1:19740', Authorization: 'Bearer ' + TEST_TOKEN,
@@ -89,7 +90,7 @@ test('real SDK HTTP initialize/list/call forwards actual tools, resources, promp
   const capabilities = client.getServerCapabilities();
   assert.deepEqual(capabilities, { tools: {}, resources: {}, prompts: {} });
   const tools = await client.listTools();
-  assert.equal(tools.tools.length, 2);
+  assert.equal(tools.tools.length, 2 + ENGINEERING_TOOLS.length);
   assert.equal(tools.tools[0]._meta['ui/resourceUri'], 'ui://desktop-commander/file-preview');
   assert.equal(tools.tools[0]._meta['openai/outputTemplate'], 'ui://desktop-commander/file-preview');
   assert.equal(tools.tools[0].annotations.readOnlyHint, true);
@@ -103,7 +104,7 @@ test('real SDK HTTP initialize/list/call forwards actual tools, resources, promp
   assert.match((await client.getPrompt({ name: 'fixture' })).messages[0].content.text, /harmless/);
   const status = await f.getStatus();
   assert.equal(status.remoteMcp.state, 'ready');
-  assert.equal(status.remoteMcp.lastToolListCount, 2);
+  assert.equal(status.remoteMcp.lastToolListCount, 2 + ENGINEERING_TOOLS.length);
   assert.equal(status.remoteMcp.clientIdentityTracked, false);
   assert.equal(status.remoteMcp.resourceSupport, true);
   assert.ok(status.remoteMcp.lastSuccessfulToolAt);
@@ -123,7 +124,7 @@ test('remote calls preserve read-only and pause policy; protocol discovery remai
   assert.equal((await client.callTool({ name: 'read_file', arguments: {} })).isError, false);
   await fs.writeFile(f.config.policyPath, JSON.stringify({ enabled: false, readOnly: true, maxInflight: 1 }));
   await assert.rejects(client.callTool({ name: 'read_file', arguments: {} }), error => error.code === -32010);
-  assert.equal((await client.listTools()).tools.length, 2);
+  assert.equal((await client.listTools()).tools.length, 2 + ENGINEERING_TOOLS.length);
 });
 
 test('concurrent cold-start clients wait for the same complete upstream initialization', async t => {
@@ -140,7 +141,7 @@ test('concurrent cold-start clients wait for the same complete upstream initiali
   const clients = await Promise.all([firstClient, f.client()]);
   for (const client of clients) {
     assert.deepEqual(client.getServerCapabilities(), { tools: {}, resources: {}, prompts: {} });
-    assert.equal((await client.listTools()).tools.length, 2);
+    assert.equal((await client.listTools()).tools.length, 2 + ENGINEERING_TOOLS.length);
   }
   assert.equal((await f.getStatus()).instances.filter(instance => instance.client === 'remote-web').length, 1);
 });

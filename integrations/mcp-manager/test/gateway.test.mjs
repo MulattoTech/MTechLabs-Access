@@ -7,6 +7,7 @@ import { atomicWriteJson } from '../lib/policy.mjs';
 import { collectStatus } from '../lib/status.mjs';
 import { readCoordinatorStatus } from '../lib/coordinator.mjs';
 import { gatewayFixture } from './helpers.mjs';
+import { ENGINEERING_TOOLS } from '../lib/engineering-tools.mjs';
 
 async function waitFor(predicate, timeout = 4000) {
   const deadline = Date.now() + timeout;
@@ -166,7 +167,7 @@ test('a cancelled queued request is never dispatched and protocol discovery work
   assert.equal((await f.response(3)).result.ordinal, 2);
   await atomicWriteJson(f.config.policyPath, { enabled: false, readOnly: true, maxInflight: 1 });
   f.input.write(JSON.stringify({ jsonrpc: '2.0', id: 4, method: 'tools/list' }) + '\n');
-  assert.deepEqual((await f.response(4)).result.tools, []);
+  assert.deepEqual((await f.response(4)).result.tools.map(item => item.name), ENGINEERING_TOOLS.map(item => item.name));
 });
 
 test('status and diagnostics contain no tool arguments or raw child secrets and preserve unrelated metadata', async t => {
