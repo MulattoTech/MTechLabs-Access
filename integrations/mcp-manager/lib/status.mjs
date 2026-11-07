@@ -4,8 +4,10 @@ import os from 'node:os';
 import { readBoundedJson } from './config.mjs';
 import { readPolicy, QUEUE_CAPACITY } from './policy.mjs';
 import { readCoordinatorStatus, GLOBAL_QUEUE_CAPACITY } from './coordinator.mjs';
+import { readToolkit, projectToolkit } from './toolkit-config.mjs';
+import { jobSummary } from './jobs.mjs';
 
-export const MANAGER_VERSION = '0.3.0';
+export const MANAGER_VERSION = '0.4.0';
 const ID = /^[a-zA-Z0-9_.-]{1,64}$/;
 const LABEL = /^[a-zA-Z0-9][a-zA-Z0-9 _().-]{0,79}$/;
 export const BOUNDARIES = [
@@ -92,6 +94,12 @@ export async function collectStatus(config, startedAt = Date.now()) {
   let policy = null;
   const warnings = [];
   try { policy = await readPolicy(config.policyPath); } catch { warnings.push('Policy is unavailable or invalid; managed tool execution fails closed.'); }
+  let toolkit = null;
+  try { toolkit = projectToolkit(await readToolkit(config)); }
+  catch { warnings.push('Engineering toolkit configuration is unavailable; specialized execution fails closed.'); }
+  let toolkitJobs = null;
+  try { toolkitJobs = await jobSummary(config); }
+  catch { warnings.push('Durable job history could not be inspected.'); }
   let packageVersion = null;
   let installed = false;
   try {
@@ -132,6 +140,8 @@ export async function collectStatus(config, startedAt = Date.now()) {
     },
     policy,
     policyValid: policy !== null,
+    toolkit,
+    toolkitJobs,
     runtime: { nodeVersion: process.version, packageVersion, installed },
     deployment: await readDeployment(config.stateDirectory),
     resources: {

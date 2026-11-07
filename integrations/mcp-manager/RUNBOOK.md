@@ -211,3 +211,79 @@ the updated gateway. Do not terminate an existing coding session as an upgrade
 shortcut. Windows sign-in autostart is verified separately from a full reboot;
 a reboot test requires actually restarting Windows and must not be inferred
 from a valid Startup shortcut.
+
+## Engineering toolkit setup and recovery (0.4.0)
+
+All commands in this section run locally on `MulattoTechBox` under the
+intended Windows user account. The examples assume the existing managed
+installation layout; check paths before running. Do **not** copy private
+tokens or browser credentials into commands, issues or logs.
+
+1. Install the optional isolated math environment. The installer only creates
+   `H:\MTechLabs\MCP\state\math-venv` and pins the reviewed requirements:
+
+       powershell -NoProfile -ExecutionPolicy RemoteSigned -File H:\MTechLabs\MCP\runtime\install-math.ps1
+
+   Verify with `...\math-venv\Scripts\python.exe -I ...\runtime\math_worker.py`
+   using bounded JSON on standard input, or the MCP math tools after launch.
+
+2. Configure local allowlisted repository roots, using a convenient parent
+   that contains the Git repositories you actually want to manage (never a
+   drive root). `rootId` is only a handle; the server resolves each requested
+   relative directory to a canonical path and requires the exact Git top level.
+
+       node H:\MTechLabs\MCP\runtime\configure-toolkit.mjs --config H:\MTechLabs\MCP\state\manager.json --add-root dev C:\Tools\Dev
+       node H:\MTechLabs\MCP\runtime\configure-toolkit.mjs --config H:\MTechLabs\MCP\state\manager.json --list
+
+   Remove one: `--remove-root dev`. Root paths are never writable through the
+   website. No default arbitrary filesystem root is assumed.
+
+3. Start with the original loopback-only launcher. First inspect the exact
+   `19740` listener and owner; do not terminate processes to reclaim a port.
+
+       powershell -NoProfile -ExecutionPolicy RemoteSigned -File H:\MTechLabs\MCP\runtime\manage.ps1 -Action Status
+       powershell -NoProfile -ExecutionPolicy RemoteSigned -File H:\MTechLabs\MCP\runtime\manage.ps1 -Action Start
+
+   The existing `install-windows-startup.ps1` creates *user-scoped* desktop
+   and Startup shortcuts when absent, refuses to overwrite different
+   shortcuts, and invokes the launcher. Use it once after validating the
+   manager. It changes no firewall rule, machine-wide policy or services.
+
+4. In the owner web dashboard, refresh status. Initially enable only the
+   capabilities you need. `testRun`, `repoWrite`, `vmPower` and `jobs` are off
+   by default. To execute those tools, the global `readOnly` gate must also be
+   disabled, after reviewing the elevated permissions. The global pause and
+   concurrency slider continue to apply to all managed calls.
+
+5. Jobs: choose VM inventory, repository diagnostics, or one of the explicitly
+   allowed tests (`npm-test`, `npm-lint`, `pytest`, `git-diff-check`). The
+   queue stores metadata in `state\toolkit-jobs.sqlite`; this is state, not a
+   cache to delete during deployment. New manager processes mark previous
+   `running` jobs `interrupted` and do not infer their outcome. Use owner
+   controls to cancel or explicitly requeue only after checking the PC.
+
+6. Rollback: keep the current good source snapshot and all `state` data. Stop
+   only the exact manager PID after proving no active managed requests, then
+   restore the previous runtime source snapshot and restart. Do not roll back
+   `toolkit.json`, admission SQLite or job SQLite blindly; an older manager
+   ignores the new toolkit, while the newest coordinator state may reject
+   an older client until it is reconnected.
+
+### Permission and resource boundaries
+
+- The owner dashboard relays fixed JSON routes through the Worker secret;
+  CSRF, owner identity and input shape are verified at the edge and local
+  bearer/Host checks at the PC. It does not accept arbitrary shell strings.
+- Git actions require canonical root containment and the Git worktree's root.
+  Checked patches require the expected 40-character HEAD and a successful
+  `git apply --check`; no automatic commit, merge, push or deletion occurs.
+- Hyper-V changes use fixed cmdlets and require an exact VM-name confirmation.
+  Shutdown is graceful; checkpoints perform a disk-headroom preflight. No
+  start/shutdown/checkpoint runs from a preview-only request.
+- The process runner does not provide Windows Job Objects or a full process-
+  tree kill guarantee. A timed-out test and an interrupted job may leave a
+  subprocess; inspect before retrying. Never interpret a timeout as a safe
+  rollback.
+- All sensitive output and absolute paths stay local. Online job status is a
+  limited metadata projection; detailed command results require an approved
+  local tool call.

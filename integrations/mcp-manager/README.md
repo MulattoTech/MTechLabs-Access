@@ -366,3 +366,44 @@ Do not reset global client configuration or terminate unrelated AI sessions.
 
 This is an independent local administration and MCP transport layer, not a
 vendor fork or a reproduction of its account/device administration service.
+
+## MTerm-CLI engineering toolkit (manager 0.4.0)
+
+The managed gateway adds 28 named, bounded MCP tools. These are additional
+interfaces alongside upstream Desktop Commander, not a replacement for its
+terminal, file and search functions. They are available through the managed
+gateway and the owner-authenticated self-hosted remote route only. Other
+separately configured native/hosted connections remain outside this policy.
+
+| Area | Tools and scope | Initial permission |
+| --- | --- | --- |
+| Math | SymPy evaluate, solve, equivalence and unit conversions; no Python `eval` | On, read only |
+| Host | OS/RAM/CPU/GPU/disk inventory, Docker and WSL listing | On, read only |
+| Hyper-V | VM list, inspect, networking, disk use, event diagnostics, change preview | On, read only |
+| Hyper-V changes | Start VM, graceful shutdown, create checkpoint with exact-name confirmation | Off |
+| Git/code | Repository status, diff review, syntax/whitespace checks, symbol/reference search | On, restricted to local root IDs |
+| Tests and edits | Allowlisted test commands, SHA-checked patch application, new isolated worktree | Off |
+| Durable work | SQLite queue for diagnostics, allowlisted tests and VM inventory; status, logs, cancel and explicit resume | Off |
+
+The owner dashboard at `https://m-techlabs.com/admin/mcp` provides a **shared
+in-flight tool-call limit of 1–64** (the `32 · Fleet` preset is intended for
+30+ concurrently active clients), separate persistent-job concurrency and
+timeout limits, capability switches, queue state and cancel/resume/submit
+controls. A connected chat does not reserve a request slot until it calls a
+tool. Neither limit is an OS-enforced CPU, memory or GPU cap. Every remotely
+initiated write requires the global managed policy to allow writes *and* the
+corresponding toolkit capability to be enabled. Enabling a capability does not
+alter independently configured Desktop Commander clients.
+
+Repository root paths are configured **only on the PC**. The website shows
+identifiers but never absolute paths. See `RUNBOOK.md` for adding/removing root
+IDs, offline recovery and local verification. Durable jobs have explicit
+terminal states; a restarted manager marks uncertain running work interrupted
+and never automatically replays it. A cancellation can leave descendant
+processes; confirm their state before resuming.
+
+Deliberate non-goals in this increment: arbitrary command or package
+installation through the owner dashboard, guest-OS credentials/interactive
+Hyper-V sessions, Proxmox/VMware integrations, dependency-graph agent
+orchestration, GPU job scheduling, and operating-system-enforced isolation.
+None of these is claimed to be implemented by the capability switches.

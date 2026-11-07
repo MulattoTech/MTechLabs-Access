@@ -33,6 +33,27 @@ function projectedPolicy(value) {
   try{return validatePolicy(value);}catch{return null;}
 }
 
+const TOOLKIT_CAPABILITIES=['math','systemRead','vmRead','codeRead','testRun','repoWrite','vmPower','jobs'];
+export function validateToolkitControls(value) {
+  if(!object(value)||Object.keys(value).sort().join(',')!=='capabilities,jobTimeoutSeconds,maxConcurrentJobs'||
+     !object(value.capabilities)||Object.keys(value.capabilities).sort().join(',')!==[...TOOLKIT_CAPABILITIES].sort().join(',')||
+     !TOOLKIT_CAPABILITIES.every(key=>typeof value.capabilities[key]==='boolean')||
+     !Number.isInteger(value.maxConcurrentJobs)||value.maxConcurrentJobs<1||value.maxConcurrentJobs>8||
+     !Number.isInteger(value.jobTimeoutSeconds)||value.jobTimeoutSeconds<30||value.jobTimeoutSeconds>3600){
+    throw new HttpError(400,'Invalid toolkit capabilities or job limits.');
+  }
+  return {capabilities:Object.fromEntries(TOOLKIT_CAPABILITIES.map(key=>[key,value.capabilities[key]])),
+    maxConcurrentJobs:value.maxConcurrentJobs,jobTimeoutSeconds:value.jobTimeoutSeconds};
+}
+
+function projectToolkit(value) {
+  if(!object(value)||value.schemaVersion!==1||!Array.isArray(value.roots))return null;
+  try{
+    const controls=validateToolkitControls({capabilities:value.capabilities,maxConcurrentJobs:value.maxConcurrentJobs,jobTimeoutSeconds:value.jobTimeoutSeconds});
+    return {schemaVersion:1,...controls,roots:value.roots.slice(0,8).filter(item=>typeof item==='string'&&/^[a-z][a-z0-9_-]{0,31}$/.test(item))};
+  }catch{return null;}
+}
+
 // Project only the public status contract. Never relay raw upstream JSON,
 // request headers, URLs, credentials, local paths or arbitrary command output.
 export function projectManagerStatus(value) {
@@ -51,6 +72,18 @@ export function projectManagerStatus(value) {
     schemaVersion:1,
     service:{name:'MTerm-CLI Manager',version:version(value.service.version),state:'running',uptimeSeconds:count(value.service.uptimeSeconds)},
     policy,policyValid:value.policyValid===true && policy!==null,
+    toolkit:projectToolkit(value.toolkit),
+    toolkitJobs:object(value.toolkitJobs)?{
+      available:value.toolkitJobs.available===true,
+      counts:Object.fromEntries(['queued','running','succeeded','failed','cancelled','interrupted'].map(k=>[k,count(value.toolkitJobs.counts?.[k])??0])),
+      recent:(Array.isArray(value.toolkitJobs.recent)?value.toolkitJobs.recent:[]).slice(0,15).filter(item=>
+        object(item)&&typeof item.id==='string'&&/^[a-f0-9-]{36}$/.test(item.id)).map(item=>({
+          id:item.id,kind:choice(item.kind,['repo_diagnostics','run_tests','vm_inventory']),
+          state:choice(item.state,['queued','running','succeeded','failed','cancelled','interrupted']),
+          createdAt:date(item.createdAt),updatedAt:date(item.updatedAt),startedAt:date(item.startedAt),finishedAt:date(item.finishedAt),
+          cancelRequested:bool(item.cancelRequested),resumeCount:count(item.resumeCount),
+        })),
+    }:null,
     runtime:{nodeVersion:version(runtime.nodeVersion),packageVersion:version(runtime.packageVersion),installed:bool(runtime.installed)},
     deployment:deployment?{
       sourceCommit:typeof deployment.sourceCommit==='string'&&/^[a-f0-9]{40}$/.test(deployment.sourceCommit)?deployment.sourceCommit:null,
@@ -131,7 +164,7 @@ async function boundedJson(response) {
 }
 
 async function managerRequest(config,path,policy,fetcher=fetch) {
-  if(!['/v1/status','/v1/policy'].includes(path) || (path==='/v1/status')!==(policy===undefined))throw new Error('unsupported_manager_route');
+  if(!['/v1/status','/v1/policy','/v1/toolkit','/v1/jobs/cancel','/v1/jobs/resume','/v1/jobs/submit'].includes(path) || (path==='/v1/status')!==(policy===undefined))throw new Error('unsupported_manager_route');
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT_MS);
   try {
     const headers={Accept:'application/json',Authorization:`Bearer ${config.token}`};
@@ -147,8 +180,8 @@ async function managerRequest(config,path,policy,fetcher=fetch) {
 
 export async function mcpApi(request,env,ctx,path) {
   const owner=await ownerIdentity(request,env);
-  if(!['/status','/policy'].includes(path))throw new HttpError(404,'Unknown MCP management action.');
-  if((path==='/status' && request.method!=='GET') || (path==='/policy' && request.method!=='POST'))throw new HttpError(405,'Method not allowed.');
+  if(!['/status','/policy','/toolkit','/jobs/cancel','/jobs/resume','/jobs/submit'].includes(path))throw new HttpError(404,'Unknown MCP management action.');
+  if((path==='/status' && request.method!=='GET') || (path!=='/status' && request.method!=='POST'))throw new HttpError(405,'Method not allowed.');
   let session=await readSession(request,env,ADMIN_COOKIE),cookie;
   if(path==='/status') {
     if(!session || session.kind!=='owner' || session.user_id!==owner.user.id) {
@@ -169,7 +202,75 @@ export async function mcpApi(request,env,ctx,path) {
   }
   if(!session || session.kind!=='owner' || session.user_id!==owner.user.id)throw new HttpError(401,'Refresh the MCP manager before changing policy.');
   await requireCsrf(request,session);
-  const policy=validatePolicy(await jsonBody(request,1024)),config=managerConfiguration(env);
+  const payload=await jsonBody(request,2048);
+  if(path==='/jobs/submit') {
+    const expected=payload?.kind==='vm_inventory'?'kind':
+      payload?.kind==='repo_diagnostics'?'kind,relativePath,rootId':
+        payload?.kind==='run_tests'?'command,kind,relativePath,rootId':'';
+    if(!object(payload)||Object.keys(payload).sort().join(',')!==expected||
+      (payload.kind!=='vm_inventory'&&
+        (typeof payload.rootId!=='string'||!/^[a-z][a-z0-9_-]{0,31}$/.test(payload.rootId)||
+         typeof payload.relativePath!=='string'||payload.relativePath.length>512))||
+      (payload.kind==='run_tests'&&!['npm-test','npm-lint','pytest','git-diff-check'].includes(payload.command))){
+      throw new HttpError(400,'Invalid job type or repository identifier.');
+    }
+    const config=managerConfiguration(env);
+    if(!config)throw new HttpError(503,'The local manager is not configured.');
+    await audit(env.DB,owner.email,'mcp.job.submit.request','mcp-manager','requested',
+      {kind:payload.kind,rootId:payload.rootId||null});
+    let response;
+    try {
+      response=await managerRequest(config,'/v1/jobs/submit',payload);
+      if(response?.ok!==true||response.job?.state!=='queued'||response.job?.kind!==payload.kind||
+         typeof response.job.id!=='string'||!/^[a-f0-9-]{36}$/.test(response.job.id))throw new Error('unverified_job_submission');
+    }catch{
+      await audit(env.DB,owner.email,'mcp.job.submit.result','mcp-manager','unverified',{kind:payload.kind});
+      throw new HttpError(502,'Job submission could not be verified. Refresh status before retrying.');
+    }
+    await audit(env.DB,owner.email,'mcp.job.submit.result','mcp-manager','allowed',
+      {kind:payload.kind,jobId:response.job.id});
+    return json({ok:true,job:{id:response.job.id,state:'queued',kind:payload.kind}});
+  }
+  if(path==='/jobs/cancel'||path==='/jobs/resume') {
+    if(!object(payload)||typeof payload.id!=='string'||!/^[a-f0-9-]{36}$/.test(payload.id)||
+       (path==='/jobs/cancel'?Object.keys(payload).length!==1:Object.keys(payload).length!==2||payload.confirm!==true)){
+      throw new HttpError(400,'Invalid job action.');
+    }
+    const config=managerConfiguration(env);
+    if(!config)throw new HttpError(503,'The local manager is not configured.');
+    const operation=path==='/jobs/cancel'?'cancel':'resume';
+    await audit(env.DB,owner.email,'mcp.job.'+operation+'.request','mcp-manager','requested',{jobId:payload.id});
+    let response;
+    try{
+      response=await managerRequest(config,'/v1'+path,payload);
+      if(response?.ok!==true||response.job?.id!==payload.id||
+         !['queued','running','succeeded','failed','cancelled','interrupted'].includes(response.job.state))throw new Error('unverified_job_result');
+    }catch{
+      await audit(env.DB,owner.email,'mcp.job.'+operation+'.result','mcp-manager','unverified',{jobId:payload.id});
+      throw new HttpError(502,'Job outcome could not be verified. Refresh before retrying.');
+    }
+    await audit(env.DB,owner.email,'mcp.job.'+operation+'.result','mcp-manager','allowed',{jobId:payload.id,state:response.job.state});
+    return json({ok:true,job:{id:response.job.id,state:response.job.state}});
+  }
+  if(path==='/toolkit') {
+    const controls=validateToolkitControls(payload),config=managerConfiguration(env);
+    if(!config)throw new HttpError(503,'The local manager is not configured. No toolkit settings were sent.');
+    await audit(env.DB,owner.email,'mcp.toolkit.request','mcp-manager','requested',controls);
+    let result;
+    try {
+      result=await managerRequest(config,'/v1/toolkit',controls);
+      const applied=projectToolkit(result?.toolkit);
+      if(result?.ok!==true||result.appliesTo!=='new_tool_calls'||!applied||
+         JSON.stringify({...applied.capabilities,maxConcurrentJobs:applied.maxConcurrentJobs,jobTimeoutSeconds:applied.jobTimeoutSeconds})!==
+         JSON.stringify({...controls.capabilities,maxConcurrentJobs:controls.maxConcurrentJobs,jobTimeoutSeconds:controls.jobTimeoutSeconds}))throw new Error('unverified_toolkit_result');
+    } catch {
+      await audit(env.DB,owner.email,'mcp.toolkit.result','mcp-manager','unverified',{verificationRequired:true});
+      throw new HttpError(502,'Toolkit result could not be verified. Refresh status before retrying.');
+    }
+    await audit(env.DB,owner.email,'mcp.toolkit.result','mcp-manager','allowed',controls);
+    return json({ok:true,toolkit:projectToolkit(result.toolkit),appliesTo:'new_tool_calls',verifiedAt:nowSeconds()});
+  }
+  const policy=validatePolicy(payload),config=managerConfiguration(env);
   if(!config)throw new HttpError(503,'The local manager connection is not configured. No policy change was sent.');
   // A failed request is never automatically retried: a lost response could hide
   // an applied change. Re-read status before a deliberate retry.

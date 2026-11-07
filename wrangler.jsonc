@@ -15,5 +15,5 @@
   },
   "d1_databases": [{"binding":"DB","database_name":"mtechlabs-access-codes","database_id":"ec35af84-1df1-4559-ace8-1db42f3b1b5c","migrations_dir":"migrations"}],
   "triggers": {"crons":["*/30 * * * *"]},
-  "observability": {"enabled":true,"head_sampling_rate":1,"logs":{"enabled":true,"invocation_logs":true},"redact_query_string":true}
+  "observability": {"enabled":true,"head_sampling_rate":1,"logs":{"enabled":true,"invocation_logs":true},"traces":{"enabled":true,"head_sampling_rate":0.01},"redact_query_string":true}
 }
