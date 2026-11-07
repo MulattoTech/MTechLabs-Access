@@ -1,4 +1,4 @@
-# M-TechLabs local MCP manager
+# MTerm-CLI managed Desktop Commander bridge
 
 ## Implementation brief
 

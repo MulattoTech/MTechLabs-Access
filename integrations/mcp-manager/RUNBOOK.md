@@ -1,4 +1,4 @@
-# M-TechLabs Desktop MCP — owner runbook
+# MTerm-CLI Desktop Bridge — owner runbook
 
 ## Daily use
 
@@ -35,7 +35,7 @@ guarantee faster builds.
 
 Remote endpoint: `https://mcp.m-techlabs.com/mcp`
 
-- ChatGPT: open the private [M-TechLabs Desktop connection](https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278),
+- ChatGPT: open the private [MTerm-CLI connection](https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278),
   install it if needed, select **Connect**, and complete the Cloudflare owner login. Enable the connection
   in the conversation. If configuring the endpoint manually instead, choose
   OAuth and automatic/DCR client registration.
@@ -52,7 +52,7 @@ authorization. A healthy backend does not prove either personal account has
 finished its OAuth consent. Leave the original hosted connector installed until
 the new connection has passed a real task in each client.
 
-The private ChatGPT package is version 0.1.0, ID
+The private ChatGPT package is version 0.1.2, ID
 `plugins_6aed1a85300481919559498b458ed278`. It is private to the owner's account,
 not a public app listing. Creating the package does not complete its OAuth
 consent or connect the Claude account.

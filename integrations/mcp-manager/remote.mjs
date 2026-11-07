@@ -192,7 +192,7 @@ export function createRemoteMcp(config, {
     if (hasPrompts) capabilities.prompts = {};
     // Do not promise subscriptions, listChanged, sampling, tasks, or sessions
     // through a stateless bridge that does not implement them.
-    const server = new sdk.Server({ name: 'M-TechLabs Desktop Commander', version: MANAGER_VERSION }, { capabilities });
+    const server = new sdk.Server({ name: 'MTerm-CLI Desktop Bridge', version: MANAGER_VERSION }, { capabilities });
     server.onerror = () => {};
     const options = { timeout: upstreamTimeoutMs };
     server.setRequestHandler(sdk.ListToolsRequestSchema, request => invoke(async () => {
