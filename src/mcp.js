@@ -49,7 +49,7 @@ export function projectManagerStatus(value) {
   const version=value=>typeof value==='string' && /^v?\d[0-9A-Za-z.+-]{0,63}$/.test(value)?value:null;
   return {
     schemaVersion:1,
-    service:{name:'M-TechLabs MCP Manager',version:version(value.service.version),state:'running',uptimeSeconds:count(value.service.uptimeSeconds)},
+    service:{name:'MTerm-CLI Manager',version:version(value.service.version),state:'running',uptimeSeconds:count(value.service.uptimeSeconds)},
     policy,policyValid:value.policyValid===true && policy!==null,
     runtime:{nodeVersion:version(runtime.nodeVersion),packageVersion:version(runtime.packageVersion),installed:bool(runtime.installed)},
     deployment:deployment?{

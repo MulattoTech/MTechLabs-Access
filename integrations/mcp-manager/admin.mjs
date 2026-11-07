@@ -134,7 +134,7 @@ async function main() {
       process.exitCode = 1;
     });
     server.listen(19740, '127.0.0.1', () => {
-      process.stderr.write('M-TechLabs MCP Manager is listening on loopback port 19740.\n');
+      process.stderr.write('MTerm-CLI Manager is listening on loopback port 19740.\n');
     });
     const close = () => server.close();
     process.once('SIGINT', close);
