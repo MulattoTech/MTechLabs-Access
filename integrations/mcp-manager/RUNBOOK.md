@@ -2,8 +2,8 @@
 
 ## Daily use
 
-Open https://m-techlabs.com/admin/mcp, or the **M-TechLabs MCP Manager** desktop
-shortcut. The shortcut safely starts the manager when necessary before opening the dashboard. Repeated clicks reuse the existing verified listener. The M-TechLabs home page also has an **MCP & Desktop Commander** card.
+Open https://m-techlabs.com/admin/mcp, or the **MTerm-CLI Manager** desktop
+shortcut. The shortcut safely starts the manager when necessary before opening the dashboard. Repeated clicks reuse the existing verified listener. The M-TechLabs home page also has an **MTerm-CLI Desktop Tools** card.
 Sign in using the existing owner Google account. The manager is independent of
 MJobs, Fleet Control, and any particular source repository.
 

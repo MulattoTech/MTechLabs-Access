@@ -125,7 +125,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
   return {
     schemaVersion: 1,
     service: {
-      name: 'M-TechLabs MCP Manager',
+      name: 'MTerm-CLI Manager',
       version: MANAGER_VERSION,
       state: 'running',
       uptimeSeconds: Math.max(0, Math.floor((Date.now() - startedAt) / 1000)),

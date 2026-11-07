@@ -26,7 +26,7 @@ async function fixture(t,configured=true){
     ...(configured?{MCP_MANAGER_ORIGIN:ORIGIN,MCP_MANAGER_TOKEN:SERVICE_TOKEN}:{})};
 }
 function sample(){return {
-  schemaVersion:1,service:{name:'M-TechLabs MCP Manager',version:'0.1.0',state:'running',uptimeSeconds:12},
+  schemaVersion:1,service:{name:'MTerm-CLI Manager',version:'0.1.0',state:'running',uptimeSeconds:12},
   policy:{enabled:true,readOnly:true,maxInflight:1},policyValid:true,runtime:{nodeVersion:'v24.0.0',packageVersion:'0.2.0',installed:true},
   resources:{freeMemoryBytes:32*1073741824,totalMemoryBytes:64*1073741824,lowMemoryFloorBytes:4*1073741824,admissionOpen:true,disk:{freeBytes:200*1073741824,totalBytes:2000*1073741824}},
   limits:{maxInflightPerInstance:1,queueCapacityPerInstance:16,detachedJobsCapped:false},
