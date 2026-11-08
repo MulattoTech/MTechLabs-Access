@@ -212,13 +212,19 @@ File-preview UI metadata is preserved when resources are supported; unsupported
 UI resource metadata is stripped if an alternate upstream lacks resources.
 No hosted account/device lifecycle tools are invented to imitate the vendor.
 
-The verified installed local package exposes 25 tools; the hosted connector
-inventory exposed 30. Twenty-four core computer tools overlap. Hosted-only
+The pinned Desktop Commander package exposes 25 native tools. Manager 0.4.0
+adds 28 engineering tools, for 53 managed tools in the verified installation.
+The hosted connector inventory exposed 30 tools. Twenty-four core computer
+tools overlap with the native package. Hosted-only
 get_tool_result, list_devices, list_remote_tool_calls, review_device_call,
 shutdown, and who_am_i are remote service/account lifecycle features. Local
 give_feedback_to_desktop_commander is additional. This is core computer-tool
 coverage, not a claim of identical hosted-service behavior or 100% parity.
 Re-list tools after upstream version changes rather than assuming these counts.
+The remote and saved-client verifiers validate required native names plus the
+engineering descriptors, unique valid names, object input schemas, JSON
+serialization, and a bounded inventory. They accept valid additions and record
+the observed count; a native-only inventory cannot pass the current contract.
 
 Read-only/discovery-only use tears down the shared backend after five idle
 minutes. Once a start_process, start_search, or interact_with_process call may

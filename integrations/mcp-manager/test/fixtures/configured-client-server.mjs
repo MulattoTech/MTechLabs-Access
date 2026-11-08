@@ -1,5 +1,6 @@
 import readline from 'node:readline';
 import { EXPECTED_LOCAL_TOOLS, PROBE_PATH } from '../../verify-clients.mjs';
+import { EXPECTED_NATIVE_TOOLS } from '../../lib/verification-inventory.mjs';
 
 const validLaunch = process.argv[2] === '--configured-argument' &&
   process.argv[3] === 'fixture argument with spaces' &&
@@ -22,6 +23,7 @@ lines.on('line', line => {
   }
   if (message.method === 'tools/list') {
     if (mode === 'missing-tool') return reply(message.id, { tools: tools.slice(1) });
+    if (mode === 'native-only') return reply(message.id, { tools: tools.filter(tool => EXPECTED_NATIVE_TOOLS.includes(tool.name)) });
     if (mode === 'repeating-cursor') return reply(message.id, { tools: [], nextCursor: 'PRIVATE_CURSOR' });
     return message.params?.cursor === 'PRIVATE_CURSOR'
       ? reply(message.id, { tools: tools.slice(24) })

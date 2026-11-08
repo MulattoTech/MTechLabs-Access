@@ -126,7 +126,7 @@ test('tool errors remain failures with content redacted and the owned child clos
 });
 
 test('unexpected tool sets and repeated cursors fail before a metadata probe', async () => {
-  for (const [mode, code] of [['missing-tool', 'unexpected_local_tool_set'], ['repeating-cursor', 'invalid_tool_pagination']]) {
+  for (const [mode, code] of [['missing-tool', 'unexpected_local_tool_set'], ['native-only', 'unexpected_local_tool_set'], ['repeating-cursor', 'invalid_tool_pagination']]) {
     const result = await verifyEntry(fixtureEntry(mode), { client: 'fixture', requestTimeoutMs: 3000, closeTimeoutMs: 3000 });
     assert.equal(result.pass, false);
     assert.equal(result.failedStage, 'tool_discovery');

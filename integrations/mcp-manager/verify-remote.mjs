@@ -6,6 +6,7 @@ import {randomBytes,createHash} from 'node:crypto';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {StreamableHTTPClientTransport} from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import {createAdminServer} from './admin.mjs';
+import {inspectToolInventory} from './lib/verification-inventory.mjs';
 
 const root='H:\\MTechLabs\\MCP';
 const directory=await fs.mkdtemp(path.join(root,'state','remote-verification-'));
@@ -37,7 +38,9 @@ try {
   assert.equal((await localFetch(base+'/v1/status',{headers:{Host:'127.0.0.1:19740'}})).status,401);result.checks.push('anonymous denied');
   const transport=new StreamableHTTPClientTransport(new URL(base+'/mcp'),{fetch:localFetch,requestInit:{headers}});
   await client.connect(transport);
-  const tools=(await client.listTools()).tools;assert.equal(tools.length,25);result.checks.push('HTTP initialize and 25 tools');
+  const inventory=await inspectToolInventory(client);
+  const {tools,lastPageCount,...inventoryEvidence}=inventory;
+  result.inventory=inventoryEvidence;result.checks.push('HTTP initialize and validated native plus engineering tools');
   const read=await client.callTool({name:'get_file_info',arguments:{path:path.join(root,'package.json')}});assert(!read.isError);result.checks.push('HTTP safe read');
   let denied=false;try{await client.callTool({name:'write_file',arguments:{path:path.join(directory,'must-not-exist.txt'),content:'NO'}});}catch(error){denied=/read-only/.test(error.message);}
   assert(denied);result.checks.push('HTTP write denied by readonly policy');
@@ -46,7 +49,7 @@ try {
   if(resources.resources.length){const r=await client.readResource({uri:resources.resources[0].uri});assert(r.contents.length>0);result.checks.push('resource content forwarded');}
   result.checks.push('resources and prompts forwarded');
   const status=await (await localFetch(base+'/v1/status',{headers})).json();
-  assert.equal(status.remoteMcp.state,'ready');assert.equal(status.remoteMcp.lastToolListCount,25);result.checks.push('live backend evidence recorded');
+  assert.equal(status.remoteMcp.state,'ready');assert.equal(status.remoteMcp.lastToolListCount,lastPageCount);result.checks.push('live backend evidence recorded');
   await localFetch(base+'/v1/policy',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({enabled:false,readOnly:true,maxInflight:1})});
   denied=false;try{await client.callTool({name:'get_file_info',arguments:{path:path.join(root,'package.json')}});}catch(error){denied=/paused/.test(error.message);}
   assert(denied);result.checks.push('HTTP pause enforced');
