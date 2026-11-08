@@ -55,13 +55,31 @@ async function post(env,body,extra={},path='/admin/mcp/api/policy'){
 
 test('MCP page, assets and API reject unauthenticated and non-owner callers',async t=>{
   const env=await fixture(t),calls=mockNetwork(t);
-  for(const path of ['/admin/mcp','/admin/mcp/assets/mcp.js','/admin/mcp/assets/mcp.css','/admin/mcp/api/status']){
+  for(const path of ['/admin/mcp','/admin/mcp/assets/mcp.js','/admin/mcp/assets/mcp.css','/admin/mcp/api/status','/admin/mcp/plugin/latest.json','/admin/mcp/plugin/latest.tar.gz']){
     const anonymous=await worker.fetch(new Request('https://m-techlabs.com'+path),env,{});assert.equal(anonymous.status,401);
     const alice=await get(env,path,{'Cf-Access-Jwt-Assertion':await identity('alice@example.com')});assert.equal(alice.status,403);
   }
   assert.equal(calls.length,0);
 });
 
+test('owner-only plugin recovery download returns the exact pinned release',async t=>{
+ const env=await fixture(t),calls=mockNetwork(t);
+ const metaResponse=await get(env,'/admin/mcp/plugin/latest.json');
+ assert.equal(metaResponse.status,200);
+ assert.equal(metaResponse.headers.get('Cache-Control'),'no-store');
+ const meta=await metaResponse.json();
+ assert.equal(meta.version,'0.2.1');
+ assert.match(meta.sha256,/^[a-f0-9]{64}$/);
+ const zipResponse=await get(env,'/admin/mcp/plugin/latest.tar.gz');
+ assert.equal(zipResponse.status,200);
+ assert.equal(zipResponse.headers.get('Content-Type'),'application/gzip');
+ const bytes=Buffer.from(await zipResponse.arrayBuffer());
+ const {createHash}=await import('node:crypto');
+ assert.equal(bytes.length,meta.bytes);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.sha256);
+ assert.equal((await worker.fetch(new Request('https://m-techlabs.com/admin/mcp/plugin/latest.tar.gz',{method:'POST'}),env,{})).status,405);
+ assert.equal(calls.length,0);
+});
 test('unconfigured manager is explicit, creates owner CSRF session and never contacts an origin',async t=>{
   const env=await fixture(t,false),calls=mockNetwork(t),response=await get(env),data=await response.json();
   assert.equal(response.status,200);assert.equal(data.configured,false);assert.equal(data.connected,false);assert.equal(data.status,null);assert.equal(data.reason,'not_configured');
