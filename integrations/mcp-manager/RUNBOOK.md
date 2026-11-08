@@ -52,10 +52,16 @@ authorization. A healthy backend does not prove either personal account has
 finished its OAuth consent. Leave the original hosted connector installed until
 the new connection has passed a real task in each client.
 
-The private ChatGPT package is version 0.1.2, ID
-`plugins_6aed1a85300481919559498b458ed278`. It is private to the owner's account,
-not a public app listing. Creating the package does not complete its OAuth
-consent or connect the Claude account.
+The private ChatGPT package is version 0.2.0, ID
+`plugins_6aed1a85300481919559498b458ed278`, with published release
+`pluginrel_6aeead9219788191b50e40e9cc1c3e37`. It is private to the owner's
+account, not a public app listing. Package publication, account installation,
+OAuth authorization, and conversation tool availability are separate states.
+On 2026-11-08 the package existed, but ChatGPT permission inspection returned
+`not_installed` by both its ID and name. The available browser connection
+reported an unavailable originating browser context, so account installation
+and a real ChatGPT tool call could not be completed in that session. See
+[the verification record](verification-20261108.md).
 
 ## Local clients
 
@@ -176,15 +182,21 @@ overwriting later settings.
 
 ## Acceptance boundary
 
-The local release advertises 25 tools, including 24 core tools also exposed by
-the 30-tool hosted connector. The six hosted-only tools are cloud-account/device
+Manager 0.4.0 advertises the pinned upstream's 25 native tools plus 28
+engineering tools (53 in this installation). Twenty-four native core tools
+also appear in the observed 30-tool hosted connector. The six hosted-only
+tools are cloud-account/device
 identity, device listing, remote call history/result retrieval, approval review,
 and remote service shutdown. They are not fabricated as local equivalents.
 The reproducible `verify-installation.mjs` checks file, process, search, PDF,
 DOCX, and spreadsheet operations in an isolated fixture on the actual PC.
 `verify-clients.mjs` reads only the three named local MCP entries and tests their
 configured command with protocol initialization, tool discovery, and one
-harmless file-metadata read; it does not invoke an AI model or prove a browser
+harmless file-metadata read. Both saved-client and HTTP verifiers require the
+native and engineering names, validate unique names and object input schemas,
+and record the complete inventory size; they do not hardcode a total of 25.
+The HTTP verifier uses an isolated manager and ephemeral token. Neither verifier
+invokes an AI model, authenticates production HTTP, or proves that a browser
 account has authorized OAuth. This is not a claim of complete hosted-product parity or verified
 browser account login.
 

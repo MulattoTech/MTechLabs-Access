@@ -7,21 +7,14 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { getDefaultEnvironment } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { CallToolResultSchema, JSONRPCMessageSchema } from '@modelcontextprotocol/sdk/types.js';
 import { createLineFramer } from './lib/framing.mjs';
+import { EXPECTED_MANAGED_TOOLS, inspectToolInventory, ToolInventoryError } from './lib/verification-inventory.mjs';
 
 // This verifies the saved stdio entries, not an AI model session or browser
 // account. Nothing here edits client configuration, manager policy, or tokens.
 export const SERVER_NAME = 'desktop-commander-local';
 export const INSTALLATION_ROOT = 'H:\\MTechLabs\\MCP';
 export const PROBE_PATH = INSTALLATION_ROOT + '\\package.json';
-export const EXPECTED_LOCAL_TOOLS = Object.freeze([
-  'create_directory', 'edit_block', 'force_terminate', 'get_config',
-  'get_file_info', 'get_more_search_results', 'get_recent_tool_calls',
-  'get_usage_stats', 'give_feedback_to_desktop_commander',
-  'interact_with_process', 'kill_process', 'list_directory', 'list_processes',
-  'list_searches', 'list_sessions', 'move_file', 'read_file',
-  'read_multiple_files', 'read_process_output', 'set_config_value',
-  'start_process', 'start_search', 'stop_search', 'write_file', 'write_pdf',
-]);
+export const EXPECTED_LOCAL_TOOLS = EXPECTED_MANAGED_TOOLS;
 export const CONFIGURATIONS = Object.freeze([
   { client: 'codex', format: 'toml', file: 'C:\\Users\\Dylan\\.codex\\config.toml' },
   { client: 'claude-code', format: 'json', file: 'C:\\Users\\Dylan\\.claude.json' },
@@ -305,23 +298,12 @@ export async function verifyEntry(entry, { client: clientName, requestTimeoutMs 
     await client.connect(transport, { timeout: requestTimeoutMs });
     result.initialized = true;
     stage = 'tool_discovery';
-    let cursor;
-    const seenCursors = new Set(), names = new Set();
-    for (let page = 0; page < 8; page += 1) {
-      const response = await client.listTools(cursor === undefined ? {} : { cursor }, { timeout: requestTimeoutMs });
-      for (const tool of response.tools) {
-        if (names.has(tool.name)) fail('duplicate_tool_name');
-        names.add(tool.name);
-        if (tool.name === 'get_file_info' && (tool.inputSchema?.properties?.path?.type !== 'string' || !tool.inputSchema.required?.includes('path'))) fail('unexpected_metadata_schema');
-      }
-      cursor = response.nextCursor;
-      if (cursor === undefined) break;
-      if (typeof cursor !== 'string' || seenCursors.has(cursor) || page === 7) fail('invalid_tool_pagination');
-      seenCursors.add(cursor);
-    }
-    result.toolCount = names.size;
-    result.expectedToolSet = names.size === EXPECTED_LOCAL_TOOLS.length && EXPECTED_LOCAL_TOOLS.every(name => names.has(name));
-    if (!result.expectedToolSet) fail('unexpected_local_tool_set');
+    const inventory = await inspectToolInventory(client, { requestTimeoutMs });
+    result.toolCount = inventory.toolCount;
+    result.inventoryBytes = inventory.inventoryBytes;
+    result.requiredToolCount = inventory.requiredToolCount;
+    result.additionalToolCount = inventory.additionalToolCount;
+    result.expectedToolSet = true;
     stage = 'metadata_read';
     const response = await client.callTool({ name: 'get_file_info', arguments: { path: PROBE_PATH } }, CallToolResultSchema, { timeout: requestTimeoutMs });
     if (response.isError === true) fail('metadata_tool_returned_error');
@@ -329,7 +311,7 @@ export async function verifyEntry(entry, { client: clientName, requestTimeoutMs 
     result.metadataRead = true;
   } catch (error) {
     result.failedStage = stage;
-    result.failureCode = error instanceof VerificationError ? error.code : stage + '_failed';
+    result.failureCode = error instanceof VerificationError || error instanceof ToolInventoryError ? error.code : stage + '_failed';
     if (Number.isInteger(error?.code)) result.rpcErrorCode = error.code;
   } finally {
     await client.close().catch(() => {});
