@@ -4,6 +4,7 @@ import {HttpError,ownerIdentity,accessIdentity,createSession,codeIdentity,requir
 import {adminApi,jsonBody} from './admin.js';
 import {homepageApi} from './homepage.js';
 import {mcpApi} from './mcp.js';
+import {PLUGIN_RELEASE} from './plugin-release.generated.js';
 import {remoteMcp} from './mcp-remote.js';
 import {acquireScan,executeScan,codeList,recomputeStatuses} from './codes.js';
 import {PUBLIC_HTML,ADMIN_HTML,PUBLIC_JS,ADMIN_JS,CSS,MCP_HTML,MCP_JS,MCP_CSS} from './ui.generated.js';
@@ -31,6 +32,13 @@ async function handle(request,env,ctx) {
     return gateway(request,env,ctx,app);
   }
   if(isHub) {
+    if(path==='/admin/mcp/plugin/latest.json'||path==='/admin/mcp/plugin/latest.tar.gz'){
+      if(request.method!=='GET')throw new HttpError(405,'Method not allowed.');
+      await ownerIdentity(request,env);
+      if(path.endsWith('.json'))return new Response(JSON.stringify({version:PLUGIN_RELEASE.version,file:PLUGIN_RELEASE.file,bytes:PLUGIN_RELEASE.bytes,sha256:PLUGIN_RELEASE.sha256,installPage:'https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278'}),{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
+      const bytes=Uint8Array.from(atob(PLUGIN_RELEASE.base64),x=>x.charCodeAt(0));
+      return new Response(bytes,{headers:{'Content-Type':'application/gzip','Content-Disposition':'attachment; filename="'+PLUGIN_RELEASE.file+'"','Content-Length':String(bytes.byteLength),'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
+    }
     if(path.startsWith('/admin/mcp/api/'))return mcpApi(request,env,ctx,path.slice('/admin/mcp/api'.length));
     const mcpAssets={
       '/admin/mcp':[MCP_HTML,'text/html; charset=utf-8'],
