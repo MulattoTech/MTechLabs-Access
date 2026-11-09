@@ -225,3 +225,41 @@ test('request-body stall is rejected before contacting the PC',async t=>{
   t.mock.timers.tick(15001);
   const result=await safeError(await pending,408);assert.match(result.error.message,/No tool request was sent/);assert.equal(cancelled,true);assert.equal(calls.length,0);
 });
+
+
+test('32 concurrent owner-authorized requests remain isolated and traceable',async t=>{
+  const {env,state}=fixture(),logs=[];
+  t.mock.method(console,'log',line=>logs.push(JSON.parse(line)));
+  const calls=network(t,async(_url,options)=>{
+    await new Promise(resolve=>setTimeout(resolve,10));
+    return Response.json({...REPLY,id:JSON.parse(options.body).id});
+  });
+  const requests=await Promise.all(Array.from({length:32},(_,i)=>request({body:{...RPC,id:i+1}})));
+  const responses=await Promise.all(requests.map(item=>remoteMcp(item,env,{})));
+  assert.ok(responses.every(item=>item.status===200));
+  const results=await Promise.all(responses.map(item=>item.json()));
+  assert.deepEqual(results.map(item=>item.id).sort((a,b)=>a-b),Array.from({length:32},(_,i)=>i+1));
+  const ids=responses.map(item=>item.headers.get('X-MTech-MCP-Request-ID'));
+  assert.equal(new Set(ids).size,32);
+  assert.ok(ids.every(id=>/^[a-f0-9-]{36}$/.test(id)));
+  assert.equal(state.reads,32,'every request rechecks revocation');
+  assert.equal(calls.length,32);
+  assert.equal(logs.length,32);
+  assert.ok(logs.every(item=>item.event==='mterm_mcp_request'&&item.status===200&&
+    item.originStatus===200&&item.phase==='origin-response'&&Number.isInteger(item.durationMs)));
+  assert.equal(JSON.stringify(logs).includes(TOKEN),false);
+});
+
+test('an ambiguous origin failure records a safe trace without leaking credentials',async t=>{
+  const {env}=fixture(),logs=[];
+  t.mock.method(console,'error',line=>logs.push(JSON.parse(line)));
+  network(t,()=>{throw Error('private network '+TOKEN);});
+  const response=await remoteMcp(await request(),env,{});
+  await safeError(response,502);
+  const id=response.headers.get('X-MTech-MCP-Request-ID');
+  assert.match(id,/^[a-f0-9-]{36}$/);
+  assert.equal(logs.length,1);
+  assert.deepEqual(logs[0],{event:'mterm_mcp_request',requestId:id,phase:'origin-dispatch',
+    status:502,originStatus:null,durationMs:logs[0].durationMs});
+  assert.equal(JSON.stringify(logs).includes(TOKEN),false);
+});
