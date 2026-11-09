@@ -10,6 +10,7 @@ const TIMEOUT_MS=110000;
 const ORIGINS=new Set(['https://mcp.m-techlabs.com','https://m-techlabs.com','https://www.m-techlabs.com','https://chatgpt.com','https://claude.ai']);
 const VERSION=/^\d{4}-\d{2}-\d{2}$/;
 const JSON_TYPE=/^application\/json(?:\s*;|$)/i;
+const SAFE_RPC_METHOD=/^(?:initialize|notifications\/initialized|notifications\/cancelled|tools\/call|tools\/list|ping|resources\/list|resources\/read|prompts\/list|prompts\/get)$/;
 const UNKNOWN_OUTCOME='The local MCP response could not be verified. The operation may still be running. Check its status before retrying; it was not automatically retried or killed.';
 
 const failure=(status,message,headers={})=>Response.json({jsonrpc:'2.0',id:null,error:{code:-32020,message}},{status,headers:{'Cache-Control':'no-store',...headers}});
@@ -107,6 +108,7 @@ async function remoteMcpCore(request,env,_ctx,trace) {
   try {
     body=await boundedText(request,MAX_REQUEST_BYTES,inputController.signal);
     const message=JSON.parse(body);
+    trace.rpcMethod=typeof message?.method==='string' && SAFE_RPC_METHOD.test(message.method) ? message.method : 'other';
     if(!message || typeof message!=='object' || Array.isArray(message) || message.jsonrpc!=='2.0') {
       return failure(400,'Send one JSON-RPC 2.0 message. No tool request was sent.');
     }
@@ -158,13 +160,13 @@ async function remoteMcpCore(request,env,_ctx,trace) {
 // The edge generates its own correlation ID. Never log the Access assertion,
 // OAuth bearer, tool arguments, file paths, response body, or raw error text.
 function logMcpTrace(trace,status) {
-  const entry={event:'mterm_mcp_request',requestId:trace.id,phase:trace.phase,
+  const entry={event:'mterm_mcp_request',requestId:trace.id,phase:trace.phase,rpcMethod:trace.rpcMethod,
     status,originStatus:trace.originStatus,durationMs:Math.max(0,Math.round(performance.now()-trace.startedAt))};
   (status>=500?console.error:console.log)(JSON.stringify(entry));
 }
 
 export async function remoteMcp(request,env,ctx) {
-  const trace={id:crypto.randomUUID(),phase:'request-routing',originStatus:null,startedAt:performance.now()};
+  const trace={id:crypto.randomUUID(),phase:'request-routing',rpcMethod:'unparsed',originStatus:null,startedAt:performance.now()};
   try {
     const response=await remoteMcpCore(request,env,ctx,trace);
     response.headers.set('X-MTech-MCP-Request-ID',trace.id);

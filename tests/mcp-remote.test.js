@@ -246,8 +246,20 @@ test('32 concurrent owner-authorized requests remain isolated and traceable',asy
   assert.equal(calls.length,32);
   assert.equal(logs.length,32);
   assert.ok(logs.every(item=>item.event==='mterm_mcp_request'&&item.status===200&&
-    item.originStatus===200&&item.phase==='origin-response'&&Number.isInteger(item.durationMs)));
+    item.originStatus===200&&item.phase==='origin-response'&&item.rpcMethod==='tools/list'&&Number.isInteger(item.durationMs)));
   assert.equal(JSON.stringify(logs).includes(TOKEN),false);
+});
+
+test('only allowlisted MCP method names appear in diagnostics',async t=>{
+  const {env}=fixture(),logs=[];
+  t.mock.method(console,'log',line=>logs.push(JSON.parse(line)));
+  network(t);
+  const secret='private_method_dont_log_' + TOKEN;
+  const response=await remoteMcp(await request({body:{jsonrpc:'2.0',id:1,method:secret}}),env,{});
+  assert.equal(response.status,200);
+  assert.equal(logs.length,1);
+  assert.equal(logs[0].rpcMethod,'other');
+  assert.equal(JSON.stringify(logs).includes(secret),false);
 });
 
 test('an ambiguous origin failure records a safe trace without leaking credentials',async t=>{
@@ -259,7 +271,7 @@ test('an ambiguous origin failure records a safe trace without leaking credentia
   const id=response.headers.get('X-MTech-MCP-Request-ID');
   assert.match(id,/^[a-f0-9-]{36}$/);
   assert.equal(logs.length,1);
-  assert.deepEqual(logs[0],{event:'mterm_mcp_request',requestId:id,phase:'origin-dispatch',
+  assert.deepEqual(logs[0],{event:'mterm_mcp_request',requestId:id,phase:'origin-dispatch',rpcMethod:'tools/list',
     status:502,originStatus:null,durationMs:logs[0].durationMs});
   assert.equal(JSON.stringify(logs).includes(TOKEN),false);
 });
