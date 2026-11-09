@@ -70,17 +70,20 @@ function identityConfiguration(env) {
  * adapter is deliberately owner-only and stateless; website grants cannot
  * delegate shell/filesystem access, and it creates no extra login mechanism.
  */
-export async function remoteMcp(request,env,_ctx) {
+async function remoteMcpCore(request,env,_ctx,trace) {
   const url=new URL(request.url);
   if(url.origin!=='https://mcp.m-techlabs.com' || url.pathname!=='/mcp' || url.search)return failure(404,'Not found.');
+  trace.phase='configuration';
   const config=managerConfiguration(env),identity=identityConfiguration(env);
   if(!config || !identity)return failure(503,'Remote MCP is not configured. No tool request was sent.');
+  trace.phase='access-authentication';
   const assertion=request.headers.get('Cf-Access-Jwt-Assertion');
   if(!assertion)return unauthorized();
   let claims;
   try {claims=await verifyAccessJWT(assertion,identity);}
   catch{return unauthorized();}
   if(normalizeEmail(claims.email)!==identity.email)return failure(403,'Owner authorization is required.');
+  trace.phase='owner-authorization';
   let user;
   try {user=await one(env.DB,'SELECT id,email,status,is_owner,revoke_before FROM users WHERE email=?',identity.email);}
   catch{return failure(503,'Owner authorization is temporarily unavailable. No tool request was sent.');}
@@ -88,6 +91,7 @@ export async function remoteMcp(request,env,_ctx) {
      !Number.isSafeInteger(user.revoke_before) || user.revoke_before<0 || claims.iat<=user.revoke_before) {
     return failure(403,'Owner authorization is required or this session was revoked.');
   }
+  trace.phase='request-validation';
   const origin=request.headers.get('Origin');
   if(origin!==null && !ORIGINS.has(origin))return failure(403,'This request origin is not allowed.');
   if(request.method!=='POST')return failure(405,'This stateless MCP endpoint accepts POST only.',{Allow:'POST'});
@@ -116,10 +120,13 @@ export async function remoteMcp(request,env,_ctx) {
   const headers={Accept:'application/json, text/event-stream','Content-Type':'application/json',Authorization:`Bearer ${config.token}`};
   if(version!==null)headers['MCP-Protocol-Version']=version;
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT_MS);
+  trace.phase='origin-dispatch';
   try {
     const response=await fetch(config.origin+'/mcp',{
       method:'POST',headers,body,redirect:'manual',signal:controller.signal,
     });
+    trace.originStatus=response.status;
+    trace.phase='origin-response';
     if(response.status<200 || response.status>=300 && response.status<400 || [401,403].includes(response.status)) {
       await discard(response.body);return failure(502,UNKNOWN_OUTCOME);
     }
@@ -146,4 +153,25 @@ export async function remoteMcp(request,env,_ctx) {
   } catch {
     return failure(controller.signal.aborted?504:502,UNKNOWN_OUTCOME);
   } finally {clearTimeout(timer);}
+}
+
+// The edge generates its own correlation ID. Never log the Access assertion,
+// OAuth bearer, tool arguments, file paths, response body, or raw error text.
+function logMcpTrace(trace,status) {
+  const entry={event:'mterm_mcp_request',requestId:trace.id,phase:trace.phase,
+    status,originStatus:trace.originStatus,durationMs:Math.max(0,Math.round(performance.now()-trace.startedAt))};
+  (status>=500?console.error:console.log)(JSON.stringify(entry));
+}
+
+export async function remoteMcp(request,env,ctx) {
+  const trace={id:crypto.randomUUID(),phase:'request-routing',originStatus:null,startedAt:performance.now()};
+  try {
+    const response=await remoteMcpCore(request,env,ctx,trace);
+    response.headers.set('X-MTech-MCP-Request-ID',trace.id);
+    logMcpTrace(trace,response.status);
+    return response;
+  } catch(error) {
+    logMcpTrace(trace,500);
+    throw error;
+  }
 }
