@@ -146,8 +146,8 @@
       "access_app_id": null,
       "audience": null,
       "access_mode": "external",
-      "description": "Legacy MCP origin; tunnel was offline during discovery.",
-      "limitation": "Separate existing service authentication; not delegated here.",
+      "description": "Stale legacy MCP origin; tunnel remains offline after 2026-11-10 reconciliation.",
+      "limitation": "Historical origin 127.0.0.1:8787 now conflicts with the Fleet controller listener. Do not restart this tunnel without an explicit new-origin and access review; it is hidden from the owner directory while unsafe as configured.",
       "managed": 0
     }
   ],
