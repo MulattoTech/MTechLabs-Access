@@ -50,11 +50,15 @@ session revocation state are checked server-side without a stale permission cach
 
 ### Registered applications
 
-The canonical inventory and Cloudflare resource identifiers are in
-[`deployment.json`](deployment.json). The live website was traced through its
-actual Cloudflare tunnel and Docker mounts. Two navigation cards were added to
-that existing static hub, with a backup and exact patch under `integrations/hub/`.
-This repository does not replace all existing application source trees.
+The Access service's managed/legacy registration inventory and exact Cloudflare
+resource identifiers are in [`deployment.json`](deployment.json). That manifest is
+deliberately scoped to the seven centrally managed targets plus preserved
+owner/external references; it is **not** the account-wide application directory.
+The current owner-homepage inventory is [`src/hub-catalog.js`](src/hub-catalog.js),
+and independently managed protected applications can exist in Cloudflare without
+being enrolled into `deployment.json`. The live website was traced through its
+actual Cloudflare tunnel and Docker mounts. This repository does not replace all
+existing application source trees.
 
 | Application or hostname | Integration in this release |
 | --- | --- |
@@ -249,11 +253,15 @@ The two interfaces were also inspected at a 390-pixel mobile viewport; their
 document widths stayed within the available viewport.
 
 `wrangler.jsonc` records the Worker, D1 binding, environment values and Cron trigger.
-`deployment.json` records the existing application inventory and Cloudflare IDs.
-DNS, custom domains, Access applications/policies and legacy Worker routes also
-exist in Cloudflare; do not assume the Worker manifest alone recreates that entire
-configuration. Preserve the `DB` binding and the `EVALUATION_PRIVATE_JWK` Worker
-secret when deploying. Never put private signing keys or OAuth secrets in Git.
+`deployment.json` records the bounded Access-management/legacy-gateway inventory
+and the exact Cloudflare IDs those safety-checked scripts are allowed to touch.
+`src/hub-catalog.js` is the current owner-homepage inventory; neither file should
+be expanded merely because another independently managed Cloudflare application
+exists. DNS, custom domains, other Access applications/policies and legacy Worker
+routes also exist in Cloudflare; do not assume the Worker manifest alone recreates
+that entire configuration. Preserve the `DB` binding and the
+`EVALUATION_PRIVATE_JWK` Worker secret when deploying. Never put private signing
+keys or OAuth secrets in Git.
 
 Before future changes, export current routes/policies, retain the previous Worker
 version and record a D1 recovery point/export. The discovery configuration is in
