@@ -88,6 +88,17 @@ Mission Control links. Preserve `mission-control` content and all unrelated
 containers. A homepage API outage must show a recovery message, not a
 client-side leak of private app links.
 
+After every hub deployment or source-verification pass, back up and refresh the
+host-local `C:\Tools\Dev\MTechLabs-Hub\deployed-source.json` receipt. Record the
+canonical repository and exact verified commit, all six deployment files
+(`index.html`, `app.js`, `style.css`, `monai.html`, `compose.yml`, `nginx.conf`),
+the live/source SHA-256 values, line-ending-aware content equivalence, exact local
+HTTP evidence for served assets, and the public Access redirect result. Windows
+CRLF and Git LF can make raw hashes differ without a content change, so confirm a
+text diff before declaring drift. The receipt is recovery evidence, not source;
+never put tunnel tokens, cookies, OAuth secrets, private keys or other credentials
+in it.
+
 ## Historical navigation update
 
 The current index includes a Fortnite Studio private-preview shortcut and a
