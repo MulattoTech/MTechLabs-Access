@@ -122,6 +122,20 @@ and access policies intact.
 Docker Desktop and the Windows host must remain running; these external
 application networks must exist when recreating the connector. No paid service
 or new external data destination was added. Monai live video and interactive
-application sessions still require their own verification. The unrelated
-`codexpro-oaksight` tunnel was offline during this audit and was not modified or
-advertised as a working homepage service.
+application sessions still require their own verification.
+
+## 2026-11-10 stale-tunnel reconciliation
+
+`mjobs-devfleet-primary` is superseded infrastructure, not a current MJobs route:
+`mjobs.m-techlabs.com` now resolves to the healthy `mjobs-windows-docker` tunnel,
+whose origin is `http://api:8000`; the old tunnel still names the same hostname but
+its historical `127.0.0.1:18701` origin has no listener and no DNS record targets
+that tunnel.
+
+`codexpro-oaksight` remains a legacy remote-config tunnel with a live DNS CNAME but
+no connector. Its configured origin is `http://localhost:8787`; that port is now
+owned by `C:\\Tools\\AO-Fleet-Control\\server.js`. Starting the old tunnel without
+changing its origin could therefore publish the Fleet controller under the stale
+OakSight hostname. Keep the tunnel down, keep Access protections unchanged, and do
+not advertise the hostname as a working homepage service. This reconciliation did
+not restart or delete either tunnel and did not modify DNS or Access policy.

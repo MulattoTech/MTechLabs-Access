@@ -69,7 +69,7 @@ This repository does not replace all existing application source trees.
 | `academy.m-techlabs.com` | Existing owner-only service; not delegated through this dashboard |
 | `feeds.m-techlabs.com` | Existing device-pairing authentication retained; dashboard grants do not manage paired devices |
 | `codexpro-widgets.m-techlabs.com` | Existing public widget origin; not a delegated private application |
-| `codexpro-oaksight.m-techlabs.com` | Existing separately authenticated MCP origin; tunnel was offline during discovery |
+| `codexpro-oaksight.m-techlabs.com` | Stale legacy MCP hostname; hidden from the owner directory because its historical `127.0.0.1:8787` origin is now the Fleet controller. Do not restart without a new-origin and access review. |
 
 For legacy gates, the dashboard offers **Access allowed** or **Denied**. An access
 grant does not make someone a viewer, editor or administrator inside that product.
