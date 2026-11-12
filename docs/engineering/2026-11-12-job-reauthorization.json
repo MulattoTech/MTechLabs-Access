@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "changeId": "2026-11-12-job-reauthorization",
+  "provider": "OpenAI",
+  "model": "GPT-6 Astra Pro (self-reported)",
+  "updatedAt": "2026-11-12T20:11:51.601672+00:00",
+  "sourceRepository": "MulattoTech/MTechLabs-Access",
+  "baseSourceSha": "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+  "baseTree": "04d1d397de37cb730b191f47bbe9877d0a94b7a3",
+  "trackingIssue": "https://github.com/MulattoTech/MTechLabs-Access/issues/26",
+  "scope": "Reauthorize stored managed jobs before explicit resume and every new provider dispatch.",
+  "finding": {
+    "status": "confirmed by source trace and actual disposable regression",
+    "boundary": "Owner-controlled toolkit capabilities on previously authorized stored jobs.",
+    "affectedKinds": [
+      "vm_inventory",
+      "repo_diagnostics",
+      "run_tests"
+    ],
+    "excludedClaims": [
+      "No anonymous access, OS elevation, repository-root escape or global pause/read-only bypass established.",
+      "No production remediation or active-job cancellation claimed."
+    ]
+  },
+  "decisions": [
+    "Use one repository-native kind/capability/selector check for submit, resume and dispatch.",
+    "At dispatch, read current capabilities after asynchronous root/resource preflight immediately before the provider call.",
+    "At resume, preserve terminal evidence when authorization fails and condition the update on the inspected state and resume count after the asynchronous configuration read.",
+    "Preserve names, schemas, annotations, global admission, root/resource checks, selectors, confirmation and maximum resume count. Already dispatched operations keep existing cancellation behavior.",
+    "Update only the two affected descriptions to explain fresh authorization and denied-resume evidence preservation.",
+    "Add a Windows manager CI job using the same pinned actions and Node24; test roots remain disposable and no VM/upstream operation is run."
+  ],
+  "review": {
+    "independentTriage": "Confirmed with high confidence;19 runtime/caller/policy files compared across immutable baseline checkpoints. No dynamic upstream or production execution.",
+    "freshAgentLimitation": "A requested fresh security-boundary agent could not spawn because the agent thread limit was reached. Root independently traced all direct callers and performs a separate challenger pass; the existing independent triage reviewer additionally reviews the patch without relying on pass claims.",
+    "patchReview": "Independent manual static review found no concrete in-scope surviving bypass/regression; code and regression hashes match its frozen snapshot. No test results were supplied to that reviewer.",
+    "sharedSkillReference": "The fix-finding artifact-storage reference was unavailable; repository-backed output follows the session git storage rule.",
+    "parentChallengerPass": "Root separately checked both admin/MCP callers, first and resumed dispatch, every kind/selector, malformed settings, resume state/count CAS, evidence preservation, and legitimate job controls. No remaining in-scope path found. Current permission read occurs after asynchronous preflight; already dispatched work is not retroactively interrupted.",
+    "freshIndependentIntegrationReview": "A new independent agent is available in this continuation and is reviewing the authorization boundary and the final immutable integrated candidate. The earlier agent-limit observation remains historical; final review is pending.",
+    "independentActualRed": "A new independent reviewer reran the unchanged new tests against an isolated exact old-main snapshot:13 failures/1 allowed-control pass. Initial fixed source passes14/14; final immutable integration review remains pending."
+  },
+  "tests": [
+    {
+      "command": "node --test test/job-authorization.test.mjs before implementation",
+      "result": "RED:1/14 passed,13 failed. Allowed control passed; revoked initial/resumed repository jobs succeeded, denied resumes were accepted and previous evidence was cleared, malformed settings did not block resume."
+    },
+    {
+      "command": "node --check lib/jobs.mjs",
+      "result": "PASS."
+    },
+    {
+      "command": "node --test test/job-authorization.test.mjs after implementation",
+      "result": "GREEN:14/14, zero failures/skips/cancellations. Actual Git check only in disposable fixture; no project scripts, VM operations or upstream launch."
+    },
+    {
+      "command": "npm test in integrations/mcp-manager",
+      "result": "GREEN:93/93 before final description/documentation integration; zero failures/skips/cancellations."
+    },
+    {
+      "command": "node --test test/job-authorization.test.mjs test/engineering-descriptions.test.mjs after metadata integration",
+      "result": "GREEN:18/18; exact descriptor contract and bounded public serialization remain intact."
+    },
+    {
+      "command": "npm test in integrations/mcp-manager after normal upstream-main integration",
+      "result": "GREEN:115/115, zero failures/skips/cancellations; source/guard tests only, no real upstream launch locally."
+    },
+    {
+      "command": "GitHub Actions initial PR27 candidate 0f30a256, run43296210578",
+      "result": "PASS: all three jobs; root123/123, Linux manager93/93, Windows manager93/93. This applies to the earlier base499255ad and is not substituted for integrated-candidate checks."
+    }
+  ],
+  "evidence": {
+    "access-job-authorization-red.tap": {
+      "rawSha256": "7629b2d932e738e84fb2293efe6c24b207fc030300b0d80c28484ff7e77c171e",
+      "storedSha256": "2afa8f42427bf68e81110921f1eca2102170cf9ef2dddb2900c6018010daa5c1",
+      "normalization": "Trailing line whitespace removed; assertions and test results unchanged."
+    },
+    "access-job-authorization-green.tap": {
+      "rawSha256": "813706fd6fae0444cde192745277104fc12cf5bcd1848b63d324ec11f58515cf",
+      "storedSha256": "813706fd6fae0444cde192745277104fc12cf5bcd1848b63d324ec11f58515cf",
+      "normalization": "Trailing line whitespace removed; assertions and test results unchanged."
+    },
+    "access-job-authorization-suite.tap": {
+      "rawSha256": "b2fa3b8be963f8408e1739a28065ce3156bb6a38d3a3e38020d48d13f7a17f94",
+      "storedSha256": "b2fa3b8be963f8408e1739a28065ce3156bb6a38d3a3e38020d48d13f7a17f94",
+      "normalization": "Trailing line whitespace removed; assertions and test results unchanged."
+    },
+    "access-job-authority-and-metadata.tap": {
+      "rawSha256": "cbd61aa88aad221b72fd7176968490ebd058c563b8491167d267c481d57f1c92",
+      "storedSha256": "cbd61aa88aad221b72fd7176968490ebd058c563b8491167d267c481d57f1c92",
+      "normalization": "Trailing line whitespace removed; assertions and test results unchanged."
+    },
+    "job-reauthorization-triage.json": {
+      "storedSha256": "75c7fbcb1a2525cf6f7976ff85cbdb6b6308dfdc81f413df7cc47b77c3370c2a",
+      "normalization": "None; exact independent receipt."
+    },
+    "job-reauthorization-triage.md": {
+      "storedSha256": "4c36e4359e3fcea0caa9a1052fe4996f1fee649e5d4df90c73b58219b286d9a5",
+      "normalization": "None; exact independent receipt."
+    },
+    "job-reauthorization-source-receipt.json": {
+      "storedSha256": "924905d442f21229dcc795fde34c782300bb7865abc4967c22e3e1c98330ec07",
+      "normalization": "None; exact independent receipt."
+    },
+    "peer-job-reauthorization-patch-review.json": {
+      "storedSha256": "933f3d3ca99a6eba5070a8530e02317ee1994c40fc665f1b9c9de444d7350e10",
+      "normalization": "None; exact independent receipt."
+    },
+    "peer-job-reauthorization-patch-review.md": {
+      "storedSha256": "43dc1f136e80d27f774eff568a5496df27cb340e131d4f79cee866482ea004c8",
+      "normalization": "None; exact independent receipt."
+    },
+    "snapshot-manifest.json": {
+      "storedSha256": "83ede8c759b65612d24a9a04bc8c1c62e3802231f03a854dba665c3aed2d1a22",
+      "normalization": "None; exact independent receipt."
+    },
+    "peer-access27-0f30a256-receipt.md": {
+      "storedSha256": "a98f792d926e8dbb584862d531d860907dbce93fa97df3972f36046e6ec528fe",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access27-0f30a256-receipt.json": {
+      "storedSha256": "fbbfb9ff2988ad60f2eb8f6583f38063813ffebcdb49fe3c340f92a5a3a1ed53",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access-review-4bd2b6bc.json": {
+      "storedSha256": "10e4743dfd7db727f76e7affc36b21b39299e888746fbc381876c3fd5bfe598a",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access24-4bd2b6bc-receipt.json": {
+      "storedSha256": "651fecce43711b7d5f5300c11adf6f25fc5e988c7a87f55eaf28b8624b969af7",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "access-job-integrated-green.tap": {
+      "storedSha256": "0a4216c9f4a7b06df4047f7e60f4116b81462f5894767cff0fe792c1af02e876",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access-review-4bd2b6bc.md": {
+      "storedSha256": "5ce0b1babe4047c4b4834e4fdc841d67ea7580dc966132a2fcd174027ec67022",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access24-4bd2b6bc-receipt.md": {
+      "storedSha256": "46aaa4c33d12c24b73b89704d405b5e834ce28491d98378f8a09f4bb678969fd",
+      "normalization": "None; exact saved receipt or local test output."
+    },
+    "peer-access-main-ef8dce0e-receipt.json": {
+      "storedSha256": "de943aed3b8dfccd7b2c7e49395f3446b81d5f28dc86155a99c5ebb7a1dd153e",
+      "normalization": "None; exact independent actual-main receipt."
+    },
+    "peer-access-main-ef8dce0e-receipt.md": {
+      "storedSha256": "1c3b6465eceded53f3c8dbe16a805be425516ce905553c3801b7d065072f30a6",
+      "normalization": "None; exact independent actual-main receipt."
+    }
+  },
+  "limitations": [
+    "Final integrated immutable review, five exact candidate checks, normal expected-head merge and five fresh actual-main checks remain pending.",
+    "VM provider execution and production deployment are outside this regression scope.",
+    "Existing descendant cancellation, multiple-runner coordination, resume queue/history limits and provider behavior are not redesigned.",
+    "No CLI300/DCP48/WEB12/AUG117 weights, IDs or requirement acceptance changed."
+  ],
+  "files": [
+    ".github/workflows/check.yml",
+    "integrations/mcp-manager/lib/jobs.mjs",
+    "integrations/mcp-manager/lib/engineering-descriptions.mjs",
+    "integrations/mcp-manager/test/job-authorization.test.mjs",
+    "integrations/mcp-manager/JOB_AUTHORIZATION.md",
+    "integrations/mcp-manager/README.md",
+    "integrations/mcp-manager/job-authorization-evidence/",
+    "docs/engineering/2026-11-12-job-reauthorization.json",
+    "docs/engineering/2026-11-12-cross-repository-checkpoint.md"
+  ],
+  "integration": {
+    "priorCandidateSha": "0f30a256a56d951595be4abf9791f74f30cb251a",
+    "qualifiedMainSha": "ef8dce0e1863e63958c4421e8506c9bdb5e881e0",
+    "qualifiedMainTree": "fe52f5d5720c6a34ee6bbec387b1dc098ea8f2d3",
+    "qualifiedMainParents": [
+      "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+      "4bd2b6bc5aeeec17e4b076eec4947081d2363c1d"
+    ],
+    "method": "Normal two-parent integration with real remote parents; local synthetic checkpoint history is not published.",
+    "resolution": "The only conflict was the workflow append. Preserve the complete Windows manager job from the job branch and the complete upstream qualification matrix from qualified main, byte-for-byte within each job definition.",
+    "preservedRuntimeHashes": {
+      "integrations/mcp-manager/lib/jobs.mjs": "081f49980fbe4fc7b9cf541f283dec7b7b0af480e26a71f00e397f6e724c7366",
+      "integrations/mcp-manager/test/job-authorization.test.mjs": "40f4678dbf1afab76238dced5aef51247c677acf33db93d27b072c7d2ab0311a"
+    },
+    "requiredCandidateAndMainChecks": [
+      "test",
+      "managed-mcp",
+      "managed-mcp-windows",
+      "Upstream qualification / ubuntu-latest / Node 24",
+      "Upstream qualification / windows-latest / Node 24"
+    ],
+    "qualifiedMainRun": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43296801071",
+    "qualifiedMainResult": "All four actual-main jobs passed. Root123/123, manager/guards101/101; all ten real stages pass in both versions on Linux and Windows, with PDF/readback, owned cleanup, exit0 and no signal. Full logs and artifact ZIP digests independently verified."
+  }
+}

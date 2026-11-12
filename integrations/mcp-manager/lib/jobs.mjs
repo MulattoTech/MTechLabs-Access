@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// AI-Change: 2026-11-12-job-reauthorization (OpenAI / GPT-6 Astra Pro; self-reported)
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -9,6 +11,7 @@ import { codeOperation } from '../providers/code.mjs';
 import { vmOperation } from '../providers/infrastructure.mjs';
 
 const KINDS = new Set(['repo_diagnostics', 'run_tests', 'vm_inventory']);
+const TEST_COMMANDS = new Set(['npm-test', 'npm-lint', 'pytest', 'git-diff-check']);
 const STATES = new Set(['queued', 'running', 'succeeded', 'failed', 'cancelled', 'interrupted']);
 const now = () => new Date().toISOString();
 const idValid = id => typeof id === 'string' && /^[a-f0-9-]{36}$/.test(id);
@@ -43,19 +46,27 @@ function publicJob(row) {
     cancelRequested: row.cancel_requested === 1, resumeCount: row.resume_count };
 }
 
+function requireJobCapabilities(settings, kind, command) {
+  if (!KINDS.has(kind)) throw new Error('invalid_job_kind');
+  if (!settings.capabilities.jobs) throw new Error('job_submission_disabled');
+  if (kind === 'vm_inventory') {
+    if (!settings.capabilities.vmRead) throw new Error('vm_read_disabled');
+  } else {
+    if (!settings.capabilities.codeRead) throw new Error('code_read_disabled');
+    if (kind === 'run_tests' && (!settings.capabilities.testRun || !TEST_COMMANDS.has(command))) {
+      throw new Error('test_execution_disabled');
+    }
+  }
+}
+
 export async function submitJob(config, args) {
   if (!args || typeof args !== 'object' || Array.isArray(args) || !KINDS.has(args.kind)) throw new Error('invalid_job_kind');
   const settings = await readToolkit(config);
-  if (!settings.capabilities.jobs) throw new Error('job_submission_disabled');
-  if (args.kind === 'vm_inventory') {
-    if (!settings.capabilities.vmRead) throw new Error('vm_read_disabled');
-  } else {
+  requireJobCapabilities(settings, args.kind, args.command);
+  if (args.kind !== 'vm_inventory') {
     if (typeof args.rootId !== 'string' || !/^[a-z][a-z0-9_-]{0,31}$/.test(args.rootId) ||
         typeof args.relativePath !== 'string' || args.relativePath.length > 512) throw new Error('invalid_repository_path');
-    if (!settings.capabilities.codeRead) throw new Error('code_read_disabled');
     await allowedRepository(config, args.rootId, args.relativePath);
-    if (args.kind === 'run_tests' && (!settings.capabilities.testRun ||
-        !['npm-test', 'npm-lint', 'pytest', 'git-diff-check'].includes(args.command))) throw new Error('test_execution_disabled');
   }
   const db = await database(config);
   try {
@@ -108,11 +119,16 @@ export async function resumeJob(config, id, confirm) {
   if (!idValid(id) || confirm !== true) throw new Error('explicit_resume_confirmation_required');
   const db = await database(config);
   try {
-    const row = db.prepare('SELECT state,resume_count FROM jobs WHERE id=?').get(id);
+    const row = db.prepare('SELECT * FROM jobs WHERE id=?').get(id);
     if (!row || !['interrupted', 'failed', 'cancelled'].includes(row.state)) throw new Error('job_not_resumable');
     if (row.resume_count >= 3) throw new Error('job_resume_limit');
-    db.prepare(`UPDATE jobs SET state='queued',updated_at=?,started_at=NULL,finished_at=NULL,
-      result_json=NULL,error=NULL,cancel_requested=0,resume_count=resume_count+1 WHERE id=?`).run(now(), id);
+    requireJobCapabilities(await readToolkit(config), row.kind, row.command);
+    // Authorization reads are asynchronous. A competing resume must not clear
+    // evidence or increment the counter after this row has already changed.
+    const changed = db.prepare(`UPDATE jobs SET state='queued',updated_at=?,started_at=NULL,finished_at=NULL,
+      result_json=NULL,error=NULL,cancel_requested=0,resume_count=resume_count+1
+      WHERE id=? AND state=? AND resume_count=?`).run(now(), id, row.state, row.resume_count).changes;
+    if (changed !== 1) throw new Error('job_not_resumable');
     return publicJob(db.prepare('SELECT * FROM jobs WHERE id=?').get(id));
   } finally { db.close(); }
 }
@@ -148,13 +164,20 @@ export function startJobRunner(config) {
     } finally { db.close(); }
   }
   async function execute(row, signal) {
-    if (row.kind === 'vm_inventory') return vmOperation('mterm_vm_list', {});
-    const repository = await allowedRepository(config, row.root_id, row.relative_path);
-    const disk = await fs.statfs(repository);
-    const free = disk.bavail * disk.bsize;
-    if (free < (config.minimumFreeDiskMiB ?? 10240) * 1048576 || os.freemem() < config.minimumFreeMemoryMiB * 1048576) {
-      throw new Error('job_resource_preflight_failed');
+    if (!KINDS.has(row.kind)) throw new Error('invalid_job_kind');
+    let repository;
+    if (row.kind !== 'vm_inventory') {
+      repository = await allowedRepository(config, row.root_id, row.relative_path);
+      const disk = await fs.statfs(repository);
+      const free = disk.bavail * disk.bsize;
+      if (free < (config.minimumFreeDiskMiB ?? 10240) * 1048576 || os.freemem() < config.minimumFreeMemoryMiB * 1048576) {
+        throw new Error('job_resource_preflight_failed');
+      }
     }
+    // Recheck after asynchronous preflight and immediately before a new
+    // provider dispatch. A stored job is not a durable permission grant.
+    requireJobCapabilities(await readToolkit(config), row.kind, row.command);
+    if (row.kind === 'vm_inventory') return vmOperation('mterm_vm_list', {});
     if (row.kind === 'repo_diagnostics') {
       const details = await codeOperation('mterm_code_diagnostics', {}, repository, config, signal);
       return { ok: details.whitespace.ok && details.syntax.every(item => item.ok), details };

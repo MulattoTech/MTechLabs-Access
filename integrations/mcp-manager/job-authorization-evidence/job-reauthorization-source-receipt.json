@@ -1,0 +1,380 @@
+{
+  "schema_version": "job-reauthorization-source-receipt/v1",
+  "created_at_utc": "2026-11-12T19:36:59.761185+00:00",
+  "repository_path": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Descriptions",
+  "requested_base": "ba4a55b7",
+  "observed_first_revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+  "observed_revision_at_capture": "4ab98c6f9571b34def09e6aa63679804bb48dc0d",
+  "requested_base_object_available_locally": false,
+  "base_runtime_equivalence": "Supplied by root; requested base object unavailable locally, not independently proven in this receipt.",
+  "scope": "One supplied durable-job capability reauthorization finding, static inspection only.",
+  "source_files": [
+    {
+      "path": "integrations/mcp-manager/lib/jobs.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "4b1045d86b4a260787e7fce71cb6cb4da868a630",
+      "sha256": "eedc4ab20e41e9e0ebbeb2a3d9cbcfe7d0be0e73062752ea18cab07955568679",
+      "bytes": 10944,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/toolkit-config.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "56cd12bde398b63be46f157a8760518e6f0148e2",
+      "sha256": "a4b65ac14371d9d9c9fe5a92bc0c0eab6111d388695e894e781d28a66050aa55",
+      "bytes": 4292,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/engineering-tools.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "4d0bfeeaa577b59c0661278b64efc298b5ec99f5",
+      "sha256": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b",
+      "bytes": 8667,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/providers/code.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "f2aa1f954499bd1e70833d20a2727d021419fb3b",
+      "sha256": "01d69421e86a9ef19109725875da230a82d81f7ab50ee60ccb8c9b2a64920b40",
+      "bytes": 8451,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/providers/infrastructure.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "eb464ca7f59926092537b7deff8963a8c9c84b61",
+      "sha256": "4f4340eef7bb1a46d813cec4b8ba9c06209a2b89273363d20695b1b9d3c71079",
+      "bytes": 6011,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/command-runner.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "46b9cd436cfde53716eb3e26fd5b449c0fa5d8bf",
+      "sha256": "151de9a523fa10293aa7a8a5a074e1cba739901cd96572ff9f4bbbb392471df6",
+      "bytes": 1994,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/policy.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "f02c879607e832f012290905751fa3bd4a3fa161",
+      "sha256": "50eb41c9dd066f0f6e1183155f4630596a54a77b1e6f0132f869c4903cd6244e",
+      "bytes": 5785,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/admin.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "413e773ae7a8978a71f7b49b4d3bce3c458d6076",
+      "sha256": "37f67bf291ae54c39098c1d06b934d33e2167151800d2ac0e6ea0c52e36501b2",
+      "bytes": 10161,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/gateway.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "4f924e59134fa7b1147265ae62e79e8439d6c089",
+      "sha256": "ef14a5d87ab44c9af86a3aee6163800a72b7a5f3547898f7f1514855385cb37c",
+      "bytes": 19609,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/coordinator.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "05d6aa2d2b417ac71124f2eb57f3a5fff948ff0a",
+      "sha256": "7ada372d57b674d5e0f88c376588e2b44252a39327aeabe843a40dd27609b1a0",
+      "bytes": 16694,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/remote.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "294326a54b80094e8dc4349d01402134c11f6d21",
+      "sha256": "80980fbfc0d30bb364b2bd0467c980e340c6325043798b2fd00c16cf456c7963",
+      "bytes": 13104,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "src/mcp.js",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "088c0be0d6e9d3fad7ec7913fa4b70e141ecaa72",
+      "sha256": "90a91df8ebe212a19cc7927b761c4cb3f79a954d3f64c7101c81c54bf1107562",
+      "bytes": 21109,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "src/mcp-remote.js",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "794b0b62d9c84a7ae319f385392e024904e22767",
+      "sha256": "cbca88fff09ab676d5e956a761232e4d1268803b471ffdac44bf9b0f4f7c19ae",
+      "bytes": 10058,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "src/auth.js",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "0be0c67d07b6be0a566ff5d1b6e1ac6a4229d356",
+      "sha256": "52099a58667a7983b1f5da1cba6d8fd7b566d8e2dc308ecc7fcfa5a6f01c14ea",
+      "bytes": 5771,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/test/engineering.test.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "5433922c0192f940a3ac22ec0c056ca64a4c2531",
+      "sha256": "118760dac1af3133ee6375cfcafb28200e8e2d174262ccb45c6349114db564fd",
+      "bytes": 6967,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/README.md",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "275ec2605cc7c00c2f6e7ba4cb9c03525e350d55",
+      "sha256": "af0aa0d408e12929d91af8cc887683cfca988ece9be483c515246ff438713179",
+      "bytes": 23834,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/RUNBOOK.md",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "4ba0ac441d1d2d53cad97ea94381ac7da3091726",
+      "sha256": "3c64f2d2e3c8eec8927a360e015ac9d66c7f7b704b710f3901f5ed6ae2f226a1",
+      "bytes": 17861,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/engineering-descriptions.mjs",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "edbe0511b920d5127b84d90c2f73f52f45199da8",
+      "sha256": "18a0a7af1305adcefc296f2079063d651f2536ae8b17224616365fd793082081",
+      "bytes": 23201,
+      "current_checkout_bytes_equal": true
+    },
+    {
+      "path": "docs/security.md",
+      "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292",
+      "git_blob_sha1": "a4ebd797074335de986b7ee96c070a9dd1c7b9b9",
+      "sha256": "47f4abe24c56f5f3e16b82171cfde0c07f8ac4cb6387b463ba8a1dd73198d847",
+      "bytes": 9606,
+      "current_checkout_bytes_equal": true
+    }
+  ],
+  "static_source_assertions": [
+    {
+      "name": "submit_has_per_kind_checks",
+      "matched": true
+    },
+    {
+      "name": "resume_has_no_readToolkit_or_capability_guard",
+      "matched": true
+    },
+    {
+      "name": "tick_has_jobs_global_only_guard",
+      "matched": true
+    },
+    {
+      "name": "run_uses_current_toolkit_only_for_timeout",
+      "matched": true
+    },
+    {
+      "name": "execute_calls_provider_directly",
+      "matched": true
+    },
+    {
+      "name": "allowedRepository_checks_current_roots_not_capabilities",
+      "matched": true
+    }
+  ],
+  "static_decision_cases": [
+    {
+      "kind": "vm_inventory",
+      "revoked_capability": "vmRead",
+      "source_kind_required_capabilities": [
+        "vmRead"
+      ],
+      "current_capabilities": {
+        "jobs": true,
+        "vmRead": false,
+        "codeRead": true,
+        "testRun": true
+      },
+      "policy": {
+        "enabled": true,
+        "readOnly": false
+      },
+      "fresh_submission_capability_admission": false,
+      "MCP_resume_capability_admission": true,
+      "runner_tick_capability_admission": true,
+      "affected_paths": [
+        "first queued dispatch",
+        "explicit requeue of failed/interrupted/cancelled job"
+      ],
+      "assumptions": [
+        "valid previously admitted stored row",
+        "current root/Git/resource/platform prerequisites satisfied",
+        "available runner slot",
+        "for resume: known ID, confirm true, eligible state, resume_count < 3"
+      ],
+      "evidence_type": "static boolean decision model, not repository execution"
+    },
+    {
+      "kind": "repo_diagnostics",
+      "revoked_capability": "codeRead",
+      "source_kind_required_capabilities": [
+        "codeRead"
+      ],
+      "current_capabilities": {
+        "jobs": true,
+        "vmRead": true,
+        "codeRead": false,
+        "testRun": true
+      },
+      "policy": {
+        "enabled": true,
+        "readOnly": false
+      },
+      "fresh_submission_capability_admission": false,
+      "MCP_resume_capability_admission": true,
+      "runner_tick_capability_admission": true,
+      "affected_paths": [
+        "first queued dispatch",
+        "explicit requeue of failed/interrupted/cancelled job"
+      ],
+      "assumptions": [
+        "valid previously admitted stored row",
+        "current root/Git/resource/platform prerequisites satisfied",
+        "available runner slot",
+        "for resume: known ID, confirm true, eligible state, resume_count < 3"
+      ],
+      "evidence_type": "static boolean decision model, not repository execution"
+    },
+    {
+      "kind": "run_tests",
+      "revoked_capability": "codeRead",
+      "source_kind_required_capabilities": [
+        "codeRead",
+        "testRun"
+      ],
+      "current_capabilities": {
+        "jobs": true,
+        "vmRead": true,
+        "codeRead": false,
+        "testRun": true
+      },
+      "policy": {
+        "enabled": true,
+        "readOnly": false
+      },
+      "fresh_submission_capability_admission": false,
+      "MCP_resume_capability_admission": true,
+      "runner_tick_capability_admission": true,
+      "affected_paths": [
+        "first queued dispatch",
+        "explicit requeue of failed/interrupted/cancelled job"
+      ],
+      "assumptions": [
+        "valid previously admitted stored row",
+        "current root/Git/resource/platform prerequisites satisfied",
+        "available runner slot",
+        "for resume: known ID, confirm true, eligible state, resume_count < 3"
+      ],
+      "evidence_type": "static boolean decision model, not repository execution"
+    },
+    {
+      "kind": "run_tests",
+      "revoked_capability": "testRun",
+      "source_kind_required_capabilities": [
+        "codeRead",
+        "testRun"
+      ],
+      "current_capabilities": {
+        "jobs": true,
+        "vmRead": true,
+        "codeRead": true,
+        "testRun": false
+      },
+      "policy": {
+        "enabled": true,
+        "readOnly": false
+      },
+      "fresh_submission_capability_admission": false,
+      "MCP_resume_capability_admission": true,
+      "runner_tick_capability_admission": true,
+      "affected_paths": [
+        "first queued dispatch",
+        "explicit requeue of failed/interrupted/cancelled job"
+      ],
+      "assumptions": [
+        "valid previously admitted stored row",
+        "current root/Git/resource/platform prerequisites satisfied",
+        "available runner slot",
+        "for resume: known ID, confirm true, eligible state, resume_count < 3"
+      ],
+      "evidence_type": "static boolean decision model, not repository execution"
+    }
+  ],
+  "negative_controls": [
+    {
+      "condition": "jobs=false",
+      "runner_tick_admission": false
+    },
+    {
+      "condition": "policy.enabled=false",
+      "runner_tick_admission": false
+    },
+    {
+      "condition": "policy.readOnly=true",
+      "runner_tick_admission": false
+    },
+    {
+      "condition": "repository root ID removed",
+      "runner_tick_admission": true,
+      "provider_admission": "denied by current allowedRepository before codeOperation"
+    }
+  ],
+  "limitations": [
+    "No repository code imports, test execution, provider/process launches, network calls, policy/job database writes, or production inspection.",
+    "Static assertions and decision table establish the missing guard, not successful command execution on any host.",
+    "Owner-only authentication and current root/platform/resource constraints still apply."
+  ],
+  "issue_inventory": {
+    "path": "/workspace/scratch/a92a3aacdca1/github-inventory.json",
+    "sha256": "5d91e46a00236cdc5edb8ee3f116cf5cd4792eb3244e5a2643b7c91496789ca8",
+    "repository": "MulattoTech/MTerm-CLI",
+    "verified_at": "2026-11-12T16:49:59.806Z",
+    "scope_limit": "Available local snapshot covers MulattoTech/MTerm-CLI, not a complete Access issue inventory; no exact Access duplicate or current state established.",
+    "related": [
+      {
+        "number": 86,
+        "title": "[AUG-004] Per-user, per-client and per-project authorization",
+        "url": "https://github.com/MulattoTech/MTerm-CLI/issues/86",
+        "state_at_snapshot": "open",
+        "relationship": "Closest existing authorization/replay/revocation foundation; separate standalone CLI repository, not a proven Access defect duplicate."
+      },
+      {
+        "number": 130,
+        "title": "[AUG-049] Durable task checkpoints and restart recovery",
+        "url": "https://github.com/MulattoTech/MTerm-CLI/issues/130",
+        "state_at_snapshot": "open",
+        "relationship": "Related durable restart/resume lifecycle foundation; does not specifically describe this omitted capability check."
+      },
+      {
+        "number": 131,
+        "title": "[AUG-050] Pause, resume, stop and emergency global kill",
+        "url": "https://github.com/MulattoTech/MTerm-CLI/issues/131",
+        "state_at_snapshot": "open",
+        "relationship": "Related control lifecycle foundation; emergency kill is outside this defect and review."
+      },
+      {
+        "number": 149,
+        "title": "[AUG-066] Queue backpressure and remote worker admission",
+        "url": "https://github.com/MulattoTech/MTerm-CLI/issues/149",
+        "state_at_snapshot": "open",
+        "relationship": "Related queue admission/backpressure foundation; distinct scope."
+      }
+    ]
+  }
+}
