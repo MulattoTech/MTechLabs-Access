@@ -97,9 +97,9 @@ test('real qualification requires explicit disposable hosted Linux/Windows Node2
   assert.throws(() => validateQualificationHost(host, 'linux', '27.0.0-alpha'), /qualification_host/);
 });
 
-test('new owned workspaces have separate control and candidate stores outside source', async t => {
+test('new owned workspaces canonicalize ordinary temporary names and separate stores from source', async t => {
   const { workspace, runnerTemp, sourceRoot } = await fixture(t);
-  assert.equal(path.dirname(workspace.root), runnerTemp);
+  assert.equal(path.dirname(workspace.root), await fs.realpath(runnerTemp));
   assert.equal(await fs.realpath(workspace.root), workspace.root);
   assert.notEqual(workspace.root, sourceRoot);
   await assertOwnedWorkspace(workspace);

@@ -54,9 +54,16 @@ async function unlinked(target, boundary) {
 }
 
 export async function createQualificationWorkspace({ runnerTemp, sourceRoot }) {
-  const parent = path.resolve(runnerTemp), source = path.resolve(sourceRoot);
+  const requested = path.resolve(runnerTemp);
+  // Windows os.tmpdir() may use an ordinary 8.3 name (RUNNER~1). Resolve it
+  // without treating it as a link; reject actual links/junctions at every level.
+  let current = path.parse(requested).root;
+  for (const segment of path.relative(current, requested).split(path.sep).filter(Boolean)) {
+    current = path.join(current, segment);
+    if ((await fs.lstat(current)).isSymbolicLink()) fail('qualification_root_link');
+  }
+  const parent = await fs.realpath(requested), source = await fs.realpath(path.resolve(sourceRoot));
   if (contained(parent, source) || contained(source, parent) ||
-      !samePath(parent, await fs.realpath(parent)) || (await fs.lstat(parent)).isSymbolicLink() ||
       !(await fs.stat(parent)).isDirectory()) fail('qualification_root_not_separate');
   const root = await fs.mkdtemp(path.join(parent, 'mterm-upstream-qualification-'));
   await fs.chmod(root, 0o700);

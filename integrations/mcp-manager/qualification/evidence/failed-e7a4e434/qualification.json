@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "testedAt": "2026-11-12T19:00:01.844Z",
+  "sourceSha": "6fe2df3875a3092b0d2d6198004154d8fa4b9aaf",
+  "sourceTree": "8959c7e93a15acbfd6c6c43e3d6e390ffcca7f8f",
+  "candidateSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v24.22.2",
+  "libuv": "1.52.1",
+  "host": "github-hosted",
+  "managerVersion": "0.4.0",
+  "sdkVersion": "1.32.2",
+  "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+  "modelCalls": 0,
+  "lanes": [
+    {
+      "lane": "control",
+      "version": "0.3.1",
+      "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+      "admitted": {
+        "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+        "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+        "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 273
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 44
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 78
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 284
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 5
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 2889,
+      "upstreamPid": 2900,
+      "toolCount": 53,
+      "failedStage": "content_search_completion_and_pagination",
+      "failureCode": "qualification_assertion_failed",
+      "rpcErrorCode": null,
+      "childExitCode": 0,
+      "ownedProcessTreeExited": true
+    },
+    {
+      "lane": "candidate",
+      "version": "0.3.3",
+      "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+      "admitted": {
+        "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/candidate/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+        "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/candidate/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+        "lockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 437
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 46
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 129
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 381
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 6
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 2963,
+      "upstreamPid": 2974,
+      "toolCount": 53,
+      "failedStage": "content_search_completion_and_pagination",
+      "failureCode": "qualification_assertion_failed",
+      "rpcErrorCode": null,
+      "childExitCode": 0,
+      "ownedProcessTreeExited": true
+    }
+  ],
+  "pass": false,
+  "limitations": [
+    "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+    "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+    "Package installation and explicit ripgrep binary download use the network; upstream may discover or download Chrome.",
+    "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+  ],
+  "contractComparison": {
+    "added": [],
+    "removed": [],
+    "contractChanges": [],
+    "descriptionChanges": [
+      "kill_process"
+    ],
+    "controlSha256": "041c12fb26073a50ed871442d2e4270ea557af23266b20fd0981427ad16cdf54",
+    "candidateSha256": "2b83b6fcdfd2b402171b250effbf489531006250d1d96bcd561903f233826a69"
+  },
+  "completedAt": "2026-11-12T19:00:13.804Z"
+}

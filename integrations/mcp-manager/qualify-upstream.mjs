@@ -24,6 +24,15 @@ const exec = promisify(execFile);
 const managerRoot = path.dirname(fileURLToPath(import.meta.url));
 const sourceRoot = path.resolve(managerRoot, '../..');
 const resultText = result => (result.content ?? []).filter(block => block.type === 'text').map(block => block.text).join('\n');
+const searchObservation = result => {
+  const input = result?.structuredContent ?? {}, output = { isError: result?.isError === true, structured: !!result?.structuredContent };
+  for (const key of ['isComplete', 'totalResults', 'totalMatches', 'returnedCount', 'hasMoreResults']) {
+    if (typeof input[key] === 'boolean' || (typeof input[key] === 'number' && Number.isFinite(input[key]))) output[key] = input[key];
+  }
+  if (['running', 'completed', 'failed', 'partial', 'timed_out', 'stopped', 'max_results'].includes(input.outcome)) output.outcome = input.outcome;
+  output.hasSessionId = typeof input.sessionId === 'string';
+  return output;
+};
 const alive = pid => { try { process.kill(pid, 0); return true; } catch (error) { return error.code !== 'ESRCH'; } };
 const quote = value => process.platform === 'win32' ? "'" + value.replaceAll("'", "''") + "'" : "'" + value.replaceAll("'", "'\\''") + "'";
 const shell = () => process.platform === 'win32'
@@ -70,11 +79,17 @@ async function prepareLane(workspace, lane, env, npmEntry, expected) {
   await npmCommand(npmEntry, ['ci', '--ignore-scripts', '--no-audit', '--no-fund'], {
     cwd: install, env, reportFile: path.join(workspace.root, 'reports', lane + '-install.log'),
   });
-  // Only this pinned dependency's binary downloader runs. Upstream onboarding,
-  // telemetry postinstall and Puppeteer's broad lifecycle hooks stay disabled.
-  await npmCommand(npmEntry, ['rebuild', '@vscode/ripgrep', '--ignore-scripts=false', '--no-audit', '--no-fund'], {
-    cwd: install, env, reportFile: path.join(workspace.root, 'reports', lane + '-ripgrep-install.log'),
-  });
+  // The exact lock contains @vscode/ripgrep1.18.0, whose platform binaries ship
+  // as optional npm packages. It has no postinstall/downloader to rebuild.
+  const nativeName = `@vscode/ripgrep-${process.platform}-${process.arch}`;
+  const nativeRoot = path.join(install, 'node_modules', nativeName);
+  const nativePackage = JSON.parse(await fs.readFile(path.join(nativeRoot, 'package.json'), 'utf8'));
+  assert.equal(nativePackage.name, nativeName); assert.equal(nativePackage.version, '1.18.0');
+  const rgPath = path.join(nativeRoot, 'bin', process.platform === 'win32' ? 'rg.exe' : 'rg');
+  const rgResult = await exec(rgPath, ['--version'], { cwd: install, env, windowsHide: true, timeout: 10000, maxBuffer: 16384 });
+  const native = { package: nativeName, version: nativePackage.version, executable: rgPath,
+    sha256: sha256(await fs.readFile(rgPath)), versionOutput: rgResult.stdout.slice(0, 1024) };
+  await writeReport(workspace, lane + '-native-prerequisites.json', native);
   const admitted = await admitInstalledUpstream(workspace, lane, expected);
   const config = { schemaVersion: 1, nodePath: process.execPath, serverPath: admitted.entryPath,
     serverPackageJsonPath: admitted.packagePath, stateDirectory: path.join(root, 'state'),
@@ -108,7 +123,8 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
   try {
     await stageRun('initialize', async () => {
       await client.connect(transport, { timeout: 60000 }); report.initialized = true;
-      const instances = await fs.readdir(path.join(config.stateDirectory, 'instances'));
+      const instances = (await fs.readdir(path.join(config.stateDirectory, 'instances')))
+        .filter(name => /^[a-f0-9-]{36}\.json$/i.test(name));
       assert.equal(instances.length, 1, 'unexpected_gateway_instances');
       const instance = JSON.parse(await fs.readFile(path.join(config.stateDirectory, 'instances', instances[0]), 'utf8'));
       assert.equal(instance.pid, transport.pid); assert.ok(Number.isInteger(instance.serverPid) && instance.serverPid > 0);
@@ -147,13 +163,18 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
       for (let index = 0; index < 6; index++) await fs.writeFile(path.join(searchRoot, `match-${index}.txt`), `MTERM_SEARCH_NEEDLE_${index}\n`);
       const start = await call('start_search', { path: searchRoot, pattern: 'MTERM_SEARCH_NEEDLE', searchType: 'content', contextLines: 0,
         timeout_ms: 10000, maxResults: 20, literalSearch: true });
-      const sessionId = start.structuredContent?.sessionId; assert.equal(typeof sessionId, 'string');
+      report.search = { start: searchObservation(start) };
+      const sessionId = start.structuredContent?.sessionId; assert.equal(typeof sessionId, 'string', 'search_session_id_missing');
       let page;
-      await until(async () => { page = await call('get_more_search_results', { sessionId, offset: 0, length: 2 }); return page.structuredContent?.isComplete === true; }, 15000, 'search_completion_timeout');
-      assert.equal(page.structuredContent.outcome, 'completed'); assert.equal(page.structuredContent.totalMatches, 6);
-      assert.equal(page.structuredContent.returnedCount, 2); assert.equal(page.structuredContent.hasMoreResults, true);
+      await until(async () => { page = await call('get_more_search_results', { sessionId, offset: 0, length: 2 }); report.search.firstPage = searchObservation(page); return page.structuredContent?.isComplete === true; }, 15000, 'search_completion_timeout');
+      assert.equal(page.structuredContent.outcome, 'completed', 'search_outcome_not_completed');
+      assert.equal(page.structuredContent.totalMatches, 6, 'search_match_count_mismatch');
+      assert.equal(page.structuredContent.returnedCount, 2, 'search_first_page_count_mismatch');
+      assert.equal(page.structuredContent.hasMoreResults, true, 'search_first_page_more_mismatch');
       const tail = await call('get_more_search_results', { sessionId, offset: 4, length: 2 });
-      assert.equal(tail.structuredContent.returnedCount, 2); assert.equal(tail.structuredContent.hasMoreResults, false);
+      report.search.lastPage = searchObservation(tail);
+      assert.equal(tail.structuredContent.returnedCount, 2, 'search_last_page_count_mismatch');
+      assert.equal(tail.structuredContent.hasMoreResults, false, 'search_last_page_more_mismatch');
     });
     await stageRun('shell_blocklist', async () => {
       const marker = path.join(fixtureRoot, 'blocked-prefix-must-not-run.txt');
@@ -236,7 +257,7 @@ export async function runQualification({ env = process.env } = {}) {
     launch: 'managed gateway -> node dist/index.js --no-onboarding (stdio)', modelCalls: 0, lanes: [], pass: false,
     limitations: ['No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.',
       'Environment redirection is not OS isolation; the fresh disposable hosted account is required.',
-      'Package installation and explicit ripgrep binary download use the network; upstream may discover or download Chrome.',
+      'Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.',
       'This is a bounded compatibility qualification, not full security certification or full mission acceptance.'] };
   const flags = createServer((request, response) => {
     if (request.url !== '/flags') { response.writeHead(404).end(); return; }

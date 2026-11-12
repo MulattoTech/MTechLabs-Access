@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-12T19:02:38.652868+00:00",
+  "reviewer": "Independent architecture agent",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "pullRequest": 24,
+  "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+  "tree": "8959c7e93a15acbfd6c6c43e3d6e390ffcca7f8f",
+  "parentSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "decision": "APPROVED_IMMUTABLE_SOURCE_FOR_HOSTED_QUALIFICATION",
+  "blockingFindings": [],
+  "sourceIdentity": {
+    "remoteGitCommitAndTreeVerified": true,
+    "remoteParentIsActualProductionSource": true,
+    "verifiedBlobs": 165,
+    "allRemoteBlobHashesMatchAfterTests": true,
+    "localCheckpoint": "28493075ba99f4cd184657e2d678cb864921f12a",
+    "localCheckpointTreeEqualsRemote": true,
+    "syntheticLocalHistoryNotPublished": true
+  },
+  "reviewedCorrections": [
+    {
+      "id": "AQ-1",
+      "result": "Exact blocklist refusal plus absent owned marker; ordinary command-not-found cannot pass."
+    },
+    {
+      "id": "AQ-2",
+      "result": "Actual server-returned configuration binds telemetry false, exact owned roots, blocked command and shell."
+    },
+    {
+      "id": "AQ-3",
+      "result": "Tail response requires exactly markers297,298,299 and at most8192 bytes; full300-line output cannot pass."
+    }
+  ],
+  "correctedSourceHashes": [
+    {
+      "path": "integrations/mcp-manager/qualify-upstream.mjs",
+      "sha256": "44836d5979ceb95e623eaf0371cb6cfc820c354d23b207ae0cbe28cb7c2d49db",
+      "matchesPriorCorrectedReview": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/upstream-qualification.mjs",
+      "sha256": "e2c5b7b2242871d5501fdd93a582eff2fc53e93529ce96083bb7a6e3bb97e55b",
+      "matchesPriorCorrectedReview": true
+    },
+    {
+      "path": "integrations/mcp-manager/test/upstream-qualification.test.mjs",
+      "sha256": "b343cb7f838b3dab724931dc293dcf3bf7834be50c2fe292c16050890c9dfd3d",
+      "matchesPriorCorrectedReview": true
+    }
+  ],
+  "validation": {
+    "managerTests": {
+      "tests": 90,
+      "pass": 90,
+      "fail": 0,
+      "skip": 0,
+      "cancel": 0,
+      "independentlyExecuted": true,
+      "node": "v24.22.1",
+      "fromImmutableExtraction": "/workspace/scratch/a92a3aacdca1/access-final-review-e7a4e434"
+    },
+    "rootTests": {
+      "tests": 123,
+      "pass": 123,
+      "source": "Saved root evidence retained and hash verified; not redundantly rerun by this reviewer."
+    },
+    "upstreamEvidenceFileHashesVerified": 18,
+    "engineeringEvidenceHashesVerified": 9,
+    "actualUpstreamExecutedLocally": false,
+    "dependenciesInstalledByReviewer": false
+  },
+  "delta": {
+    "ordinaryGatewayManagerCodeChanged": false,
+    "existingFilesModified": [
+      ".github/workflows/check.yml",
+      "README.md",
+      "integrations/mcp-manager/RUNBOOK.md",
+      "integrations/mcp-manager/package.json",
+      "integrations/mcp-manager/upstream-package-lock.json",
+      "integrations/mcp-manager/upstream-package.json"
+    ],
+    "controlManifestsByteExactAgainstParent": true,
+    "candidateVersion": "0.3.3",
+    "controlVersion": "0.3.1",
+    "sdkVersion": "1.32.2",
+    "lockChanges": {
+      "changed": [
+        "",
+        "node_modules/@wonderwhy-er/desktop-commander"
+      ],
+      "addedCount": 31,
+      "removed": [
+        "node_modules/@wonderwhy-er/desktop-commander/node_modules/@desktop-commander/telemetry-contract"
+      ]
+    },
+    "unrelatedExistingLockEntriesExactlyPreserved": true
+  },
+  "boundaryReview": [
+    "Actual upstream runs require explicit fresh GitHub-hosted Ubuntu/Windows Node24 context before mutations. Guard is accurately described as accident prevention, not attestation or OS sandbox.",
+    "New workflow uses checkout without persisted credentials; owned lane environments omit credentials, preload hooks and user npm config. Only pinned ripgrep rebuild enables a lifecycle installer.",
+    "Separate owned homes/state/cache/temp and admitted exact package path/lock/integrity protect accidental production reuse; no production verifier is called.",
+    "Actual managed gateway and stdio dispatch remain unchanged; remote-auth repair is not falsely claimed as reachable or deployed through the normal stdio path.",
+    "EOF-only owned transport and explicit gateway/upstream/owned-tree exit checks refuse qualification on uncertain cleanup.",
+    "All53 names plus complete inputSchema/annotations/outputSchema are compared against the actual control; description deltas retained separately.",
+    "Static artifact/notice evidence remains explicitly bounded; no signature-chain, complete reproducibility, final legal redistribution clearance or full security acceptance is asserted."
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-review-e7a4-manager.tap",
+      "sha256": "801f98a0dcdd22a76955e6296966b3b1001a35e6c2f99ee33d0fca9b85503c2c"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-review-e7a4-verification.json",
+      "sha256": "cd998907d5a7e46ef64430be1f92fbd1080f71eb6d7e82cc8770586812f67505"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-review-e7a4-delta.json",
+      "sha256": "9f5cc688d8619beb0a1baf37913efe65fbc300918bb0515ab6f9f33f18bf61db"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-review-e7a4-remote-commit.json",
+      "sha256": "5dea9f7327c3657d6c20ee8575e75eebf15b42d4bd31eb0e7398777af9b1fd37"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-review-e7a4-remote-tree.json",
+      "sha256": "ef79420dab58206eff0f366f976980dbdef45d7e524f0091537975cc0258b65e"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-harness-corrections-reviewed.json",
+      "sha256": "4b8c239d0ceeeb96b37cf622431ad9d802e48a45c134e290bfd0a49f73bcf579"
+    }
+  ],
+  "limits": [
+    "This is immutable source approval, not passing actual-upstream hosted qualification.",
+    "All required exact candidate hosted jobs and independent actual merged-main jobs remain required.",
+    "No installed production runtime/configuration, Cloudflare Worker, ChatGPT plugin metadata or production connection changed.",
+    "Broader issue10 acceptance, full feature parity, public remote/OAuth, macOS, Docker and two-computer behavior remain outside this slice."
+  ]
+}

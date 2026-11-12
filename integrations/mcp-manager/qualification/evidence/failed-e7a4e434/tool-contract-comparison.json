@@ -1,0 +1,10 @@
+{
+  "added": [],
+  "removed": [],
+  "contractChanges": [],
+  "descriptionChanges": [
+    "kill_process"
+  ],
+  "controlSha256": "041c12fb26073a50ed871442d2e4270ea557af23266b20fd0981427ad16cdf54",
+  "candidateSha256": "2b83b6fcdfd2b402171b250effbf489531006250d1d96bcd561903f233826a69"
+}

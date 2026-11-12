@@ -3,7 +3,7 @@
   "changeId": "2026-11-12-upstream-033",
   "provider": "OpenAI",
   "model": "GPT-6 Astra Pro (self-reported)",
-  "updatedAt": "2026-11-12T18:58:28.598180+00:00",
+  "updatedAt": "2026-11-12T19:07:22.521243+00:00",
   "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
   "sourceRepository": "MulattoTech/MTechLabs-Access",
   "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
@@ -12,9 +12,12 @@
     "Preserve the exact 0.3.1 control manifests and SDK 1.32.2; pin 0.3.3 candidate without production deployment.",
     "Refuse actual upstream execution outside explicit fresh GitHub-hosted Linux/Windows Node 24 context. Separate lane homes/state/cache and validate directory ownership. Guard is not an OS sandbox.",
     "Use real SDK through the unchanged managed stdio gateway; verify all 53 tool contracts, actual returned configuration, owned file/search/process/PDF behavior, exact read-only denial, admission release and EOF cleanup.",
-    "Use npm ci with lifecycle scripts disabled; explicitly rebuild only pinned ripgrep. Disable upstream telemetry, supply local feature flags, and disclose dependency/Chrome networking.",
+    "Use npm ci with lifecycle scripts disabled. Both locks contain ripgrep1.18.0 prebuilt optional packages; remove the unnecessary rebuild, verify the exact native binary version/hash/path, and disclose npm/Chrome networking.",
     "Restore all 16 unrelated native libc selectors dropped by npm lock regeneration. All other existing unrelated lock entries remain identical.",
-    "Independent review identified three false-positive proof weaknesses. Add actual failing counterexamples before tightening blocklist, configuration and output-tail assertions."
+    "Independent review identified three false-positive proof weaknesses. Add actual failing counterexamples before tightening blocklist, configuration and output-tail assertions.",
+    "Canonicalize ordinary temporary path aliases after rejecting every actual link/junction ancestor, retaining source/store separation and pinned ownership.",
+    "Record bounded search state/count observations and specific assertion codes to diagnose the failed hosted comparison without exposing arbitrary response content.",
+    "Count published UUID.json heartbeat records rather than concurrent atomic-write temporary files in the existing shared-admission fixture and new probe."
   ],
   "tests": [
     {
@@ -44,6 +47,18 @@
     {
       "command": "Independent exact npm artifacts and final dependency lock review",
       "result": "PASS within static scope: both upstream tarballs and all 31 added paths/29 unique artifacts match integrity; all unrelated existing dependency entries preserved after 16 libc restorations. New licenses/notices retained; no added native/install hook found. Runtime and redistribution scope remain separate."
+    },
+    {
+      "command": "Exact e7a4e434 hosted run43285538231",
+      "result": "FAIL: root123/123 and manager90/90 passed. Ubuntu real control/candidate each passed initialize, all53 contracts, owned configuration, file/policy probes then failed an unidentified search assertion; both exited cleanly. Windows guards83/90, seven root-path failures; actual upstream step skipped. Artifact digest and full failure receipt retained."
+    },
+    {
+      "command": "npm test after diagnostic/path follow-up before metadata fixture correction",
+      "result": "RED:89/90; existing shared-admission fixture counted a concurrent atomic-write temporary file as a third published instance. Runtime status reader already filters UUID.json."
+    },
+    {
+      "command": "npm test after metadata fixture correction",
+      "result": "GREEN:90/90, zero failures/skips/cancellations. Revised hosted Windows root handling and real search/native tests remain pending."
     }
   ],
   "roadmapUpdates": [
@@ -68,7 +83,11 @@
     "access-root-candidate.tap": "319710688450aef212947dcea34f1014d6ce9ba2d94502e194b0d6cf416f1714",
     "access-harness-review-current.json": "cecfb9c07647063b0259344b66f770972712c66784363ce9625079ce7df206d0",
     "access-harness-review-current.md": "7af20f89fe652d4dc7d2f0688fe2b9b424d5c889df0c91c78f242e360b8253cd",
-    "upstream/FILE-SHA256.json": "78e362a22136ee788c4202508b8db15b382b5e1df014c797acffe9df9da04a8b"
+    "upstream/FILE-SHA256.json": "78e362a22136ee788c4202508b8db15b382b5e1df014c797acffe9df9da04a8b",
+    "peer-access-review-e7a4e434.json": "652b3980a655c3fce4b6ccd729ec6d053773d71d0aaa083fe229eec0d5246822",
+    "peer-access24-e7a4e434-receipt.json": "13e52a5c6b666b878e681a7b196020bcb0f0ac6b17108b6a05b0cd5062a414c7",
+    "access-harness-revision-green.tap": "6f06582505591538f6e50af1b4495297de09d6a23d27a73944ae82124124b6da",
+    "access-harness-revision-final.tap": "c366e5dc7c793860cf0a5fbcf53aca0c6295e2a7318914aaef545d4fc88b6a60"
   },
   "files": [
     ".github/workflows/check.yml",
@@ -81,6 +100,7 @@
     "integrations/mcp-manager/qualify-upstream.mjs",
     "integrations/mcp-manager/test/upstream-qualification.test.mjs",
     "integrations/mcp-manager/qualification/",
-    "docs/engineering/2026-11-12-upstream-033.json"
+    "docs/engineering/2026-11-12-upstream-033.json",
+    "integrations/mcp-manager/test/shared-admission.test.mjs"
   ]
 }
