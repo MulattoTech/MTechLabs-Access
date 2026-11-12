@@ -413,3 +413,10 @@ installation through the owner dashboard, guest-OS credentials/interactive
 Hyper-V sessions, Proxmox/VMware integrations, dependency-graph agent
 orchestration, GPU job scheduling, and operating-system-enforced isolation.
 None of these is claimed to be implemented by the capability switches.
+
+
+## Engineering tool descriptions
+
+The 28 MTerm engineering tools use static plain-text sections for purpose, inputs,
+permissions, results and limits. Their names, schemas and permission annotations
+are preserved. See [metadata evidence and deployment limits](./METADATA.md).

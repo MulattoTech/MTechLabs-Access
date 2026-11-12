@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// AI-Change: 2026-11-12-engineering-descriptions (OpenAI / GPT-6 Astra Pro; self-reported)
+import { ENGINEERING_DESCRIPTIONS } from './engineering-descriptions.mjs';
 import { readToolkit, allowedRepository } from './toolkit-config.mjs';
 import { mathOperation } from '../providers/math.mjs';
 import { vmOperation, systemOperation } from '../providers/infrastructure.mjs';
@@ -15,34 +18,34 @@ const root = { rootId: str('Configured local repository root identifier', 32), r
 const vm = { name: str('Exact local Hyper-V virtual machine name', 80) };
 
 export const ENGINEERING_TOOLS = Object.freeze([
-  tool('mterm_math_evaluate', 'Safely simplify and numerically evaluate a mathematical expression using isolated SymPy.', { expression: str('Math expression, e.g. sqrt(2)+1'), precision: int('Decimal digits', 8, 100) }, ['expression']),
-  tool('mterm_math_solve', 'Solve an algebraic equation for one variable without executing Python code.', { equation: str('Equation such as x^2=4'), variable: str('Variable to solve for', 16) }, ['equation', 'variable']),
-  tool('mterm_math_verify', 'Check symbolic equivalence of two expressions.', { left: str('First expression'), right: str('Second expression') }, ['left', 'right']),
-  tool('mterm_math_convert_units', 'Convert supported length, mass, time and temperature units with decimal arithmetic.', { value: str('Decimal numeric value', 80), from: str('Source unit', 12), to: str('Target unit', 12) }, ['value', 'from', 'to']),
-  tool('mterm_system_inventory', 'Inspect host OS, CPU, RAM, logical disks and GPU model without modifying configuration.'),
-  tool('mterm_container_list', 'Inspect Docker containers and WSL distributions without changing them.'),
-  tool('mterm_vm_list', 'List local Hyper-V VMs with state and resource allocation.'),
-  tool('mterm_vm_inspect', 'Inspect one Hyper-V VM configuration, adapters, attached disks, and checkpoints.', vm, ['name']),
-  tool('mterm_vm_network_map', 'Inspect Hyper-V virtual switches and VM network adapters.'),
-  tool('mterm_vm_disk_health', 'Report attached Hyper-V virtual disk paths and allocated VHDX sizes.'),
-  tool('mterm_vm_diagnostics', 'Read recent Hyper-V event log warnings and errors.', { hours: int('Lookback hours', 1, 168) }),
-  tool('mterm_vm_change_plan', 'Preview a proposed VM power or checkpoint operation; does not execute it.', { ...vm, action: { type: 'string', enum: ['start', 'shutdown', 'checkpoint'] } }, ['name', 'action']),
-  tool('mterm_vm_start', 'Start a Hyper-V VM after an exact-name confirmation and explicit VM power permission.', { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
-  tool('mterm_vm_shutdown', 'Request a graceful guest shutdown; never force-turns off a VM.', { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
-  tool('mterm_vm_checkpoint_create', 'Create a production checkpoint of a VM, never restore or remove checkpoints.', { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
-  tool('mterm_repo_inspect', 'Inspect repository branch, cleanliness, scripts and development entry points.', root, ['rootId']),
-  tool('mterm_code_diagnostics', 'Run non-executing diff and JavaScript syntax checks on changed files.', root, ['rootId']),
-  tool('mterm_code_review_diff', 'Return a bounded, evidence-based Git diff and whitespace diagnostics.', { ...root, base: str('Optional Git base ref; defaults to HEAD', 80) }, ['rootId']),
-  tool('mterm_code_symbols', 'Locate code declarations in tracked project files.', { ...root, query: str('Function, class or identifier to locate', 80) }, ['rootId', 'query']),
-  tool('mterm_code_references', 'Find tracked references to an identifier without executing project code.', { ...root, symbol: str('Exact identifier to search', 80) }, ['rootId', 'symbol']),
-  tool('mterm_test_run', 'Run a configured repository test command after test-execution permission is enabled.', { ...root, command: { type: 'string', enum: ['npm-test', 'npm-lint', 'pytest', 'git-diff-check'] } }, ['rootId', 'command'], false),
-  tool('mterm_patch_apply_checked', 'Check Git patch application; applies only when apply=true and repository-write permission is enabled.', { ...root, patch: str('Unified diff', 20000), expectedHead: str('Expected 40-character HEAD SHA', 40), apply: bool('Actually apply the patch; false validates only') }, ['rootId', 'patch', 'expectedHead', 'apply'], false),
-  tool('mterm_git_worktree_create', 'Create a separate named Git worktree on a new branch under the manager worktree directory.', { ...root, name: str('Unique lowercase worktree name, e.g. sprint-one', 40) }, ['rootId', 'name'], false),
-  tool('mterm_job_submit', 'Queue one persistent, allowlisted diagnostics/test/VM inventory job with a durable ID.', { kind: { type: 'string', enum: ['repo_diagnostics', 'run_tests', 'vm_inventory'] }, ...root, command: { type: 'string', enum: ['npm-test', 'npm-lint', 'pytest', 'git-diff-check'] } }, ['kind'], false),
-  tool('mterm_job_status', 'Read durable status of a previously submitted job.', { id: str('Job UUID', 36) }, ['id']),
-  tool('mterm_job_logs', 'Retrieve bounded result evidence for a finished job.', { id: str('Job UUID', 36) }, ['id']),
-  tool('mterm_job_cancel', 'Cancel a queued job or request controlled cancellation of a running job.', { id: str('Job UUID', 36) }, ['id'], false),
-  tool('mterm_job_resume', 'Explicitly requeue an interrupted or failed job; never automatic retry.', { id: str('Job UUID', 36), confirm: bool('I verified the previous outcome before requeueing') }, ['id', 'confirm'], false),
+  tool('mterm_math_evaluate', ENGINEERING_DESCRIPTIONS.mterm_math_evaluate, { expression: str('Math expression, e.g. sqrt(2)+1'), precision: int('Decimal digits', 8, 100) }, ['expression']),
+  tool('mterm_math_solve', ENGINEERING_DESCRIPTIONS.mterm_math_solve, { equation: str('Equation such as x^2=4'), variable: str('Variable to solve for', 16) }, ['equation', 'variable']),
+  tool('mterm_math_verify', ENGINEERING_DESCRIPTIONS.mterm_math_verify, { left: str('First expression'), right: str('Second expression') }, ['left', 'right']),
+  tool('mterm_math_convert_units', ENGINEERING_DESCRIPTIONS.mterm_math_convert_units, { value: str('Decimal numeric value', 80), from: str('Source unit', 12), to: str('Target unit', 12) }, ['value', 'from', 'to']),
+  tool('mterm_system_inventory', ENGINEERING_DESCRIPTIONS.mterm_system_inventory),
+  tool('mterm_container_list', ENGINEERING_DESCRIPTIONS.mterm_container_list),
+  tool('mterm_vm_list', ENGINEERING_DESCRIPTIONS.mterm_vm_list),
+  tool('mterm_vm_inspect', ENGINEERING_DESCRIPTIONS.mterm_vm_inspect, vm, ['name']),
+  tool('mterm_vm_network_map', ENGINEERING_DESCRIPTIONS.mterm_vm_network_map),
+  tool('mterm_vm_disk_health', ENGINEERING_DESCRIPTIONS.mterm_vm_disk_health),
+  tool('mterm_vm_diagnostics', ENGINEERING_DESCRIPTIONS.mterm_vm_diagnostics, { hours: int('Lookback hours', 1, 168) }),
+  tool('mterm_vm_change_plan', ENGINEERING_DESCRIPTIONS.mterm_vm_change_plan, { ...vm, action: { type: 'string', enum: ['start', 'shutdown', 'checkpoint'] } }, ['name', 'action']),
+  tool('mterm_vm_start', ENGINEERING_DESCRIPTIONS.mterm_vm_start, { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
+  tool('mterm_vm_shutdown', ENGINEERING_DESCRIPTIONS.mterm_vm_shutdown, { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
+  tool('mterm_vm_checkpoint_create', ENGINEERING_DESCRIPTIONS.mterm_vm_checkpoint_create, { ...vm, confirmName: str('Repeat the exact VM name to confirm', 80) }, ['name', 'confirmName'], false),
+  tool('mterm_repo_inspect', ENGINEERING_DESCRIPTIONS.mterm_repo_inspect, root, ['rootId']),
+  tool('mterm_code_diagnostics', ENGINEERING_DESCRIPTIONS.mterm_code_diagnostics, root, ['rootId']),
+  tool('mterm_code_review_diff', ENGINEERING_DESCRIPTIONS.mterm_code_review_diff, { ...root, base: str('Optional Git base ref; defaults to HEAD', 80) }, ['rootId']),
+  tool('mterm_code_symbols', ENGINEERING_DESCRIPTIONS.mterm_code_symbols, { ...root, query: str('Function, class or identifier to locate', 80) }, ['rootId', 'query']),
+  tool('mterm_code_references', ENGINEERING_DESCRIPTIONS.mterm_code_references, { ...root, symbol: str('Exact identifier to search', 80) }, ['rootId', 'symbol']),
+  tool('mterm_test_run', ENGINEERING_DESCRIPTIONS.mterm_test_run, { ...root, command: { type: 'string', enum: ['npm-test', 'npm-lint', 'pytest', 'git-diff-check'] } }, ['rootId', 'command'], false),
+  tool('mterm_patch_apply_checked', ENGINEERING_DESCRIPTIONS.mterm_patch_apply_checked, { ...root, patch: str('Unified diff', 20000), expectedHead: str('Expected 40-character HEAD SHA', 40), apply: bool('Actually apply the patch; false validates only') }, ['rootId', 'patch', 'expectedHead', 'apply'], false),
+  tool('mterm_git_worktree_create', ENGINEERING_DESCRIPTIONS.mterm_git_worktree_create, { ...root, name: str('Unique lowercase worktree name, e.g. sprint-one', 40) }, ['rootId', 'name'], false),
+  tool('mterm_job_submit', ENGINEERING_DESCRIPTIONS.mterm_job_submit, { kind: { type: 'string', enum: ['repo_diagnostics', 'run_tests', 'vm_inventory'] }, ...root, command: { type: 'string', enum: ['npm-test', 'npm-lint', 'pytest', 'git-diff-check'] } }, ['kind'], false),
+  tool('mterm_job_status', ENGINEERING_DESCRIPTIONS.mterm_job_status, { id: str('Job UUID', 36) }, ['id']),
+  tool('mterm_job_logs', ENGINEERING_DESCRIPTIONS.mterm_job_logs, { id: str('Job UUID', 36) }, ['id']),
+  tool('mterm_job_cancel', ENGINEERING_DESCRIPTIONS.mterm_job_cancel, { id: str('Job UUID', 36) }, ['id'], false),
+  tool('mterm_job_resume', ENGINEERING_DESCRIPTIONS.mterm_job_resume, { id: str('Job UUID', 36), confirm: bool('I verified the previous outcome before requeueing') }, ['id', 'confirm'], false),
 ]);
 
 const capabilities = {

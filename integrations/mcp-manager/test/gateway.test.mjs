@@ -50,12 +50,17 @@ test('policy changes are read on each call and read-only blocks writes, config a
 
 test('pause rejects queued work without killing an already dispatched command', async t => {
   const f = await gatewayFixture(t);
-  f.send(1, 'start_process', { delayMs: 150 });
-  await new Promise(resolve => setTimeout(resolve, 50));
+  const barrier = 'pause-active-command';
+  f.send(1, 'start_process', { barrier });
+  await waitFor(() => f.messages.some(message => message.method === 'notifications/test-started' &&
+    message.params?.barrier === barrier));
   f.send(2, 'read_file');
+  await waitFor(async () => (await readCoordinatorStatus(f.config.stateDirectory)).queued === 1);
   await atomicWriteJson(f.config.policyPath, { enabled: false, readOnly: false, maxInflight: 1 });
-  assert.equal((await f.response(1)).result.executed, true);
   assert.equal((await f.response(2)).error.code, -32010);
+  assert.equal(f.messages.some(message => message.id === 1), false, 'pause must not kill the active command');
+  releaseBarrier(f, barrier);
+  assert.equal((await f.response(1)).result.executed, true);
 });
 
 test('low memory blocks heavy admission and policy corruption fails closed', async t => {
