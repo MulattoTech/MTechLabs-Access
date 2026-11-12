@@ -1,0 +1,60 @@
+{
+  "retrievedAt": "2026-11-12T21:14:34.675Z",
+  "source": "Plugin Creator get_plugin_files",
+  "files": [
+    {
+      "path": ".app.json",
+      "size_bytes": 128
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "size_bytes": 1904
+    },
+    {
+      "path": ".mcp.json",
+      "size_bytes": 352
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 1385
+    },
+    {
+      "path": "assets/icon.svg",
+      "size_bytes": 320
+    },
+    {
+      "path": "mcp.json",
+      "size_bytes": 403
+    },
+    {
+      "path": "plugin.json",
+      "size_bytes": 2011
+    },
+    {
+      "path": "skills/connection-recovery/SKILL.md",
+      "size_bytes": 1248
+    }
+  ],
+  "next_offset": null,
+  "contents": {
+    ".app.json": "{\n  \"apps\": {\n    \"dev-6af0c8a4c2b08191bf5c00d3b4f18dbb\": {\n      \"id\": \"asdk_app_6af0c8a4c2b08191bf5c00d3b4f18dbb\"\n    }\n  }\n}\n",
+    ".codex-plugin/plugin.json": "{\n  \"apps\": \"./.app.json\",\n  \"interface\": {\n    \"capabilities\": [\n      \"Interactive\"\n    ],\n    \"category\": \"Developer Tools\",\n    \"composerIcon\": \"assets/icon.svg\",\n    \"defaultPrompt\": \"Use MTerm-CLI to verify my workstation tools. For configuration, connection recovery or the current plugin package, open https://m-techlabs.com/admin/mcp and its Plugin & recovery section. Never request or reveal service tokens.\",\n    \"developerName\": \"Dylan Mellor\",\n    \"displayName\": \"MTerm-CLI\",\n    \"logo\": \"assets/icon.svg\",\n    \"longDescription\": \"MTerm-CLI is a private workstation connection through M-TechLabs owner OAuth. Manage the existing service at https://m-techlabs.com/admin/mcp: shared request concurrency 1\\u201364, read-only and pause controls, engineering capability gates, jobs and recovery. The Plugin & recovery section provides a versioned downloadable archive, checksums and account-specific reconnect guidance. Plugin settings cannot override ChatGPT platform OAuth or create a native Reconnect button: OAuth consent must be completed in ChatGPT, and sometimes removing/readding the app is necessary. Do not uninstall local MTerm-CLI, its manager, or Cloudflare Tunnel to repair a ChatGPT-side session. Privileged tool operations require explicit capabilities and policy gates. ChatGPT sessions, independent CLI tools, and hosted Desktop Commander remain separate.\",\n    \"shortDescription\": \"Private workstation tools and recovery\"\n  },\n  \"requires_local_executor\": false,\n  \"name\": \"m-techlabs-desktop\",\n  \"version\": \"0.2.2\",\n  \"description\": \"MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.\",\n  \"author\": {\n    \"name\": \"Dylan Mellor\",\n    \"email\": \"dylanmellor@gmail.com\"\n  },\n  \"keywords\": [],\n  \"homepage\": \"https://m-techlabs.com/admin/mcp\",\n  \"skills\": \"./skills\",\n  \"mcpServers\": \"./.mcp.json\"\n}\n",
+    ".mcp.json": "{\n  \"mcpServers\": {\n    \"m-techlabs-desktop\": {\n      \"type\": \"streamable-http\",\n      \"url\": \"https://mcp.m-techlabs.com/mcp\",\n      \"headers\": {},\n      \"extensions\": {\n        \"com.openai\": {\n          \"auth\": {\n            \"type\": \"oauth\",\n            \"client\": {\n              \"mode\": \"dcr\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "README.md": "# MTerm-CLI ChatGPT private plugin v0.2.1\n\nThis archive is **plugin source**, not a Windows installer or a guarantee that ChatGPT can install directly from a file. Its endpoint is `https://mcp.m-techlabs.com/mcp`.\n\n## Configure and recover\n\n1. Open the owner-only manager at https://m-techlabs.com/admin/mcp and use **Plugin & recovery** for the latest archive and status.\n2. Open the existing private ChatGPT plugin entry at https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278.\n3. Try connecting/authorizing from ChatGPT if offered, and complete Cloudflare Access OAuth with the owner account.\n4. If ChatGPT only offers uninstall, retain this archive first; reinstall or re-create the private plugin using the ChatGPT plugin creation workflow available to your account and this archive. The plugin ID might change if you create a new plugin.\n5. Start a new chat with the plugin enabled and request `get_file_info` for `H:\\MTechLabs\\MCP\\runtime\\package.json`. Only this call validates the end-to-end ChatGPT path.\n\nDo **not** delete the Windows manager, cloudflared, or the manager's config for a ChatGPT-side auth problem. ChatGPT account installation and consent cannot be reset by an MCP server.\n\nPublishing a newer package on the website is a separate step from updating the private plugin in ChatGPT. See the site's package release synchronization documentation.\n",
+    "assets/icon.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"128\" height=\"128\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"M-TechLabs\">\n  <rect width=\"128\" height=\"128\" rx=\"28\" fill=\"#101a15\"/>\n  <path d=\"M25 94V34h16l23 32 23-32h16v60H85V64L64 92 43 64v30z\" fill=\"#e8f1e9\"/>\n  <circle cx=\"105\" cy=\"23\" r=\"9\" fill=\"#74bc9b\"/>\n</svg>\n",
+    "mcp.json": "{\n  \"$schema\": \"https://agent-plugins.org/schemas/1.0.0/mcp.schema.json\",\n  \"mcpServers\": {\n    \"m-techlabs-desktop\": {\n      \"type\": \"streamable-http\",\n      \"url\": \"https://mcp.m-techlabs.com/mcp\",\n      \"extensions\": {\n        \"com.openai\": {\n          \"auth\": {\n            \"type\": \"oauth\",\n            \"client\": {\n              \"mode\": \"dcr\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "plugin.json": "{\n  \"$schema\": \"https://agent-plugins.org/schemas/1.0.0/plugin.schema.json\",\n  \"author\": {\n    \"email\": \"dylanmellor@gmail.com\",\n    \"name\": \"Dylan Mellor\"\n  },\n  \"description\": \"MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.\",\n  \"extensions\": {\n    \"com.openai\": {\n      \"apps\": \"./.app.json\",\n      \"interface\": {\n        \"capabilities\": [\n          \"Interactive\"\n        ],\n        \"category\": \"Developer Tools\",\n        \"composerIcon\": \"assets/icon.svg\",\n        \"defaultPrompt\": \"Use MTerm-CLI to verify my workstation tools. For configuration, connection recovery or the current plugin package, open https://m-techlabs.com/admin/mcp and its Plugin & recovery section. Never request or reveal service tokens.\",\n        \"developerName\": \"Dylan Mellor\",\n        \"displayName\": \"MTerm-CLI\",\n        \"logo\": \"assets/icon.svg\",\n        \"longDescription\": \"MTerm-CLI is a private workstation connection through M-TechLabs owner OAuth. Manage the existing service at https://m-techlabs.com/admin/mcp: shared request concurrency 1–64, read-only and pause controls, engineering capability gates, jobs and recovery. The Plugin & recovery section provides a versioned downloadable archive, checksums and account-specific reconnect guidance. Plugin settings cannot override ChatGPT platform OAuth or create a native Reconnect button: OAuth consent must be completed in ChatGPT, and sometimes removing/readding the app is necessary. Do not uninstall local MTerm-CLI, its manager, or Cloudflare Tunnel to repair a ChatGPT-side session. Privileged tool operations require explicit capabilities and policy gates. ChatGPT sessions, independent CLI tools, and hosted Desktop Commander remain separate.\",\n        \"shortDescription\": \"Private workstation tools and recovery\"\n      },\n      \"requires_local_executor\": false\n    }\n  },\n  \"homepage\": \"https://m-techlabs.com/admin/mcp\",\n  \"name\": \"m-techlabs-desktop\",\n  \"version\": \"0.2.2\"\n}\n",
+    "skills/connection-recovery/SKILL.md": "---\nname: mterm-connection-recovery\ndescription: Diagnose the private MTerm-CLI ChatGPT connection and open the owner-only manager for configuration or recovering a broken OAuth installation.\n---\n\n# Recover MTerm-CLI safely\n\n1. Distinguish backend health, plugin installation in the present ChatGPT conversation, and authenticated MCP tool-call success. A healthy endpoint alone does not establish working ChatGPT authorization.\n2. The owner-only management page is https://m-techlabs.com/admin/mcp. The current private plugin is https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278.\n3. The server endpoint is https://mcp.m-techlabs.com/mcp, using OAuth and dynamic client registration. Never paste manager tokens into ChatGPT settings or downloads.\n4. Browser-side OAuth consent/install is controlled by ChatGPT and Cloudflare Access; MCP tools cannot create a native ChatGPT Settings Reconnect button or bypass consent.\n5. Prefer a reconnect if offered; otherwise download a verified package before uninstalling, reinstall from the supported plugin creation flow, then test get_file_info for H:\\MTechLabs\\MCP\\runtime\\package.json.\n6. Do not change local services or Cloudflare OAuth to work around a missing ChatGPT-side install.\n"
+  },
+  "missing_paths": [],
+  "size_limited_paths": [],
+  "plugin": {
+    "plugin_id": "plugins_6aed1a85300481919559498b458ed278",
+    "name": "m-techlabs-desktop",
+    "description": "MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.",
+    "version": "0.2.2",
+    "current_release_id": "pluginrel_6af0cd87157c81919ee37775a27a5e65",
+    "scope": "USER",
+    "discoverability": "PRIVATE"
+  }
+}

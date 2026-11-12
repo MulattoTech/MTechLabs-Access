@@ -6,6 +6,47 @@ deployment and whole-requirement acceptance. OpenAI / GPT-6 Astra Pro is the
 self-reported implementation owner. Independent agents review immutable source
 and hosted evidence; one writer owns implementation changes.
 
+## Current continuation state — 2026-11-12 21:18 UTC
+
+The historical next-action sections below describe earlier checkpoints. These
+verified outcomes supersede them without discarding their failed or pending history.
+
+- Access27 merged normally at `9353b53a15cf50b67f4e9d452935e58a0bc9b8f3`,
+  tree `a78d085222d478f0def630acd198289c458b189f`. All five exact candidate
+  and all five actual-main jobs passed: root123, Linux/Windows manager115,
+  Linux/Windows qualification guards115, and all four real upstream version/platform
+  lanes through all ten stages. Independent full-log/artifact receipts are in
+  `evidence/`. Scoped issue26 is closed; the orchestration umbrella16 stays open.
+- CLI257's normal expected-head merge recovered after fresh authoritative checks,
+  at `f447c0baac3f36470d6fd96360928c6a2a192c4b`. All six actual-main jobs
+  passed: Windows1395, other source lanes1383 plus12 Windows-only skips, profiles24
+  in all five package lanes, and native12 source plus12 installed. The source tree
+  remains the reviewed `cbb3b682c4bfdf472bdfbc1ebfce5cd2e71174fc`.
+  The earlier timeout and merge-in-progress responses remain historical evidence.
+  Scoped issue255 is closed; the full mission acceptance axes remain zero.
+- CLI258 is the draft public endpoint inspector at
+  `01c0fc0dc236fbb09d0400f9119df9147c6580f7`, tree
+  `2ee6ecc09206ca3f8e64edc34635b3820383e00b`, parent `f447c0ba`.
+  All1,033 remote blobs and52 directory trees bind independently to the reviewed
+  source. Local focused142 and endpoint81 pass; local full/package Unix-socket
+  failures remain explicit. Hosted candidate/actual-main gates are separate.
+  Issue251 remains open for integration and broader acceptance.
+- The canonical plugin recovery package was updated through its supported guarded
+  channel to version0.2.3, release
+  `pluginrel_6af62cc94f208191ae197a1a9ae7aa65`. Its exact eight read-back source
+  files are in `integrations/m-techlabs-desktop`; dated independent review and
+  release evidence are in the sibling `m-techlabs-desktop-evidence` directory.
+  Only README/skill guidance and two version literals changed relative to the
+  previous installed release. Existing App/MCP/identity/audience/presentation
+  remain intact. Website archive, manager runtime and production Worker did not
+  change. Canonical-only authorization and actual UI rendering remain unverified.
+
+**Current action:** finish immutable publication and hosted qualification of this
+plugin source reconciliation, while independently completing CLI258's candidate
+and actual-main gates. Continue truthful device-readiness work under CLI58/62
+after reviewing the existing agent/registry boundary. No production service
+promotion, wrapper removal or paid model call is authorized by these source gates.
+
 ## Verified source deliveries
 
 | Slice | Pull request | Actual merged commit | Actual-main qualification |
@@ -34,7 +75,7 @@ changing PDF assertions, Chrome arguments or ownership guards. Earlier failed
 runs remain in evidence. The original raw fatal error was not captured; the
 successful intervention does not prove a specific unrecorded historical error.
 
-## Current implementation: stored-job authorization
+## Historical job implementation checkpoint — now qualified above
 
 [Access27](https://github.com/MulattoTech/MTechLabs-Access/pull/27) addresses
 [Access26](https://github.com/MulattoTech/MTechLabs-Access/issues/26), within
@@ -63,7 +104,7 @@ checks, merge with expected-head protection, and verify all five actual-main
 checks. Keep issue26 open until that source gate is complete. Installation and
 live acceptance remain separate.
 
-## Capability register and merge service blocker
+## Historical capability-register merge blocker — recovered above
 
 [CLI257](https://github.com/MulattoTech/MTerm-CLI/pull/257) contains the
 validated mission register: 143 product rows, all 272 feature bullets, all 488

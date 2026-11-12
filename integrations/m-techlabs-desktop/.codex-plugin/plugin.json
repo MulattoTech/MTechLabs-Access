@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "interface": {
+    "capabilities": [
+      "Interactive"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "assets/icon.svg",
+    "defaultPrompt": "Use MTerm-CLI to verify my workstation tools. For configuration, connection recovery or the current plugin package, open https://m-techlabs.com/admin/mcp and its Plugin & recovery section. Never request or reveal service tokens.",
+    "developerName": "Dylan Mellor",
+    "displayName": "MTerm-CLI",
+    "logo": "assets/icon.svg",
+    "longDescription": "MTerm-CLI is a private workstation connection through M-TechLabs owner OAuth. Manage the existing service at https://m-techlabs.com/admin/mcp: shared request concurrency 1\u201364, read-only and pause controls, engineering capability gates, jobs and recovery. The Plugin & recovery section provides a versioned downloadable archive, checksums and account-specific reconnect guidance. Plugin settings cannot override ChatGPT platform OAuth or create a native Reconnect button: OAuth consent must be completed in ChatGPT, and sometimes removing/readding the app is necessary. Do not uninstall local MTerm-CLI, its manager, or Cloudflare Tunnel to repair a ChatGPT-side session. Privileged tool operations require explicit capabilities and policy gates. ChatGPT sessions, independent CLI tools, and hosted Desktop Commander remain separate.",
+    "shortDescription": "Private workstation tools and recovery"
+  },
+  "requires_local_executor": false,
+  "name": "m-techlabs-desktop",
+  "version": "0.2.3",
+  "description": "MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.",
+  "author": {
+    "name": "Dylan Mellor",
+    "email": "dylanmellor@gmail.com"
+  },
+  "keywords": [],
+  "homepage": "https://m-techlabs.com/admin/mcp",
+  "skills": "./skills",
+  "mcpServers": "./.mcp.json"
+}

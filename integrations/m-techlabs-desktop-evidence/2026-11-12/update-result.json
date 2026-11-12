@@ -1,0 +1,13 @@
+{
+  "plugin_id": "plugins_6aed1a85300481919559498b458ed278",
+  "name": "m-techlabs-desktop",
+  "description": "MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.",
+  "version": "0.2.3",
+  "current_release_id": "pluginrel_6af62cc94f208191ae197a1a9ae7aa65",
+  "scope": "USER",
+  "discoverability": "PRIVATE",
+  "plugin_url": "https://chatgpt.com/plugins/plugins_6aed1a85300481919559498b458ed278",
+  "release_id": "pluginrel_6af62cc94f208191ae197a1a9ae7aa65",
+  "latest_release_id": "pluginrel_6af62cc94f208191ae197a1a9ae7aa65",
+  "status": "updated"
+}
