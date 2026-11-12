@@ -3,7 +3,7 @@
   "changeId": "2026-11-12-upstream-033",
   "provider": "OpenAI",
   "model": "GPT-6 Astra Pro (self-reported)",
-  "updatedAt": "2026-11-12T19:43:32.998280+00:00",
+  "updatedAt": "2026-11-12T19:58:52.278665+00:00",
   "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
   "sourceRepository": "MulattoTech/MTechLabs-Access",
   "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
@@ -23,7 +23,8 @@
     "Replace the existing pause test sleep with explicit started, queued and release barriers after a hosted timing failure; no production admission behavior changes.",
     "After both Linux lanes failed PDF creation while both Windows lanes fully passed, retain only fixed diagnostic rule IDs, whitelisted error codes, byte count and SHA256 of the exact UTF-8 public PDF error. Inspect at most16384 characters; no raw text, paths, URLs, stack or arbitrary metadata. This observes signals, not a proven cause.",
     "Keep all qualification assertions and hosted/browser boundaries unchanged; do not set MCP_CLIENT_DOCKER, add no-sandbox flags, change stderr handling or weaken any gate.",
-    "Normally integrate independently reviewed and merged descriptor main499255ad, preserving its140 verified blobs and unchanged runtime contract. Publication has real parents92f5579b and499255ad; local synthetic checkpoint history is not published."
+    "Normally integrate independently reviewed and merged descriptor main499255ad, preserving the reviewed descriptor slice and unchanged runtime contract. Publication has real parents92f5579b and499255ad; local synthetic checkpoint history is not published.",
+    "Treat the Linux PDF cause as unproven. Primary Chromium/Linux sources establish a pathname socket budget; retained lane TMPDIR lengths72/74 predict socket paths113-120bytes. Test the bounded hypothesis by shortening only the owned workspace prefix21bytes and matching artifact glob, retaining all owner identity/path/host/browser/probe gates. Add fixed singleton/socket/dbus signal IDs without raw payloads."
   ],
   "tests": [
     {
@@ -101,6 +102,22 @@
     {
       "command": "npm test after normal descriptor integration and final PDF diagnostic-only change",
       "result": "GREEN:100/100, zero failures/skips/cancellations. Current combined candidate uses all21 qualification guards and79 other manager tests. Hosted diagnostic attempt remains pending; Linux PDF still unqualified."
+    },
+    {
+      "command": "Exactad4dc29f hosted run43293182649",
+      "result": "FAIL overall: root123/123, manager100/100 and Windows all10 real stages pass; Ubuntu100guards and first8real stages pass, then both versions fail PDF. Fixed signals browser_launch and filesystem_missing; no error codes and no proven cause. Both full receipts and bounded Linux reports retained."
+    },
+    {
+      "command": "Geometry regression derived from actual workspace/environment before prefix correction",
+      "result": "RED:21/22 focused tests passed; observed Linux runner-parent plus actual lane suffix and longest known browser socket suffix exceeds107pathnamebytes."
+    },
+    {
+      "command": "npm test after prefix correction in integrations/mcp-manager",
+      "result": "GREEN:101/101, zero failures/skips/cancellations. Both control/candidate derived paths fit the observed Linux runner socket budget; existing ownership/link/nonce and isolation guards pass. Real PDF behavior still requires fresh hosted proof."
+    },
+    {
+      "command": "Root npm test after prefix correction",
+      "result": "GREEN:123/123, zero failures/skips/cancellations; no application-source behavior changes."
     }
   ],
   "roadmapUpdates": [
@@ -146,7 +163,14 @@
     "peer-access-descriptions-review-60f188a8.json": "4b8bbd00627f3aa331210a522642b83ef602d740fcbd7a3cf5b61829b46cce53",
     "access-diagnostics-integrated-green.tap": "1760009bbdfc18716746d4ed80ba8f109412b28d88a7dd73d7c0a41aad7d3389",
     "peer-access-main-499255ad-receipt.json": "e341a67a133ac346052796a3d627f826f8d486a7b7005f06055168df35fbfd9d",
-    "peer-access-main-499255ad-receipt.md": "337d48bb59a16303d2527ffd9d0ac865f71021be6d0e1b69b3cd277dd5906753"
+    "peer-access-main-499255ad-receipt.md": "337d48bb59a16303d2527ffd9d0ac865f71021be6d0e1b69b3cd277dd5906753",
+    "peer-access24-ad4dc29f-receipt.json": "5f930f3734736eac4e7f9c28c8bc2f604c5b79783ec2f806710bf0b54dcd97c5",
+    "peer-access24-ad4dc29f-receipt.md": "99ba4f2a005f5765ef024fe156d7961935ead98d4fae9413edbe51a91a81f3a6",
+    "peer-access-review-ad4dc29f.json": "b4c5b4b9cdcf5a23a386029c31acbd636b6b36ac7aa9e50f452cf641ba69b471",
+    "access-linux-pdf-temp-geometry.json": "6b29f8a0e2a9c99bbbd82273be1849033b13f4323ad110d5b9d972633b7600fa",
+    "access-linux-pdf-temp-geometry.md": "6105dbc32cb40d6fa357c099d651f35a53915781495084f3feb99c2adb40dfac",
+    "access-temp-geometry-red.tap": "97daa6a505e887cd5ebf0d7c870b9d6aa5ac2541690e9fa2c2b6e31c1f34c43d",
+    "access-temp-geometry-manager-green.tap": "de4f44a743b3b7ea653051e69048bbe4a6273bcdac8a85c94a3e6a25006adcd6"
   },
   "files": [
     ".github/workflows/check.yml",

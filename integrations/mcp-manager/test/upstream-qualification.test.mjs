@@ -17,6 +17,20 @@ const host = { CI: 'true', GITHUB_ACTIONS: 'true', RUNNER_ENVIRONMENT: 'github-h
 const version = '0.3.3';
 const integrity = 'sha512-' + Buffer.alloc(64, 7).toString('base64');
 
+test('owned lane temp geometry leaves room for Chromium Unix sockets on the observed Linux runner', async t => {
+  const { workspace } = await fixture(t);
+  // The ad4 hosted artifact binds this runner parent. Derive the suffix from
+  // actual workspace/environment behavior, not the chosen workspace prefix.
+  const observedLinuxParent = '/home/runner/work/_temp';
+  const longestSocketSuffix = '/.org.chromium.Chromium.XXXXXX/SingletonSocket';
+  for (const lane of ['control', 'candidate']) {
+    const env = qualificationEnvironment(workspace, lane, {}, 'http://127.0.0.1:9876/flags');
+    const relative = path.relative(workspace.parent, env.TMPDIR).split(path.sep).join('/');
+    const socket = observedLinuxParent + '/' + relative + longestSocketSuffix;
+    assert.ok(Buffer.byteLength(socket, 'utf8') <= 107, lane + ' temp geometry exceeds Linux pathname socket budget');
+  }
+});
+
 test('hosted tool failures retain fixed diagnostic signals and hashes without raw error payloads', () => {
   const secret = 'fixture-secret-value-not-to-log';
   const message = `Error: Failed to launch the browser process!\nNo usable sandbox!\n/home/private/${secret}\nhttps://user:${secret}@example.invalid/?token=${secret}`;
@@ -36,6 +50,10 @@ test('hosted tool failures retain fixed diagnostic signals and hashes without ra
   const malformed = observeToolFailure({ isError: true, content: [{ type: 'image', data: secret }] });
   assert.equal(malformed.malformed, true); assert.equal(malformed.textSha256, null); assert.deepEqual(malformed.signals, []);
   assert.doesNotMatch(JSON.stringify(malformed), /fixture-secret/);
+  const socket = observeToolFailure({ isError: true, content: [{ type: 'text',
+    text: 'Socket path too long: ' + secret + '\nFailed to create a ProcessSingleton\nFailed to connect to the bus' }] });
+  assert.deepEqual(socket.signals, ['socket_path_too_long', 'process_singleton', 'dbus_connection']);
+  assert.doesNotMatch(JSON.stringify(socket), /fixture-secret/);
 });
 
 const searchRoot = path.resolve('/owned/search');

@@ -1,0 +1,46 @@
+✖ owned lane temp geometry leaves room for Chromium Unix sockets on the observed Linux runner (30.686813ms)
+✔ hosted tool failures retain fixed diagnostic signals and hashes without raw error payloads (14.589107ms)
+✔ qualification reads actual public text-only search receipts after upstream strips internal facts (6.443689ms)
+✔ public search accepts one running match and rejects inconsistent count grammar (0.963455ms)
+✔ every completed search page proves full count and range; later pages must remain complete (3.362947ms)
+✔ public search parsing refuses partial completion, duplicate or outside rows, stale IDs and oversized pages (0.890458ms)
+✔ public blocklist proof accepts the two published wire forms without internal structured fields (0.526234ms)
+✔ command-not-found and an executed marker cannot masquerade as pre-execution blocklist denial (0.558477ms)
+✔ configuration proof validates returned ownership and policy fields, not only an object (0.751738ms)
+✔ tail proof rejects a full buffer or oversized output that happens to contain the last marker (1.041278ms)
+✔ import is inert and the real entry refuses local execution before mutation (0.998547ms)
+✔ targeted upstream bump preserves every existing unrelated dependency and native platform selector (29.013068ms)
+✔ real qualification requires explicit disposable hosted Linux/Windows Node24 context (0.802131ms)
+✔ new owned workspaces canonicalize ordinary temporary names and separate stores from source (9.296693ms)
+✔ overlapping or linked runner roots fail before creating a qualification store (7.350856ms)
+✔ replacement directory or owner marker cannot be reused as the admitted workspace (7.883769ms)
+✔ environment preserves Windows runtime essentials while removing credentials and preload hooks (8.462807ms)
+✔ feature flags cannot redirect qualification to arbitrary or authenticated endpoints (6.368625ms)
+✔ installed entry admission binds exact name, version, lock pin, integrity and owned path (45.059043ms)
+✔ retargeted package bin, linked entry and replaced install directory are rejected (19.068253ms)
+✔ contract comparison covers each name, input schema and annotation independent of list order (11.796104ms)
+✔ description changes are recorded without weakening contract checks (0.558011ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 730.82729
+
+✖ failing tests:
+
+test at test/upstream-qualification.test.mjs:20:1
+✖ owned lane temp geometry leaves room for Chromium Unix sockets on the observed Linux runner (30.686813ms)
+  AssertionError [ERR_ASSERTION]: control temp geometry exceeds Linux pathname socket budget
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:30:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

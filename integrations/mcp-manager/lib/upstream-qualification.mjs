@@ -20,6 +20,9 @@ export function observeToolFailure(result) {
     browser_crashpad: /chrome_crashpad_handler|crashpad.*database/i,
     browser_missing: /Could not find Chrome|requires Chrome or Chromium|Browser was not found|Chrome executable.*not found/i,
     browser_protocol: /DevTools|Protocol error|Target closed|Session closed/i,
+    socket_path_too_long: /Socket path too long|socket[^\n]*(?:File name too long|too long for sockaddr_un)/i,
+    process_singleton: /Failed to create (?:a )?ProcessSingleton|Failed to create[^\n]*SingletonSocket|Failed to create socket directory/i,
+    dbus_connection: /Failed to connect to the bus|Failed to connect to socket[^\n]*system_bus_socket|org\.freedesktop\.DBus\.Error/i,
     module_load: /Cannot find (?:module|package)|ERR_MODULE_NOT_FOUND|MODULE_NOT_FOUND/i,
     native_library: /error while loading shared libraries|cannot open shared object|ERR_DLOPEN_FAILED|invalid ELF header/i,
     filesystem_denied: /EACCES|EPERM|EROFS|Access denied|read-only file system|outside.*allowed|not.*allowed director/i,
@@ -141,7 +144,9 @@ export async function createQualificationWorkspace({ runnerTemp, sourceRoot }) {
   const parent = await fs.realpath(requested), source = await fs.realpath(path.resolve(sourceRoot));
   if (contained(parent, source) || contained(source, parent) ||
       !(await fs.stat(parent)).isDirectory()) fail('qualification_root_not_separate');
-  const root = await fs.mkdtemp(path.join(parent, 'mterm-upstream-qualification-'));
+  // Chromium creates pathname sockets below TMPDIR; keep our owned prefix
+  // short enough to leave room for its browser-created directory and socket.
+  const root = await fs.mkdtemp(path.join(parent, 'mterm-q-'));
   await fs.chmod(root, 0o700);
   const stat = await fs.lstat(root), nonce = randomUUID();
   const workspace = Object.freeze({ root, parent, dev: stat.dev, ino: stat.ino, nonce });

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:53:00.279252+00:00",
+  "candidateSha": "ad4dc29f5f848368ccd5fd93373f4bc498784dfa",
+  "candidateTree": "66549c0561d0bf2388ed0494727304d1c93cd15e",
+  "status": "SUPPORTED_PATH_GEOMETRY_HYPOTHESIS_NOT_PROVEN_FAILURE_CAUSE",
+  "localUpstreamExecution": false,
+  "sources": [
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/HEAD/chrome/browser/process_singleton_posix.cc",
+      "blob": "827a8a94b0a185638678d63e3e8f9f5e380cca28",
+      "webRef": "turn9view0",
+      "facts": "Linux uses ordinary sockaddr_un; SetupSockAddr rejects path length at least sun_path size. Create builds a unique temporary socket directory, checks mode0700, appends SingletonSocket, then sets up its address. The fatal fixed text is Socket path too long:.",
+      "scope": "Current reviewed source, not the unrecorded hosted browser binary version."
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/master/base/files/file_util_posix.cc",
+      "blob": "1bc9e08aa3d59e05078b381f40013ce1156d55e7",
+      "webRef": "turn12view2",
+      "facts": "GetTempDir uses nonempty TMPDIR on Linux. New temporary directories use the brand prefix plus six random characters. Current code passes hidden=false, omitting the leading dot; older reviewed versions used a leading dot.",
+      "scope": "Current reviewed source; both naming variants evaluated."
+    },
+    {
+      "url": "https://kernel.googlesource.com/pub/scm/docs/man-pages/man-pages/+/cd95675fc3e38b6175ecd568cca4c4694d3db76d/man7/unix.7",
+      "blob": "b290117fcc93fa175822e375ed00fb212f53e9f8",
+      "webRef": "turn12view1",
+      "facts": "Linux sockaddr_un.sun_path is108bytes. Chromium reserves NUL, so its pathname acceptance is at most107bytes."
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/refs/tags/127.0.6527.0/base/files/scoped_temp_dir.cc",
+      "webRef": "turn11search4",
+      "facts": "Reviewed older ScopedTempDir implementation routes CreateUniqueTempDir through CreateNewTempDirectory; current singleton call explicitly supplies an empty prefix.",
+      "scope": "Historical corroboration; current scoped_temp_dir.cc full page was unavailable through the web lookup."
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/HEAD/dbus/bus.cc",
+      "webRef": "turn13search0",
+      "facts": "DBus connection failures log their supplied error message. Generic filesystem_missing can therefore be an accompanying launch warning rather than the fatal event.",
+      "scope": "Potential alternative origin of a missing-path signal; no such line has been observed in the ad4 receipt."
+    }
+  ],
+  "localSourceEvidence": [
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/access-final-review-ad4dc29f/integrations/mcp-manager/lib/upstream-qualification.mjs",
+      "sha256": "6a5042651590a7cf7c5f45668b5e9d2f0a616db267183ae5b06035421600b609"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/tools/pdf/markdown.js",
+      "sha256": "61685462f9abb2517e4691fbc7baebea23260e776d3e216d941480551450e982"
+    },
+    {
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/tools/pdf/markdown.js",
+      "sha256": "ece461975a0bb20a80e187431ca6a53281a691206f87711fc6a4700d76c3206b"
+    }
+  ],
+  "lanes": [
+    {
+      "lane": "control",
+      "reportFile": "/workspace/scratch/a92a3aacdca1/peer-access24-ad4dc29f-evidence/artifact-13978086556/mterm-upstream-qualification-51C0ad/reports/control-result.json",
+      "reportSha256": "0861ac4608e6d2b2710db0446b798af81793d82c050930b8d956c3bccf1ed002",
+      "ownedRootObserved": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad",
+      "tempPathDerivedFromExactAd4Source": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad/control/temp",
+      "tempPathBytes": 72,
+      "socketBytesHypothesis": {
+        "chrome_current": 113,
+        "chrome_hidden": 114,
+        "chromium_current": 117,
+        "chromium_hidden": 118
+      },
+      "proposedShortPrefixTempBytes": 51,
+      "proposedShortPrefixSocketBytes": {
+        "chrome_current": 92,
+        "chrome_hidden": 93,
+        "chromium_current": 96,
+        "chromium_hidden": 97
+      },
+      "observedPdfFailure": {
+        "tool": "write_pdf",
+        "stage": "pdf_create_and_read_fidelity",
+        "fixture": "owned-fixed-markdown-v1",
+        "isError": true,
+        "malformed": false,
+        "textEncoding": "utf-8",
+        "textBytes": 693,
+        "textSha256": "72f9739fce4c3e201b5497f617b306a275570c399a0a2dda1691ea3b580f8d57",
+        "inspectedCharacters": 693,
+        "inspectionTruncated": false,
+        "signals": [
+          "browser_launch",
+          "filesystem_missing"
+        ],
+        "errorCodes": []
+      }
+    },
+    {
+      "lane": "candidate",
+      "reportFile": "/workspace/scratch/a92a3aacdca1/peer-access24-ad4dc29f-evidence/artifact-13978086556/mterm-upstream-qualification-51C0ad/reports/candidate-result.json",
+      "reportSha256": "4979e36b83256059434869a40a49553176e09cb21119d4eb7338701552c0ad4d",
+      "ownedRootObserved": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad",
+      "tempPathDerivedFromExactAd4Source": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad/candidate/temp",
+      "tempPathBytes": 74,
+      "socketBytesHypothesis": {
+        "chrome_current": 115,
+        "chrome_hidden": 116,
+        "chromium_current": 119,
+        "chromium_hidden": 120
+      },
+      "proposedShortPrefixTempBytes": 53,
+      "proposedShortPrefixSocketBytes": {
+        "chrome_current": 94,
+        "chrome_hidden": 95,
+        "chromium_current": 98,
+        "chromium_hidden": 99
+      },
+      "observedPdfFailure": {
+        "tool": "write_pdf",
+        "stage": "pdf_create_and_read_fidelity",
+        "fixture": "owned-fixed-markdown-v1",
+        "isError": true,
+        "malformed": false,
+        "textEncoding": "utf-8",
+        "textBytes": 695,
+        "textSha256": "9e5923c467423d99dbf2a04c5e820e0bb19e06d2d2940ff5ca47c3513db36425",
+        "inspectedCharacters": 695,
+        "inspectionTruncated": false,
+        "signals": [
+          "browser_launch",
+          "filesystem_missing"
+        ],
+        "errorCodes": []
+      }
+    }
+  ],
+  "knownMechanism": "Chromium singleton socket address paths must be shorter than108bytes on Linux. Both evaluated branded naming styles exceed that cap under the current owned TMPDIR values.",
+  "unknowns": [
+    "Actual hosted Chrome/Chromium binary version and executable path were not retained.",
+    "The fixed diagnostic has not yet observed socket-path-too-long or process-singleton text.",
+    "No raw PDF error is retained; filesystem_missing does not identify its fatal origin."
+  ],
+  "boundedExperiment": {
+    "decision": "No concrete objection; source review of actual patch and fresh hosted qualification still required.",
+    "oldPrefix": "mterm-upstream-qualification-",
+    "newPrefix": "mterm-q-",
+    "oldPrefixBytes": 29,
+    "newPrefixBytes": 8,
+    "savedBytes": 21,
+    "activeChanges": [
+      "Owned mkdtemp name prefix only.",
+      "Matching active Actions artifact glob only.",
+      "Precise fixed diagnostic IDs for socket path and process singleton.",
+      "Actual RED geometry regression derived from workspace/environment behavior and retained parent byte length."
+    ],
+    "preserve": [
+      "Random mkdtemp allocation and private directory permissions.",
+      "Nonce, dev/ino, containment and every link/junction check.",
+      "Separate control/candidate home/temp/state/install paths.",
+      "All browser sandbox, host guards, package pins and PDF/readback/admission/cleanup assertions.",
+      "All historical paths and failed receipts verbatim."
+    ],
+    "qualification": "Both upstream versions must freshly pass all actual stages on both Ubuntu and Windows. A pass would support the geometry intervention; do not retrospectively claim the old cause was observed."
+  },
+  "suggestedFixedSignals": {
+    "socket_path_too_long": "Exact Socket path too long phrase.",
+    "process_singleton": "ProcessSingleton or process_singleton_posix.cc marker; observational only.",
+    "dbus_connection": "Optional fixed DBus connection-failure phrase to distinguish accompanying missing-path warnings."
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-12T19:46:53.436Z",
+  "reviewer": "/root/architecture",
+  "decision": "APPROVE_SOURCE_ONLY_FOR_HOSTED_QUALIFICATION",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "pullRequest": 24,
+  "commit": "ad4dc29f5f848368ccd5fd93373f4bc498784dfa",
+  "tree": "66549c0561d0bf2388ed0494727304d1c93cd15e",
+  "parents": [
+    "92f5579bdb8365013600fa210755f0671a23b868",
+    "499255adf0c3988558eb4b1dd04ee95ad3c7da33"
+  ],
+  "integratedMainTree": "04d1d397de37cb730b191f47bbe9877d0a94b7a3",
+  "localSyntheticCheckpoint": "18ee4948f45a71765ea9719e87b4d7aa01100b16",
+  "identity": {
+    "publishedCommitTreeAndRealParentsVerified": true,
+    "publishedRecursiveTreeComplete": true,
+    "remoteBlobsVerifiedBeforeAndAfterTests": 224,
+    "archive": "/workspace/scratch/a92a3aacdca1/access-final-review-ad4dc29f",
+    "syntheticLocalHistoryNotPublished": true
+  },
+  "reviewScope": [
+    "Frozen combined candidate and all production-sensitive file differences since previously source-reviewed e7 candidate.",
+    "Public MCP wire corrections, strict returned configuration/read-only denial/blocklist/tail evidence, canonical Windows temporary aliases, explicit pause barriers and native binary evidence.",
+    "PDF diagnostic-only delta and unchanged failure/pass/cleanup conditions.",
+    "Exact metadata main integration and descriptor contract preservation."
+  ],
+  "findings": [],
+  "nonBlockingDocumentationClarification": {
+    "statement": "The AI decision says preserving its140 verified blobs; the combined tree actually preserves all descriptor-change files while seven existing main files legitimately differ as part of the separately reviewed upstream slice.",
+    "changedMainFiles": [
+      ".github/workflows/check.yml",
+      "README.md",
+      "integrations/mcp-manager/RUNBOOK.md",
+      "integrations/mcp-manager/package.json",
+      "integrations/mcp-manager/test/shared-admission.test.mjs",
+      "integrations/mcp-manager/upstream-package-lock.json",
+      "integrations/mcp-manager/upstream-package.json"
+    ],
+    "impact": "No source defect or unexpected difference. The review records the exact scope; wording can be clarified in the next evidence checkpoint."
+  },
+  "boundaries": {
+    "diagnosticSourceIdenticalToReviewedLocal52283c0": true,
+    "pdfObservation": {
+      "trigger": "isError=true, tool write_pdf, stage pdf_create_and_read_fidelity; the sole call writes fixed owned Markdown to its owned fixture path.",
+      "output": "Fixed signal IDs, allowlisted error codes, UTF-8 byte count/SHA256, malformed/truncation metadata only.",
+      "inspectionLimitCharacters": 16384,
+      "rawErrorRetained": false,
+      "signalsAreObservationsNotRootCause": true
+    },
+    "pdfFailureAssertionUnchanged": true,
+    "qualificationPassLogicUnchanged": true,
+    "hostOwnershipAndBrowserProtectionsUnchanged": true,
+    "noMcpClientDockerOrNoSandboxAddition": true,
+    "workflowLocksManifestsGatewayIdenticalToApprovedE7": [
+      {
+        "path": ".github/workflows/check.yml",
+        "gitBlob": "daae48f01247c37e9fb2b8b2f513544b40ccd3db"
+      },
+      {
+        "path": "integrations/mcp-manager/package.json",
+        "gitBlob": "989f247eea87bf13cccda9b2fb8161ba0afdb99a"
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package.json",
+        "gitBlob": "cb60ea060938e6ac6f45e7909efa7b0b3e34ccae"
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package-lock.json",
+        "gitBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d"
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package.json",
+        "gitBlob": "e4283b1edc780ccbe8d91afd1ceabf6361d756aa"
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package-lock.json",
+        "gitBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92"
+      },
+      {
+        "path": "integrations/mcp-manager/gateway.mjs",
+        "gitBlob": "4f924e59134fa7b1147265ae62e79e8439d6c089"
+      }
+    ],
+    "descriptionContractSha256": "2f66aaf72db1583aa3940acb5a0374bb5298e90eec5e5bba0ec733ba25549cfe",
+    "metadataChangesIdenticalToVerifiedMain": true,
+    "ordinaryRuntimeGatewayAndProviderBehaviorUnchanged": true
+  },
+  "tests": {
+    "tests": 100,
+    "pass": 100,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "tapPath": "/workspace/scratch/a92a3aacdca1/access-review-ad4dc29f-manager.tap",
+    "tapSha256": "5c459a4b4767522357d9c7bef01bc1649f9773e3eec06dba82b4b2c718482457",
+    "tapBytes": 23799,
+    "command": "node --test --test-reporter=tap test/*.test.mjs",
+    "workingDirectory": "/workspace/scratch/a92a3aacdca1/access-final-review-ad4dc29f/integrations/mcp-manager"
+  },
+  "evidence": {
+    "aiHashEntriesVerified": 30,
+    "upstreamArtifactEvidenceFilesVerified": 18,
+    "descriptionEvidenceFilesVerified": 5,
+    "verificationFile": "/workspace/scratch/a92a3aacdca1/access-review-ad4dc29f-verification.json",
+    "verificationSha256": "ebb368c25b33fcf554d077701f1645e5931e2596fb4c4ca3dffb79bdd752be78",
+    "remoteCommitFile": "/workspace/scratch/a92a3aacdca1/access-review-ad4dc29f-remote-commit.json",
+    "remoteCommitSha256": "200cfa5e6b756095eb384f083e757796092ce85e28110b3f414df0888b6716eb",
+    "remoteTreeFile": "/workspace/scratch/a92a3aacdca1/access-review-ad4dc29f-remote-tree.json",
+    "remoteTreeSha256": "3aa53be79ae01c8be17fc7633741e274025679a0c23eee9dedd8f67061f82102"
+  },
+  "qualification": {
+    "state": "NOT_QUALIFIED_BY_THIS_SOURCE_REVIEW",
+    "required": "All four exact-head hosted jobs must pass, including actual control and candidate upstream probes on both Ubuntu and Windows. Actual merged-main qualification remains required after merge.",
+    "prior92State": "Windows both upstream versions passed all ten actual stages. Linux both failed write_pdf_tool_error without its underlying public error retained. No established Linux cause; no acceptance credit.",
+    "newDiagnosticPurpose": "Observe bounded public failure signals while retaining the same failure. It does not remediate or waive Linux PDF qualification."
+  },
+  "limitations": [
+    "No upstream installation or actual upstream execution occurred locally. Existing SDK dependencies were reused for pure/fixture manager tests.",
+    "No production runtime/configuration changes, restart, deployment, plugin publication, owner files, credentials or paid model calls.",
+    "No public remote/OAuth, Docker, macOS, multi-computer or full security certification.",
+    "A subsequent source delta requires a new immutable delta review. Hosted observation belongs to github_inventory; this source receipt does not assert its outcome."
+  ]
+}

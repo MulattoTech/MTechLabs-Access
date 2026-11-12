@@ -72,6 +72,6 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: upstream-qualification-${{ matrix.os }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/mterm-upstream-qualification-*/reports/
+          path: ${{ runner.temp }}/mterm-q-*/reports/
           retention-days: 14
           if-no-files-found: warn

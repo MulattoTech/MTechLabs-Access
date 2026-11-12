@@ -137,6 +137,27 @@ actual-main root 123 and manager 79 tests passed. The combined local manager sui
 passes 100/100. The imported metadata retains the same 53-tool contract; only the
 28 MTerm descriptions are more detailed in both control and candidate lanes.
 
+## Bounded temporary-path experiment
+
+The diagnostic attempt retained browser-launch and missing-filesystem signals
+for both Linux versions; neither signal proves a root cause. Chromium's published
+source creates a pathname Unix socket below a unique system temporary directory,
+and Linux provides 108 bytes for its pathname including termination. The retained
+runner paths give lane TMPDIR lengths 72/74 bytes; known Chrome/Chromium directory
+variants predict 113-120-byte socket paths. The actual hosted browser version and
+original socket error remain unknown.
+
+The follow-up shortens only the active owned workspace prefix by 21 bytes, to
+`mterm-q-`, and updates the matching artifact-upload glob. A regression derives
+lane paths from the actual workspace/environment helpers, combines them with the
+retained Linux runner-parent length and longest known browser socket suffix, and
+fails before the change. The corrected predicted paths fit below 108 bytes. The
+local manager suite passes 101/101. Nonce/dev/ino/link checks, separate lane homes,
+browser arguments, host guards, all PDF/readback assertions and cleanup remain
+unchanged. Fresh real Linux and Windows qualification is still mandatory.
+Historical receipts and paths remain verbatim. Primary-source identities,
+arithmetic, limitations and failed diagnostics are retained in `evidence/`.
+
 ## Limits and deployment
 
 This is a bounded compatibility qualification, not full security certification,
