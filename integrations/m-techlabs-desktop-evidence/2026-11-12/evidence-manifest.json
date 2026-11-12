@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-12T21:19:01.664331+00:00",
+  "files": [
+    {
+      "path": "after-source.json",
+      "bytes": 12281,
+      "sha256": "6ebcc208109eb0f547139c2387a98ecd12a907a78602d89be50934a4c03595e9"
+    },
+    {
+      "path": "before-source.json",
+      "bytes": 9562,
+      "sha256": "d6678c0c850b30fb843ab0b516721c55c857175f68dda7745ea9a8ca5219759d"
+    },
+    {
+      "path": "local-root-tests.log",
+      "bytes": 29173,
+      "sha256": "d82a383f9a59fb12d38aea6ac61a5144eb5e6f16352030b72274ff90b9693f23"
+    },
+    {
+      "path": "peer-release-readback.json",
+      "bytes": 3777,
+      "sha256": "e3eae13d68ae00f729a3355fee5c8b648a57a9979149fd92859cfb887c503767"
+    },
+    {
+      "path": "peer-release-readback.md",
+      "bytes": 1724,
+      "sha256": "44ee17ff8c54dfb4afc42d2f254116ce4c4eb005c0fe6cc9be06b89b76712b91"
+    },
+    {
+      "path": "peer-review.json",
+      "bytes": 7217,
+      "sha256": "dc7bc60a37054962d5aa1794cb5d4305048a9fc60718a6ab85d930c123d0f825"
+    },
+    {
+      "path": "peer-review.md.json",
+      "bytes": 4848,
+      "sha256": "c36f2a1433a6abf6b17f1e76b3f4f011a9396e4c8f103c00a50a7996805713a5"
+    },
+    {
+      "path": "prepublication-validation.json",
+      "bytes": 3989,
+      "sha256": "838eafb4bd9ac2cee79279e80b01a61fa99c43170172b91465ff708a2cfe7cce"
+    },
+    {
+      "path": "update-result.json",
+      "bytes": 631,
+      "sha256": "dc94186cf6e0a4ff1fd3b9ccd3fd8047c363f78ca69f9ebe4d13011cbb9f6451"
+    }
+  ]
+}

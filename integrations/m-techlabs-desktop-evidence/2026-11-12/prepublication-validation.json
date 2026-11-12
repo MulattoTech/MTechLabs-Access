@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-12T21:15:51.174597+00:00",
+  "pluginId": "plugins_6aed1a85300481919559498b458ed278",
+  "expectedReleaseId": "pluginrel_6af0cd87157c81919ee37775a27a5e65",
+  "scope": "USER",
+  "discoverability": "PRIVATE",
+  "beforeVersion": "0.2.2",
+  "proposedVersion": "0.2.3",
+  "changedPaths": [
+    ".codex-plugin/plugin.json",
+    "README.md",
+    "plugin.json",
+    "skills/connection-recovery/SKILL.md"
+  ],
+  "files": [
+    {
+      "path": ".app.json",
+      "beforeBytes": 128,
+      "afterBytes": 128,
+      "beforeSha256": "101efe717beb4c446ec5b7aa0a095ae61ee03bc51841a8e2d201192e25d63102",
+      "afterSha256": "101efe717beb4c446ec5b7aa0a095ae61ee03bc51841a8e2d201192e25d63102",
+      "changed": false
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "beforeBytes": 1904,
+      "afterBytes": 1904,
+      "beforeSha256": "07fb7e8b39615658174fcb6ab65c24cb50883a74be9de2547acb4b214118a155",
+      "afterSha256": "405a88bce39972896204fc248b22f3679f26947fa9a70a1782b7a2cdedd36341",
+      "changed": true
+    },
+    {
+      "path": ".mcp.json",
+      "beforeBytes": 352,
+      "afterBytes": 352,
+      "beforeSha256": "1d35f1c148cbb7005545b4b93585e8254ffc53d6f65eee8d001f9bf2277da95c",
+      "afterSha256": "1d35f1c148cbb7005545b4b93585e8254ffc53d6f65eee8d001f9bf2277da95c",
+      "changed": false
+    },
+    {
+      "path": "README.md",
+      "beforeBytes": 1385,
+      "afterBytes": 2948,
+      "beforeSha256": "0993b220c902492faab24ff1b5d97276ee95fa059fb732afc35cce3f02f16d67",
+      "afterSha256": "f9cb64d72169f4e0b85de7d0a4802a3a8a5102ea9be978ead14e127bb427eb98",
+      "changed": true
+    },
+    {
+      "path": "assets/icon.svg",
+      "beforeBytes": 320,
+      "afterBytes": 320,
+      "beforeSha256": "10740ccea9674b9ea628d2f9e6a09ce9e0eefb7e78dd2daaaadfbae882df681e",
+      "afterSha256": "10740ccea9674b9ea628d2f9e6a09ce9e0eefb7e78dd2daaaadfbae882df681e",
+      "changed": false
+    },
+    {
+      "path": "mcp.json",
+      "beforeBytes": 403,
+      "afterBytes": 403,
+      "beforeSha256": "8a6d7d1c73e2ee73610b35a7427566bb363051d2b85bfe2a7dbb5df11e81b3fe",
+      "afterSha256": "8a6d7d1c73e2ee73610b35a7427566bb363051d2b85bfe2a7dbb5df11e81b3fe",
+      "changed": false
+    },
+    {
+      "path": "plugin.json",
+      "beforeBytes": 2011,
+      "afterBytes": 2011,
+      "beforeSha256": "bd09e9a61e70598f1e03e1dd6cce826bb8e90e9b31b051289c68441cf79d3720",
+      "afterSha256": "c8da59638c2734c3f6f70484a51ff747de69d4f0490b38dd79ddf78c2b97c077",
+      "changed": true
+    },
+    {
+      "path": "skills/connection-recovery/SKILL.md",
+      "beforeBytes": 1248,
+      "afterBytes": 2430,
+      "beforeSha256": "4d57634067fb22c120bb09296f9cf43587dd82cefd503e41c3bdc2cee4df2667",
+      "afterSha256": "dada81e48504014a5cdd246b853bfa062532e8671848cb4588118f322eacf99e",
+      "changed": true
+    }
+  ],
+  "archive": {
+    "file": "mterm-plugin-recovery-0.2.3.zip",
+    "bytes": 4902,
+    "sha256": "52478365b17e03aaa46cc752829ff7f3898198a0473615b79b041af9b63812bc",
+    "entries": [
+      ".codex-plugin/plugin.json",
+      "README.md",
+      "plugin.json",
+      "skills/connection-recovery/SKILL.md"
+    ],
+    "omittedFilesPreserved": true,
+    "deletePaths": []
+  },
+  "checks": {
+    "jsonParsed": true,
+    "yamlParsed": true,
+    "manifestChangesVersionOnly": true,
+    "allEightFilesAccountedFor": true,
+    "unchangedAppMcpAndAssetBytes": true,
+    "sameSkillName": true,
+    "zipReadbackExact": true
+  },
+  "websiteSourceObservation": {
+    "version": "0.2.1",
+    "manifestSha256": "882d1c8b290fbf224cbdcd3af7a51455d98e28a4dc177c57e958cb2667decbff",
+    "deploymentVerified": false,
+    "modifiedByThisChange": false
+  },
+  "limits": [
+    "No authenticated canonical-only connection test",
+    "No UI rendering claim",
+    "No OAuth grant or presentation-field update",
+    "No website archive publication or production deployment",
+    "No service or connector restart",
+    "No dynamic model skill evaluation"
+  ]
+}

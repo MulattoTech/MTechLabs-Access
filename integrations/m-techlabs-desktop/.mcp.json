@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "m-techlabs-desktop": {
+      "type": "streamable-http",
+      "url": "https://mcp.m-techlabs.com/mcp",
+      "headers": {},
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "dcr"
+            }
+          }
+        }
+      }
+    }
+  }
+}
