@@ -3,7 +3,7 @@
   "changeId": "2026-11-12-engineering-descriptions",
   "provider": "OpenAI",
   "model": "GPT-6 Astra Pro (self-reported)",
-  "updatedAt": "2026-11-12T19:27:09.948529+00:00",
+  "updatedAt": "2026-11-12T19:31:08.673806+00:00",
   "sourceRepository": "MulattoTech/MTechLabs-Access",
   "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
   "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/246",
@@ -13,7 +13,8 @@
     "Preserve exact tool names/order, schemas, annotations, capability dispatch and read-only membership.",
     "Correct source-inaccurate claims about checkpoint type, semantic navigation, untracked files, patch-preview permissions, job resumption and cancellation.",
     "Keep the installed runtime and ChatGPT UI acceptance separate from source/JSON/MCP serialization checks.",
-    "Baseline non-description contract is bound to ba4a55b7 and SHA256 2f66aaf72db1583aa3940acb5a0374bb5298e90eec5e5bba0ec733ba25549cfe."
+    "Baseline non-description contract is bound to ba4a55b7 and SHA256 2f66aaf72db1583aa3940acb5a0374bb5298e90eec5e5bba0ec733ba25549cfe.",
+    "After an actual hosted failure of the existing pause test, use the same explicit started/queued/release barriers already passing in upstream qualification candidate92. No admission runtime change."
   ],
   "tests": [
     {
@@ -27,6 +28,14 @@
     {
       "command": "git diff --check",
       "result": "PASS before commit."
+    },
+    {
+      "command": "Exact hosted run43290464737 at834bd015",
+      "result": "FAIL: root123/123 passed; manager78/79 failed only the inherited pause timing fixture at test/gateway.test.mjs58. All four new metadata checks passed. The exact candidate tree/parents and both full logs are independently recorded."
+    },
+    {
+      "command": "npm test with explicit pause barriers",
+      "result": "GREEN:79/79; no failures/skips/cancellations. Proves queued denial while dispatched work remains active until explicit release."
     }
   ],
   "evidence": {
@@ -39,6 +48,18 @@
       "rawSha256": "bb6a049247174b07f29459349b50d3a683096e67f7906fa2834cf54e99692758",
       "storedSha256": "bb6a049247174b07f29459349b50d3a683096e67f7906fa2834cf54e99692758",
       "normalization": "Trailing line whitespace removed; test results unchanged."
+    },
+    "peer-access25-834bd015-receipt.json": {
+      "storedSha256": "e3f4642a23aae76d2c1797cf58759bb32ab465b9b3c830e25782605e1136e103",
+      "normalization": "None; exact receipt bytes."
+    },
+    "peer-access25-834bd015-receipt.md": {
+      "storedSha256": "96b5c7f7546afb028901257017836627e0a59f9ec948f3ff3ce9b6fb74a0defc",
+      "normalization": "None; exact receipt bytes."
+    },
+    "access-descriptions-barrier-green.tap": {
+      "storedSha256": "41738158185d99aa40c296a8945f33fd7ba6f6f210855e204f83f26bc0dd61c5",
+      "normalization": "None; exact receipt bytes."
     }
   },
   "limitations": [
@@ -55,6 +76,7 @@
     "integrations/mcp-manager/METADATA.md",
     "integrations/mcp-manager/README.md",
     "integrations/mcp-manager/metadata-evidence/",
-    "docs/engineering/2026-11-12-engineering-descriptions.json"
+    "docs/engineering/2026-11-12-engineering-descriptions.json",
+    "integrations/mcp-manager/test/gateway.test.mjs"
   ]
 }

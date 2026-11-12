@@ -46,3 +46,12 @@ The static provider review and normalized red/green records are retained in
 hashes. Plain-text structure is verified; actual UI wrapping, clipping and
 accessibility remain to be observed in the client. No production deployment,
 runtime restart, authentication change or full issue acceptance is claimed.
+
+The first hosted candidate passed all four metadata checks and the 123 application
+tests, but the existing pause test failed because a fixed sleep did not establish
+that the first request had dispatched and the second had queued. The follow-up
+uses explicit started, queued and release barriers, preserving the assertion that
+queued work is rejected during pause while already dispatched work completes.
+This fixture correction changes no runtime admission code. The local suite again
+passes 79/79; a fresh exact hosted result and review remain required. The failed
+candidate receipt and revised green record are retained in `metadata-evidence/`.
