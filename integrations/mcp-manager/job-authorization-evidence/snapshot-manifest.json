@@ -1,0 +1,127 @@
+{
+  "captured_at": "2026-11-12T19:52:55.183321+00:00",
+  "repository": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs",
+  "baseline_commit": "4ab98c6f9571b34def09e6aa63679804bb48dc0d",
+  "patch_sha256": "8313f3b589e6ec257a995d5e58710b80aabe400fb3bfb6125b0a404be108aab2",
+  "files": [
+    {
+      "path": "integrations/mcp-manager/lib/jobs.mjs",
+      "sha256": "081f49980fbe4fc7b9cf541f283dec7b7b0af480e26a71f00e397f6e724c7366",
+      "bytes": 12052,
+      "baseline_sha256": "eedc4ab20e41e9e0ebbeb2a3d9cbcfe7d0be0e73062752ea18cab07955568679",
+      "changed": true
+    },
+    {
+      "path": "integrations/mcp-manager/test/job-authorization.test.mjs",
+      "sha256": "40f4678dbf1afab76238dced5aef51247c677acf33db93d27b072c7d2ab0311a",
+      "bytes": 8379,
+      "baseline_sha256": null,
+      "changed": true
+    },
+    {
+      "path": "integrations/mcp-manager/lib/toolkit-config.mjs",
+      "sha256": "a4b65ac14371d9d9c9fe5a92bc0c0eab6111d388695e894e781d28a66050aa55",
+      "bytes": 4292,
+      "baseline_sha256": "a4b65ac14371d9d9c9fe5a92bc0c0eab6111d388695e894e781d28a66050aa55",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/lib/engineering-tools.mjs",
+      "sha256": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b",
+      "bytes": 8667,
+      "baseline_sha256": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/providers/code.mjs",
+      "sha256": "01d69421e86a9ef19109725875da230a82d81f7ab50ee60ccb8c9b2a64920b40",
+      "bytes": 8451,
+      "baseline_sha256": "01d69421e86a9ef19109725875da230a82d81f7ab50ee60ccb8c9b2a64920b40",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/providers/infrastructure.mjs",
+      "sha256": "4f4340eef7bb1a46d813cec4b8ba9c06209a2b89273363d20695b1b9d3c71079",
+      "bytes": 6011,
+      "baseline_sha256": "4f4340eef7bb1a46d813cec4b8ba9c06209a2b89273363d20695b1b9d3c71079",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/lib/command-runner.mjs",
+      "sha256": "151de9a523fa10293aa7a8a5a074e1cba739901cd96572ff9f4bbbb392471df6",
+      "bytes": 1994,
+      "baseline_sha256": "151de9a523fa10293aa7a8a5a074e1cba739901cd96572ff9f4bbbb392471df6",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/admin.mjs",
+      "sha256": "37f67bf291ae54c39098c1d06b934d33e2167151800d2ac0e6ea0c52e36501b2",
+      "bytes": 10161,
+      "baseline_sha256": "37f67bf291ae54c39098c1d06b934d33e2167151800d2ac0e6ea0c52e36501b2",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/gateway.mjs",
+      "sha256": "ef14a5d87ab44c9af86a3aee6163800a72b7a5f3547898f7f1514855385cb37c",
+      "bytes": 19609,
+      "baseline_sha256": "ef14a5d87ab44c9af86a3aee6163800a72b7a5f3547898f7f1514855385cb37c",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/lib/policy.mjs",
+      "sha256": "50eb41c9dd066f0f6e1183155f4630596a54a77b1e6f0132f869c4903cd6244e",
+      "bytes": 5785,
+      "baseline_sha256": "50eb41c9dd066f0f6e1183155f4630596a54a77b1e6f0132f869c4903cd6244e",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/test/helpers.mjs",
+      "sha256": "125d4ea773f437870c153c68e26fcd3dd72944a47a9914f03644ca6f270d0a86",
+      "bytes": 3529,
+      "baseline_sha256": "125d4ea773f437870c153c68e26fcd3dd72944a47a9914f03644ca6f270d0a86",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/test/engineering.test.mjs",
+      "sha256": "118760dac1af3133ee6375cfcafb28200e8e2d174262ccb45c6349114db564fd",
+      "bytes": 6967,
+      "baseline_sha256": "118760dac1af3133ee6375cfcafb28200e8e2d174262ccb45c6349114db564fd",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/README.md",
+      "sha256": "af0aa0d408e12929d91af8cc887683cfca988ece9be483c515246ff438713179",
+      "bytes": 23834,
+      "baseline_sha256": "af0aa0d408e12929d91af8cc887683cfca988ece9be483c515246ff438713179",
+      "changed": false
+    },
+    {
+      "path": "integrations/mcp-manager/RUNBOOK.md",
+      "sha256": "3c64f2d2e3c8eec8927a360e015ac9d66c7f7b704b710f3901f5ed6ae2f226a1",
+      "bytes": 17861,
+      "baseline_sha256": "3c64f2d2e3c8eec8927a360e015ac9d66c7f7b704b710f3901f5ed6ae2f226a1",
+      "changed": false
+    },
+    {
+      "path": "docs/security.md",
+      "sha256": "47f4abe24c56f5f3e16b82171cfde0c07f8ac4cb6387b463ba8a1dd73198d847",
+      "bytes": 9606,
+      "baseline_sha256": "47f4abe24c56f5f3e16b82171cfde0c07f8ac4cb6387b463ba8a1dd73198d847",
+      "changed": false
+    },
+    {
+      "path": "src/mcp.js",
+      "sha256": "90a91df8ebe212a19cc7927b761c4cb3f79a954d3f64c7101c81c54bf1107562",
+      "bytes": 21109,
+      "baseline_sha256": "90a91df8ebe212a19cc7927b761c4cb3f79a954d3f64c7101c81c54bf1107562",
+      "changed": false
+    },
+    {
+      "path": "src/mcp-remote.js",
+      "sha256": "cbca88fff09ab676d5e956a761232e4d1268803b471ffdac44bf9b0f4f7c19ae",
+      "bytes": 10058,
+      "baseline_sha256": "cbca88fff09ab676d5e956a761232e4d1268803b471ffdac44bf9b0f4f7c19ae",
+      "changed": false
+    }
+  ]
+}

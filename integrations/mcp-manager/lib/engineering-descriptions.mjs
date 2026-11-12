@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // AI-Change: 2026-11-12-engineering-descriptions (OpenAI / GPT-6 Astra Pro; self-reported)
+// AI-Change: 2026-11-12-job-reauthorization (OpenAI / GPT-6 Astra Pro; self-reported)
 // Static plain text: clients need no Markdown renderer to read these sections.
 export const ENGINEERING_DESCRIPTIONS = Object.freeze({
   mterm_math_evaluate: `Purpose: Simplify a mathematical expression and calculate a numerical approximation with isolated SymPy.
@@ -114,7 +115,7 @@ Result/limits: Creates branch mterm/name and a destination under the manager's w
 Example: rootId="project", name="review-one".`,
   mterm_job_submit: `Purpose: Queue one persistent repository diagnostics, test or Hyper-V inventory job and return its ID.
 Inputs: kind is repo_diagnostics, run_tests or vm_inventory. Repository kinds require rootId and explicit relativePath, such as .; run_tests also requires command: npm-test, npm-lint, pytest or git-diff-check. The repository path must select its Git top level for execution.
-Permissions: Enabled managed policy, writable policy and jobs capability. Submission also checks vmRead for VM inventory, codeRead for repository jobs, and testRun for tests. Tests can execute repository code and change files.
+Permissions: Enabled managed policy, writable policy and jobs capability. Submission and each new dispatch check vmRead for VM inventory, codeRead for repository jobs, and testRun for tests. Tests can execute repository code and change files.
 Result/limits: Returns ID, kind, queued state and creation time. Submission is blocked at 100 queued jobs or 1,000 retained records. Execution requires an active runner and writable policy; concurrency and timeout are configured. Inspect status/logs using the returned ID.
 Example: kind="repo_diagnostics", rootId="project", relativePath=".".`,
   mterm_job_status: `Purpose: Read the durable state of a previously submitted job.
@@ -134,7 +135,7 @@ Result/limits: A queued job becomes cancelled immediately. A running job receive
 Example: Call with the id of the job to stop.`,
   mterm_job_resume: `Purpose: Explicitly requeue a failed, interrupted or cancelled job from the beginning.
 Inputs: id is the returned job UUID; confirm must be true after checking the previous outcome and possible remaining work.
-Permissions: Enabled managed policy, writable policy and jobs capability. Execution still requires an active runner and writable policy.
-Result/limits: Reuses the job ID and original kind, repository and command; it does not continue a suspended process or resume from partial progress. Clears prior result/error, start/finish timestamps and cancellation request, increments resumeCount, and returns queued status. Each job can be requeued at most three times. Queued, running or succeeded jobs cannot be resumed. Reexecution can repeat effects left by the previous attempt; inspect the previous evidence before calling.
+Permissions: Enabled managed policy, writable policy and jobs capability. Requeueing and each new dispatch recheck the stored kind: vmRead for VM inventory, codeRead for repository jobs, and testRun for tests. Execution requires an active runner.
+Result/limits: Reuses the job ID and original kind, repository and command; it does not continue a suspended process or resume from partial progress. After authorization, clears prior result/error, start/finish timestamps and cancellation request, increments resumeCount, and returns queued status. Denied resume preserves prior evidence and count. Each job can be requeued at most three times. Queued, running or succeeded jobs cannot be resumed. Reexecution can repeat effects left by the previous attempt; inspect the previous evidence before calling.
 Example: Use the id returned by mterm_job_submit with confirm=true.`,
 });

@@ -1,0 +1,171 @@
+{
+  "schema_version": "triage-finding/v0",
+  "repository": {
+    "path": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Descriptions",
+    "revision": "7ea1e80bb3f7aa95bdf340d4290327a506f65292"
+  },
+  "findings": [
+    {
+      "triage_item_id": "triage-001",
+      "input_id": "unknown",
+      "source_type": "freeform",
+      "title": "Durable jobs omit current per-kind toolkit authorization on resume and queued dispatch",
+      "normalized_input": {
+        "vulnerable_component": "integrations/mcp-manager/lib/jobs.mjs: resumeJob and startJobRunner",
+        "claimed_source": "A valid, previously admitted stored job, followed by legitimate owner revocation of its vmRead, codeRead or testRun capability; an authenticated managed client can explicitly resume an eligible existing job by ID.",
+        "claimed_sink": "Direct provider invocation for vm_inventory, repo_diagnostics or run_tests from the persistent runner despite a now-disabled kind capability.",
+        "claimed_control": "Kind authorization is checked on submitJob but not on resumeJob or runner dispatch.",
+        "affected_version_or_path": "Root requested Access main ba4a55b7. Independently inspected immutable checkout revision 7ea1e80bb3f7aa95bdf340d4290327a506f65292; all 19 reviewed files are byte-identical at observed successor 4ab98c6f9571b34def09e6aa63679804bb48dc0d. Requested base object is absent locally; its runtime equivalence was supplied by root.",
+        "preconditions": [
+          "Owner has opted into jobs and originally enabled the job kind permissions; repository jobs use a configured local root.",
+          "A valid job remains queued or is failed/interrupted/cancelled with resume_count below three.",
+          "Owner later disables vmRead, codeRead or testRun while jobs remains enabled.",
+          "At runner admission the global policy is enabled and writable, the runner is active, and a slot is available.",
+          "Repository existence, current root containment, Git-root and resource preflights still pass; VM inventory needs Windows/PowerShell/Hyper-V access.",
+          "Explicit resume additionally requires a known job ID and confirm=true. Remote calls require the current approved owner identity; local stdio requires an enrolled/trusted local client. Automatic first dispatch requires no new call after revocation."
+        ],
+        "impact": "A newly started stored job can perform its previously selected repository command, diagnostics or VM inventory under the manager OS account after the corresponding toolkit permission is revoked. This is a narrow toolkit permission-enforcement defect; no anonymous access, role escalation, root escape, global pause/read-only bypass or OS elevation is established.",
+        "references": [
+          "Root-supplied freeform finding; no scanner, CVE or issue identifier supplied.",
+          "/workspace/scratch/a92a3aacdca1/peer-job-reauthorization-triage-20261112/receipt/job-reauthorization-source-receipt.json",
+          "/workspace/scratch/a92a3aacdca1/peer-job-reauthorization-triage-20261112/receipt/job-reauthorization-source-excerpts.txt"
+        ]
+      },
+      "verdict": "confirmed",
+      "confidence": "high",
+      "affected_locations": [
+        {
+          "label": "submission permission checks",
+          "path": "integrations/mcp-manager/lib/jobs.mjs",
+          "lines": "46-70",
+          "detail": "Submission checks jobs and the kind-specific vmRead/codeRead/testRun flags, then persists a queued job."
+        },
+        {
+          "label": "resume omits reauthorization",
+          "path": "integrations/mcp-manager/lib/jobs.mjs",
+          "lines": "107-118",
+          "detail": "Reads state/resume_count only; explicit confirmation, eligible terminal state and a three-resume limit do not check current kind permissions."
+        },
+        {
+          "label": "dispatch omits kind permissions",
+          "path": "integrations/mcp-manager/lib/jobs.mjs",
+          "lines": "150-197",
+          "detail": "execute calls providers directly; run reads current toolkit only for timeout; tick gates jobs plus global enabled/writable policy."
+        },
+        {
+          "label": "MCP capability wrapper",
+          "path": "integrations/mcp-manager/lib/engineering-tools.mjs",
+          "lines": "51-85",
+          "detail": "All mterm_job_* actions map to jobs; resume reaches resumeJob after jobs-only capability admission."
+        },
+        {
+          "label": "authenticated admin resume",
+          "path": "integrations/mcp-manager/admin.mjs",
+          "lines": "61-75,118-131",
+          "detail": "Bearer and Host/Origin checks precede the fixed resume route, which calls resumeJob directly without toolkit permission checks."
+        },
+        {
+          "label": "current repository containment",
+          "path": "integrations/mcp-manager/lib/toolkit-config.mjs",
+          "lines": "89-102",
+          "detail": "Reads current roots, canonicalizes target, and checks containment/directory type, but does not check codeRead or testRun."
+        },
+        {
+          "label": "test execution sink",
+          "path": "integrations/mcp-manager/providers/code.mjs",
+          "lines": "91-103,134-145",
+          "detail": "Fixed test selector maps to npm test, npm lint, pytest or git diff; codeOperation validates Git root but never reads toolkit permissions."
+        },
+        {
+          "label": "VM read sink",
+          "path": "integrations/mcp-manager/providers/infrastructure.mjs",
+          "lines": "4-11,24-25",
+          "detail": "VM inventory uses fixed Get-VM via pwsh.exe on Windows; no vmRead check occurs in the provider."
+        },
+        {
+          "label": "process identity",
+          "path": "integrations/mcp-manager/lib/command-runner.mjs",
+          "lines": "4-11",
+          "detail": "Spawns with an argument vector, shell false, inherited environment, and no elevation/user switch."
+        },
+        {
+          "label": "owner-only remote boundary",
+          "path": "src/mcp-remote.js",
+          "lines": "68-94",
+          "detail": "Requires verified Access assertion, configured owner email, current approved owner record and unrevoked session."
+        },
+        {
+          "label": "owner management boundary",
+          "path": "src/mcp.js",
+          "lines": "181-205,234-271",
+          "detail": "Management changes require ownerIdentity, matching owner session and CSRF; toolkit and resume are separate fixed routes."
+        },
+        {
+          "label": "existing job test",
+          "path": "integrations/mcp-manager/test/engineering.test.mjs",
+          "lines": "67-80",
+          "detail": "Covers queued cancel and explicit resume, with no startJobRunner, capability revocation or execution assertion in that test."
+        },
+        {
+          "label": "permission contract",
+          "path": "integrations/mcp-manager/README.md",
+          "lines": "394-409",
+          "detail": "Separate persistent job controls and capability switches; remotely initiated writes require corresponding capability and writable global policy."
+        }
+      ],
+      "reachable_path": [
+        "Authorized submission: managed tools/call -> gateway policy admission -> executeEngineeringTool jobs capability -> submitJob -> jobs plus vmRead/codeRead/testRun checks -> stored queued row; owner HTTP submission reaches the same helper after bearer/owner checks.",
+        "Owner saves a capability revocation through /toolkit -> fixed /v1/toolkit -> writeToolkit; this changes the current file read by the runner.",
+        "First-dispatch path: a previously queued row remains queued; tick reads the new settings but checks jobs only (along with enabled/writable global policy), marks the row running and calls run.",
+        "Resume variant: authenticated MCP mterm_job_resume checks jobs only, or owner HTTP /v1/jobs/resume calls the helper directly; resumeJob validates confirmation/state/count and returns the original row to queued without inspecting its kind permissions.",
+        "run reads current toolkit for timeout only -> execute -> vmOperation(mterm_vm_list), or current allowedRepository/resource checks -> codeOperation(mterm_code_diagnostics or mterm_test_run). These providers do not re-read the omitted capability flags.",
+        "For tests, the fixed selector reaches runCommand with repository cwd; the launcher inherits manager environment and process authority. Actual process success was not executed or observed in this static triage."
+      ],
+      "boundary_assessment": {
+        "product_surface": "MCP/tooling",
+        "source_trust": "trusted_operator",
+        "boundary_crossed": true,
+        "policy_basis": "The crossed boundary is the toolkit capability guard for a newly dispatched/reexecuted operation, not user identity or OS privilege. README 394-402 and RUNBOOK 264-268 present distinct owner-controlled capability switches; submitJob enforces the specific kind permissions. README 25-27/46 and RUNBOOK 18-25 describe fresh/queued admission rather than cancellation of live commands. Current metadata explicitly describes the existing limited resume checks; it does not establish a durable permission grant immune to later owner revocation. No repository-owned SECURITY.md or scoped AGENTS.md was found. General docs/security.md does not expand the narrow toolkit scope."
+      },
+      "exploitability_stack_rank": {
+        "rank_queue": "confirmed",
+        "rank": 1,
+        "rationale": "Only one supplied item was triaged. Rank 1 denotes its place in that singleton queue, not severity. The missing checks are directly visible, but useful execution requires a previously valid job, owner/enrolled access, opt-in jobs, writable global policy and platform/root/resource prerequisites.",
+        "drivers": [
+          "Authenticated owner/enrolled client boundary; no anonymous entry path established.",
+          "An ordinary legitimate owner revocation suffices; the resuming MCP caller need not edit toolkit policy or SQLite.",
+          "First queued dispatch can occur with no caller after revocation.",
+          "Stored kind, root and test selector are reused; no arbitrary new command argument is admitted through resume.",
+          "Broader native/upstream shell powers may already exist when global policy is writable; no additional OS authority is claimed."
+        ]
+      },
+      "evidence": [
+        "Immutable source evidence and SHA256/Git-blob hashes are in job-reauthorization-source-receipt.json; 19 reviewed files match the later checkout exactly.",
+        "jobs.mjs 49-58 checks jobs, vmRead, codeRead and testRun only at submission; 66-69 persists kind/root/relative/command in a queued row.",
+        "jobs.mjs 111 selects only state,resume_count at resume and 114-115 requeues the row; no readToolkit or readPolicy appears in the helper.",
+        "jobs.mjs 185 reads current settings; 191 tests only jobs and global enabled/writable; 170-171 uses another current toolkit read only for timeout.",
+        "jobs.mjs 151/159/162 directly call providers, bypassing executeEngineeringTool capability dispatch; allowedRepository reads only current roots for authorization.",
+        "Six nonexecuting source-string checks confirm the described guard sites and direct calls. A finite four-row boolean decision model shows fresh submission denied but stored dispatch permitted for vmRead revocation, diagnostics codeRead revocation, tests codeRead revocation and tests testRun revocation. This is a source-derived model, not an executed repository test.",
+        "The only supplied repository job lifecycle test inspected (engineering.test.mjs 67-80) does not start the runner or revoke capabilities. Scoped test search found no regression case covering revocation before first dispatch or resume.",
+        "Local issue inventory is MulattoTech/MTerm-CLI as of 2026-11-12T16:49:59.806Z: #86 is the closest authorization/replay/revocation foundation; #130, #131 and #149 are related lifecycle/admission scopes. No exact Access issue duplicate is established."
+      ],
+      "counterevidence": [
+        "Jobs, testRun, repoWrite and vmPower default off. Remote MCP verifies current approved owner; management mutations require matching owner session and CSRF; local admin validates bearer, Host and Origin.",
+        "A caller cannot create a fresh job of a currently disabled kind through submitJob. Resume requires an existing UUID, explicit confirmation, an eligible terminal state and fewer than three prior resumes.",
+        "Runner tick still blocks new dispatch when jobs=false, enabled=false or readOnly=true. This finding does not claim a racing policy update after admission bypasses these controls.",
+        "Current root removal, canonical containment/Git-root verification, fixed test selectors, resource checks and Windows/Hyper-V prerequisites remain relevant. No root traversal, VM power operation, shell-string injection or privilege elevation was demonstrated.",
+        "Policy does not promise to terminate live commands on revocation; this report is limited to first start/reexecution of stored jobs. Cancellation and descendant cleanup behavior is outside this finding.",
+        "engineering-descriptions.mjs 115-138 truthfully says submission checks kind permissions and resume checks jobs/writable policy. The issue is the omitted current kind authorization, not a claim that these new descriptions introduced a runtime regression.",
+        "Writability already authorizes broader upstream Desktop Commander process/file tools. The observed omission therefore establishes a per-toolkit permission contract failure, not newly gained host privileges for an otherwise powerless identity."
+      ],
+      "proof_gaps": [
+        "No repository code, tests, scripts, providers, servers or upstream binaries were executed. No command success, host-specific exploit, deployed exposure or production state was observed.",
+        "The root-requested ba4a55b7 object is unavailable locally. Runtime equivalence to that base is a root-supplied fact; this receipt independently binds only the inspected revisions and source bytes.",
+        "The shared security-guidance/static-finding-assessment references linked from the skill were unavailable through the skill reader; the main triage skill and its result contract were read, and repository product policy was reviewed manually.",
+        "Available local issue inventory is for the standalone MTerm-CLI repository and has a recorded earlier timestamp; a complete/current Access issue inventory was not fetched."
+      ],
+      "recommended_next_step": "fix-finding",
+      "fix_finding_handoff": "Root/sole implementation writer: for the immutable source identified in this receipt, repair current kind authorization for stored jobs before explicit requeue and before queued dispatch. Preserve the existing jobs/global policy gates, current root checks, fixed selectors, confirmation/resume limits, cancellation semantics and uncertain-restart behavior. A shared pure kind-permission decision used by submit/resume/runner would avoid drift; choose denied-job state/result semantics explicitly. In a separately authorized implementation step, add inert regressions for each required capability revoked before first dispatch and before resume, plus allowed controls and global-policy/root-removal negatives; ensure denied work cannot call a provider. Do not expand this into owner-auth, process-tree termination, production changes or broad refactoring. This triage makes no edits and does not invoke the fix skill."
+    }
+  ]
+}

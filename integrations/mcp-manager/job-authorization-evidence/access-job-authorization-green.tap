@@ -1,0 +1,24 @@
+▶ resume rechecks jobs and every kind capability without clearing previous evidence
+  ✔ vm_inventory / vmRead (81.18148ms)
+  ✔ repo_diagnostics / codeRead (47.620888ms)
+  ✔ run_tests / codeRead (58.936315ms)
+  ✔ run_tests / testRun (41.327042ms)
+  ✔ vm_inventory / jobs (54.656395ms)
+✔ resume rechecks jobs and every kind capability without clearing previous evidence (288.452798ms)
+▶ initial and resumed queued repository work observes capability revocation before provider dispatch
+  ✔ repo_diagnostics / codeRead / initial (47.108635ms)
+  ✔ run_tests / codeRead / initial (45.68278ms)
+  ✔ run_tests / testRun / initial (45.448502ms)
+  ✔ run_tests / testRun / resumed (50.87638ms)
+✔ initial and resumed queued repository work observes capability revocation before provider dispatch (191.100053ms)
+✔ allowed jobs still execute and terminal states resume once with explicit confirmation (88.29195ms)
+✔ MCP resume reaches the shared kind check while status and logs stay readable with jobs disabled (164.123529ms)
+✔ malformed settings and invalid persisted kinds or commands cannot requeue a stored job (71.21583ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1081.560481

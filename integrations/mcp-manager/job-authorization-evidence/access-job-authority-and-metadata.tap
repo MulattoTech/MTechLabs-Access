@@ -1,0 +1,28 @@
+✔ description-only change preserves all 28 names, schemas, annotations and read-only membership (4.443243ms)
+✔ every description has readable plain-text sections with bounded content and no escaped formatting (1.445979ms)
+✔ known capability limitations and write permissions remain explicit in tool metadata (0.278623ms)
+✔ real gateway tools/list preserves Unicode, quotes, literal line breaks and the unchanged contract (208.841015ms)
+▶ resume rechecks jobs and every kind capability without clearing previous evidence
+  ✔ vm_inventory / vmRead (62.860926ms)
+  ✔ repo_diagnostics / codeRead (34.779807ms)
+  ✔ run_tests / codeRead (28.79624ms)
+  ✔ run_tests / testRun (31.588362ms)
+  ✔ vm_inventory / jobs (39.526938ms)
+✔ resume rechecks jobs and every kind capability without clearing previous evidence (199.876667ms)
+▶ initial and resumed queued repository work observes capability revocation before provider dispatch
+  ✔ repo_diagnostics / codeRead / initial (42.71916ms)
+  ✔ run_tests / codeRead / initial (47.630686ms)
+  ✔ run_tests / testRun / initial (40.238155ms)
+  ✔ run_tests / testRun / resumed (42.642024ms)
+✔ initial and resumed queued repository work observes capability revocation before provider dispatch (174.782425ms)
+✔ allowed jobs still execute and terminal states resume once with explicit confirmation (60.848139ms)
+✔ MCP resume reaches the shared kind check while status and logs stay readable with jobs disabled (146.665526ms)
+✔ malformed settings and invalid persisted kinds or commands cannot requeue a stored job (31.664679ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 801.173387

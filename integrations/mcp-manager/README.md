@@ -420,3 +420,13 @@ None of these is claimed to be implemented by the capability switches.
 The 28 MTerm engineering tools use static plain-text sections for purpose, inputs,
 permissions, results and limits. Their names, schemas and permission annotations
 are preserved. See [metadata evidence and deployment limits](./METADATA.md).
+
+
+## Current permissions for stored jobs
+
+Submission, explicit resumption and every new provider dispatch check current
+jobs and kind-specific capabilities. A stored job does not retain a permission
+that the owner has revoked. Denied resume preserves the previous state, evidence
+and resume count. A queued job denied before provider dispatch records a failed
+attempt with a bounded capability error; already dispatched work keeps its
+existing cancellation semantics. See [job authorization](./JOB_AUTHORIZATION.md).

@@ -1,0 +1,111 @@
+{
+  "schema_version": "peer-static-patch-review/v1",
+  "reviewed_at": "2026-11-12T19:57:16.029906+00:00",
+  "repository": {
+    "path": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs",
+    "baseline_commit": "4ab98c6f9571b34def09e6aa63679804bb48dc0d",
+    "supplied_main_binding": "Root states baseline runtime equals Access main 499, tree 04d1d397; this review independently binds the local baseline and frozen working patch only."
+  },
+  "patch_binding": {
+    "patch_sha256": "8313f3b589e6ec257a995d5e58710b80aabe400fb3bfb6125b0a404be108aab2",
+    "jobs_sha256": "081f49980fbe4fc7b9cf541f283dec7b7b0af480e26a71f00e397f6e724c7366",
+    "test_sha256": "40f4678dbf1afab76238dced5aef51247c677acf33db93d27b072c7d2ab0311a",
+    "source_snapshot_manifest": "/workspace/scratch/a92a3aacdca1/peer-job-reauthorization-patch-review-20261112/snapshot-manifest.json",
+    "source_snapshot_directory": "/workspace/scratch/a92a3aacdca1/peer-job-reauthorization-patch-review-20261112/snapshot",
+    "live_files_matched_frozen_snapshot_at_last_check": true
+  },
+  "scope": {
+    "finding": "Stored jobs omitted current per-kind capability checks at resume and new provider dispatch.",
+    "changed_files": [
+      "integrations/mcp-manager/lib/jobs.mjs",
+      "integrations/mcp-manager/test/job-authorization.test.mjs"
+    ],
+    "policy": [
+      "docs/security.md",
+      "integrations/mcp-manager/README.md",
+      "integrations/mcp-manager/RUNBOOK.md"
+    ],
+    "policy_files_unchanged_from_baseline": true,
+    "actor_boundary": "Approved owner or enrolled/trusted local managed client; no new authentication or OS privilege claim.",
+    "review_mode": "Manual static patch review; no delegation, repository code execution, test execution, network, production or repository writes."
+  },
+  "invariant": "Before clearing/requeueing an eligible stored job, and before any new provider invocation for initial or resumed queued work, validate current jobs plus the kind-specific vmRead/codeRead/testRun permissions and exact test selector. Preserve existing owner/enrolled entry, global pause/readOnly admission, root containment, fixed commands and lifecycle/evidence rules.",
+  "result": "no_concrete_in_scope_findings",
+  "findings": [],
+  "verification": [
+    {
+      "area": "Shared kind authorization",
+      "locations": [
+        "integrations/mcp-manager/lib/jobs.mjs:49-60,62-69"
+      ],
+      "observation": "The same helper requires jobs, then vmRead for vm_inventory, codeRead for repo_diagnostics, and codeRead plus testRun plus an exact TEST_COMMANDS member for run_tests. KINDS and TEST_COMMANDS are Sets of fixed strings; case variants, prototype-property names and other aliases do not gain a branch.",
+      "result": "No surviving kind/selector bypass found."
+    },
+    {
+      "area": "MCP and authenticated admin resume",
+      "locations": [
+        "integrations/mcp-manager/lib/engineering-tools.mjs:65-85",
+        "integrations/mcp-manager/admin.mjs:61-75,118-131",
+        "integrations/mcp-manager/lib/jobs.mjs:118-133"
+      ],
+      "observation": "Both production resume callers reach resumeJob. It reads the complete stored row and applies fresh validated toolkit permissions before its update. Global policy admission for MCP and bearer/Host/Origin admission for HTTP are unchanged.",
+      "result": "Both direct callers now reach the guard; no alternate production resume caller found in scoped source search."
+    },
+    {
+      "area": "Initial and resumed queued dispatch",
+      "locations": [
+        "integrations/mcp-manager/lib/jobs.mjs:166-185,188-223"
+      ],
+      "observation": "Every provider invocation is preceded by requireJobCapabilities(await readToolkit(...), row.kind, row.command). Repository root/path and resource awaits occur before that read. There is no further await between the completed helper and invocation of vmOperation/codeOperation. The runner receives both initial and resumed queued rows through the same execute function.",
+      "result": "All three fixed provider dispatch branches are dominated by current kind authorization."
+    },
+    {
+      "area": "Resume state and evidence integrity",
+      "locations": [
+        "integrations/mcp-manager/lib/jobs.mjs:118-133,103-115,149-164,216-220"
+      ],
+      "observation": "Confirmation, resumable-state and three-resume limit remain. Failed config/capability checks occur before clearing evidence or updating counts. The conditional update includes the observed state and resume_count, and changes must equal one. Legitimate production writers do not change kind/root/path/command; another resume changes state/count and cannot be overwritten after the asynchronous authorization read.",
+      "result": "No concrete lost-update or legitimate-state regression found in the scoped production writers."
+    },
+    {
+      "area": "Malformed configuration and corrupt stored selectors",
+      "locations": [
+        "integrations/mcp-manager/lib/toolkit-config.mjs:26-62",
+        "integrations/mcp-manager/lib/jobs.mjs:49-60,125,167,179"
+      ],
+      "observation": "Missing toolkit defaults jobs to false; malformed/oversized/invalid-capability configuration throws. Unknown stored kinds are rejected at resume and before runner preflight. Invalid run_tests selectors are rejected before requeue or provider dispatch. Irrelevant command fields on the two non-test kinds cannot redirect their fixed provider calls.",
+      "result": "No fail-open configuration, kind alias or selector path found."
+    },
+    {
+      "area": "Existing outer controls and side effects",
+      "locations": [
+        "integrations/mcp-manager/lib/jobs.mjs:169-175,208-220",
+        "integrations/mcp-manager/lib/toolkit-config.mjs:89-102",
+        "integrations/mcp-manager/lib/policy.mjs:76-99",
+        "integrations/mcp-manager/providers/code.mjs:91-103,134-145"
+      ],
+      "observation": "Global enabled/readOnly/jobs admission, canonical root containment, Git-root validation, resource checks and fixed test selectors remain. Failed dispatch authorization is handled by the existing run catch as a failed/interrupted row with a bounded error and no provider result. Status/logs and cancellation code are unchanged.",
+      "result": "No concrete weakening of these controls or side-effect regression found."
+    },
+    {
+      "area": "Regression source",
+      "locations": [
+        "integrations/mcp-manager/test/job-authorization.test.mjs:1-153",
+        "integrations/mcp-manager/test/helpers.mjs:12-75"
+      ],
+      "observation": "Read the complete new test file and fixture helper. Tests describe disabled-kind resume with prior evidence preserved; initial/resumed repository dispatch denial; allowed git-diff-check; eligible terminal states and competing resumes; MCP routing/readable logs; malformed settings and persisted kind/selector corruption. Fixture setup targets its disposable repository and disables commit hooks/signing for that fixture.",
+      "result": "Source inspected only; no pass, failure, provider-call count or runtime side-effect claim inferred."
+    }
+  ],
+  "preexisting_scope_boundaries": [
+    "Global policy is evaluated at runner tick admission (candidate jobs.mjs:208-214; baseline 185-191). It was not made a continuously enforced execution policy by this patch.",
+    "Provider-internal awaits/live commands and operating-system path identity are not continuously reauthorized or cancelled. Those baseline lifecycle/TOCTOU semantics were not presented as new patch defects or as fixed by this review.",
+    "Arbitrary mutation of SQLite rows by an actor already controlling the private state directory is outside the owner/enrolled API boundary. Static checks still verified malformed kind/selector denial; no extra untrusted database writer was found in the scoped callers."
+  ],
+  "evidence_limits": [
+    "This is an independent source review of the original author patch, not a runtime qualification or formal completed Codex Security scan.",
+    "No test results were supplied or used as proof. Assertions in the new test source were examined as coverage intent only.",
+    "The security-diff-scan main skill was read, but its shared config-preflight reference was unavailable through the reader; no formal scan identity, helper, scan finalization or remediation was run.",
+    "Only the two changed files and supporting direct callers/guards/providers/policy were reviewed. No broad scan or deployed-state investigation was performed."
+  ]
+}
