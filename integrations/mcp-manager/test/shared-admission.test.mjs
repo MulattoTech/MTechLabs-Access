@@ -56,7 +56,10 @@ async function processFixture(t, labels, options = {}) {
   }
   const handles = labels.map(launch);
   await Promise.all(handles.map(handle => handle.response('initialize')));
-  const instanceFiles = await fs.readdir(path.join(base.config.stateDirectory, 'instances'));
+  // Atomic heartbeat updates may have a private .tmp file in flight. Count
+  // published instance records, as the runtime status reader does.
+  const instanceFiles = (await fs.readdir(path.join(base.config.stateDirectory, 'instances')))
+    .filter(name => /^[a-f0-9-]{36}\.json$/i.test(name));
   assert.equal(instanceFiles.length, labels.length, 'initial responses have durable instance metadata');
   return { ...base, handles, launch };
 }

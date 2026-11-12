@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "testedAt": "2026-11-12T19:22:42.044Z",
+  "sourceSha": "ca587a109a2e2f85aa5ed39770d371273c233079",
+  "sourceTree": "d150910b16ff394a6c089b78a49235f7d88be14f",
+  "candidateSha": "92f5579bdb8365013600fa210755f0671a23b868",
+  "platform": "linux",
+  "arch": "x64",
+  "node": "v24.22.2",
+  "libuv": "1.52.1",
+  "host": "github-hosted",
+  "managerVersion": "0.4.0",
+  "sdkVersion": "1.32.2",
+  "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+  "modelCalls": 0,
+  "lanes": [
+    {
+      "lane": "control",
+      "version": "0.3.1",
+      "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+      "admitted": {
+        "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+        "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+        "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 461
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 72
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 100
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 543
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 7
+        },
+        {
+          "name": "content_search_completion_and_pagination",
+          "pass": true,
+          "durationMs": 38
+        },
+        {
+          "name": "shell_blocklist",
+          "pass": true,
+          "durationMs": 8
+        },
+        {
+          "name": "owned_process_output_and_tree_cleanup",
+          "pass": true,
+          "durationMs": 1116
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 3450,
+      "upstreamPid": 3461,
+      "toolCount": 53,
+      "search": {
+        "start": {
+          "isError": false,
+          "structured": false,
+          "hasSessionId": false,
+          "public": {
+            "sessionId": "search_1_1794511374494",
+            "isComplete": false,
+            "outcome": "running",
+            "totalMatches": 1,
+            "totalResults": 1,
+            "returnedCount": 1,
+            "hasMoreResults": true,
+            "markers": [
+              2
+            ]
+          }
+        },
+        "firstPage": {
+          "sessionId": "search_1_1794511374494",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": true,
+          "markers": [
+            2,
+            1
+          ]
+        },
+        "middlePage": {
+          "sessionId": "search_1_1794511374494",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": true,
+          "markers": [
+            0,
+            3
+          ]
+        },
+        "lastPage": {
+          "sessionId": "search_1_1794511374494",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": false,
+          "markers": [
+            5,
+            4
+          ]
+        }
+      },
+      "terminationTool": "force_terminate",
+      "ownedProcessTreeExited": true,
+      "failedStage": "pdf_create_and_read_fidelity",
+      "failureCode": "write_pdf_tool_error",
+      "rpcErrorCode": null,
+      "childExitCode": 0
+    },
+    {
+      "lane": "candidate",
+      "version": "0.3.3",
+      "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+      "admitted": {
+        "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/candidate/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+        "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/candidate/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+        "lockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 562
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 42
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 168
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 513
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 7
+        },
+        {
+          "name": "content_search_completion_and_pagination",
+          "pass": true,
+          "durationMs": 35
+        },
+        {
+          "name": "shell_blocklist",
+          "pass": true,
+          "durationMs": 14
+        },
+        {
+          "name": "owned_process_output_and_tree_cleanup",
+          "pass": true,
+          "durationMs": 1085
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 3560,
+      "upstreamPid": 3571,
+      "toolCount": 53,
+      "search": {
+        "start": {
+          "isError": false,
+          "structured": false,
+          "hasSessionId": false,
+          "public": {
+            "sessionId": "search_1_1794511391629",
+            "isComplete": false,
+            "outcome": "running",
+            "totalMatches": 1,
+            "totalResults": 1,
+            "returnedCount": 1,
+            "hasMoreResults": true,
+            "markers": [
+              2
+            ]
+          }
+        },
+        "firstPage": {
+          "sessionId": "search_1_1794511391629",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": true,
+          "markers": [
+            2,
+            1
+          ]
+        },
+        "middlePage": {
+          "sessionId": "search_1_1794511391629",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": true,
+          "markers": [
+            0,
+            3
+          ]
+        },
+        "lastPage": {
+          "sessionId": "search_1_1794511391629",
+          "isComplete": true,
+          "outcome": "completed",
+          "totalMatches": 6,
+          "totalResults": 6,
+          "returnedCount": 2,
+          "hasMoreResults": false,
+          "markers": [
+            5,
+            4
+          ]
+        }
+      },
+      "terminationTool": "kill_process",
+      "ownedProcessTreeExited": true,
+      "failedStage": "pdf_create_and_read_fidelity",
+      "failureCode": "write_pdf_tool_error",
+      "rpcErrorCode": null,
+      "childExitCode": 0
+    }
+  ],
+  "pass": false,
+  "limitations": [
+    "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+    "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+    "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+    "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+  ],
+  "contractComparison": {
+    "added": [],
+    "removed": [],
+    "contractChanges": [],
+    "descriptionChanges": [
+      "kill_process"
+    ],
+    "controlSha256": "041c12fb26073a50ed871442d2e4270ea557af23266b20fd0981427ad16cdf54",
+    "candidateSha256": "2b83b6fcdfd2b402171b250effbf489531006250d1d96bcd561903f233826a69"
+  },
+  "completedAt": "2026-11-12T19:23:13.270Z"
+}

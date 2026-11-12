@@ -1,0 +1,25 @@
+file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:11
+  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe, observeToolFailure,
+                                                                ^^^^^^^^^^^^^^^^^^
+SyntaxError: The requested module '../lib/upstream-qualification.mjs' does not provide an export named 'observeToolFailure'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:455:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:553:5)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.22.1
+✖ test/upstream-qualification.test.mjs (407.298915ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 419.184037
+
+✖ failing tests:
+
+test at test/upstream-qualification.test.mjs:1:1
+✖ test/upstream-qualification.test.mjs (407.298915ms)
+  'test failed'

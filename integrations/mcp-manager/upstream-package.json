@@ -4,6 +4,6 @@
   "private": true,
   "description": "Shared pinned local Desktop Commander installation for M-TechLabs",
   "dependencies": {
-    "@wonderwhy-er/desktop-commander": "0.3.1"
+    "@wonderwhy-er/desktop-commander": "0.3.3"
   }
 }

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-12T18:44:17.428362+00:00",
+  "files": [
+    {
+      "path": "0.3.1-attestation-payloads.json",
+      "bytes": 2148,
+      "sha256": "a5d5d0d2742ca411e8d7fa3b7f7f88ea1084ab86f45e1e53572572cd9b79354a"
+    },
+    {
+      "path": "0.3.3-attestation-payloads.json",
+      "bytes": 2148,
+      "sha256": "ea4a2ba02bd6a42015bd57f1dcb0d6d4ef505db1791f85bfa0c542d827a9cf34"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1639,
+      "sha256": "55bc30fa80b47615c306b9826c7367cddd52899d020316a7cf74f764de1db9f9"
+    },
+    {
+      "path": "added-dependencies/SHIPPED-NOTICES.md",
+      "bytes": 83231,
+      "sha256": "1e404bf836d8195261b1449c62cddaeebea91ed80b91d0935274ceab7c483d9b"
+    },
+    {
+      "path": "added-dependencies/artifact-SHA256SUMS.txt",
+      "bytes": 3736,
+      "sha256": "d031cd429f0971909214d49cc9d2d01b1f47f6f6f3b95361d600ab2f38ef4b4c"
+    },
+    {
+      "path": "added-dependencies/lock-extension-report.json",
+      "bytes": 130096,
+      "sha256": "4eb68deaf263314dc70a42b4f43a4d5b6aef9667d9b42ca2ec6ad0b93b06fe44"
+    },
+    {
+      "path": "added-dependencies/lock-extension-report.md",
+      "bytes": 8236,
+      "sha256": "b65bf101f39978f3788ada53ad188c25c8dbb463753ec79f446216e925752ee4"
+    },
+    {
+      "path": "added-dependencies/registry-metadata-evidence.json",
+      "bytes": 139087,
+      "sha256": "f81bc3ca340a8397659ad7c0e2ce04f849bcd5fc3753c77a84e1e39f557dc1d3"
+    },
+    {
+      "path": "added-dependencies/source-manifest-evidence.json",
+      "bytes": 145592,
+      "sha256": "8075eef419b77b9dd17eed6f326ce1bbbb509e352557c8f15c8b1fc29e85b94c"
+    },
+    {
+      "path": "artifact-review.json",
+      "bytes": 24419,
+      "sha256": "1ab2e34617df3f1d8f3ba31d012eeacd3b2f022a19f4a3edcbe18b14ace39613"
+    },
+    {
+      "path": "artifact-review.md",
+      "bytes": 11169,
+      "sha256": "cd5db2e5c4a07241faaf847ab3614d037c9c0ae8855eadbc1ce2a72078787686"
+    },
+    {
+      "path": "dist_server.js.patch",
+      "bytes": 606,
+      "sha256": "75c4139265a31053443db7ca82b572b622d14f0d5f0bb70298ec0a8e9e34b7e4"
+    },
+    {
+      "path": "lock-audit/libc-drift-evidence.json",
+      "bytes": 8019,
+      "sha256": "9de196481868290d8ab68605773ae3f0df2fb3512f32d0e238a5335304d7f541"
+    },
+    {
+      "path": "lock-audit/libc-repair-receipt.json",
+      "bytes": 3383,
+      "sha256": "99be6a42409ef175b75ff4657a89689f2ee4d90f7096ab4c5cfaa89cab67497a"
+    },
+    {
+      "path": "lock-audit/mqtt-lock-closure.json",
+      "bytes": 23391,
+      "sha256": "d9b09fbf97b550f465eff093f84521578e6b8e6a365da89808be01ae8ec9bdb5"
+    },
+    {
+      "path": "notices/desktop-commander-LICENSE.txt",
+      "bytes": 1108,
+      "sha256": "e77cff545e0506903bf6a4bf29169fa40911eb76d70d239267df10c5c59370dd"
+    },
+    {
+      "path": "release-version-deltas.json",
+      "bytes": 7153,
+      "sha256": "ff38047de8753a003f43a1a21f784782b49a4b383dac02c5c70fbdfe3968c456"
+    },
+    {
+      "path": "source-and-provenance-summary.json",
+      "bytes": 1077,
+      "sha256": "64c61722afdf6f858e1859dc3f7c94d404747996faf76114a7c21e752c301a56"
+    }
+  ]
+}

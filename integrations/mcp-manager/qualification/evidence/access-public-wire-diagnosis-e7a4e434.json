@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:10:25.859505+00:00",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+  "tree": "8959c7e93a15acbfd6c6c43e3d6e390ffcca7f8f",
+  "decision": "HOSTED_QUALIFICATION_BLOCKED_PUBLIC_PROTOCOL_REPAIR_REQUIRED",
+  "historicalSourceReview": "peer-access-review-e7a4e434.json remains historical source-review evidence; it never supplied hosted qualification. Newly identified protocol defects require a revised immutable source review.",
+  "hostedFailure": "Ubuntu control and candidate both reached content_search_completion_and_pagination and recorded qualification_assertion_failed. Windows failed guard fixture setup before actual upstream. Hosted receipt is independently held by github_inventory.",
+  "exactSourceCause": [
+    "Both tarball server.js implementations call withoutInternalFacts before returning/recording tool results.",
+    "The strip set includes start_search, get_more_search_results and start_process. Therefore the first search stage assertion expecting start.structuredContent.sessionId necessarily fails on a successful public search response.",
+    "The strict blocklist helper also requires stripped start_process structuredContent, and would fail downstream. It must be repaired without returning to generic command-error acceptance."
+  ],
+  "strippedTools": [
+    "write_pdf",
+    "start_process",
+    "interact_with_process",
+    "list_sessions",
+    "start_search",
+    "get_more_search_results"
+  ],
+  "preservedChecks": [
+    "get_config structuredContent.config remains public; exact owned configuration binding is valid.",
+    "Positive process PID is in the initial text header; the existing fallback works, and can be anchored to that header.",
+    "read_process_output is not in the strip set and returns bounded tail text; exact297,298,299 marker check remains valid."
+  ],
+  "publicForms": {
+    "startSearchHeader": "Started content search session: search_<counter>_<timestamp>\nPattern: \"<pattern>\"\nPath: <owned path>\nStatus: COMPLETED|RUNNING\nRuntime: <integer>ms\nTotal results: 6 matches\n",
+    "pageHeader": "Search session: <same-id>\nStatus: COMPLETED|IN PROGRESS\nRuntime: <integer>s\nTotal results: 6 matches\nShowing results <offset>-<last-index>\n\nResults:\n",
+    "matchRow": "📄 <owned-file>:<line> - <fixture marker>",
+    "more": "📖 More results available. Use get_more_search_results with offset: <next>",
+    "completed": "✅ Search completed.",
+    "controlBlocked": "Error: Command not allowed: <exact command>",
+    "candidateBlocked": "Error: Command not allowed: \"mterm_qualification_blocked\" is in the blockedCommands setting.",
+    "processHeader": "Process started with PID <positive integer> (shell: <shell>)\nInitial output:\n",
+    "processTail": "[Reading last 3 lines (total: 300 lines)]\n\nMTERM_PROCESS_LINE_297\nMTERM_PROCESS_LINE_298\nMTERM_PROCESS_LINE_299"
+  },
+  "repairRequirements": [
+    "Bounded fail-closed text parsing tested with text-only wire fixtures; do not bypass managed gateway or import internal handlers for runtime qualification.",
+    "Bind search session, actual owned result rows, requested offsets, exact count and pagination continuation; reject partial/permission-warning/timed-out/stopped/max-results outputs as completed success.",
+    "Blocklist requires isError, exact known public denial text for the tested version and absent owned execution marker; generic parser failure or command-not-found does not prove blocklist matching.",
+    "Preserve recorded search observations on future hosted failures without leaking unrelated raw configuration."
+  ],
+  "evidence": [
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/utils/internal-facts.js",
+      "sha256": "1d89d2040ff852cf04edfdfcf4eda523576a28cb1ff189333dc11f771f4397fc"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/handlers/search-answers.js",
+      "sha256": "800072d144e0854e32ce2b4e9c78a9f5af45a8a326f84771bfd20eed5d3fdaf6"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/server.js",
+      "sha256": "8772e70baa8a19b6a3799b0d012392f96b4db67149971fa6eb9453d90993eced"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/tools/improved-process-tools.js",
+      "sha256": "0b087ae2464e7fa17e6bddb3a9cb1247f08ccadb2521afe6469c7a7d3eb4bc68"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/terminal-manager.js",
+      "sha256": "92a97f083a5b650a86dc3ecfd029dd3a371ca7a0636d9d1f93233a2b70a68e41"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/utils/internal-facts.js",
+      "sha256": "1d89d2040ff852cf04edfdfcf4eda523576a28cb1ff189333dc11f771f4397fc"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/handlers/search-answers.js",
+      "sha256": "800072d144e0854e32ce2b4e9c78a9f5af45a8a326f84771bfd20eed5d3fdaf6"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/server.js",
+      "sha256": "0c5d8937612ae52c3107f0fc31861b81a530c4f707fbc2199a1e0ed53f0eda83"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/tools/improved-process-tools.js",
+      "sha256": "e0be1ddbec830a209d00cff6bee3d737eae9656cfafbc8aeeccbff97290c6602"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/terminal-manager.js",
+      "sha256": "020bbcc524cef58a6e2413e2b5386672a587abf97ade8452ca2d659c8ec24c60"
+    }
+  ],
+  "execution": "Static tarball and harness source inspection only; no upstream module import, install or runtime execution."
+}

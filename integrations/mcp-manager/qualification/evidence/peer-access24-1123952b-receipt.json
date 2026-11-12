@@ -1,0 +1,861 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:13:10.881417+00:00",
+  "status": "BLOCKED_HOSTED_QUALIFICATION",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "pr": 24,
+  "candidateSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+  "candidateTree": "4e6ae029da84181d454c2708e3ea066e9b7582a1",
+  "candidateParent": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+  "baseSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "checkoutMergeSha": "9c07543ad92348ccdd26db932673715ce22265fb",
+  "checkoutMergeTreeEqualsCandidate": true,
+  "run": {
+    "id": 43286995191,
+    "html_url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43286995191",
+    "event": "pull_request",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "jobs": [
+    {
+      "id": 131422908159,
+      "name": "Upstream qualification / windows-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43286995191/job/131422908159",
+      "headSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+      "conclusion": "failure",
+      "testCounts": {
+        "tests": 90,
+        "pass": 90,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [
+        "Compare real pinned upstream packages in disposable stores"
+      ],
+      "log": {
+        "path": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/job-131422908159.log",
+        "bytes": 29329,
+        "sha256": "aaaf6a2b6046645dd7bda449a1bf3b9c9f4050c73d1ea8cb5b94c21634df6ec7"
+      }
+    },
+    {
+      "id": 131422907683,
+      "name": "Upstream qualification / ubuntu-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43286995191/job/131422907683",
+      "headSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+      "conclusion": "failure",
+      "testCounts": {
+        "tests": 90,
+        "pass": 90,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [
+        "Compare real pinned upstream packages in disposable stores"
+      ],
+      "log": {
+        "path": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/job-131422907683.log",
+        "bytes": 29300,
+        "sha256": "c96e305b515ba293dd9df9805bb369fe7410aadd1ff313ef89ed6cc3cebd79e1"
+      }
+    },
+    {
+      "id": 131422907549,
+      "name": "test",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43286995191/job/131422907549",
+      "headSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+      "conclusion": "success",
+      "testCounts": {
+        "tests": 123,
+        "pass": 123,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [],
+      "log": {
+        "path": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/job-131422907549.log",
+        "bytes": 49821,
+        "sha256": "641325ed118134d35a09a5136d5744885b9397f0776f66204eaea5443dc4e037"
+      }
+    },
+    {
+      "id": 131422907065,
+      "name": "managed-mcp",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43286995191/job/131422907065",
+      "headSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+      "conclusion": "failure",
+      "testCounts": {
+        "tests": 90,
+        "pass": 89,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [
+        "Run npm test"
+      ],
+      "log": {
+        "path": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/job-131422907065.log",
+        "bytes": 25695,
+        "sha256": "f29839aaaf54b4525afc57ff802433c5987b6d922f999be560a6228720dce235"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "artifactId": 13974479660,
+      "qualification": {
+        "schemaVersion": 1,
+        "testedAt": "2026-11-12T19:08:24.956Z",
+        "sourceSha": "9c07543ad92348ccdd26db932673715ce22265fb",
+        "sourceTree": "4e6ae029da84181d454c2708e3ea066e9b7582a1",
+        "candidateSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+        "platform": "linux",
+        "arch": "x64",
+        "node": "v24.22.2",
+        "libuv": "1.52.1",
+        "host": "github-hosted",
+        "managerVersion": "0.4.0",
+        "sdkVersion": "1.32.2",
+        "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+        "modelCalls": 0,
+        "lanes": [
+          {
+            "lane": "control",
+            "version": "0.3.1",
+            "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+            "admitted": {
+              "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+              "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+              "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 776
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 105
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 294
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 704
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 6
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 3047,
+            "upstreamPid": 3058,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false
+              }
+            },
+            "failedStage": "content_search_completion_and_pagination",
+            "failureCode": "qualification_assertion_failed",
+            "rpcErrorCode": null,
+            "childExitCode": 0,
+            "ownedProcessTreeExited": true
+          },
+          {
+            "lane": "candidate",
+            "version": "0.3.3",
+            "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+            "admitted": {
+              "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/candidate/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+              "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/candidate/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+              "lockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 541
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 95
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 131
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 512
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 7
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 3101,
+            "upstreamPid": 3112,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false
+              }
+            },
+            "failedStage": "content_search_completion_and_pagination",
+            "failureCode": "qualification_assertion_failed",
+            "rpcErrorCode": null,
+            "childExitCode": 0,
+            "ownedProcessTreeExited": true
+          }
+        ],
+        "pass": false,
+        "limitations": [
+          "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+          "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+          "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+          "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+        ],
+        "contractComparison": {
+          "added": [],
+          "removed": [],
+          "contractChanges": [],
+          "descriptionChanges": [
+            "kill_process"
+          ],
+          "controlSha256": "041c12fb26073a50ed871442d2e4270ea557af23266b20fd0981427ad16cdf54",
+          "candidateSha256": "2b83b6fcdfd2b402171b250effbf489531006250d1d96bcd561903f233826a69"
+        },
+        "completedAt": "2026-11-12T19:08:48.690Z"
+      },
+      "nativePrerequisites": [
+        {
+          "file": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/artifact-13974479660/mterm-upstream-qualification-PKxk5D/reports/candidate-native-prerequisites.json",
+          "receipt": {
+            "package": "@vscode/ripgrep-linux-x64",
+            "version": "1.18.0",
+            "executable": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/candidate/install/node_modules/@vscode/ripgrep-linux-x64/bin/rg",
+            "sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+            "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+          }
+        },
+        {
+          "file": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/artifact-13974479660/mterm-upstream-qualification-PKxk5D/reports/control-native-prerequisites.json",
+          "receipt": {
+            "package": "@vscode/ripgrep-linux-x64",
+            "version": "1.18.0",
+            "executable": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/control/install/node_modules/@vscode/ripgrep-linux-x64/bin/rg",
+            "sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+            "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+          }
+        }
+      ]
+    },
+    {
+      "artifactId": 13976365517,
+      "qualification": {
+        "schemaVersion": 1,
+        "testedAt": "2026-11-12T19:09:10.105Z",
+        "sourceSha": "9c07543ad92348ccdd26db932673715ce22265fb",
+        "sourceTree": "4e6ae029da84181d454c2708e3ea066e9b7582a1",
+        "candidateSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v24.22.2",
+        "libuv": "1.52.1",
+        "host": "github-hosted",
+        "managerVersion": "0.4.0",
+        "sdkVersion": "1.32.2",
+        "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+        "modelCalls": 0,
+        "lanes": [
+          {
+            "lane": "control",
+            "version": "0.3.1",
+            "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+            "admitted": {
+              "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+              "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+              "lockSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 768
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 33
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 54
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 881
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 9
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 9076,
+            "upstreamPid": 5352,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false
+              }
+            },
+            "failedStage": "content_search_completion_and_pagination",
+            "failureCode": "qualification_assertion_failed",
+            "rpcErrorCode": null,
+            "childExitCode": 0,
+            "ownedProcessTreeExited": true
+          },
+          {
+            "lane": "candidate",
+            "version": "0.3.3",
+            "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+            "admitted": {
+              "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+              "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+              "lockSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 807
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 35
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 65
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 853
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 31
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 6908,
+            "upstreamPid": 2888,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false
+              }
+            },
+            "failedStage": "content_search_completion_and_pagination",
+            "failureCode": "qualification_assertion_failed",
+            "rpcErrorCode": null,
+            "childExitCode": 0,
+            "ownedProcessTreeExited": true
+          }
+        ],
+        "pass": false,
+        "limitations": [
+          "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+          "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+          "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+          "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+        ],
+        "contractComparison": {
+          "added": [],
+          "removed": [],
+          "contractChanges": [],
+          "descriptionChanges": [
+            "kill_process"
+          ],
+          "controlSha256": "4c0b8a18fad5dd3526ce46f9369f718be34a93e63943470082371a896af28dbf",
+          "candidateSha256": "8d7cc6b45990516863e85931dd9ed0da1481291c2eb5b862c3c675cc9d051d40"
+        },
+        "completedAt": "2026-11-12T19:10:04.649Z"
+      },
+      "nativePrerequisites": [
+        {
+          "file": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/artifact-13976365517/mterm-upstream-qualification-9hx2Cu/reports/candidate-native-prerequisites.json",
+          "receipt": {
+            "package": "@vscode/ripgrep-win32-x64",
+            "version": "1.18.0",
+            "executable": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@vscode\\ripgrep-win32-x64\\bin\\rg.exe",
+            "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+            "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+          }
+        },
+        {
+          "file": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/artifact-13976365517/mterm-upstream-qualification-9hx2Cu/reports/control-native-prerequisites.json",
+          "receipt": {
+            "package": "@vscode/ripgrep-win32-x64",
+            "version": "1.18.0",
+            "executable": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@vscode\\ripgrep-win32-x64\\bin\\rg.exe",
+            "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+            "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+          }
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13974479660,
+      "zipSha256": "46083415ad9956437d0941ba329a22b060a0446bbef4ae812412f9ea0f19a2be",
+      "bytes": 34394,
+      "digestMatchesGitHub": true,
+      "files": [
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/candidate-install.log",
+          "bytes": 1872,
+          "sha256": "94ab08183cee20626e8ae1186238ab217cf9f73a3d15d70e9ad789b86f44d2f0"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/candidate-native-prerequisites.json",
+          "bytes": 481,
+          "sha256": "3e5c124fe908ca6c4a9e110cf9ad995ecfe61e87940e4244eb7a664a48b474a4"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/candidate-result.json",
+          "bytes": 1709,
+          "sha256": "95d3c5e60487f9b42afaa710c3818195f53787ebb4875530d59e29134b640178"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/candidate-tools.json",
+          "bytes": 80649,
+          "sha256": "197c232374fff1abdb9a3d9ab5cf747a9f11554bffd80f865ea2c8232a74a96d"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/control-install.log",
+          "bytes": 1873,
+          "sha256": "59878189c39dff2980cbc6ef49026d2593db9203a8c5a6ab7fd7c7203a1edf6e"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/control-native-prerequisites.json",
+          "bytes": 479,
+          "sha256": "97d6807447fff6561317911887c3918560ae4537dcbc51fc5e13b2910ced9e94"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/control-result.json",
+          "bytes": 1704,
+          "sha256": "946e61aa2ad5cd745032c4ad33c102800586ee338da44b387adc0904a2bbaa6a"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/control-tools.json",
+          "bytes": 80358,
+          "sha256": "230b0d7fda73b6cd8eed5d2977aeb17b6378cf135cae6a29d24057c681e697bc"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/qualification.json",
+          "bytes": 5274,
+          "sha256": "a70b93538afe2a65a18f30dc05c513a5a87abb4571e3c78bcb68805951420e18"
+        },
+        {
+          "path": "mterm-upstream-qualification-PKxk5D/reports/tool-contract-comparison.json",
+          "bytes": 286,
+          "sha256": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2"
+        }
+      ]
+    },
+    {
+      "id": 13976365517,
+      "zipSha256": "2bfa014eaec31c702a06e4ee4cc3e9f005bd6cfa1390b33fe6471f845309991f",
+      "bytes": 34667,
+      "digestMatchesGitHub": true,
+      "files": [
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/candidate-install.log",
+          "bytes": 1873,
+          "sha256": "10c9b88073c66b8daa98b002723523e60d51a4b811267b4a2c9974853901ed93"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/candidate-native-prerequisites.json",
+          "bytes": 482,
+          "sha256": "4e600ddc43a9174367008f30db5564a832c1a639f2c5135c1e79ae573537f07f"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/candidate-result.json",
+          "bytes": 1702,
+          "sha256": "648fb8a8667422bf249db989241041eb489221f182888ef6a274906b49fa9e3d"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/candidate-tools.json",
+          "bytes": 80949,
+          "sha256": "6cee5c7decf5b48bae8dfb99fe7f03b462fda7015e4ead6fb72586cbc9f74d95"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/control-install.log",
+          "bytes": 1873,
+          "sha256": "6a69cfa9df1d70668041af2bc355ad5d852d5e03f8b4304574c6348b07afd980"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/control-native-prerequisites.json",
+          "bytes": 480,
+          "sha256": "7942d9fb2e1cb8c0af3e4fe267ea7f24800842c5660382b1442cbaaefb5f4845"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/control-result.json",
+          "bytes": 1695,
+          "sha256": "41744ea57407d39d0fac3580f489e5de7427514daccb0868ace4a0dce352f851"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/control-tools.json",
+          "bytes": 80658,
+          "sha256": "5ce83b04f135b288d6fc2a38b3f1776f896b9425ef55009b4799f63d65854cee"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/qualification.json",
+          "bytes": 5258,
+          "sha256": "36ab85929e8634fba332f8365d232a0024711cb81c9dd72d2060ad0bf39c6c5b"
+        },
+        {
+          "path": "mterm-upstream-qualification-9hx2Cu/reports/tool-contract-comparison.json",
+          "bytes": 286,
+          "sha256": "5df779e0b9200151907247a1e5b5efef83105865c0adce586ac1e44c4293ad11"
+        }
+      ]
+    }
+  ],
+  "toolContractIndependentComparison": [
+    {
+      "artifactId": 13974479660,
+      "controlCount": 53,
+      "candidateCount": 53,
+      "independentlyCompared": true,
+      "allNamesAndNonDescriptionFieldsEqual": true,
+      "changedFields": [
+        {
+          "tool": "kill_process",
+          "field": "description"
+        }
+      ]
+    },
+    {
+      "artifactId": 13976365517,
+      "controlCount": 53,
+      "candidateCount": 53,
+      "independentlyCompared": true,
+      "allNamesAndNonDescriptionFieldsEqual": true,
+      "changedFields": [
+        {
+          "tool": "kill_process",
+          "field": "description"
+        }
+      ]
+    }
+  ],
+  "windowsLockHashReconciliation": [
+    {
+      "lane": "control",
+      "canonicalLfSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+      "reconstructedCrlfSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59",
+      "windowsReceiptSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59",
+      "exactMatch": true,
+      "jsonContentUnchangedByLineEndingConversion": true
+    },
+    {
+      "lane": "candidate",
+      "canonicalLfSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+      "reconstructedCrlfSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480",
+      "windowsReceiptSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480",
+      "exactMatch": true,
+      "jsonContentUnchangedByLineEndingConversion": true
+    }
+  ],
+  "nativeBinaryComparison": {
+    "lanesMatched": 4,
+    "lanesTotal": 4,
+    "comparisonFile": "/workspace/scratch/a92a3aacdca1/peer-access24-1123952b-evidence/native-rg-digest-receipt.json",
+    "comparisonFileSha256": "10857f11910d3c331620cd7e1a64627b3bb46aebd0edf99ea1c531bcc98d403d",
+    "localBinaryExecution": false
+  },
+  "unchangedPackageAndStaticEvidence": {
+    "candidateSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+    "candidateTree": "4e6ae029da84181d454c2708e3ea066e9b7582a1",
+    "previousCandidate": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+    "allCheckedUnchanged": true,
+    "entries": [
+      {
+        "path": "integrations/mcp-manager/package-lock.json",
+        "oldBlob": "a62e98f1abac52268bb67fdbc5d21c73cd5a7a5a",
+        "newBlob": "a62e98f1abac52268bb67fdbc5d21c73cd5a7a5a",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/package.json",
+        "oldBlob": "989f247eea87bf13cccda9b2fb8161ba0afdb99a",
+        "newBlob": "989f247eea87bf13cccda9b2fb8161ba0afdb99a",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package-lock.json",
+        "oldBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92",
+        "newBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package.json",
+        "oldBlob": "e4283b1edc780ccbe8d91afd1ceabf6361d756aa",
+        "newBlob": "e4283b1edc780ccbe8d91afd1ceabf6361d756aa",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/0.3.1-attestation-payloads.json",
+        "oldBlob": "cd327d141e4d605163256a59b17bc277e21cc4da",
+        "newBlob": "cd327d141e4d605163256a59b17bc277e21cc4da",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/0.3.3-attestation-payloads.json",
+        "oldBlob": "f3c668122b3de7b8bbfa4a30e72919ae1afbdafb",
+        "newBlob": "f3c668122b3de7b8bbfa4a30e72919ae1afbdafb",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/FILE-SHA256.json",
+        "oldBlob": "3002f1f15bf83473fa0e74d5d8e916541ca32f4b",
+        "newBlob": "3002f1f15bf83473fa0e74d5d8e916541ca32f4b",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/README.md",
+        "oldBlob": "c27ff8444860654d614a77ab4d8086160ee9acc2",
+        "newBlob": "c27ff8444860654d614a77ab4d8086160ee9acc2",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/SHIPPED-NOTICES.md",
+        "oldBlob": "667a59596c9207ea339a8d78c07feb6fe9913e31",
+        "newBlob": "667a59596c9207ea339a8d78c07feb6fe9913e31",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/artifact-SHA256SUMS.txt",
+        "oldBlob": "660ad9a4c21b5c48584321ad7ca8d9919d7fb402",
+        "newBlob": "660ad9a4c21b5c48584321ad7ca8d9919d7fb402",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/lock-extension-report.json",
+        "oldBlob": "0b272cbf54692354380e591d883e4f6b1c95d732",
+        "newBlob": "0b272cbf54692354380e591d883e4f6b1c95d732",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/lock-extension-report.md",
+        "oldBlob": "ab1d1cc02c09781411c0c1b2586f101dfcddb999",
+        "newBlob": "ab1d1cc02c09781411c0c1b2586f101dfcddb999",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/registry-metadata-evidence.json",
+        "oldBlob": "f3a814071cfddb41b8d65c8869715ee09c2bd0f6",
+        "newBlob": "f3a814071cfddb41b8d65c8869715ee09c2bd0f6",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/source-manifest-evidence.json",
+        "oldBlob": "593127c6cfa8095f3f94c2175917c87de5cdfdba",
+        "newBlob": "593127c6cfa8095f3f94c2175917c87de5cdfdba",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/artifact-review.json",
+        "oldBlob": "f6e9d94fed0611203a57a38efe7c6243f1e08672",
+        "newBlob": "f6e9d94fed0611203a57a38efe7c6243f1e08672",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/artifact-review.md",
+        "oldBlob": "ebff474db12fa96d35e96ac6624204ca7c531d85",
+        "newBlob": "ebff474db12fa96d35e96ac6624204ca7c531d85",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/dist_server.js.patch",
+        "oldBlob": "21b913feef56eb521a45c50cfc442ea7b0d5ac67",
+        "newBlob": "21b913feef56eb521a45c50cfc442ea7b0d5ac67",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-drift-evidence.json",
+        "oldBlob": "bd42803a6c117ee4264f338bc121b61ce94cc57f",
+        "newBlob": "bd42803a6c117ee4264f338bc121b61ce94cc57f",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-repair-receipt.json",
+        "oldBlob": "c2840139a3883065f76c3dc9d1193755523fdb4b",
+        "newBlob": "c2840139a3883065f76c3dc9d1193755523fdb4b",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/mqtt-lock-closure.json",
+        "oldBlob": "8c7ae7dbcd3680282f3b49ab87e8f01f4fd58847",
+        "newBlob": "8c7ae7dbcd3680282f3b49ab87e8f01f4fd58847",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/notices/desktop-commander-LICENSE.txt",
+        "oldBlob": "cc6ce4fa68f26cd5db3dc1ff83c8163094f28451",
+        "newBlob": "cc6ce4fa68f26cd5db3dc1ff83c8163094f28451",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/release-version-deltas.json",
+        "oldBlob": "d89a169825c3a93c3443d8f757df2fce68a76cc7",
+        "newBlob": "d89a169825c3a93c3443d8f757df2fce68a76cc7",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/source-and-provenance-summary.json",
+        "oldBlob": "43949deb74dc6fb7d44b21d71e8bf299c88418ff",
+        "newBlob": "43949deb74dc6fb7d44b21d71e8bf299c88418ff",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package-lock.json",
+        "oldBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d",
+        "newBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package.json",
+        "oldBlob": "cb60ea060938e6ac6f45e7909efa7b0b3e34ccae",
+        "newBlob": "cb60ea060938e6ac6f45e7909efa7b0b3e34ccae",
+        "unchanged": true
+      },
+      {
+        "path": "package.json",
+        "oldBlob": "cefd87aa1b733f23c5139d88f59109e3bdf38dc8",
+        "newBlob": "cefd87aa1b733f23c5139d88f59109e3bdf38dc8",
+        "unchanged": true
+      }
+    ]
+  },
+  "historicalFailureReceiptCommitted": [
+    {
+      "path": "integrations/mcp-manager/qualification/evidence/peer-access24-e7a4e434-receipt.json",
+      "localBlob": "bdfe142e7e5a57d0a9ca48202670061f8ed622e0",
+      "committedBlob": "bdfe142e7e5a57d0a9ca48202670061f8ed622e0",
+      "matches": true
+    },
+    {
+      "path": "integrations/mcp-manager/qualification/evidence/peer-access24-e7a4e434-receipt.md",
+      "localBlob": "775c3c8e6af12ea7aa5e3c85951204310460786c",
+      "committedBlob": "775c3c8e6af12ea7aa5e3c85951204310460786c",
+      "matches": true
+    }
+  ],
+  "failures": [
+    {
+      "scope": "managed-mcp",
+      "test": "pause rejects queued work without killing an already dispatched command",
+      "location": "test/gateway.test.mjs:58:44",
+      "code": "TypeError",
+      "detail": "Cannot read properties of undefined (reading 'code')",
+      "causeEstablished": false
+    },
+    {
+      "scope": "both platforms, both upstream lanes",
+      "stage": "content_search_completion_and_pagination",
+      "failureCode": "qualification_assertion_failed",
+      "rpcErrorCode": null,
+      "observations": {
+        "isError": false,
+        "structured": false,
+        "hasSessionId": false
+      },
+      "paginationReached": false
+    }
+  ],
+  "reviewerActions": {
+    "retriedJobs": false,
+    "changedSource": false,
+    "changedGithub": false,
+    "executedUpstreamLocally": false,
+    "productionAction": false
+  },
+  "limitations": [
+    "Search start diagnostics prove absent structured session metadata on the public response, not failed search execution. No pagination result was reached.",
+    "Managed-mcp pause test failure is preserved without inferring its underlying timing or implementation cause.",
+    "Native binaries were executed only by hosted qualification; independent review only downloaded, safely extracted and hashed npm bytes.",
+    "No overall compatibility, merge or deployment approval is asserted."
+  ]
+}

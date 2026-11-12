@@ -1,0 +1,102 @@
+{
+  "0.3.1": {
+    "url": "https://api.github.com/repos/wonderwhy-er/DesktopCommanderMCP/compare/51c7fbf2350d8c039707e9f26151ed792f2891c7...7251da501d760e6eb5f95d802d9b42c741190950",
+    "html_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/compare/51c7fbf2350d8c039707e9f26151ed792f2891c7...7251da501d760e6eb5f95d802d9b42c741190950",
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "total_commits": 1,
+    "files": [
+      {
+        "sha": "b5a02cb755b3eddc150cb8df2c14a6bd95f752a0",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/7251da501d760e6eb5f95d802d9b42c741190950/package.json",
+        "patch": "@@ -1,6 +1,6 @@\n {\n   \"name\": \"@wonderwhy-er/desktop-commander\",\n-  \"version\": \"0.3.0\",\n+  \"version\": \"0.3.1\",\n   \"description\": \"MCP server for terminal operations and file editing\",\n   \"mcpName\": \"io.github.wonderwhy-er/desktop-commander\",\n   \"license\": \"MIT\","
+      },
+      {
+        "sha": "f53f2a584d4d59ebb24024a13446bbe65d4bf470",
+        "filename": "server.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/7251da501d760e6eb5f95d802d9b42c741190950/server.json",
+        "patch": "@@ -7,13 +7,13 @@\n     \"url\": \"https://github.com/wonderwhy-er/DesktopCommanderMCP\",\n     \"source\": \"github\"\n   },\n-  \"version\": \"0.3.0\",\n+  \"version\": \"0.3.1\",\n   \"packages\": [\n     {\n       \"registryType\": \"npm\",\n       \"registryBaseUrl\": \"https://registry.npmjs.org\",\n       \"identifier\": \"@wonderwhy-er/desktop-commander\",\n-      \"version\": \"0.3.0\",\n+      \"version\": \"0.3.1\",\n       \"transport\": {\n         \"type\": \"stdio\"\n       }"
+      },
+      {
+        "sha": "d9a6219bd29e4567c7860fc6129c219281423a2a",
+        "filename": "src/version.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/7251da501d760e6eb5f95d802d9b42c741190950/src%2Fversion.ts",
+        "patch": "@@ -1 +1 @@\n-export const VERSION = '0.3.0';\n+export const VERSION = '0.3.1';"
+      }
+    ]
+  },
+  "0.3.3": {
+    "url": "https://api.github.com/repos/wonderwhy-er/DesktopCommanderMCP/compare/6cb7f9d444d9e6442cb6c02c6fba572e06c92145...bce370e9395f5bc74eda34913e5ae1dee48df8f8",
+    "html_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/compare/6cb7f9d444d9e6442cb6c02c6fba572e06c92145...bce370e9395f5bc74eda34913e5ae1dee48df8f8",
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "total_commits": 1,
+    "files": [
+      {
+        "sha": "377ef0158a3a4c6a81e66fd751be33f34c1651c4",
+        "filename": "manifest.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/bce370e9395f5bc74eda34913e5ae1dee48df8f8/manifest.json",
+        "patch": "@@ -2,7 +2,7 @@\n   \"manifest_version\": \"0.3\",\n   \"name\": \"desktop-commander\",\n   \"display_name\": \"Desktop Commander\",\n-  \"version\": \"0.3.2\",\n+  \"version\": \"0.3.3\",\n   \"description\": \"Build, explore, and automate on your local machine with access to files and terminal.\",\n   \"long_description\": \"Combine local filesystem access with full terminal control to handle technical tasks through natural language. Desktop Commander empowers you to build, explore, and automate - from organizing repositories to creating complete applications:\\n* **Build from scratch** - Create features and applications with simple commands\\n* **Manage development environments** - Set up servers, configure systems, and handle processes\\n* **Manage context and documentation** - Keep track of project details and technical specifications\\n* **Explore existing codebases and projects** - Navigate and understand complex repositories\\n\\nThis extension bridges technical skill gaps by providing full command-line superpowers through an interface that understands your intent and handles complexity automatically.\",\n   \"author\": {"
+      },
+      {
+        "sha": "2ad12170d2042aaeb2baee3cf2926c93aede96d9",
+        "filename": "package-lock.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/bce370e9395f5bc74eda34913e5ae1dee48df8f8/package-lock.json",
+        "patch": "@@ -1,12 +1,12 @@\n {\n   \"name\": \"@wonderwhy-er/desktop-commander\",\n-  \"version\": \"0.3.2\",\n+  \"version\": \"0.3.3\",\n   \"lockfileVersion\": 3,\n   \"requires\": true,\n   \"packages\": {\n     \"\": {\n       \"name\": \"@wonderwhy-er/desktop-commander\",\n-      \"version\": \"0.3.2\",\n+      \"version\": \"0.3.3\",\n       \"hasInstallScript\": true,\n       \"license\": \"MIT\",\n       \"dependencies\": {"
+      },
+      {
+        "sha": "48fa780f2b43814da668ef4b1428ac41e792d6ab",
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/bce370e9395f5bc74eda34913e5ae1dee48df8f8/package.json",
+        "patch": "@@ -1,6 +1,6 @@\n {\n   \"name\": \"@wonderwhy-er/desktop-commander\",\n-  \"version\": \"0.3.2\",\n+  \"version\": \"0.3.3\",\n   \"description\": \"MCP server for terminal operations and file editing\",\n   \"mcpName\": \"io.github.wonderwhy-er/desktop-commander\",\n   \"license\": \"MIT\","
+      },
+      {
+        "sha": "57137941fb8175e17bffc419ac049929d0851714",
+        "filename": "server.json",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/bce370e9395f5bc74eda34913e5ae1dee48df8f8/server.json",
+        "patch": "@@ -7,13 +7,13 @@\n     \"url\": \"https://github.com/wonderwhy-er/DesktopCommanderMCP\",\n     \"source\": \"github\"\n   },\n-  \"version\": \"0.3.2\",\n+  \"version\": \"0.3.3\",\n   \"packages\": [\n     {\n       \"registryType\": \"npm\",\n       \"registryBaseUrl\": \"https://registry.npmjs.org\",\n       \"identifier\": \"@wonderwhy-er/desktop-commander\",\n-      \"version\": \"0.3.2\",\n+      \"version\": \"0.3.3\",\n       \"transport\": {\n         \"type\": \"stdio\"\n       }"
+      },
+      {
+        "sha": "f727e53961ad832a40374d20c048ad16991ed0cd",
+        "filename": "src/version.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "raw_url": "https://github.com/wonderwhy-er/DesktopCommanderMCP/raw/bce370e9395f5bc74eda34913e5ae1dee48df8f8/src%2Fversion.ts",
+        "patch": "@@ -1 +1 @@\n-export const VERSION = '0.3.2';\n+export const VERSION = '0.3.3';"
+      }
+    ]
+  }
+}
