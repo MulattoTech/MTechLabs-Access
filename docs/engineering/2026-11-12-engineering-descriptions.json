@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "changeId": "2026-11-12-engineering-descriptions",
+  "provider": "OpenAI",
+  "model": "GPT-6 Astra Pro (self-reported)",
+  "updatedAt": "2026-11-12T19:27:09.948529+00:00",
+  "sourceRepository": "MulattoTech/MTechLabs-Access",
+  "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/246",
+  "scope": "Source metadata for all28 MTerm engineering tools; no provider or authorization behavior change.",
+  "decisions": [
+    "Use static multiline plain text with Purpose, Inputs, Permissions, Result/limits and optional Example labels; no dependence on a Markdown renderer.",
+    "Preserve exact tool names/order, schemas, annotations, capability dispatch and read-only membership.",
+    "Correct source-inaccurate claims about checkpoint type, semantic navigation, untracked files, patch-preview permissions, job resumption and cancellation.",
+    "Keep the installed runtime and ChatGPT UI acceptance separate from source/JSON/MCP serialization checks.",
+    "Baseline non-description contract is bound to ba4a55b7 and SHA256 2f66aaf72db1583aa3940acb5a0374bb5298e90eec5e5bba0ec733ba25549cfe."
+  ],
+  "tests": [
+    {
+      "command": "node --test test/engineering-descriptions.test.mjs against original source",
+      "result": "RED:1/4 passed. Original descriptions lacked labeled sections, overstated production checkpoint behavior, and had no multiline Unicode example."
+    },
+    {
+      "command": "npm test in integrations/mcp-manager after correction",
+      "result": "GREEN:79/79 tests, zero failures/skips/cancellations. Four metadata regressions include actual managed gateway tools/list and unchanged contract."
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS before commit."
+    }
+  ],
+  "evidence": {
+    "access-descriptions-red.tap": {
+      "rawSha256": "15b4a2766db9023cd0ad2ed3525198cf440f5cbbeb44f9ac85a3a4811f3c252c",
+      "storedSha256": "06834f5e13e92beb5f68eda80ff3b734cbf52222c58dd531ce0d097ebd9a8bc2",
+      "normalization": "Trailing line whitespace removed; test results unchanged."
+    },
+    "access-descriptions-green.tap": {
+      "rawSha256": "bb6a049247174b07f29459349b50d3a683096e67f7906fa2834cf54e99692758",
+      "storedSha256": "bb6a049247174b07f29459349b50d3a683096e67f7906fa2834cf54e99692758",
+      "normalization": "Trailing line whitespace removed; test results unchanged."
+    }
+  },
+  "limitations": [
+    "Actual ChatGPT plugin settings rendering, desktop/narrow UI and authenticated staging remain unverified.",
+    "No deployment, restart, OAuth change, owner files or paid model calls.",
+    "Source review documents existing behavior limitations; this metadata slice does not repair those provider/runtime limitations.",
+    "Issue246 remains open pending remaining acceptance. No CLI300/DCP48/WEB12/AUG117 stage or weight changes."
+  ],
+  "files": [
+    "integrations/mcp-manager/lib/engineering-descriptions.mjs",
+    "integrations/mcp-manager/lib/engineering-tools.mjs",
+    "integrations/mcp-manager/test/engineering-descriptions.test.mjs",
+    "integrations/mcp-manager/test/fixtures/engineering-contract-ba4a55b7.json",
+    "integrations/mcp-manager/METADATA.md",
+    "integrations/mcp-manager/README.md",
+    "integrations/mcp-manager/metadata-evidence/",
+    "docs/engineering/2026-11-12-engineering-descriptions.json"
+  ]
+}
