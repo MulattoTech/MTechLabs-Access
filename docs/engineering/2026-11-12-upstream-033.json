@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "changeId": "2026-11-12-upstream-033",
+  "provider": "OpenAI",
+  "model": "GPT-6 Astra Pro (self-reported)",
+  "updatedAt": "2026-11-12T19:58:52.278665+00:00",
+  "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "sourceRepository": "MulattoTech/MTechLabs-Access",
+  "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
+  "scope": "Source-only exact Desktop Commander 0.3.3 candidate and disposable hosted control/candidate qualification",
+  "decisions": [
+    "Preserve the exact 0.3.1 control manifests and SDK 1.32.2; pin 0.3.3 candidate without production deployment.",
+    "Refuse actual upstream execution outside explicit fresh GitHub-hosted Linux/Windows Node 24 context. Separate lane homes/state/cache and validate directory ownership. Guard is not an OS sandbox.",
+    "Use real SDK through the unchanged managed stdio gateway; verify all 53 tool contracts, actual returned configuration, owned file/search/process/PDF behavior, exact read-only denial, admission release and EOF cleanup.",
+    "Use npm ci with lifecycle scripts disabled. Both locks contain ripgrep1.18.0 prebuilt optional packages; remove the unnecessary rebuild, verify the exact native binary version/hash/path, and disclose npm/Chrome networking.",
+    "Restore all 16 unrelated native libc selectors dropped by npm lock regeneration. All other existing unrelated lock entries remain identical.",
+    "Independent review identified three false-positive proof weaknesses. Add actual failing counterexamples before tightening blocklist, configuration and output-tail assertions.",
+    "Canonicalize ordinary temporary path aliases after rejecting every actual link/junction ancestor, retaining source/store separation and pinned ownership.",
+    "Record bounded search state/count observations and specific assertion codes to diagnose the failed hosted comparison without exposing arbitrary response content.",
+    "Count published UUID.json heartbeat records rather than concurrent atomic-write temporary files in the existing shared-admission fixture and new probe.",
+    "Validate the published MCP text-only search, command denial and process-start responses; both pinned upstream versions deliberately strip internal structured facts for these handlers. Do not bypass the public gateway boundary.",
+    "Bind every search row to one of six owned files and exact matched text; require clean completed status, consistent total counts, complete bounded pages, correct more flags and disjoint full file coverage. Permit singular running results.",
+    "Replace the existing pause test sleep with explicit started, queued and release barriers after a hosted timing failure; no production admission behavior changes.",
+    "After both Linux lanes failed PDF creation while both Windows lanes fully passed, retain only fixed diagnostic rule IDs, whitelisted error codes, byte count and SHA256 of the exact UTF-8 public PDF error. Inspect at most16384 characters; no raw text, paths, URLs, stack or arbitrary metadata. This observes signals, not a proven cause.",
+    "Keep all qualification assertions and hosted/browser boundaries unchanged; do not set MCP_CLIENT_DOCKER, add no-sandbox flags, change stderr handling or weaken any gate.",
+    "Normally integrate independently reviewed and merged descriptor main499255ad, preserving the reviewed descriptor slice and unchanged runtime contract. Publication has real parents92f5579b and499255ad; local synthetic checkpoint history is not published.",
+    "Treat the Linux PDF cause as unproven. Primary Chromium/Linux sources establish a pathname socket budget; retained lane TMPDIR lengths72/74 predict socket paths113-120bytes. Test the bounded hypothesis by shortening only the owned workspace prefix21bytes and matching artifact glob, retaining all owner identity/path/host/browser/probe gates. Add fixed singleton/socket/dbus signal IDs without raw payloads."
+  ],
+  "tests": [
+    {
+      "command": "node --test test/upstream-qualification.test.mjs before implementation",
+      "result": "RED: missing qualification module."
+    },
+    {
+      "command": "Native selector preservation regression before lock correction",
+      "result": "RED: npm removed libc metadata for 16 unchanged native packages; restored exact control metadata."
+    },
+    {
+      "command": "Independent blocklist/configuration/output-tail proof regressions before correction",
+      "result": "RED: command-not-found accepted as denial; wrong returned configuration accepted; full output buffer accepted as requested tail. All repaired."
+    },
+    {
+      "command": "npm test in integrations/mcp-manager",
+      "result": "GREEN: 90/90 tests, no failures/skips/cancellations; 75 original manager tests plus 15 qualification tests. No actual upstream installation/execution."
+    },
+    {
+      "command": "Root npm test, npm run check, npm run build, generated UI diff",
+      "result": "GREEN: 123/123 tests; syntax and build passed; generated UI unchanged."
+    },
+    {
+      "command": "Exact immutable review and hosted actual-upstream qualification",
+      "result": "Pending before publication. No source upgrade qualification, deployment or issue acceptance claimed."
+    },
+    {
+      "command": "Independent exact npm artifacts and final dependency lock review",
+      "result": "PASS within static scope: both upstream tarballs and all 31 added paths/29 unique artifacts match integrity; all unrelated existing dependency entries preserved after 16 libc restorations. New licenses/notices retained; no added native/install hook found. Runtime and redistribution scope remain separate."
+    },
+    {
+      "command": "Exact e7a4e434 hosted run43285538231",
+      "result": "FAIL: root123/123 and manager90/90 passed. Ubuntu real control/candidate each passed initialize, all53 contracts, owned configuration, file/policy probes then failed an unidentified search assertion; both exited cleanly. Windows guards83/90, seven root-path failures; actual upstream step skipped. Artifact digest and full failure receipt retained."
+    },
+    {
+      "command": "npm test after diagnostic/path follow-up before metadata fixture correction",
+      "result": "RED:89/90; existing shared-admission fixture counted a concurrent atomic-write temporary file as a third published instance. Runtime status reader already filters UUID.json."
+    },
+    {
+      "command": "npm test after metadata fixture correction",
+      "result": "GREEN:90/90, zero failures/skips/cancellations. Revised hosted Windows root handling and real search/native tests remain pending."
+    },
+    {
+      "command": "Exact 1123952b hosted run43286995191",
+      "result": "FAIL: root123/123 passed. Managed89/90 failed a pause-test timing assumption. Both Linux/Windows guard90/90 passed; all four real lanes reached public search responses with no structured facts, contradicting the harness assumption. All owned processes exited0. Independently verified ripgrep binary hashes match exact npm artifacts on both platforms; Windows CRLF lock hash differences are reconciled."
+    },
+    {
+      "command": "Public wire fixtures before correction",
+      "result": "RED: actual text-only search and blocklist fixtures fail the internal-structured-field assumptions; diagnosis binds both unchanged published internal-facts/search-answer artifacts."
+    },
+    {
+      "command": "Independent parser edge cases before correction",
+      "result": "RED:18/20 qualification tests; a valid singular running match was rejected and a completed middle page could understate its count. Both corrected with explicit regressions."
+    },
+    {
+      "command": "npm test after public-wire and pause-barrier correction",
+      "result": "GREEN:95/95, zero failures/skips/cancellations. Includes75 existing manager tests and20 qualification tests. No actual upstream executed locally. Exact revised hosted qualification and immutable review remain required."
+    },
+    {
+      "command": "Exact92f5579b hosted run (independent retained receipt)",
+      "result": "FAIL overall: root123/123, manager95/95 and Windows qualification pass. Both Windows versions pass all10 real stages, including PDF creation/read and admission release, then clean exit0. Both Linux lanes pass search/blocklist/process-tree stages but fail write_pdf_tool_error; no underlying cause is established by that receipt."
+    },
+    {
+      "command": "PDF error observer regression before implementation",
+      "result": "RED: missing observeToolFailure export; no actual upstream executed."
+    },
+    {
+      "command": "node --test test/upstream-qualification.test.mjs after diagnostic-only correction",
+      "result": "GREEN:21/21; payload sentinels, malformed/unknown/oversized errors prove fixed bounded observations without raw values. Full merged candidate suite and fresh hosted qualification remain required."
+    },
+    {
+      "command": "Actual Access main499255ad pushrun43292737244",
+      "result": "PASS:123/123 root and79/79 manager, with check/build/generated-UI verification; exact main tree04d1d397 and parentsba4+60 independently observed. This qualifies the descriptor source, not installed UI/deployment."
+    },
+    {
+      "command": "npm test after normal descriptor integration and final PDF diagnostic-only change",
+      "result": "GREEN:100/100, zero failures/skips/cancellations. Current combined candidate uses all21 qualification guards and79 other manager tests. Hosted diagnostic attempt remains pending; Linux PDF still unqualified."
+    },
+    {
+      "command": "Exactad4dc29f hosted run43293182649",
+      "result": "FAIL overall: root123/123, manager100/100 and Windows all10 real stages pass; Ubuntu100guards and first8real stages pass, then both versions fail PDF. Fixed signals browser_launch and filesystem_missing; no error codes and no proven cause. Both full receipts and bounded Linux reports retained."
+    },
+    {
+      "command": "Geometry regression derived from actual workspace/environment before prefix correction",
+      "result": "RED:21/22 focused tests passed; observed Linux runner-parent plus actual lane suffix and longest known browser socket suffix exceeds107pathnamebytes."
+    },
+    {
+      "command": "npm test after prefix correction in integrations/mcp-manager",
+      "result": "GREEN:101/101, zero failures/skips/cancellations. Both control/candidate derived paths fit the observed Linux runner socket budget; existing ownership/link/nonce and isolation guards pass. Real PDF behavior still requires fresh hosted proof."
+    },
+    {
+      "command": "Root npm test after prefix correction",
+      "result": "GREEN:123/123, zero failures/skips/cancellations; no application-source behavior changes."
+    }
+  ],
+  "roadmapUpdates": [
+    {
+      "id": "MTR-UPSTREAM / issue 10",
+      "stageChange": false,
+      "reason": "Qualified source and actual installed production state remain separate. No CLI 300 / DCP 48 / WEB 12 / AUG 117 weights, IDs or acceptance modified."
+    }
+  ],
+  "limitations": [
+    "No production configuration, runtime restart, Worker/plugin deployment, owner credentials or paid model call.",
+    "Hosted real upstream tests and immutable final review remain pending.",
+    "No public remote/OAuth/Docker/macOS/two-computer acceptance or full security/license certification.",
+    "The independently checked package metadata and retained notices are evidence, not reproducible-build or signature-chain verification."
+  ],
+  "evidence": {
+    "access-qualification-red.tap": "8366f8ab2ddf1baa576101e2e5e5ccd4a44550eca00cd71c7aad9a87ed0f824a",
+    "access-libc-red.tap": "771936b0f7a454ec92de0be3bcaedbc3f8d06e129b005ba145d924ce1005be80",
+    "access-blocklist-probe-red.tap": "5ff6608b12fb7591cedaa688072399be68a648a9c1364f5ac5fdc57bb426d208",
+    "access-proof-red.tap": "d1a3b6d7fdac90f63a618b5fd11513e92d0bbc2bb2e059481d6b8c35fe6f6468",
+    "access-manager-reviewed.tap": "92db77529626c5c026d65bd724f43f5dece82503ef600f58d1b7e57a908d7d29",
+    "access-root-candidate.tap": "319710688450aef212947dcea34f1014d6ce9ba2d94502e194b0d6cf416f1714",
+    "access-harness-review-current.json": "cecfb9c07647063b0259344b66f770972712c66784363ce9625079ce7df206d0",
+    "access-harness-review-current.md": "7af20f89fe652d4dc7d2f0688fe2b9b424d5c889df0c91c78f242e360b8253cd",
+    "upstream/FILE-SHA256.json": "78e362a22136ee788c4202508b8db15b382b5e1df014c797acffe9df9da04a8b",
+    "peer-access-review-e7a4e434.json": "652b3980a655c3fce4b6ccd729ec6d053773d71d0aaa083fe229eec0d5246822",
+    "peer-access24-e7a4e434-receipt.json": "13e52a5c6b666b878e681a7b196020bcb0f0ac6b17108b6a05b0cd5062a414c7",
+    "access-harness-revision-green.tap": "6f06582505591538f6e50af1b4495297de09d6a23d27a73944ae82124124b6da",
+    "access-harness-revision-final.tap": "c366e5dc7c793860cf0a5fbcf53aca0c6295e2a7318914aaef545d4fc88b6a60",
+    "peer-access24-1123952b-receipt.json": "ec0b06674b87d68a19adc1c0adecca20dc1bb19b42dc9d6926ab70435cd2c1b7",
+    "peer-access24-1123952b-receipt.md": "8831136e7ef1641fb20b2d4150fecc999e076b6617d9507fb972c97bc0212c24",
+    "access-public-wire-diagnosis-e7a4e434.json": "38e8432daf8f0982d6141bc4289c697406a8097ff474a218eb6cced4b1a731eb",
+    "access-public-wire-diagnosis-e7a4e434.md": "f9953cb91c894c29e30bba5fdf3048c20a77ce136d32cd6908e6e66c4ab93f37",
+    "access-public-wire-red.tap": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
+    "access-wire-review-red.tap": "ed6e65df7951fc46c18c76df7b41fa9bd125749b88352258f3971a9481cf9db3",
+    "access-public-wire-final.tap": "0bb31aee8f300c31a77d15521d23e3a91a39a40571580ffa6113b4b61391fb06",
+    "peer-access24-92f5579b-receipt.json": "d9348d4cab9f21799878c5a8bc174749050f8b46fc6bba361bc2f5943066c98a",
+    "peer-access24-92f5579b-receipt.md": "851b7ca8e33ddf24f9676770b83ad22838c896577ce5bca58568bb5bb0e1f397",
+    "access-tool-diagnostics-red.tap": "ba2291863b7d5327107e6ea715c519b90c0ad4060eed24946708e62065d991cf",
+    "access-tool-diagnostics-focused.tap": "38551bc0cfaa92e1c6962ba7cd0b4808da19506893a253bb41870a1dd3579568",
+    "access-linux-pdf-diagnosis.json": "eef02f16d5b6849dee900a8fdd8f86328971999302e4d44797b85915f0181223",
+    "access-linux-pdf-diagnosis.md": "5cac95fca340039308fa95832ae5da353a08ec2d2213fc22a5f81ae1e8c78f58",
+    "peer-access-descriptions-review-60f188a8.json": "4b8bbd00627f3aa331210a522642b83ef602d740fcbd7a3cf5b61829b46cce53",
+    "access-diagnostics-integrated-green.tap": "1760009bbdfc18716746d4ed80ba8f109412b28d88a7dd73d7c0a41aad7d3389",
+    "peer-access-main-499255ad-receipt.json": "e341a67a133ac346052796a3d627f826f8d486a7b7005f06055168df35fbfd9d",
+    "peer-access-main-499255ad-receipt.md": "337d48bb59a16303d2527ffd9d0ac865f71021be6d0e1b69b3cd277dd5906753",
+    "peer-access24-ad4dc29f-receipt.json": "5f930f3734736eac4e7f9c28c8bc2f604c5b79783ec2f806710bf0b54dcd97c5",
+    "peer-access24-ad4dc29f-receipt.md": "99ba4f2a005f5765ef024fe156d7961935ead98d4fae9413edbe51a91a81f3a6",
+    "peer-access-review-ad4dc29f.json": "b4c5b4b9cdcf5a23a386029c31acbd636b6b36ac7aa9e50f452cf641ba69b471",
+    "access-linux-pdf-temp-geometry.json": "6b29f8a0e2a9c99bbbd82273be1849033b13f4323ad110d5b9d972633b7600fa",
+    "access-linux-pdf-temp-geometry.md": "6105dbc32cb40d6fa357c099d651f35a53915781495084f3feb99c2adb40dfac",
+    "access-temp-geometry-red.tap": "97daa6a505e887cd5ebf0d7c870b9d6aa5ac2541690e9fa2c2b6e31c1f34c43d",
+    "access-temp-geometry-manager-green.tap": "de4f44a743b3b7ea653051e69048bbe4a6273bcdac8a85c94a3e6a25006adcd6"
+  },
+  "files": [
+    ".github/workflows/check.yml",
+    "README.md",
+    "integrations/mcp-manager/RUNBOOK.md",
+    "integrations/mcp-manager/package.json",
+    "integrations/mcp-manager/upstream-package.json",
+    "integrations/mcp-manager/upstream-package-lock.json",
+    "integrations/mcp-manager/lib/upstream-qualification.mjs",
+    "integrations/mcp-manager/qualify-upstream.mjs",
+    "integrations/mcp-manager/test/upstream-qualification.test.mjs",
+    "integrations/mcp-manager/qualification/",
+    "docs/engineering/2026-11-12-upstream-033.json",
+    "integrations/mcp-manager/test/shared-admission.test.mjs",
+    "integrations/mcp-manager/test/gateway.test.mjs"
+  ],
+  "evidenceNormalization": {
+    "access-public-wire-red.tap": {
+      "rawSha256": "e84e2b8c9c6b8726b3aee5304e2253a1314198ea919dea8e715cab35ad177159",
+      "storedSha256": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
+      "transformation": "Trailing whitespace removed from TAP lines; assertion text and results unchanged."
+    }
+  },
+  "integratedMainSha": "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+  "integratedMainTree": "04d1d397de37cb730b191f47bbe9877d0a94b7a3"
+}

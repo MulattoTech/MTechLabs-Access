@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-12T20:03:34.032Z",
+  "reviewer": "/root/architecture",
+  "decision": "APPROVE_SOURCE_ONLY; NORMAL_MERGE_ELIGIBLE_AFTER_ALL_FOUR_EXACT_HOSTED_CHECKS_AND_ARTIFACTS_PASS",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "pullRequest": 24,
+  "commit": "4bd2b6bc5aeeec17e4b076eec4947081d2363c1d",
+  "tree": "fe52f5d5720c6a34ee6bbec387b1dc098ea8f2d3",
+  "parent": "ad4dc29f5f848368ccd5fd93373f4bc498784dfa",
+  "localSyntheticCheckpoint": "0adc79e927a39b3414a1c184ed3a809aae2d500d",
+  "identity": {
+    "publishedCommitParentAndTreeVerified": true,
+    "completeRemoteTree": true,
+    "matchingBlobsBeforeAndAfterTests": 234,
+    "archive": "/workspace/scratch/a92a3aacdca1/access-final-review-4bd2b6bc",
+    "syntheticHistoryNotPublished": true
+  },
+  "scope": {
+    "deltaFiles": 15,
+    "modifiedFiles": 5,
+    "newEvidenceFiles": 10,
+    "changedFiles": [
+      {
+        "status": "M",
+        "path": ".github/workflows/check.yml"
+      },
+      {
+        "status": "M",
+        "path": "docs/engineering/2026-11-12-upstream-033.json"
+      },
+      {
+        "status": "M",
+        "path": "integrations/mcp-manager/lib/upstream-qualification.mjs"
+      },
+      {
+        "status": "M",
+        "path": "integrations/mcp-manager/qualification/README.md"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/access-linux-pdf-temp-geometry.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/access-linux-pdf-temp-geometry.md"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/access-temp-geometry-manager-green.tap"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/access-temp-geometry-red.tap"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/candidate-result.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/control-result.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/qualification.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/peer-access-review-ad4dc29f.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/peer-access24-ad4dc29f-receipt.json"
+      },
+      {
+        "status": "A",
+        "path": "integrations/mcp-manager/qualification/evidence/peer-access24-ad4dc29f-receipt.md"
+      },
+      {
+        "status": "M",
+        "path": "integrations/mcp-manager/test/upstream-qualification.test.mjs"
+      }
+    ],
+    "executableChanges": [
+      "The owned mkdtemp prefix changes from mterm-upstream-qualification- to mterm-q-, saving21bytes without changing random suffix allocation.",
+      "Three precise fixed observation regexes identify socket length, process singleton and DBus signals.",
+      "A geometry regression derives lane TMPDIR from actual workspace and environment helpers, combines the retained runner parent and longest reviewed browser suffix, and enforces the107-byte pathname budget.",
+      "The diagnostic regression checks the new fixed IDs and preservation of secret-text redaction."
+    ],
+    "workflow": "Only the active artifact-report glob changes to match the shortened prefix. All other workflow bytes are unchanged.",
+    "documentation": "Preserves the unproven-cause qualification and prior failed receipts; corrects the previous140-blobs wording to preserving the reviewed descriptor slice."
+  },
+  "findings": [],
+  "boundaryVerification": {
+    "ownedParentPermissionsNonceDeviceInodeAndLinkChecksUnchanged": true,
+    "controlCandidateLaneSeparationUnchanged": true,
+    "qualificationHostAndSourceIdentityGuardsUnchanged": true,
+    "browserArgumentsEnvironmentAndSandboxUnchanged": true,
+    "pdfCreationReadbackAndFinalPassAssertionsUnchanged": true,
+    "admissionAndProcessCleanupAssertionsUnchanged": true,
+    "productionGatewayProvidersAndDescriptorsUnchanged": true,
+    "packagePinsControlManifestsLocksAndStaticArtifactEvidenceUnchanged": true,
+    "noFallbackOutsideOwnedWorkspace": true,
+    "files": [
+      {
+        "path": "integrations/mcp-manager/qualify-upstream.mjs",
+        "sha256": "1f4dd1e08a784e98b34b3644b73618a5588130ce7f0bdf17b46df17ed066fab6"
+      },
+      {
+        "path": "integrations/mcp-manager/gateway.mjs",
+        "sha256": "ef14a5d87ab44c9af86a3aee6163800a72b7a5f3547898f7f1514855385cb37c"
+      },
+      {
+        "path": "integrations/mcp-manager/package.json",
+        "sha256": "f23baf3e4334cd77e366152c9f6c6315c7eacc0d7409d3fcb3af7ea8f339dc87"
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package.json",
+        "sha256": "757440e3022b02150b1b0bf8e17e0337de6059ea948977ecda7fc7b1dbe36bc6"
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package-lock.json",
+        "sha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package.json",
+        "sha256": "af4f183d2fa4fe814fdc78f8201ebc7b704a8c89b3c2ef9e981dc6ef8c1d82e5"
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package-lock.json",
+        "sha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+      },
+      {
+        "path": "integrations/mcp-manager/lib/engineering-tools.mjs",
+        "sha256": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b"
+      },
+      {
+        "path": "integrations/mcp-manager/lib/engineering-descriptions.mjs",
+        "sha256": "18a0a7af1305adcefc296f2079063d651f2536ae8b17224616365fd793082081"
+      }
+    ]
+  },
+  "tests": {
+    "tests": 101,
+    "pass": 101,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "node": "v24.22.1",
+    "command": "node --test --test-reporter=tap test/*.test.mjs",
+    "workingDirectory": "/workspace/scratch/a92a3aacdca1/access-final-review-4bd2b6bc/integrations/mcp-manager",
+    "tapPath": "/workspace/scratch/a92a3aacdca1/access-review-4bd2b6bc-manager.tap",
+    "tapSha256": "d50263182afc8a271f7764e23a4739cc661371474e9349c26a64fef0278872ea",
+    "tapBytes": 24042
+  },
+  "evidence": {
+    "aiHashEntriesVerified": 37,
+    "upstreamArtifactEvidenceFilesVerified": 18,
+    "descriptionEvidenceFilesVerified": 5,
+    "archivedAd4FailedReportsExact": [
+      {
+        "name": "control-result.json",
+        "sha256": "0861ac4608e6d2b2710db0446b798af81793d82c050930b8d956c3bccf1ed002"
+      },
+      {
+        "name": "candidate-result.json",
+        "sha256": "4979e36b83256059434869a40a49553176e09cb21119d4eb7338701552c0ad4d"
+      },
+      {
+        "name": "qualification.json",
+        "sha256": "46c9572298d88e407a67cde3b66a4c1265beee17aa8054c31a2a2f54b4595342"
+      }
+    ],
+    "actualRed": "Committed access-temp-geometry-red.tap records21/22 passed with the geometry assertion failing under the old prefix; its stored SHA256 matches the AI record.",
+    "inputs": [
+      {
+        "file": "/workspace/scratch/a92a3aacdca1/access-review-4bd2b6bc-verification.json",
+        "sha256": "39ea91522a08efa5e704987c9920514c696276a63548b42486ea4fabdbe6f91f"
+      },
+      {
+        "file": "/workspace/scratch/a92a3aacdca1/access-review-4bd2b6bc-remote-commit.json",
+        "sha256": "078b7db8e232a4ea38322fb2d4862f9aff5457d2afbd53f0e0513f1c7822f4aa"
+      },
+      {
+        "file": "/workspace/scratch/a92a3aacdca1/access-review-4bd2b6bc-remote-tree.json",
+        "sha256": "95715e45758b0ea2c15809c9f2f749a54f8e0208e9ef886e93275bb1491ebfc8"
+      }
+    ]
+  },
+  "qualification": {
+    "allHostedEvidenceComplete": false,
+    "observedProgress": "Independent github_inventory observer reports exact Linux job131453369237 and verified artifact13980085028 passed all ten real stages in both versions, including PDF13242bytes/readback/admission and clean process exits; final Windows artifact verification was still pending when this source receipt was written.",
+    "requiredChecks": [
+      "test",
+      "managed-mcp",
+      "Upstream qualification / ubuntu-latest / Node 24",
+      "Upstream qualification / windows-latest / Node 24"
+    ],
+    "requiredEvidence": "All four checks must pass at this exact immutable head, with actual control/candidate outcomes, artifact integrity and cleanup verified. Then use a normal expected-head merge; actual merged-main qualification remains required.",
+    "inferenceLimit": "Successful PDF behavior after shortening the path supports the intervention. It does not retrospectively establish an original socket error that was never retained."
+  },
+  "limitations": [
+    "No actual upstream installation/execution occurred locally; existing SDK dependencies were reused for manager guards.",
+    "No production restart/configuration changes, deployment, plugin publication, owner data, credentials or paid model calls.",
+    "No public remote/OAuth, Docker, macOS, multi-computer or full security certification.",
+    "A later source delta requires new immutable review. Separate job-authorization PR27 is not included in this review."
+  ]
+}

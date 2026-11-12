@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T18:42:17.807912+00:00",
+  "candidateState": "unfrozen current tree; no immutable approval",
+  "scope": "Read-only safety and qualification false-positive review",
+  "sourceFiles": [
+    {
+      "path": "integrations/mcp-manager/qualify-upstream.mjs",
+      "sha256": "07c67676ca43a6d6fbdb5a28f0bd77c7e71456bfdf719e5482585b0d1321c871"
+    },
+    {
+      "path": "integrations/mcp-manager/lib/upstream-qualification.mjs",
+      "sha256": "0fc392662ce13c87c8ef904a58478931268ee43fa8f1249f90f55b0e756610a7"
+    },
+    {
+      "path": "integrations/mcp-manager/test/upstream-qualification.test.mjs",
+      "sha256": "a0bc1ac8f71c8af80c97d0e0054d03c49774e6e17ddabc585403b07f0156cf7c"
+    },
+    {
+      "path": "integrations/mcp-manager/qualification/README.md",
+      "sha256": "cf2dabd0baeb4682884c2cfe77f8722b450a6ec363e9239221393d4a5a831f95"
+    },
+    {
+      "path": ".github/workflows/check.yml",
+      "sha256": "b04a832a045b9e752c70c2f8adb66b444d9aabae506b387b6b7fff112b1b1ee5"
+    }
+  ],
+  "boundariesConfirmed": [
+    "Module import remains inert; explicit hosted-only guard precedes installation and workspace creation.",
+    "Fresh hosted account boundary explicitly required because environment redirection does not contain os.userInfo().homedir.",
+    "No production verifier or live config path is invoked. Custom transport is EOF-only, with no broad timed kill.",
+    "Separate control/candidate stores, exact package/version/lock/integrity checks, sanitized child environment and full descriptor comparison are present.",
+    "Network and bounded-test limitations are explicit; runtime/plugin/deployment claims remain separate."
+  ],
+  "findings": [
+    {
+      "id": "AQ-1",
+      "status": "corrected_after_report",
+      "path": "integrations/mcp-manager/qualify-upstream.mjs",
+      "stage": "shell_blocklist",
+      "finding": "Command text itself contained blocked; ordinary command-not-found could satisfy generic denial regex.",
+      "currentCorrection": "Strict error prefix, structured blocked:true and exact command plus absent owned prefix-marker. Inspected compiled 0.3.1 and0.3.3 shapes support this assertion."
+    },
+    {
+      "id": "AQ-2",
+      "status": "reported",
+      "path": "integrations/mcp-manager/qualify-upstream.mjs",
+      "stage": "owned_configuration",
+      "finding": "Actual returned configuration values are not compared; hasConfigurationObject accepts mismatched roots/telemetry/blocked commands while the separate file assertion merely confirms harness-authored bytes.",
+      "negativeFixture": {
+        "structuredContent": {
+          "config": {
+            "telemetryEnabled": true,
+            "allowedDirectories": [
+              "/outside-owned-fixture"
+            ],
+            "blockedCommands": []
+          }
+        }
+      },
+      "observedResponseCheck": true,
+      "recommendation": "Assert exact required fields from the actual returned configuration; add wrong-configuration rejection fixture."
+    },
+    {
+      "id": "AQ-3",
+      "status": "reported",
+      "path": "integrations/mcp-manager/qualify-upstream.mjs",
+      "stage": "owned_process_output_and_tree_cleanup",
+      "finding": "Requested three-line tail can pass when all 300 fixture marker lines are returned, since assertion only searches for marker299.",
+      "negativeFixture": "Concatenated MTERM_PROCESS_LINE_0 through MTERM_PROCESS_LINE_299",
+      "observedResponseCheck": true,
+      "recommendation": "Assert exact returned marker sequence/count and bounded output; add full-buffer response rejection fixture."
+    }
+  ],
+  "execution": "Only inert fixture predicates and source reads; no installation, actual upstream run, production call, checkout edit or workflow mutation."
+}

@@ -1,0 +1,54 @@
+✖ qualification reads actual public text-only search receipts after upstream strips internal facts (3.662819ms)
+✖ public blocklist proof accepts the two published wire forms without internal structured fields (0.622677ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 560.432793
+
+✖ failing tests:
+
+test at test/upstream-qualification.test.mjs:26:1
+✖ qualification reads actual public text-only search receipts after upstream strips internal facts (3.662819ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 'search_1_1234567890123'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:29:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'search_1_1234567890123',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/upstream-qualification.test.mjs:35:1
+✖ public blocklist proof accepts the two published wire forms without internal structured fields (0.622677ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

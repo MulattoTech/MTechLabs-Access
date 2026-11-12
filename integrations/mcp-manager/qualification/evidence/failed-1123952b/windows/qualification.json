@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "testedAt": "2026-11-12T19:09:10.105Z",
+  "sourceSha": "9c07543ad92348ccdd26db932673715ce22265fb",
+  "sourceTree": "4e6ae029da84181d454c2708e3ea066e9b7582a1",
+  "candidateSha": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+  "platform": "win32",
+  "arch": "x64",
+  "node": "v24.22.2",
+  "libuv": "1.52.1",
+  "host": "github-hosted",
+  "managerVersion": "0.4.0",
+  "sdkVersion": "1.32.2",
+  "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+  "modelCalls": 0,
+  "lanes": [
+    {
+      "lane": "control",
+      "version": "0.3.1",
+      "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+      "admitted": {
+        "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+        "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+        "lockSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 768
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 33
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 54
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 881
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 9
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 9076,
+      "upstreamPid": 5352,
+      "toolCount": 53,
+      "search": {
+        "start": {
+          "isError": false,
+          "structured": false,
+          "hasSessionId": false
+        }
+      },
+      "failedStage": "content_search_completion_and_pagination",
+      "failureCode": "qualification_assertion_failed",
+      "rpcErrorCode": null,
+      "childExitCode": 0,
+      "ownedProcessTreeExited": true
+    },
+    {
+      "lane": "candidate",
+      "version": "0.3.3",
+      "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+      "admitted": {
+        "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+        "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+        "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+        "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+        "lockSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480"
+      },
+      "stages": [
+        {
+          "name": "initialize",
+          "pass": true,
+          "durationMs": 807
+        },
+        {
+          "name": "full_tool_contract",
+          "pass": true,
+          "durationMs": 35
+        },
+        {
+          "name": "owned_configuration",
+          "pass": true,
+          "durationMs": 65
+        },
+        {
+          "name": "file_read_write_metadata",
+          "pass": true,
+          "durationMs": 853
+        },
+        {
+          "name": "manager_read_only_denial",
+          "pass": true,
+          "durationMs": 31
+        }
+      ],
+      "initialized": true,
+      "childExited": true,
+      "upstreamExited": true,
+      "pass": false,
+      "gatewayPid": 6908,
+      "upstreamPid": 2888,
+      "toolCount": 53,
+      "search": {
+        "start": {
+          "isError": false,
+          "structured": false,
+          "hasSessionId": false
+        }
+      },
+      "failedStage": "content_search_completion_and_pagination",
+      "failureCode": "qualification_assertion_failed",
+      "rpcErrorCode": null,
+      "childExitCode": 0,
+      "ownedProcessTreeExited": true
+    }
+  ],
+  "pass": false,
+  "limitations": [
+    "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+    "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+    "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+    "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+  ],
+  "contractComparison": {
+    "added": [],
+    "removed": [],
+    "contractChanges": [],
+    "descriptionChanges": [
+      "kill_process"
+    ],
+    "controlSha256": "4c0b8a18fad5dd3526ce46f9369f718be34a93e63943470082371a896af28dbf",
+    "candidateSha256": "8d7cc6b45990516863e85931dd9ed0da1481291c2eb5b862c3c675cc9d051d40"
+  },
+  "completedAt": "2026-11-12T19:10:04.649Z"
+}

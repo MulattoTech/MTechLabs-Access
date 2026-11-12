@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:35:50.342897+00:00",
+  "candidate": "92f5579bdb8365013600fa210755f0671a23b868",
+  "decision": "DIAGNOSTIC_ONLY_REVISION_REQUIRED_CAUSE_NOT_ESTABLISHED",
+  "observedHostedBoundary": {
+    "windows": "Both versions pass all10 stages including real PDF19629bytes/readback/admission/exit0.",
+    "linux": "Both versions pass preceding search/blocklist/process stages, then return write_pdf_tool_error; actual error content not retained."
+  },
+  "staticFindings": [
+    "write_pdf public error response contains Error-prefixed actual error.message; shared call helper discards it by asserting isError false. No gateway or stderr change is needed to classify the public result.",
+    "Both versions use lazy md-to-pdf and Puppeteer, own temporary Chrome profile/local HTTP render server, cache then system Chrome then explicit Chrome download.",
+    "Upstream uses CONFIG_FILE-adjacent puppeteer-cache; PUPPETEER_SKIP_DOWNLOAD only suppresses ordinary Puppeteer install behavior, not upstream explicit browser installation.",
+    "The0.3.3 markdown module differs only in Docker-specific browser selection and no-sandbox flags. isDockerImage checks MCP_CLIENT_DOCKER===true; qualification environment does not admit that switch.",
+    "Fixture Markdown/path/options are valid on actual Windows; this does not identify the Linux failure cause. Shared Linux browser launch, sandbox, native prerequisites or discovery problems are hypotheses only."
+  ],
+  "recommendation": {
+    "placement": "Only the immutable owned write_pdf fixture in the disposable qualification harness; immediately before existing failing assertion.",
+    "record": [
+      "fixed classificationVersion and matchedRuleIds",
+      "fixed failure category or unknown",
+      "isError, tool/stage/owned-fixture identity",
+      "exact error text UTF-8 byte count and SHA-256",
+      "input bound and truncation/malformed indicators"
+    ],
+    "noRawData": [
+      "error text",
+      "stack",
+      "arbitrary path or URL",
+      "metadata object",
+      "owner credentials"
+    ],
+    "classificationSignals": [
+      "no_usable_sandbox",
+      "namespace_denied",
+      "root_requires_no_sandbox",
+      "chrome_unavailable",
+      "shared_library_loader_error",
+      "module_not_found",
+      "filesystem_permission_or_readonly",
+      "timeout",
+      "network_dns_connect_download_failure",
+      "generic_browser_launch",
+      "unknown"
+    ],
+    "tests": [
+      "known signal maps to fixed enum without reflecting matched text",
+      "unknown malformed and oversized responses remain failed",
+      "secret/path/URL/stack sentinel content is absent from serialized observation",
+      "control and candidate still fail PDF stage on isError regardless of classification",
+      "non-PDF or non-owned target cannot collect this diagnostic"
+    ],
+    "preserve": [
+      "Chrome sandbox and host guard",
+      "original lock and source gateway",
+      "stage failure and all required hosted gates",
+      "EOF cleanup and source/runtime separation"
+    ]
+  },
+  "evidence": [
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/tools/pdf/markdown.js",
+      "sha256": "61685462f9abb2517e4691fbc7baebea23260e776d3e216d941480551450e982"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/handlers/filesystem-handlers.js",
+      "sha256": "667771f5439092c0554fa54313fbcb24a7762ffe6c7e4ed29f51dedcd52f417f"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/tools/filesystem.js",
+      "sha256": "787d9f63525abf96d24b9a4696ac111c964510bc0899123d0afc9c5ab259dd69"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/error-handlers.js",
+      "sha256": "3112f3b6c25625992931c147f4e88ab9f4b48dddee86bef2993f7698bd5ea1bd"
+    },
+    {
+      "version": "0.3.1",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.1/package/dist/utils/system-info.js",
+      "sha256": "c3f44d931760f172080093db44b5ae3c802c28e635b0342d945b2da0fea19eb3"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/tools/pdf/markdown.js",
+      "sha256": "ece461975a0bb20a80e187431ca6a53281a691206f87711fc6a4700d76c3206b"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/handlers/filesystem-handlers.js",
+      "sha256": "667771f5439092c0554fa54313fbcb24a7762ffe6c7e4ed29f51dedcd52f417f"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/tools/filesystem.js",
+      "sha256": "787d9f63525abf96d24b9a4696ac111c964510bc0899123d0afc9c5ab259dd69"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/error-handlers.js",
+      "sha256": "3112f3b6c25625992931c147f4e88ab9f4b48dddee86bef2993f7698bd5ea1bd"
+    },
+    {
+      "version": "0.3.3",
+      "path": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/0.3.3/package/dist/utils/system-info.js",
+      "sha256": "e12fa4cbb980615becd953df36e979dfefd85fc0a1402d63c5965fe8008c8c09"
+    }
+  ],
+  "upstreamExecutionLocally": false
+}

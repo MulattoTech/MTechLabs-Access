@@ -1,0 +1,34 @@
+{
+  "0.3.1": {
+    "sourceManifestJsonDifferences": {},
+    "sourceLicenseMatchesTarball": true,
+    "attestationSubjectSha512Matches": true,
+    "slsaSourceCommit": "51c7fbf2350d8c039707e9f26151ed792f2891c7",
+    "gitHead": "7251da501d760e6eb5f95d802d9b42c741190950",
+    "sourceCommitToGitHeadCommits": 1,
+    "releaseCommitChangedFiles": [
+      "package.json",
+      "server.json",
+      "src/version.ts"
+    ],
+    "releaseDeltaIsVersionOnly": true,
+    "cryptographicSignatureOrSigstoreVerified": false
+  },
+  "0.3.3": {
+    "sourceManifestJsonDifferences": {},
+    "sourceLicenseMatchesTarball": true,
+    "attestationSubjectSha512Matches": true,
+    "slsaSourceCommit": "6cb7f9d444d9e6442cb6c02c6fba572e06c92145",
+    "gitHead": "bce370e9395f5bc74eda34913e5ae1dee48df8f8",
+    "sourceCommitToGitHeadCommits": 1,
+    "releaseCommitChangedFiles": [
+      "manifest.json",
+      "package-lock.json",
+      "package.json",
+      "server.json",
+      "src/version.ts"
+    ],
+    "releaseDeltaIsVersionOnly": true,
+    "cryptographicSignatureOrSigstoreVerified": false
+  }
+}

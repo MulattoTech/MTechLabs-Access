@@ -57,6 +57,9 @@ The allowed execution uses only `git diff --check` in a disposable Git repositor
 The implementation introduces no provider injection or testing override. VM
 dispatch shares the same current capability guard; VM execution is not exercised
 by this regression suite. Authenticated admin routes retain their existing tests
-and call the same checked resume helper. The final candidate still requires
-independent review, hosted checks and actual-main verification. Installed
+and call the same checked resume helper. The initial published candidate passed all three hosted jobs: root 123/123,
+Linux manager 93/93 and Windows manager 93/93. Integration with qualified
+upstream main passes 115/115 local manager tests. The final combined candidate
+requires independent immutable review and all five hosted checks, followed by
+fresh actual-main qualification. Installed
 deployment and live acceptance remain separate; no production restart is included.

@@ -1,0 +1,66 @@
+[
+  {
+    "_type": "https://in-toto.io/Statement/v0.1",
+    "subject": [
+      {
+        "name": "pkg:npm/%40wonderwhy-er/desktop-commander@0.3.1",
+        "digest": {
+          "sha512": "731eca4ec70b17de7569d1e60cb5420c8553a89fc18352ed75120b668a39c1afd431ec8e7cc02e38938406e94d30a04a6f95ddde71c342707d697ae837d170e4"
+        }
+      }
+    ],
+    "predicateType": "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "predicate": {
+      "name": "@wonderwhy-er/desktop-commander",
+      "version": "0.3.1",
+      "registry": "https://registry.npmjs.org"
+    }
+  },
+  {
+    "_type": "https://in-toto.io/Statement/v1",
+    "subject": [
+      {
+        "name": "pkg:npm/%40wonderwhy-er/desktop-commander@0.3.1",
+        "digest": {
+          "sha512": "731eca4ec70b17de7569d1e60cb5420c8553a89fc18352ed75120b668a39c1afd431ec8e7cc02e38938406e94d30a04a6f95ddde71c342707d697ae837d170e4"
+        }
+      }
+    ],
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "predicate": {
+      "buildDefinition": {
+        "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+        "externalParameters": {
+          "workflow": {
+            "ref": "refs/heads/main",
+            "repository": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+            "path": ".github/workflows/release.yml"
+          }
+        },
+        "internalParameters": {
+          "github": {
+            "event_name": "workflow_dispatch",
+            "repository_id": "898345892",
+            "repository_owner_id": "1150639"
+          }
+        },
+        "resolvedDependencies": [
+          {
+            "uri": "git+https://github.com/wonderwhy-er/DesktopCommanderMCP@refs/heads/main",
+            "digest": {
+              "gitCommit": "51c7fbf2350d8c039707e9f26151ed792f2891c7"
+            }
+          }
+        ]
+      },
+      "runDetails": {
+        "builder": {
+          "id": "https://github.com/actions/runner/github-hosted"
+        },
+        "metadata": {
+          "invocationId": "https://github.com/wonderwhy-er/DesktopCommanderMCP/actions/runs/39742337515/attempts/1"
+        }
+      }
+    }
+  }
+]

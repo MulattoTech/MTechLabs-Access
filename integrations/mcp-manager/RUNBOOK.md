@@ -1,5 +1,14 @@
 # MTerm-CLI Desktop Bridge — owner runbook
 
+## Source candidate and deployed runtime
+
+The November 12 engineering branch proposes Desktop Commander **0.3.3** with a
+separate disposable-hosted qualification harness. The observed live installation
+remains **0.3.1**, and no production restart or deployment is part of that source
+change. See [the qualification contract](qualification/README.md) before using
+the candidate manifests. The production instructions below remain a separate
+operational record; they are not an instruction to deploy this candidate.
+
 ## Daily use
 
 Open https://m-techlabs.com/admin/mcp, or the **MTerm-CLI Manager** desktop

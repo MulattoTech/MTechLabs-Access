@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:03:06.759265+00:00",
+  "status": "BLOCKED_HOSTED_QUALIFICATION",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "pr": 24,
+  "candidateSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+  "candidateTree": "8959c7e93a15acbfd6c6c43e3d6e390ffcca7f8f",
+  "baseSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "checkoutMergeSha": "6fe2df3875a3092b0d2d6198004154d8fa4b9aaf",
+  "checkoutMergeTreeEqualsCandidate": true,
+  "run": {
+    "id": 43285538231,
+    "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231",
+    "event": "pull_request",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "jobs": [
+    {
+      "id": 131417855791,
+      "name": "managed-mcp",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231/job/131417855791",
+      "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+      "conclusion": "success",
+      "startedAt": "2026-11-12T18:59:43Z",
+      "completedAt": "2026-11-12T19:00:05Z",
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "testCounts": {
+        "tests": 90,
+        "pass": 90,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "failedSteps": [],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-e7a4e434-evidence/job-131417855791.log",
+        "bytes": 25127,
+        "sha256": "9fa197adf7c2bc10e0cad79143a66e62f3340b3694c74c71e2a39c1975801b99"
+      }
+    },
+    {
+      "id": 131417855693,
+      "name": "Upstream qualification / ubuntu-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231/job/131417855693",
+      "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+      "conclusion": "failure",
+      "startedAt": "2026-11-12T18:59:43Z",
+      "completedAt": "2026-11-12T19:00:20Z",
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "testCounts": {
+        "tests": 90,
+        "pass": 90,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "failedSteps": [
+        "Compare real pinned upstream packages in disposable stores"
+      ],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-e7a4e434-evidence/job-131417855693.log",
+        "bytes": 29280,
+        "sha256": "ed2a4734cb13a1844a3ed51e0b3b7562900638e617eb081fbb878ad675fed93a"
+      }
+    },
+    {
+      "id": 131417855594,
+      "name": "test",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231/job/131417855594",
+      "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+      "conclusion": "success",
+      "startedAt": "2026-11-12T18:59:43Z",
+      "completedAt": "2026-11-12T18:59:51Z",
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "testCounts": {
+        "tests": 123,
+        "pass": 123,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "failedSteps": [],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-e7a4e434-evidence/job-131417855594.log",
+        "bytes": 49822,
+        "sha256": "bec874ab29f5eaa6515e0dd64cfe1ae4419b093f1fc61194a46c8a6381f3686f"
+      }
+    },
+    {
+      "id": 131417855004,
+      "name": "Upstream qualification / windows-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231/job/131417855004",
+      "headSha": "e7a4e434cc2c2b0c979cba94c273593bc6c80b28",
+      "conclusion": "failure",
+      "startedAt": "2026-11-12T18:59:43Z",
+      "completedAt": "2026-11-12T19:00:45Z",
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "testCounts": {
+        "tests": 90,
+        "pass": 83,
+        "fail": 7,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "failedSteps": [
+        "Verify manager and qualification guards on this platform"
+      ],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-e7a4e434-evidence/job-131417855004.log",
+        "bytes": 35749,
+        "sha256": "aef9fcba269cfec6bc07c9036f7b3de21009b8ade49d7ec1d2136fcb1ec4a1a7"
+      }
+    }
+  ],
+  "ubuntu": {
+    "realUpstreamExecuted": true,
+    "platform": "linux",
+    "node": "v24.22.2",
+    "libuv": "1.52.1",
+    "sdkVersion": "1.32.2",
+    "modelCalls": 0,
+    "lanes": [
+      {
+        "lane": "control",
+        "version": "0.3.1",
+        "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+        "admitted": {
+          "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+          "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+          "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+          "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+          "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+        },
+        "stages": [
+          {
+            "name": "initialize",
+            "pass": true,
+            "durationMs": 273
+          },
+          {
+            "name": "full_tool_contract",
+            "pass": true,
+            "durationMs": 44
+          },
+          {
+            "name": "owned_configuration",
+            "pass": true,
+            "durationMs": 78
+          },
+          {
+            "name": "file_read_write_metadata",
+            "pass": true,
+            "durationMs": 284
+          },
+          {
+            "name": "manager_read_only_denial",
+            "pass": true,
+            "durationMs": 5
+          }
+        ],
+        "initialized": true,
+        "childExited": true,
+        "upstreamExited": true,
+        "pass": false,
+        "gatewayPid": 2889,
+        "upstreamPid": 2900,
+        "toolCount": 53,
+        "failedStage": "content_search_completion_and_pagination",
+        "failureCode": "qualification_assertion_failed",
+        "rpcErrorCode": null,
+        "childExitCode": 0,
+        "ownedProcessTreeExited": true
+      },
+      {
+        "lane": "candidate",
+        "version": "0.3.3",
+        "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+        "admitted": {
+          "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/candidate/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+          "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-8U12zs/candidate/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+          "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+          "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+          "lockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+        },
+        "stages": [
+          {
+            "name": "initialize",
+            "pass": true,
+            "durationMs": 437
+          },
+          {
+            "name": "full_tool_contract",
+            "pass": true,
+            "durationMs": 46
+          },
+          {
+            "name": "owned_configuration",
+            "pass": true,
+            "durationMs": 129
+          },
+          {
+            "name": "file_read_write_metadata",
+            "pass": true,
+            "durationMs": 381
+          },
+          {
+            "name": "manager_read_only_denial",
+            "pass": true,
+            "durationMs": 6
+          }
+        ],
+        "initialized": true,
+        "childExited": true,
+        "upstreamExited": true,
+        "pass": false,
+        "gatewayPid": 2963,
+        "upstreamPid": 2974,
+        "toolCount": 53,
+        "failedStage": "content_search_completion_and_pagination",
+        "failureCode": "qualification_assertion_failed",
+        "rpcErrorCode": null,
+        "childExitCode": 0,
+        "ownedProcessTreeExited": true
+      }
+    ],
+    "searchFailureDetailsAvailable": {
+      "stage": true,
+      "failureCode": true,
+      "rpcErrorCode": true,
+      "actualExpected": false,
+      "searchObservations": false
+    },
+    "independentContractComparison": {
+      "independentlyCompared": true,
+      "controlCount": 53,
+      "candidateCount": 53,
+      "allNamesUnique": true,
+      "added": [],
+      "removed": [],
+      "changedFields": [
+        {
+          "tool": "kill_process",
+          "field": "description"
+        }
+      ],
+      "allOtherToolFieldsEqual": true
+    },
+    "ripgrepLogObservation": "Both lane ripgrep logs say rebuilt dependencies successfully, then warn that two package install scripts are not yet covered by allowScripts. This alone does not establish binary execution or the cause of the search assertion."
+  },
+  "windows": {
+    "guardTests": 90,
+    "passed": 83,
+    "failed": 7,
+    "failureCode": "qualification_root_not_separate",
+    "commonOrigin": "lib/upstream-qualification.mjs:60 via fixture at test/upstream-qualification.test.mjs:67",
+    "testDeclarationLines": [
+      100,
+      112,
+      121,
+      129,
+      146,
+      155,
+      165
+    ],
+    "realUpstreamStep": "skipped",
+    "qualificationArtifact": "none; upload reported no files"
+  },
+  "artifacts": [
+    {
+      "id": 13973259442,
+      "zipSha256": "ae5d574a10e00398a4f97797d47ee168a321079f5b5c03c896d26554e76d86fc",
+      "bytes": 33776,
+      "digestMatchesGitHub": true,
+      "files": [
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/candidate-install.log",
+          "bytes": 1872,
+          "sha256": "dad365daa3d8255740cd3841dd1d031e7dc2cdfbd6902dcba436565eb17373b9"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/candidate-result.json",
+          "bytes": 1590,
+          "sha256": "3b806b999606b81a4bd53b4707e64fb3c56182d75ad3d1686419e609ffc82ed0"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/candidate-ripgrep-install.log",
+          "bytes": 156,
+          "sha256": "669af15a20b34fa89cb2d339b04f5df843ad38dcf8ad80e7130baeeaa1ad8a69"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/candidate-tools.json",
+          "bytes": 80649,
+          "sha256": "197c232374fff1abdb9a3d9ab5cf747a9f11554bffd80f865ea2c8232a74a96d"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/control-install.log",
+          "bytes": 1872,
+          "sha256": "7f466ab66505658f8fd91d82838e63069cbe2ba6b76c907d9294f5bbfbde734b"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/control-result.json",
+          "bytes": 1583,
+          "sha256": "fb9819d0ca7710843860c8dca396f3c68ed85380dab3f2f69549ce1da99c93e3"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/control-ripgrep-install.log",
+          "bytes": 156,
+          "sha256": "669af15a20b34fa89cb2d339b04f5df843ad38dcf8ad80e7130baeeaa1ad8a69"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/control-tools.json",
+          "bytes": 80358,
+          "sha256": "230b0d7fda73b6cd8eed5d2977aeb17b6378cf135cae6a29d24057c681e697bc"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/qualification.json",
+          "bytes": 4974,
+          "sha256": "d5594b68afa8a9549b8e2123bf2a8fe1fbe12c127ab9a5aa28bfa75d17b3d3a6"
+        },
+        {
+          "path": "mterm-upstream-qualification-8U12zs/reports/tool-contract-comparison.json",
+          "bytes": 286,
+          "sha256": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2"
+        }
+      ],
+      "githubDigest": "sha256:ae5d574a10e00398a4f97797d47ee168a321079f5b5c03c896d26554e76d86fc",
+      "githubUrl": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43285538231/artifacts/13973259442"
+    }
+  ],
+  "committedStaticEvidence": {
+    "checked": 19,
+    "allMatch": true,
+    "proofFile": "/workspace/scratch/a92a3aacdca1/peer-access24-e7a4e434-evidence/committed-evidence-match.json"
+  },
+  "reviewerActions": {
+    "retriedJobs": false,
+    "changedSource": false,
+    "changedGithub": false,
+    "executedUpstreamLocally": false,
+    "productionAction": false
+  },
+  "qualificationLimits": [
+    "Ubuntu actual and expected search assertion values were not persisted, so the specific violated assertion cannot be identified from this report.",
+    "Both Linux versions failed the same stage; this run alone does not establish a candidate-specific upstream regression.",
+    "Windows upstream behavior remains untested because guard tests failed before execution.",
+    "No overall compatibility, source-merge approval or production rollout is asserted."
+  ]
+}
