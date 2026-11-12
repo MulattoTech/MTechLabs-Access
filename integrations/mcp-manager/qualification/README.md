@@ -63,7 +63,9 @@ configuration. That gateway launches the exact admitted package as
 dispatch. A real SDK client initializes and discovers all 53 tool descriptors,
 checks configuration ownership, writes and reads an owned Unicode fixture,
 checks file metadata, verifies manager read-only denial, exercises completed
-content search and pagination, rejects an inert blocklisted command, reads
+content search and pagination through the public text-only wire response, rejects
+an inert blocklisted command using the exact public denial message and absence of
+an owned execution marker, reads
 bounded process output and observes owned parent/child termination. The control
 uses existing `force_terminate`; the candidate exercises the upgraded
 `kill_process` managed-tree behavior. Both create a real PDF, verify its signature
@@ -83,7 +85,7 @@ hashes. A count match alone cannot qualify the upgrade. Exact candidate review,
 all required CI jobs, normal expected-head merge, and fresh actual-main jobs
 remain necessary before source qualification is recorded.
 
-## Limits and deployment
+## Failed qualification evidence and corrections
 
 The initial hosted attempt is retained as a failed qualification: Ubuntu passed
 both versions' initialization, 53-tool discovery, configuration and file/policy
@@ -91,9 +93,31 @@ probes, but failed a search assertion without enough diagnostic values to locate
 it; Windows failed seven temporary-root guard fixtures before real execution.
 The follow-up canonicalizes ordinary temporary path names while still rejecting
 actual links, records bounded search observations, and verifies the exact native
-ripgrep prerequisite. Revised hosted qualification remains required. The guard
+ripgrep prerequisite.
+
+The second hosted attempt is also retained as failed. Both platforms passed all
+90 guards and all four lanes reached search with successful text-only responses.
+The harness had incorrectly required internal structured search facts, which both
+published versions strip before MCP serialization. The corrected parser consumes
+the known bounded public format, accepts a single running match, and requires six
+owned fixture matches, complete pages with consistent counts, exact more flags,
+and disjoint full file coverage. Later pages must remain completed. Process-start
+PID and command-denial checks likewise use their published public text forms;
+configuration still requires the actual returned structured configuration.
+
+The separate existing pause test failed under hosted scheduling because it used
+elapsed time to guess when a request had started and queued. It now proves those
+events with barriers and verifies that paused queued work is rejected while an
+already dispatched operation finishes after its explicit release. The manager's
+runtime admission behavior is unchanged. The revised local suite passes 95 tests.
+Both prior failed receipts, bounded real reports, native binary comparison, public
+wire diagnosis and actual red/green regressions are retained under `evidence/`.
+Revised hosted qualification and exact immutable review remain required. The guard
 unit tests use inert files and never install or run upstream.
-It is a bounded compatibility qualification, not full security certification,
+
+## Limits and deployment
+
+This is a bounded compatibility qualification, not full security certification,
 full feature parity, release readiness or complete issue acceptance. It does not
 test public remote mode, personal account OAuth, provider registration, Docker,
 macOS, all cancellation races or a real two-computer setup.

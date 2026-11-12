@@ -3,7 +3,7 @@
   "changeId": "2026-11-12-upstream-033",
   "provider": "OpenAI",
   "model": "GPT-6 Astra Pro (self-reported)",
-  "updatedAt": "2026-11-12T19:07:22.521243+00:00",
+  "updatedAt": "2026-11-12T19:21:37.407615+00:00",
   "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
   "sourceRepository": "MulattoTech/MTechLabs-Access",
   "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
@@ -17,7 +17,10 @@
     "Independent review identified three false-positive proof weaknesses. Add actual failing counterexamples before tightening blocklist, configuration and output-tail assertions.",
     "Canonicalize ordinary temporary path aliases after rejecting every actual link/junction ancestor, retaining source/store separation and pinned ownership.",
     "Record bounded search state/count observations and specific assertion codes to diagnose the failed hosted comparison without exposing arbitrary response content.",
-    "Count published UUID.json heartbeat records rather than concurrent atomic-write temporary files in the existing shared-admission fixture and new probe."
+    "Count published UUID.json heartbeat records rather than concurrent atomic-write temporary files in the existing shared-admission fixture and new probe.",
+    "Validate the published MCP text-only search, command denial and process-start responses; both pinned upstream versions deliberately strip internal structured facts for these handlers. Do not bypass the public gateway boundary.",
+    "Bind every search row to one of six owned files and exact matched text; require clean completed status, consistent total counts, complete bounded pages, correct more flags and disjoint full file coverage. Permit singular running results.",
+    "Replace the existing pause test sleep with explicit started, queued and release barriers after a hosted timing failure; no production admission behavior changes."
   ],
   "tests": [
     {
@@ -59,6 +62,22 @@
     {
       "command": "npm test after metadata fixture correction",
       "result": "GREEN:90/90, zero failures/skips/cancellations. Revised hosted Windows root handling and real search/native tests remain pending."
+    },
+    {
+      "command": "Exact 1123952b hosted run43286995191",
+      "result": "FAIL: root123/123 passed. Managed89/90 failed a pause-test timing assumption. Both Linux/Windows guard90/90 passed; all four real lanes reached public search responses with no structured facts, contradicting the harness assumption. All owned processes exited0. Independently verified ripgrep binary hashes match exact npm artifacts on both platforms; Windows CRLF lock hash differences are reconciled."
+    },
+    {
+      "command": "Public wire fixtures before correction",
+      "result": "RED: actual text-only search and blocklist fixtures fail the internal-structured-field assumptions; diagnosis binds both unchanged published internal-facts/search-answer artifacts."
+    },
+    {
+      "command": "Independent parser edge cases before correction",
+      "result": "RED:18/20 qualification tests; a valid singular running match was rejected and a completed middle page could understate its count. Both corrected with explicit regressions."
+    },
+    {
+      "command": "npm test after public-wire and pause-barrier correction",
+      "result": "GREEN:95/95, zero failures/skips/cancellations. Includes75 existing manager tests and20 qualification tests. No actual upstream executed locally. Exact revised hosted qualification and immutable review remain required."
     }
   ],
   "roadmapUpdates": [
@@ -87,7 +106,14 @@
     "peer-access-review-e7a4e434.json": "652b3980a655c3fce4b6ccd729ec6d053773d71d0aaa083fe229eec0d5246822",
     "peer-access24-e7a4e434-receipt.json": "13e52a5c6b666b878e681a7b196020bcb0f0ac6b17108b6a05b0cd5062a414c7",
     "access-harness-revision-green.tap": "6f06582505591538f6e50af1b4495297de09d6a23d27a73944ae82124124b6da",
-    "access-harness-revision-final.tap": "c366e5dc7c793860cf0a5fbcf53aca0c6295e2a7318914aaef545d4fc88b6a60"
+    "access-harness-revision-final.tap": "c366e5dc7c793860cf0a5fbcf53aca0c6295e2a7318914aaef545d4fc88b6a60",
+    "peer-access24-1123952b-receipt.json": "ec0b06674b87d68a19adc1c0adecca20dc1bb19b42dc9d6926ab70435cd2c1b7",
+    "peer-access24-1123952b-receipt.md": "8831136e7ef1641fb20b2d4150fecc999e076b6617d9507fb972c97bc0212c24",
+    "access-public-wire-diagnosis-e7a4e434.json": "38e8432daf8f0982d6141bc4289c697406a8097ff474a218eb6cced4b1a731eb",
+    "access-public-wire-diagnosis-e7a4e434.md": "f9953cb91c894c29e30bba5fdf3048c20a77ce136d32cd6908e6e66c4ab93f37",
+    "access-public-wire-red.tap": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
+    "access-wire-review-red.tap": "ed6e65df7951fc46c18c76df7b41fa9bd125749b88352258f3971a9481cf9db3",
+    "access-public-wire-final.tap": "0bb31aee8f300c31a77d15521d23e3a91a39a40571580ffa6113b4b61391fb06"
   },
   "files": [
     ".github/workflows/check.yml",
@@ -101,6 +127,14 @@
     "integrations/mcp-manager/test/upstream-qualification.test.mjs",
     "integrations/mcp-manager/qualification/",
     "docs/engineering/2026-11-12-upstream-033.json",
-    "integrations/mcp-manager/test/shared-admission.test.mjs"
-  ]
+    "integrations/mcp-manager/test/shared-admission.test.mjs",
+    "integrations/mcp-manager/test/gateway.test.mjs"
+  ],
+  "evidenceNormalization": {
+    "access-public-wire-red.tap": {
+      "rawSha256": "e84e2b8c9c6b8726b3aee5304e2253a1314198ea919dea8e715cab35ad177159",
+      "storedSha256": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
+      "transformation": "Trailing whitespace removed from TAP lines; assertion text and results unchanged."
+    }
+  }
 }

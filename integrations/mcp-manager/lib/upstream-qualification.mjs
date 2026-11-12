@@ -6,11 +6,57 @@ import { createHash, randomUUID } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+// Both published packages intentionally remove internal structured search facts
+// at the public MCP boundary. Parse only the known, bounded fixture wire format.
+export function parseSearchProbe(result, { kind, root, sessionId, offset = 0, length = 2, requireComplete = false }) {
+  if (result?.isError === true || !Array.isArray(result?.content) || result.content.length !== 1 ||
+      result.content[0]?.type !== 'text' || typeof result.content[0].text !== 'string' ||
+      Buffer.byteLength(result.content[0].text) > 65536) throw new Error('qualification_search_wire');
+  const text = result.content[0].text.replaceAll('\r\n', '\n').trimEnd();
+  const id = '(search_[1-9]\\d*_\\d{10,16})';
+  const start = new RegExp('^Started content search session: ' + id + '\\nPattern: "MTERM_SEARCH_NEEDLE"\\nPath: ([^\\n]+)\\nStatus: (COMPLETED|RUNNING)\\nRuntime: \\d+ms\\nTotal results: (\\d+) (matches|match)\\n');
+  const page = new RegExp('^Search session: ' + id + '\\nStatus: (COMPLETED|IN PROGRESS)\\nRuntime: \\d+s\\nTotal results: (\\d+) (matches|match)\\n');
+  const header = kind === 'start' ? start.exec(text) : kind === 'page' ? page.exec(text) : null;
+  if (!header) throw new Error('qualification_search_header');
+  const actualId = header[1], status = header[kind === 'start' ? 3 : 2];
+  const totalMatches = Number(header[kind === 'start' ? 4 : 3]);
+  if (header[kind === 'start' ? 5 : 4] !== (totalMatches === 1 ? 'match' : 'matches')) throw new Error('qualification_search_count_grammar');
+  if (totalMatches > 6 || (sessionId !== undefined && actualId !== sessionId) ||
+      (kind === 'start' && !samePath(path.resolve(header[2]), path.resolve(root)))) throw new Error('qualification_search_identity');
+  const isComplete = status === 'COMPLETED';
+  if (requireComplete && !isComplete) throw new Error('qualification_search_not_complete');
+  if (isComplete && !text.endsWith('✅ Search completed.')) throw new Error('qualification_search_not_clean');
+  if (isComplete && totalMatches !== 6) throw new Error('qualification_search_completed_count');
+  const rows = text.split('\n').filter(line => line.startsWith('📄 '));
+  const markers = rows.map(line => {
+    const row = /^📄 (.+):1 - MTERM_SEARCH_NEEDLE$/.exec(line);
+    const index = row && /^match-([0-5])\.txt$/.exec(path.basename(row[1]));
+    if (!row || !index || !samePath(path.resolve(row[1]), path.join(path.resolve(root), `match-${index[1]}.txt`))) {
+      throw new Error('qualification_search_fixture_row');
+    }
+    return Number(index[1]);
+  });
+  if (new Set(markers).size !== markers.length || markers.length > totalMatches) throw new Error('qualification_search_duplicate_rows');
+  let hasMoreResults = !isComplete || totalMatches > markers.length;
+  if (kind === 'page') {
+    const range = /^Showing results (\d+)-(\d+)$/m.exec(text);
+    const more = /^📖 More results available\. Use get_more_search_results with offset: (\d+)$/m.exec(text);
+    if (markers.length > length || offset + markers.length > totalMatches ||
+        (markers.length > 0 && (!range || Number(range[1]) !== offset || Number(range[2]) !== offset + markers.length - 1)) ||
+        (markers.length === 0 && range) || (more && Number(more[1]) !== offset + markers.length)) throw new Error('qualification_search_page_bounds');
+    if (isComplete && markers.length !== Math.min(length, totalMatches - offset)) throw new Error('qualification_search_completed_page_count');
+    hasMoreResults = !!more || !isComplete;
+    if (isComplete && hasMoreResults !== (offset + markers.length < totalMatches)) throw new Error('qualification_search_more_marker');
+  }
+  return { sessionId: actualId, isComplete, outcome: isComplete ? 'completed' : 'running', totalMatches,
+    totalResults: totalMatches, returnedCount: markers.length, hasMoreResults, markers };
+}
 export function isBlockedProbe(result, command, markerExists) {
-  return markerExists === false && result?.isError === true &&
-    result.structuredContent?.blocked === true && result.structuredContent.command === command &&
-    result.content?.some(block => block.type === 'text' && typeof block.text === 'string' &&
-      block.text.startsWith('Error: Command not allowed:')) === true;
+  const text = result?.content?.[0]?.text;
+  return markerExists === false && result?.isError === true && result.content?.length === 1 &&
+    result.content[0].type === 'text' && typeof text === 'string' && Buffer.byteLength(text) <= 16384 &&
+    (text === 'Error: Command not allowed: ' + command ||
+      text === 'Error: Command not allowed: "mterm_qualification_blocked" is in the blockedCommands setting.');
 }
 export function isOwnedConfiguration(result, expected) {
   const config = result?.structuredContent?.config;

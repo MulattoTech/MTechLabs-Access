@@ -1,0 +1,7 @@
+{
+  "package": "@vscode/ripgrep-linux-x64",
+  "version": "1.18.0",
+  "executable": "/home/runner/work/_temp/mterm-upstream-qualification-PKxk5D/control/install/node_modules/@vscode/ripgrep-linux-x64/bin/rg",
+  "sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+  "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+}

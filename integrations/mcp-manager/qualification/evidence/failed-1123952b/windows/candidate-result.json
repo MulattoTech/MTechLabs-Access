@@ -1,0 +1,58 @@
+{
+  "lane": "candidate",
+  "version": "0.3.3",
+  "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+  "admitted": {
+    "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+    "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+    "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+    "lockSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480"
+  },
+  "stages": [
+    {
+      "name": "initialize",
+      "pass": true,
+      "durationMs": 807
+    },
+    {
+      "name": "full_tool_contract",
+      "pass": true,
+      "durationMs": 35
+    },
+    {
+      "name": "owned_configuration",
+      "pass": true,
+      "durationMs": 65
+    },
+    {
+      "name": "file_read_write_metadata",
+      "pass": true,
+      "durationMs": 853
+    },
+    {
+      "name": "manager_read_only_denial",
+      "pass": true,
+      "durationMs": 31
+    }
+  ],
+  "initialized": true,
+  "childExited": true,
+  "upstreamExited": true,
+  "pass": false,
+  "gatewayPid": 6908,
+  "upstreamPid": 2888,
+  "toolCount": 53,
+  "search": {
+    "start": {
+      "isError": false,
+      "structured": false,
+      "hasSessionId": false
+    }
+  },
+  "failedStage": "content_search_completion_and_pagination",
+  "failureCode": "qualification_assertion_failed",
+  "rpcErrorCode": null,
+  "childExitCode": 0,
+  "ownedProcessTreeExited": true
+}

@@ -17,7 +17,7 @@ import { atomicWriteJson } from './lib/policy.mjs';
 import {
   validateQualificationHost, createQualificationWorkspace, assertOwnedWorkspace,
   qualificationEnvironment, admitInstalledUpstream, compareToolContracts, sha256, isBlockedProbe,
-  isOwnedConfiguration, isBoundedProcessTail,
+  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe,
 } from './lib/upstream-qualification.mjs';
 
 const exec = promisify(execFile);
@@ -163,18 +163,26 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
       for (let index = 0; index < 6; index++) await fs.writeFile(path.join(searchRoot, `match-${index}.txt`), `MTERM_SEARCH_NEEDLE_${index}\n`);
       const start = await call('start_search', { path: searchRoot, pattern: 'MTERM_SEARCH_NEEDLE', searchType: 'content', contextLines: 0,
         timeout_ms: 10000, maxResults: 20, literalSearch: true });
-      report.search = { start: searchObservation(start) };
-      const sessionId = start.structuredContent?.sessionId; assert.equal(typeof sessionId, 'string', 'search_session_id_missing');
+      const started = parseSearchProbe(start, { kind: 'start', root: searchRoot });
+      report.search = { start: { ...searchObservation(start), public: started } };
+      const sessionId = started.sessionId;
       let page;
-      await until(async () => { page = await call('get_more_search_results', { sessionId, offset: 0, length: 2 }); report.search.firstPage = searchObservation(page); return page.structuredContent?.isComplete === true; }, 15000, 'search_completion_timeout');
-      assert.equal(page.structuredContent.outcome, 'completed', 'search_outcome_not_completed');
-      assert.equal(page.structuredContent.totalMatches, 6, 'search_match_count_mismatch');
-      assert.equal(page.structuredContent.returnedCount, 2, 'search_first_page_count_mismatch');
-      assert.equal(page.structuredContent.hasMoreResults, true, 'search_first_page_more_mismatch');
+      await until(async () => { const response = await call('get_more_search_results', { sessionId, offset: 0, length: 2 });
+        page = parseSearchProbe(response, { kind: 'page', root: searchRoot, sessionId, offset: 0, length: 2 });
+        report.search.firstPage = page; return page.isComplete; }, 15000, 'search_completion_timeout');
+      assert.equal(page.outcome, 'completed', 'search_outcome_not_completed');
+      assert.equal(page.totalMatches, 6, 'search_match_count_mismatch');
+      assert.equal(page.returnedCount, 2, 'search_first_page_count_mismatch');
+      assert.equal(page.hasMoreResults, true, 'search_first_page_more_mismatch');
+      const middle = parseSearchProbe(await call('get_more_search_results', { sessionId, offset: 2, length: 2 }),
+        { kind: 'page', root: searchRoot, sessionId, offset: 2, length: 2, requireComplete: true });
+      report.search.middlePage = middle;
       const tail = await call('get_more_search_results', { sessionId, offset: 4, length: 2 });
-      report.search.lastPage = searchObservation(tail);
-      assert.equal(tail.structuredContent.returnedCount, 2, 'search_last_page_count_mismatch');
-      assert.equal(tail.structuredContent.hasMoreResults, false, 'search_last_page_more_mismatch');
+      const last = parseSearchProbe(tail, { kind: 'page', root: searchRoot, sessionId, offset: 4, length: 2, requireComplete: true });
+      report.search.lastPage = last;
+      assert.equal(last.returnedCount, 2, 'search_last_page_count_mismatch');
+      assert.equal(last.hasMoreResults, false, 'search_last_page_more_mismatch');
+      assert.deepEqual([...page.markers, ...middle.markers, ...last.markers].sort(), [0, 1, 2, 3, 4, 5], 'search_page_coverage_mismatch');
     });
     await stageRun('shell_blocklist', async () => {
       const marker = path.join(fixtureRoot, 'blocked-prefix-must-not-run.txt');
@@ -192,7 +200,7 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
       await fs.writeFile(script, source);
       const command = (process.platform === 'win32' ? '& ' : '') + quote(process.execPath) + ' ' + quote(script);
       const response = await call('start_process', { command, shell: shell(), timeout_ms: 1000 });
-      managedPid = response.structuredContent?.pid ?? Number(resultText(response).match(/PID[:\s]+(\d+)/i)?.[1]);
+      managedPid = Number(resultText(response).match(/^Process started with PID ([1-9]\d*) \(shell: [^\n]+\)\n/)?.[1]);
       assert.ok(Number.isInteger(managedPid) && managedPid > 0, 'missing_managed_process_pid');
       let markerValue;
       await until(async () => { try { markerValue = JSON.parse(await fs.readFile(marker, 'utf8')); return true; } catch { return false; } }, 10000, 'owned_process_start_timeout');

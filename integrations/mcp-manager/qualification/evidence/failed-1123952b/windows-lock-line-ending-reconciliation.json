@@ -1,0 +1,18 @@
+[
+  {
+    "lane": "control",
+    "canonicalLfSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "reconstructedCrlfSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59",
+    "windowsReceiptSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59",
+    "exactMatch": true,
+    "jsonContentUnchangedByLineEndingConversion": true
+  },
+  {
+    "lane": "candidate",
+    "canonicalLfSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+    "reconstructedCrlfSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480",
+    "windowsReceiptSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480",
+    "exactMatch": true,
+    "jsonContentUnchangedByLineEndingConversion": true
+  }
+]

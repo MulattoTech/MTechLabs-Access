@@ -8,7 +8,7 @@ import path from 'node:path';
 import {
   validateQualificationHost, createQualificationWorkspace, assertOwnedWorkspace,
   qualificationEnvironment, admitInstalledUpstream, compareToolContracts, isBlockedProbe,
-  isOwnedConfiguration, isBoundedProcessTail,
+  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe,
 } from '../lib/upstream-qualification.mjs';
 import { runQualification } from '../qualify-upstream.mjs';
 
@@ -16,6 +16,63 @@ const host = { CI: 'true', GITHUB_ACTIONS: 'true', RUNNER_ENVIRONMENT: 'github-h
   MTERM_DISPOSABLE_UPSTREAM_QUALIFICATION: '1', GITHUB_SHA: 'a'.repeat(40), RUNNER_TEMP: os.tmpdir() };
 const version = '0.3.3';
 const integrity = 'sha512-' + Buffer.alloc(64, 7).toString('base64');
+
+const searchRoot = path.resolve('/owned/search');
+const searchId = 'search_1_1234567890123';
+const wire = text => ({ content: [{ type: 'text', text }] });
+// Public content rows contain the matched substring, not the entire file line.
+const searchRows = markers => markers.map(i => '📄 ' + path.join(searchRoot, `match-${i}.txt`) + ':1 - MTERM_SEARCH_NEEDLE').join('\n');
+const searchPage = (offset, markers, more) => wire(`Search session: ${searchId}\nStatus: COMPLETED\nRuntime: 1s\nTotal results: 6 matches\nShowing results ${offset}-${offset + markers.length - 1}\n\nResults:\n${searchRows(markers)}\n${more ? '\n📖 More results available. Use get_more_search_results with offset: ' + (offset + markers.length) + '\n' : ''}\n✅ Search completed.`);
+
+test('qualification reads actual public text-only search receipts after upstream strips internal facts', () => {
+  const start = wire(`Started content search session: ${searchId}\nPattern: "MTERM_SEARCH_NEEDLE"\nPath: ${searchRoot}\nStatus: COMPLETED\nRuntime: 12ms\nTotal results: 6 matches\n\nInitial results:\n${searchRows([0, 1, 2, 3, 4, 5])}\n\n✅ Search completed.`);
+  const a = parseSearchProbe(start, { kind: 'start', root: searchRoot });
+  assert.equal(a.sessionId, searchId); assert.equal(a.isComplete, true); assert.equal(a.totalMatches, 6);
+  const b = parseSearchProbe(searchPage(0, [2, 5], true), { kind: 'page', root: searchRoot, sessionId: searchId, offset: 0, length: 2 });
+  assert.deepEqual(b.markers, [2, 5]); assert.equal(b.returnedCount, 2); assert.equal(b.hasMoreResults, true);
+  assert.equal(parseSearchProbe(searchPage(4, [1, 4], false), { kind: 'page', root: searchRoot, sessionId: searchId, offset: 4, length: 2 }).hasMoreResults, false);
+});
+
+test('public search accepts one running match and rejects inconsistent count grammar', () => {
+  const start = wire(`Started content search session: ${searchId}\nPattern: "MTERM_SEARCH_NEEDLE"\nPath: ${searchRoot}\nStatus: RUNNING\nRuntime: 1ms\nTotal results: 1 match\n\nInitial results:\n${searchRows([0])}\n\nSearch in progress.`);
+  const options = { kind: 'start', root: searchRoot };
+  assert.equal(parseSearchProbe(start, options).totalMatches, 1);
+  assert.equal(parseSearchProbe(start, options).isComplete, false);
+  const page = wire(`Search session: ${searchId}\nStatus: IN PROGRESS\nRuntime: 0s\nTotal results: 1 match\nShowing results 0-0\n\nResults:\n${searchRows([0])}\n\nSearch in progress.`);
+  assert.equal(parseSearchProbe(page, { kind: 'page', root: searchRoot, sessionId: searchId }).returnedCount, 1);
+  assert.throws(() => parseSearchProbe(wire(start.content[0].text.replace('1 match\n', '1 matches\n')), options), /qualification_search_count_grammar/);
+  assert.throws(() => parseSearchProbe(wire(start.content[0].text.replace('1 match\n', '2 match\n')), options), /qualification_search_count_grammar/);
+});
+
+test('every completed search page proves full count and range; later pages must remain complete', () => {
+  const options = { kind: 'page', root: searchRoot, sessionId: searchId, offset: 2, length: 2, requireComplete: true };
+  const middle = searchPage(2, [2, 3], true);
+  const undercount = searchPage(2, [2, 3], false);
+  assert.throws(() => parseSearchProbe(wire(undercount.content[0].text.replace('6 matches', '2 matches')), options), /qualification_search_completed_count|qualification_search_page_bounds/);
+  assert.throws(() => parseSearchProbe(wire(middle.content[0].text.replace('COMPLETED', 'IN PROGRESS')), options), /qualification_search_not_complete/);
+  assert.throws(() => parseSearchProbe(searchPage(6, [2, 3], false), { ...options, offset: 6 }), /qualification_search_page_bounds/);
+  assert.throws(() => parseSearchProbe(searchPage(2, [2], true), options), /qualification_search_completed_page_count/);
+  assert.equal(parseSearchProbe(middle, options).totalMatches, 6);
+});
+
+test('public search parsing refuses partial completion, duplicate or outside rows, stale IDs and oversized pages', () => {
+  const options = { kind: 'page', root: searchRoot, sessionId: searchId, offset: 0, length: 2 };
+  const good = searchPage(0, [0, 1], true);
+  assert.throws(() => parseSearchProbe({ ...good, isError: true }, options), /qualification_search/);
+  assert.throws(() => parseSearchProbe(wire(good.content[0].text.replace('✅ Search completed.', '✅ Search completed.\n⚠️ Permission warning')), options), /qualification_search_not_clean/);
+  assert.throws(() => parseSearchProbe(searchPage(0, [0, 0], true), options), /qualification_search_duplicate_rows/);
+  assert.throws(() => parseSearchProbe(searchPage(0, [0, 1, 2], true), options), /qualification_search_page_bounds/);
+  assert.throws(() => parseSearchProbe(good, { ...options, sessionId: 'search_2_1234567890123' }), /qualification_search_identity/);
+  assert.throws(() => parseSearchProbe(wire(good.content[0].text.replace(path.join(searchRoot, 'match-0.txt'), path.resolve('/outside/match-0.txt'))), options), /qualification_search_fixture_row/);
+  assert.throws(() => parseSearchProbe(wire('x'.repeat(65537)), options), /qualification_search_wire/);
+});
+
+test('public blocklist proof accepts the two published wire forms without internal structured fields', () => {
+  const command = 'safe-prefix; mterm_qualification_blocked';
+  assert.equal(isBlockedProbe({ ...wire('Error: Command not allowed: ' + command), isError: true }, command, false), true);
+  assert.equal(isBlockedProbe({ ...wire('Error: Command not allowed: "mterm_qualification_blocked" is in the blockedCommands setting.'), isError: true }, command, false), true);
+  assert.equal(isBlockedProbe({ ...wire('Error: Command not allowed: the check for blocked commands failed (parser_error), so nothing was run.'), isError: true }, command, false), false);
+});
 
 test('command-not-found and an executed marker cannot masquerade as pre-execution blocklist denial', () => {
   const command = 'safe-prefix; mterm_qualification_blocked';
