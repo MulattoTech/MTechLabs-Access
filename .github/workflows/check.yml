@@ -36,3 +36,42 @@ jobs:
           node-version: '24'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
+
+  upstream-qualification:
+    name: Upstream qualification / ${{ matrix.os }} / Node 24
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: integrations/mcp-manager
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Install the exact manager SDK without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Verify manager and qualification guards on this platform
+        run: npm test
+      - name: Compare real pinned upstream packages in disposable stores
+        run: npm run qualify:upstream
+        env:
+          MTERM_DISPOSABLE_UPSTREAM_QUALIFICATION: '1'
+          MTERM_QUALIFICATION_CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify tracked source remains unchanged
+        if: always()
+        run: git diff --exit-code
+      - name: Preserve exact qualification and contract evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: upstream-qualification-${{ matrix.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/mterm-upstream-qualification-*/reports/
+          retention-days: 14
+          if-no-files-found: warn

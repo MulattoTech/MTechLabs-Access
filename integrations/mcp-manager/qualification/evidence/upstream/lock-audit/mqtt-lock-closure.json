@@ -1,0 +1,929 @@
+{
+  "nodes": [
+    {
+      "path": "node_modules/@babel/runtime",
+      "name": "@babel/runtime",
+      "version": "7.29.14",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/@types/node",
+      "name": "@types/node",
+      "version": "14.18.63",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/@types/readable-stream",
+      "name": "@types/readable-stream",
+      "version": "4.0.25",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/@types/ws",
+      "name": "@types/ws",
+      "version": "8.18.2",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/abort-controller",
+      "name": "abort-controller",
+      "version": "3.0.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/base64-js",
+      "name": "base64-js",
+      "version": "1.5.1",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/broker-factory",
+      "name": "broker-factory",
+      "version": "3.1.15",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/buffer-from",
+      "name": "buffer-from",
+      "version": "1.1.2",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/commist",
+      "name": "commist",
+      "version": "3.2.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/concat-stream",
+      "name": "concat-stream",
+      "version": "2.0.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/debug",
+      "name": "debug",
+      "version": "4.4.3",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/event-target-shim",
+      "name": "event-target-shim",
+      "version": "5.0.1",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/events",
+      "name": "events",
+      "version": "3.3.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/fast-unique-numbers",
+      "name": "fast-unique-numbers",
+      "version": "9.0.27",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/help-me",
+      "name": "help-me",
+      "version": "5.0.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/ieee754",
+      "name": "ieee754",
+      "version": "1.2.1",
+      "license": "BSD-3-Clause",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/inherits",
+      "name": "inherits",
+      "version": "2.0.4",
+      "license": "ISC",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/ip-address",
+      "name": "ip-address",
+      "version": "10.7.6",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "10.4.3",
+      "license": "ISC",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/minimist",
+      "name": "minimist",
+      "version": "1.2.8",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt",
+      "name": "mqtt",
+      "version": "5.16.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt-packet",
+      "name": "mqtt-packet",
+      "version": "9.0.2",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt-packet/node_modules/bl",
+      "name": "bl",
+      "version": "6.1.6",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt-packet/node_modules/buffer",
+      "name": "buffer",
+      "version": "6.0.3",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "readable-stream",
+      "version": "4.8.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt/node_modules/buffer",
+      "name": "buffer",
+      "version": "6.0.3",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "readable-stream",
+      "version": "4.8.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/ms",
+      "name": "ms",
+      "version": "2.1.3",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/process",
+      "name": "process",
+      "version": "0.11.10",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/process-nextick-args",
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/readable-stream",
+      "name": "readable-stream",
+      "version": "3.6.2",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/rfdc",
+      "name": "rfdc",
+      "version": "1.4.1",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/safe-buffer",
+      "name": "safe-buffer",
+      "version": "5.2.1",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/smart-buffer",
+      "name": "smart-buffer",
+      "version": "4.2.0",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/socks",
+      "name": "socks",
+      "version": "2.8.10",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/split2",
+      "name": "split2",
+      "version": "4.2.0",
+      "license": "ISC",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/string_decoder",
+      "name": "string_decoder",
+      "version": "1.3.0",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/tslib",
+      "name": "tslib",
+      "version": "2.8.1",
+      "license": "0BSD",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/typedarray",
+      "name": "typedarray",
+      "version": "0.0.6",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/util-deprecate",
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/worker-factory",
+      "name": "worker-factory",
+      "version": "7.0.50",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/worker-timers",
+      "name": "worker-timers",
+      "version": "8.0.34",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/worker-timers-broker",
+      "name": "worker-timers-broker",
+      "version": "8.0.18",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/worker-timers-worker",
+      "name": "worker-timers-worker",
+      "version": "9.0.15",
+      "license": "MIT",
+      "isAdded": true,
+      "hasInstallScript": false
+    },
+    {
+      "path": "node_modules/ws",
+      "name": "ws",
+      "version": "8.22.1",
+      "license": "MIT",
+      "isAdded": false,
+      "hasInstallScript": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "node_modules/mqtt",
+      "name": "@types/readable-stream",
+      "range": "^4.0.21",
+      "kind": "dependencies",
+      "to": "node_modules/@types/readable-stream"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "@types/ws",
+      "range": "^8.18.1",
+      "kind": "dependencies",
+      "to": "node_modules/@types/ws"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "commist",
+      "range": "^3.2.0",
+      "kind": "dependencies",
+      "to": "node_modules/commist"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "concat-stream",
+      "range": "^2.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/concat-stream"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "debug",
+      "range": "^4.4.1",
+      "kind": "dependencies",
+      "to": "node_modules/debug"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "help-me",
+      "range": "^5.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/help-me"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "lru-cache",
+      "range": "^10.4.3",
+      "kind": "dependencies",
+      "to": "node_modules/lru-cache"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "minimist",
+      "range": "^1.2.8",
+      "kind": "dependencies",
+      "to": "node_modules/minimist"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "mqtt-packet",
+      "range": "^9.0.2",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt-packet"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "readable-stream",
+      "range": "^4.7.0",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt/node_modules/readable-stream"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "rfdc",
+      "range": "^1.4.1",
+      "kind": "dependencies",
+      "to": "node_modules/rfdc"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "socks",
+      "range": "^2.8.6",
+      "kind": "dependencies",
+      "to": "node_modules/socks"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "split2",
+      "range": "^4.2.0",
+      "kind": "dependencies",
+      "to": "node_modules/split2"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "worker-timers",
+      "range": "^8.0.23",
+      "kind": "dependencies",
+      "to": "node_modules/worker-timers"
+    },
+    {
+      "from": "node_modules/mqtt",
+      "name": "ws",
+      "range": "^8.18.3",
+      "kind": "dependencies",
+      "to": "node_modules/ws"
+    },
+    {
+      "from": "node_modules/ws",
+      "name": "bufferutil",
+      "range": "^4.0.1",
+      "to": null,
+      "optional": true
+    },
+    {
+      "from": "node_modules/ws",
+      "name": "utf-8-validate",
+      "range": ">=5.0.2",
+      "to": null,
+      "optional": true
+    },
+    {
+      "from": "node_modules/worker-timers",
+      "name": "@babel/runtime",
+      "range": "^7.29.7",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/worker-timers",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/worker-timers",
+      "name": "worker-timers-broker",
+      "range": "^8.0.18",
+      "kind": "dependencies",
+      "to": "node_modules/worker-timers-broker"
+    },
+    {
+      "from": "node_modules/worker-timers",
+      "name": "worker-timers-worker",
+      "range": "^9.0.15",
+      "kind": "dependencies",
+      "to": "node_modules/worker-timers-worker"
+    },
+    {
+      "from": "node_modules/worker-timers-worker",
+      "name": "@babel/runtime",
+      "range": "^7.29.7",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/worker-timers-worker",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/worker-timers-worker",
+      "name": "worker-factory",
+      "range": "^7.0.50",
+      "kind": "dependencies",
+      "to": "node_modules/worker-factory"
+    },
+    {
+      "from": "node_modules/worker-factory",
+      "name": "@babel/runtime",
+      "range": "^7.29.7",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/worker-factory",
+      "name": "fast-unique-numbers",
+      "range": "^9.0.27",
+      "kind": "dependencies",
+      "to": "node_modules/fast-unique-numbers"
+    },
+    {
+      "from": "node_modules/worker-factory",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/fast-unique-numbers",
+      "name": "@babel/runtime",
+      "range": "^7.29.2",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/fast-unique-numbers",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/worker-timers-broker",
+      "name": "@babel/runtime",
+      "range": "^7.29.7",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/worker-timers-broker",
+      "name": "broker-factory",
+      "range": "^3.1.15",
+      "kind": "dependencies",
+      "to": "node_modules/broker-factory"
+    },
+    {
+      "from": "node_modules/worker-timers-broker",
+      "name": "fast-unique-numbers",
+      "range": "^9.0.27",
+      "kind": "dependencies",
+      "to": "node_modules/fast-unique-numbers"
+    },
+    {
+      "from": "node_modules/worker-timers-broker",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/worker-timers-broker",
+      "name": "worker-timers-worker",
+      "range": "^9.0.15",
+      "kind": "dependencies",
+      "to": "node_modules/worker-timers-worker"
+    },
+    {
+      "from": "node_modules/broker-factory",
+      "name": "@babel/runtime",
+      "range": "^7.29.7",
+      "kind": "dependencies",
+      "to": "node_modules/@babel/runtime"
+    },
+    {
+      "from": "node_modules/broker-factory",
+      "name": "fast-unique-numbers",
+      "range": "^9.0.27",
+      "kind": "dependencies",
+      "to": "node_modules/fast-unique-numbers"
+    },
+    {
+      "from": "node_modules/broker-factory",
+      "name": "tslib",
+      "range": "^2.8.1",
+      "kind": "dependencies",
+      "to": "node_modules/tslib"
+    },
+    {
+      "from": "node_modules/broker-factory",
+      "name": "worker-factory",
+      "range": "^7.0.50",
+      "kind": "dependencies",
+      "to": "node_modules/worker-factory"
+    },
+    {
+      "from": "node_modules/socks",
+      "name": "ip-address",
+      "range": "^10.1.1",
+      "kind": "dependencies",
+      "to": "node_modules/ip-address"
+    },
+    {
+      "from": "node_modules/socks",
+      "name": "smart-buffer",
+      "range": "^4.2.0",
+      "kind": "dependencies",
+      "to": "node_modules/smart-buffer"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "abort-controller",
+      "range": "^3.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/abort-controller"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "buffer",
+      "range": "^6.0.3",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt/node_modules/buffer"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "events",
+      "range": "^3.3.0",
+      "kind": "dependencies",
+      "to": "node_modules/events"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "process",
+      "range": "^0.11.10",
+      "kind": "dependencies",
+      "to": "node_modules/process"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/readable-stream",
+      "name": "string_decoder",
+      "range": "^1.3.0",
+      "kind": "dependencies",
+      "to": "node_modules/string_decoder"
+    },
+    {
+      "from": "node_modules/string_decoder",
+      "name": "safe-buffer",
+      "range": "~5.2.0",
+      "kind": "dependencies",
+      "to": "node_modules/safe-buffer"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/buffer",
+      "name": "base64-js",
+      "range": "^1.3.1",
+      "kind": "dependencies",
+      "to": "node_modules/base64-js"
+    },
+    {
+      "from": "node_modules/mqtt/node_modules/buffer",
+      "name": "ieee754",
+      "range": "^1.2.1",
+      "kind": "dependencies",
+      "to": "node_modules/ieee754"
+    },
+    {
+      "from": "node_modules/abort-controller",
+      "name": "event-target-shim",
+      "range": "^5.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/event-target-shim"
+    },
+    {
+      "from": "node_modules/mqtt-packet",
+      "name": "bl",
+      "range": "^6.0.8",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt-packet/node_modules/bl"
+    },
+    {
+      "from": "node_modules/mqtt-packet",
+      "name": "debug",
+      "range": "^4.3.4",
+      "kind": "dependencies",
+      "to": "node_modules/debug"
+    },
+    {
+      "from": "node_modules/mqtt-packet",
+      "name": "process-nextick-args",
+      "range": "^2.0.1",
+      "kind": "dependencies",
+      "to": "node_modules/process-nextick-args"
+    },
+    {
+      "from": "node_modules/debug",
+      "name": "ms",
+      "range": "^2.1.3",
+      "kind": "dependencies",
+      "to": "node_modules/ms"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/bl",
+      "name": "@types/readable-stream",
+      "range": "^4.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/@types/readable-stream"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/bl",
+      "name": "buffer",
+      "range": "^6.0.3",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt-packet/node_modules/buffer"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/bl",
+      "name": "inherits",
+      "range": "^2.0.4",
+      "kind": "dependencies",
+      "to": "node_modules/inherits"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/bl",
+      "name": "readable-stream",
+      "range": "^4.2.0",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt-packet/node_modules/readable-stream"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "abort-controller",
+      "range": "^3.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/abort-controller"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "buffer",
+      "range": "^6.0.3",
+      "kind": "dependencies",
+      "to": "node_modules/mqtt-packet/node_modules/buffer"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "events",
+      "range": "^3.3.0",
+      "kind": "dependencies",
+      "to": "node_modules/events"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "process",
+      "range": "^0.11.10",
+      "kind": "dependencies",
+      "to": "node_modules/process"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/readable-stream",
+      "name": "string_decoder",
+      "range": "^1.3.0",
+      "kind": "dependencies",
+      "to": "node_modules/string_decoder"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/buffer",
+      "name": "base64-js",
+      "range": "^1.3.1",
+      "kind": "dependencies",
+      "to": "node_modules/base64-js"
+    },
+    {
+      "from": "node_modules/mqtt-packet/node_modules/buffer",
+      "name": "ieee754",
+      "range": "^1.2.1",
+      "kind": "dependencies",
+      "to": "node_modules/ieee754"
+    },
+    {
+      "from": "node_modules/@types/readable-stream",
+      "name": "@types/node",
+      "range": "*",
+      "kind": "dependencies",
+      "to": "node_modules/@types/node"
+    },
+    {
+      "from": "node_modules/concat-stream",
+      "name": "buffer-from",
+      "range": "^1.0.0",
+      "kind": "dependencies",
+      "to": "node_modules/buffer-from"
+    },
+    {
+      "from": "node_modules/concat-stream",
+      "name": "inherits",
+      "range": "^2.0.3",
+      "kind": "dependencies",
+      "to": "node_modules/inherits"
+    },
+    {
+      "from": "node_modules/concat-stream",
+      "name": "readable-stream",
+      "range": "^3.0.2",
+      "kind": "dependencies",
+      "to": "node_modules/readable-stream"
+    },
+    {
+      "from": "node_modules/concat-stream",
+      "name": "typedarray",
+      "range": "^0.0.6",
+      "kind": "dependencies",
+      "to": "node_modules/typedarray"
+    },
+    {
+      "from": "node_modules/readable-stream",
+      "name": "inherits",
+      "range": "^2.0.3",
+      "kind": "dependencies",
+      "to": "node_modules/inherits"
+    },
+    {
+      "from": "node_modules/readable-stream",
+      "name": "string_decoder",
+      "range": "^1.1.1",
+      "kind": "dependencies",
+      "to": "node_modules/string_decoder"
+    },
+    {
+      "from": "node_modules/readable-stream",
+      "name": "util-deprecate",
+      "range": "^1.0.1",
+      "kind": "dependencies",
+      "to": "node_modules/util-deprecate"
+    },
+    {
+      "from": "node_modules/@types/ws",
+      "name": "@types/node",
+      "range": "*",
+      "kind": "dependencies",
+      "to": "node_modules/@types/node"
+    }
+  ],
+  "missingNormalOrOptional": [],
+  "licenseExpressionsBefore": [
+    "(MIT AND Zlib)",
+    "(MIT OR GPL-3.0)",
+    "(MIT OR GPL-3.0-or-later)",
+    "(WTFPL OR MIT)",
+    "0BSD",
+    "Apache-2.0",
+    "Apache-2.0 AND LGPL-3.0-or-later",
+    "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BlueOak-1.0.0",
+    "ISC",
+    "LGPL-3.0-or-later",
+    "MIT",
+    "MIT/X11",
+    "Python-2.0",
+    "UNKNOWN",
+    "Unlicense"
+  ],
+  "licenseExpressionsAfter": [
+    "(BSD-3-Clause OR GPL-2.0)",
+    "(MIT AND Zlib)",
+    "(MIT OR GPL-3.0)",
+    "(MIT OR GPL-3.0-or-later)",
+    "(WTFPL OR MIT)",
+    "0BSD",
+    "Apache-2.0",
+    "Apache-2.0 AND LGPL-3.0-or-later",
+    "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BlueOak-1.0.0",
+    "ISC",
+    "LGPL-3.0-or-later",
+    "MIT",
+    "MIT/X11",
+    "Python-2.0",
+    "UNKNOWN",
+    "Unlicense"
+  ],
+  "installScriptBefore": {
+    "node_modules/@wonderwhy-er/desktop-commander": "0.3.1",
+    "node_modules/fsevents": "2.3.3",
+    "node_modules/puppeteer": "25.16.0"
+  },
+  "installScriptAfter": {
+    "node_modules/@wonderwhy-er/desktop-commander": "0.3.3",
+    "node_modules/fsevents": "2.3.3",
+    "node_modules/puppeteer": "25.16.0"
+  }
+}

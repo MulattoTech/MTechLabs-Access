@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "changeId": "2026-11-12-upstream-033",
+  "provider": "OpenAI",
+  "model": "GPT-6 Astra Pro (self-reported)",
+  "updatedAt": "2026-11-12T18:58:28.598180+00:00",
+  "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "sourceRepository": "MulattoTech/MTechLabs-Access",
+  "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
+  "scope": "Source-only exact Desktop Commander 0.3.3 candidate and disposable hosted control/candidate qualification",
+  "decisions": [
+    "Preserve the exact 0.3.1 control manifests and SDK 1.32.2; pin 0.3.3 candidate without production deployment.",
+    "Refuse actual upstream execution outside explicit fresh GitHub-hosted Linux/Windows Node 24 context. Separate lane homes/state/cache and validate directory ownership. Guard is not an OS sandbox.",
+    "Use real SDK through the unchanged managed stdio gateway; verify all 53 tool contracts, actual returned configuration, owned file/search/process/PDF behavior, exact read-only denial, admission release and EOF cleanup.",
+    "Use npm ci with lifecycle scripts disabled; explicitly rebuild only pinned ripgrep. Disable upstream telemetry, supply local feature flags, and disclose dependency/Chrome networking.",
+    "Restore all 16 unrelated native libc selectors dropped by npm lock regeneration. All other existing unrelated lock entries remain identical.",
+    "Independent review identified three false-positive proof weaknesses. Add actual failing counterexamples before tightening blocklist, configuration and output-tail assertions."
+  ],
+  "tests": [
+    {
+      "command": "node --test test/upstream-qualification.test.mjs before implementation",
+      "result": "RED: missing qualification module."
+    },
+    {
+      "command": "Native selector preservation regression before lock correction",
+      "result": "RED: npm removed libc metadata for 16 unchanged native packages; restored exact control metadata."
+    },
+    {
+      "command": "Independent blocklist/configuration/output-tail proof regressions before correction",
+      "result": "RED: command-not-found accepted as denial; wrong returned configuration accepted; full output buffer accepted as requested tail. All repaired."
+    },
+    {
+      "command": "npm test in integrations/mcp-manager",
+      "result": "GREEN: 90/90 tests, no failures/skips/cancellations; 75 original manager tests plus 15 qualification tests. No actual upstream installation/execution."
+    },
+    {
+      "command": "Root npm test, npm run check, npm run build, generated UI diff",
+      "result": "GREEN: 123/123 tests; syntax and build passed; generated UI unchanged."
+    },
+    {
+      "command": "Exact immutable review and hosted actual-upstream qualification",
+      "result": "Pending before publication. No source upgrade qualification, deployment or issue acceptance claimed."
+    },
+    {
+      "command": "Independent exact npm artifacts and final dependency lock review",
+      "result": "PASS within static scope: both upstream tarballs and all 31 added paths/29 unique artifacts match integrity; all unrelated existing dependency entries preserved after 16 libc restorations. New licenses/notices retained; no added native/install hook found. Runtime and redistribution scope remain separate."
+    }
+  ],
+  "roadmapUpdates": [
+    {
+      "id": "MTR-UPSTREAM / issue 10",
+      "stageChange": false,
+      "reason": "Qualified source and actual installed production state remain separate. No CLI 300 / DCP 48 / WEB 12 / AUG 117 weights, IDs or acceptance modified."
+    }
+  ],
+  "limitations": [
+    "No production configuration, runtime restart, Worker/plugin deployment, owner credentials or paid model call.",
+    "Hosted real upstream tests and immutable final review remain pending.",
+    "No public remote/OAuth/Docker/macOS/two-computer acceptance or full security/license certification.",
+    "The independently checked package metadata and retained notices are evidence, not reproducible-build or signature-chain verification."
+  ],
+  "evidence": {
+    "access-qualification-red.tap": "8366f8ab2ddf1baa576101e2e5e5ccd4a44550eca00cd71c7aad9a87ed0f824a",
+    "access-libc-red.tap": "771936b0f7a454ec92de0be3bcaedbc3f8d06e129b005ba145d924ce1005be80",
+    "access-blocklist-probe-red.tap": "5ff6608b12fb7591cedaa688072399be68a648a9c1364f5ac5fdc57bb426d208",
+    "access-proof-red.tap": "d1a3b6d7fdac90f63a618b5fd11513e92d0bbc2bb2e059481d6b8c35fe6f6468",
+    "access-manager-reviewed.tap": "92db77529626c5c026d65bd724f43f5dece82503ef600f58d1b7e57a908d7d29",
+    "access-root-candidate.tap": "319710688450aef212947dcea34f1014d6ce9ba2d94502e194b0d6cf416f1714",
+    "access-harness-review-current.json": "cecfb9c07647063b0259344b66f770972712c66784363ce9625079ce7df206d0",
+    "access-harness-review-current.md": "7af20f89fe652d4dc7d2f0688fe2b9b424d5c889df0c91c78f242e360b8253cd",
+    "upstream/FILE-SHA256.json": "78e362a22136ee788c4202508b8db15b382b5e1df014c797acffe9df9da04a8b"
+  },
+  "files": [
+    ".github/workflows/check.yml",
+    "README.md",
+    "integrations/mcp-manager/RUNBOOK.md",
+    "integrations/mcp-manager/package.json",
+    "integrations/mcp-manager/upstream-package.json",
+    "integrations/mcp-manager/upstream-package-lock.json",
+    "integrations/mcp-manager/lib/upstream-qualification.mjs",
+    "integrations/mcp-manager/qualify-upstream.mjs",
+    "integrations/mcp-manager/test/upstream-qualification.test.mjs",
+    "integrations/mcp-manager/qualification/",
+    "docs/engineering/2026-11-12-upstream-033.json"
+  ]
+}

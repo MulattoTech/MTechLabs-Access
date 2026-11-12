@@ -1,0 +1,2806 @@
+{
+  "title": "Desktop Commander 0.3.3 \u2014 exact added-lock artifact evidence",
+  "reviewed_utc": "2026-11-12T18:43:15.698501+00:00",
+  "reviewed_inputs": {
+    "corrected_candidate": {
+      "file": "candidate-package-lock-corrected.json",
+      "sha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+    },
+    "original_candidate": {
+      "file": "candidate-package-lock.json",
+      "sha256": "fd80a897bf5405a04cbc7240f0c9eeca59ef96dae7e3f25592faa32cc936636d"
+    },
+    "original_delta": {
+      "file": "lock-delta.json",
+      "sha256": "e3241090762ed7b39969ed2248a66938dabd3ae7b91864ac1af7a0c5e7968906"
+    },
+    "control_lock": {
+      "file": "control-package-lock.json",
+      "sha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+    },
+    "all_added_entries_exactly_unchanged_in_corrected_lock": true,
+    "corrected_added_path_count": 31
+  },
+  "scope": "All 31 added lock paths, deduplicated to 29 exact name/version artifacts. Three previously verified direct tarballs reused, 26 missing artifacts fetched once. No unchanged baseline artifacts were fetched; parent performed closure/path resolution and changed-entry review.",
+  "counts": {
+    "added_paths": 31,
+    "unique_artifacts": 29,
+    "newly_downloaded_artifacts": 26,
+    "reused_artifacts": 3,
+    "lock_sri_matches": 29,
+    "registry_sri_matches": 29,
+    "registry_sha1_matches": 29,
+    "artifacts_with_standalone_license_text": 29,
+    "license_field_agreement": 29,
+    "license_labels_by_unique_artifact": {
+      "MIT": 26,
+      "(BSD-3-Clause OR GPL-2.0)": 1,
+      "ISC": 2
+    },
+    "preinstall_install_postinstall_declarations": 0,
+    "gitHead_present": 24,
+    "matching_source_manifest_and_license_pairs": 23,
+    "source_manifest_version_mismatch": 1,
+    "gitHead_absent": 5
+  },
+  "acceptance_limits": {
+    "identity": "Established: all 29 artifacts match corrected-lock SRI, registry SRI and registry SHA-1; source snapshot binds unchanged added entries to the corrected lock.",
+    "license_evidence": "Established for shipped standalone texts and detected embedded notices of all added artifacts. Complete final-distribution rights/notice compatibility is not determined; retain stated embedded-origin limits.",
+    "install_hooks": "No preinstall/install/postinstall declarations in added manifests. Other lifecycle declarations are preserved and must not be summarized as no scripts. No install was performed.",
+    "native": "No new Node addon/WASM/native-library/build prerequisite detected in these artifacts. Forge legacy SWF caveat remains; unchanged baseline and real runtime compatibility are outside this artifact review.",
+    "provenance": "23 pinned source manifest/license pairs match; MQTT version mismatch and five absent gitHeads remain. Registry signatures/attestations and complete source-to-build reproducibility were not verified."
+  },
+  "material_findings": [
+    {
+      "id": "hook-source-workflows",
+      "finding": "socks@2.8.10 and smart-buffer@4.2.0 each declare prepublish: npm install -g typescript && npm run build. Six worker/broker packages declare prepare: husky and prepublishOnly: npm run build. MQTT declares prepare build, Forge prepublish build, unbash prepack TypeScript build. None of the 29 added unique artifacts declares preinstall, install, or postinstall. These facts do not assert which hooks a particular npm workflow invokes; source or publishing workflows differ from registry dependency consumption."
+    },
+    {
+      "id": "engine-field-shape",
+      "finding": "concat-stream@2.0.0 has an array-valued engines field [\"node >= 6.0\"] in the lock, registry metadata and shipped manifest. Record this non-object shape rather than silently treating it as a normal engines.node constraint. The highest explicit Node lower bound among the added artifacts is fast-unique-numbers >=18.2.0; no runtime test was performed."
+    },
+    {
+      "id": "embedded-notices",
+      "finding": "Newly inspected artifacts include the complete Sindre Sorhus MIT notice in commist/leven.js; full Node.js/Joyent MIT texts in readable-stream and Joyent headers in events; regenerator-runtime Facebook/MIT notices in @babel/runtime; Linden Research/Joshua Bell attribution in typedarray; and both split2 copyright-year notices (standalone LICENSE 2014-2018, source header 2014-2021). abort-controller UMD sourcemap embeds an event-target-shim copyright/license pointer. These are captured alongside complete standalone license files."
+    },
+    {
+      "id": "prior-direct-notice-limits",
+      "finding": "MQTT browser bundles retain three short bundled notices and do not establish complete licensing for every embedded module. Forge retains MIT, custom Tom Wu, BSD-label and public-domain origin notices; lib/aes.js acknowledges OpenSSL-derived portions without an exact upstream version or separate OpenSSL terms. The complete top-level Forge license offers BSD or GPL v2. These are factual evidence limits, not infringement findings."
+    },
+    {
+      "id": "native-scope",
+      "finding": "No added artifact contains a detected .node, .wasm, native library, platform-native executable, native source prerequisite or binding.gyp, and none declares os/cpu/libc/gypfile restrictions. The only compiled asset candidate is the previously reviewed Forge flash/swf/SocketPool.swf, with no ActionScript source in its tarball. This does not certify unchanged baseline native packages or runtime behavior."
+    },
+    {
+      "id": "source-provenance",
+      "finding": "24 of 29 artifacts carry a registry gitHead. Pinned package.json and top-level license bytes match for 23. MQTT alone retains the recorded version-only package manifest mismatch (source 5.15.2 vs tarball 5.16.0). @babel/runtime, @types/readable-stream, @types/ws, typedarray and unbash have no registry gitHead. concat-stream and process stale repository owner URLs were resolved through GitHub API repository redirects; their canonical pinned files match. Matching these selected files does not reproduce a build or authenticate publisher signatures."
+    },
+    {
+      "id": "count-shape",
+      "finding": "@types/readable-stream has 4 regular files plus one directory, versus registry fileCount 5; @types/ws has 5 regular files plus one directory, versus registry fileCount 6. Registry counts match archive entries in these two cases; all available unpacked sizes match. There is no integrity mismatch."
+    }
+  ],
+  "method": "Bounded HTTPS downloads, hash comparisons, validated tar parsing and safe non-executable regular-file extraction; static inspection only. Absolute/traversal/backslash paths, links, special files and duplicate paths were rejected. No npm install, upstream code import/execution, build, paid call, repository mutation or production mutation.",
+  "artifacts": [
+    {
+      "name": "abort-controller",
+      "version": "3.0.0",
+      "lock_paths": [
+        "node_modules/abort-controller"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/abort-controller/3.0.0",
+      "registry_sha256": "a44e55f1490cec88c03ecc5e5887c5b558d4f4b2d4b826c0d1ca34428d12696c",
+      "tarball_url": "https://registry.npmjs.org/abort-controller/-/abort-controller-3.0.0.tgz",
+      "tarball_size": 17548,
+      "tarball_sha256": "d2e249d5d010eb18e57c12c610d63e3ca3fa9dd0a5378009c1f465e21f50ab2f",
+      "tarball_sha1": "eaf54d53b62bae4138e809ca225c8439a6efb392",
+      "tarball_sha512": "87c950f2d69c6589d1def3504e089b8feb4e0c7239ffe974e80bb63dcae2bff1a67add1e6a3e13c161f8d6c3bdc271c3890b048f5f6ad1daf375675e007b707a",
+      "lock_integrity": "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==",
+      "registry_integrity": "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=6.5"
+      },
+      "scripts": {
+        "preversion": "npm test",
+        "version": "npm run -s build && git add dist/*",
+        "postversion": "git push && git push --tags",
+        "clean": "rimraf .nyc_output coverage",
+        "coverage": "opener coverage/lcov-report/index.html",
+        "lint": "eslint . --ext .ts",
+        "build": "run-s -s build:*",
+        "build:rollup": "rollup -c",
+        "build:dts": "dts-bundle-generator -o dist/abort-controller.d.ts src/abort-controller.ts && ts-node scripts/fix-dts",
+        "test": "run-s -s lint test:*",
+        "test:mocha": "nyc mocha test/*.ts",
+        "test:karma": "karma start --single-run",
+        "watch": "run-p -s watch:*",
+        "watch:mocha": "mocha test/*.ts --require ts-node/register --watch-extensions ts --watch --growl",
+        "watch:karma": "karma start --watch",
+        "codecov": "codecov"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "event-target-shim": "^5.0.0"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1071,
+          "sha256": "dbbf03317f0101fed5643cd87ca80fb769e358fa4f428445bf2315deeb23a154"
+        }
+      ],
+      "regular_file_count": 14,
+      "archive_directory_count": 0,
+      "archive_entry_count": 14,
+      "registry_file_count": 14,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 76297,
+      "registry_unpacked_size": 76297,
+      "gitHead": "a935d38e09eb95d6b633a8c42fcceec9969e7b05",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "abort-controller",
+        "version": "3.0.0",
+        "gitHead": "a935d38e09eb95d6b633a8c42fcceec9969e7b05",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mysticatea/abort-controller/a935d38e09eb95d6b633a8c42fcceec9969e7b05/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mysticatea/abort-controller/a935d38e09eb95d6b633a8c42fcceec9969e7b05/package.json",
+            "sha256": "3d64dcdcf9d0a1d045eb6bcaa5013d486f15527a3668e64b1155839a797da164",
+            "byte_equal_shipped": true,
+            "source_name": "abort-controller",
+            "source_version": "3.0.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/mysticatea/abort-controller/a935d38e09eb95d6b633a8c42fcceec9969e7b05/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mysticatea/abort-controller/a935d38e09eb95d6b633a8c42fcceec9969e7b05/LICENSE",
+            "sha256": "dbbf03317f0101fed5643cd87ca80fb769e358fa4f428445bf2315deeb23a154",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.517232+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "@babel/runtime",
+      "version": "7.29.14",
+      "lock_paths": [
+        "node_modules/@babel/runtime"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/@babel%2Fruntime/7.29.14",
+      "registry_sha256": "f4833c7738b45e601144ebfa1edbb4d63ac79b0191a01b089a9fe0a58328830d",
+      "tarball_url": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.29.14.tgz",
+      "tarball_size": 55267,
+      "tarball_sha256": "60f15c5b7ab37589e43822029e3d4608bea7cec6573d8c3c34fc59415d6c206f",
+      "tarball_sha1": "9ad0cc2addbbc8c46adaec9e90b21bb76d42b483",
+      "tarball_sha512": "639b6a7af41a500661863f3606960c342d6cb2f2d04d501fc0a766f22cbcab09a1bc2dbf0a9700bbc382f9012d8ccee9324ee49f1f37bb5423f20ce489cc9e97",
+      "lock_integrity": "sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw==",
+      "registry_integrity": "sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=6.9.0"
+      },
+      "scripts": {},
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1106,
+          "sha256": "117da2af0d4ce0fe1c8e19b5cff9dcd806adf973d328d27b11d4448c4ff24f76"
+        }
+      ],
+      "regular_file_count": 249,
+      "archive_directory_count": 0,
+      "archive_entry_count": 249,
+      "registry_file_count": 249,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 247201,
+      "registry_unpacked_size": 247201,
+      "gitHead": null,
+      "source_pointer_result": "registry gitHead absent",
+      "source_pointer_checks": {
+        "name": "@babel/runtime",
+        "version": "7.29.14",
+        "gitHead": null,
+        "checks": [],
+        "status": "no_registry_gitHead"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fruntime@7.29.14",
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "bl",
+      "version": "6.1.6",
+      "lock_paths": [
+        "node_modules/mqtt-packet/node_modules/bl"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/bl/6.1.6",
+      "registry_sha256": "a7a56ca6dab9e10ef1d220cd61296c0304ef6d053084fea351b86bfe3682d44a",
+      "tarball_url": "https://registry.npmjs.org/bl/-/bl-6.1.6.tgz",
+      "tarball_size": 20881,
+      "tarball_sha256": "db880a6b7f0c829b2b2b0c42c1b4e051127bae006615fc8b000ecfde4353443a",
+      "tarball_sha1": "b40f3aea6963c6742616a957efb742c4fb87ecbb",
+      "tarball_sha512": "8cbb0f80dfd84af3d483d517d0a77bdc25e99b63ec83d17131e0925e79375813b708c4f5d093308a3b9b8467c70a716ee933e7d5e8b76fdef9771bfb2b6a5656",
+      "lock_integrity": "sha512-jLsPgN/YSvPUg9UX0Kd73CXpm2Psg9FxMeCSXnk3WBO3CMT10JMwijubhGfHCnFu6TPn1ei3b975dxv7K2pWVg==",
+      "registry_integrity": "sha512-jLsPgN/YSvPUg9UX0Kd73CXpm2Psg9FxMeCSXnk3WBO3CMT10JMwijubhGfHCnFu6TPn1ei3b975dxv7K2pWVg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "lint": "standard *.js test/*.js",
+        "test": "npm run lint && npm run test:types && node test/test.js | faucet",
+        "test:ci": "npm run lint && node test/test.js && npm run test:types",
+        "test:types": "tsc --target esnext --moduleResolution node --allowJs --noEmit --skipLibCheck test/test.js",
+        "build": "true"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@types/readable-stream": "^4.0.0",
+        "buffer": "^6.0.3",
+        "inherits": "^2.0.4",
+        "readable-stream": "^4.2.0"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE.md",
+          "size": 1216,
+          "sha256": "9377db95383c8befacf05c6e465d969d756edf178487ca1344fdf3ba147c596f"
+        }
+      ],
+      "regular_file_count": 14,
+      "archive_directory_count": 0,
+      "archive_entry_count": 14,
+      "registry_file_count": 14,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 100082,
+      "registry_unpacked_size": 100082,
+      "gitHead": "05851dc353efb99774c33326d79d02ebf10eaf13",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "bl",
+        "version": "6.1.6",
+        "gitHead": "05851dc353efb99774c33326d79d02ebf10eaf13",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/rvagg/bl/05851dc353efb99774c33326d79d02ebf10eaf13/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/rvagg/bl/05851dc353efb99774c33326d79d02ebf10eaf13/package.json",
+            "sha256": "36049d10923def7264b2adf980f5003e98da92e9846651e3ced03d19eda9f320",
+            "byte_equal_shipped": true,
+            "source_name": "bl",
+            "source_version": "6.1.6",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE.md",
+            "url": "https://raw.githubusercontent.com/rvagg/bl/05851dc353efb99774c33326d79d02ebf10eaf13/LICENSE.md",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/rvagg/bl/05851dc353efb99774c33326d79d02ebf10eaf13/LICENSE.md",
+            "sha256": "9377db95383c8befacf05c6e465d969d756edf178487ca1344fdf3ba147c596f",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.492867+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "broker-factory",
+      "version": "3.1.15",
+      "lock_paths": [
+        "node_modules/broker-factory"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/broker-factory/3.1.15",
+      "registry_sha256": "c207d896bb51187a5250b26fbedc61c2899b61f7376c5e496303296a482b35d1",
+      "tarball_url": "https://registry.npmjs.org/broker-factory/-/broker-factory-3.1.15.tgz",
+      "tarball_size": 10172,
+      "tarball_sha256": "e4b19ea8b9544464ae2b82ef42c9f483db12dc5c04548c5c593ce15d4f7eb9f6",
+      "tarball_sha1": "7f4a04512a3e8afa9e708a7719ceddbaf68929ab",
+      "tarball_sha512": "928f9a5af80db8fe3d99e1ab76352eeeb0be63e59a8b77023f13f7c56c07b077de8458ce879650336c82e20101d9475d799fd85e19b42b5786fcbe9fc729b63a",
+      "lock_integrity": "sha512-ko+aWvgNuP49meGrdjUu7rC+Y+Wai3cCPxP3xWwHsHfehFjOh5ZQM2yC4gEB2UddeZ/YXhm0K1eG/L6fxym2Og==",
+      "registry_integrity": "sha512-ko+aWvgNuP49meGrdjUu7rC+Y+Wai3cCPxP3xWwHsHfehFjOh5ZQM2yC4gEB2UddeZ/YXhm0K1eG/L6fxym2Og==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:unit",
+        "test:unit": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ]; then npx vitest --config config/vitest/unit.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.7",
+        "fast-unique-numbers": "^9.0.27",
+        "tslib": "^2.8.1",
+        "worker-factory": "^7.0.50"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 65,
+      "archive_directory_count": 0,
+      "archive_entry_count": 65,
+      "registry_file_count": 65,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 39502,
+      "registry_unpacked_size": 39502,
+      "gitHead": "b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "broker-factory",
+        "version": "3.1.15",
+        "gitHead": "b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/broker-factory/b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/broker-factory/b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c/package.json",
+            "sha256": "1dee10f2e86159d8bfffe894206f72ca19109a4f20240fbb0b43c42e3fcc14eb",
+            "byte_equal_shipped": true,
+            "source_name": "broker-factory",
+            "source_version": "3.1.15",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/broker-factory/b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/broker-factory/b92e1e0e8414bffa03b59d133b6ff9a46c0e4a5c/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.531282+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "buffer",
+      "version": "6.0.3",
+      "lock_paths": [
+        "node_modules/mqtt-packet/node_modules/buffer",
+        "node_modules/mqtt/node_modules/buffer"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/buffer/6.0.3",
+      "registry_sha256": "ee23c8d3aa4d452b5546b703a81add9d196d172b099150ed291a08d7d6bc99b7",
+      "tarball_url": "https://registry.npmjs.org/buffer/-/buffer-6.0.3.tgz",
+      "tarball_size": 23108,
+      "tarball_sha256": "555b6f49224afcf6b2c5a9aea7cd34a7f443f395b10532bc5580022d57aa51f5",
+      "tarball_sha1": "2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6",
+      "tarball_sha512": "153882a4dc6dc226591c465b71b4c87198c44552029fdcaafe90c591397de7f031cc3d6768172d37b60eebcae233f80b48363bb1dacc6f2f21a1f00362ebaa38",
+      "lock_integrity": "sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==",
+      "registry_integrity": "sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "perf": "browserify --debug perf/bracket-notation.js > perf/bundle.js && open perf/index.html",
+        "perf-node": "node perf/bracket-notation.js && node perf/concat.js && node perf/copy-big.js && node perf/copy.js && node perf/new-big.js && node perf/new.js && node perf/readDoubleBE.js && node perf/readFloatBE.js && node perf/readUInt32LE.js && node perf/slice.js && node perf/writeFloatBE.js",
+        "size": "browserify -r ./ | uglifyjs -c -m | gzip | wc -c",
+        "test": "standard && node ./bin/test.js",
+        "test-browser-old": "airtap -- test/*.js",
+        "test-browser-old-local": "airtap --local -- test/*.js",
+        "test-browser-new": "airtap -- test/*.js test/node/*.js",
+        "test-browser-new-local": "airtap --local -- test/*.js test/node/*.js",
+        "test-node": "tape test/*.js test/node/*.js",
+        "update-authors": "./bin/update-authors.sh"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "base64-js": "^1.3.1",
+        "ieee754": "^1.2.1"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1106,
+          "sha256": "06bafa45fdad2579ba0e43b0c9b2c6290287c99c4203c300254a462b38a307f6"
+        },
+        {
+          "path": "package/AUTHORS.md",
+          "size": 2788,
+          "sha256": "ca3d96437f69ceb38df1972db017fcd6303b02f57ea1f838ab9f9c3db3e789e0"
+        }
+      ],
+      "regular_file_count": 6,
+      "archive_directory_count": 0,
+      "archive_entry_count": 6,
+      "registry_file_count": 6,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 91279,
+      "registry_unpacked_size": 91279,
+      "gitHead": "f52dffd9df0445b93c0c9065c2f8f0f46b2c729a",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "buffer",
+        "version": "6.0.3",
+        "gitHead": "f52dffd9df0445b93c0c9065c2f8f0f46b2c729a",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/feross/buffer/f52dffd9df0445b93c0c9065c2f8f0f46b2c729a/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/feross/buffer/f52dffd9df0445b93c0c9065c2f8f0f46b2c729a/package.json",
+            "sha256": "5b105ac0abbf5985cbe62ad28a34032d85c7ef623e0eb01f39441b0feb419004",
+            "byte_equal_shipped": true,
+            "source_name": "buffer",
+            "source_version": "6.0.3",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/feross/buffer/f52dffd9df0445b93c0c9065c2f8f0f46b2c729a/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/feross/buffer/f52dffd9df0445b93c0c9065c2f8f0f46b2c729a/LICENSE",
+            "sha256": "06bafa45fdad2579ba0e43b0c9b2c6290287c99c4203c300254a462b38a307f6",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.481075+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "buffer-from",
+      "version": "1.1.2",
+      "lock_paths": [
+        "node_modules/buffer-from"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/buffer-from/1.1.2",
+      "registry_sha256": "7287aba03235ffc8d0f0d0954729498635afe2b6ffc0ddf8e53b997a88ecccaa",
+      "tarball_url": "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz",
+      "tarball_size": 2313,
+      "tarball_sha256": "9c2b03d59eca8f463a1927e07273ddaa87785fe3f61626c42b005540e962e343",
+      "tarball_sha1": "2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5",
+      "tarball_sha512": "13e5d0091c126da6a20a1b6fea4e83c2073e6f1f81b3abee2891c7979928c7f05a29b8625f3a903b02b870edb6c84946a763829a3c15853dc79b18323c69c97d",
+      "lock_integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==",
+      "registry_integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "standard && node test"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1078,
+          "sha256": "14275f5c8139d02054c5259d52a88ccbba662a86af18c30f071c8d082dc6004c"
+        }
+      ],
+      "regular_file_count": 4,
+      "archive_directory_count": 0,
+      "archive_entry_count": 4,
+      "registry_file_count": 4,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 5047,
+      "registry_unpacked_size": 5047,
+      "gitHead": "fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "buffer-from",
+        "version": "1.1.2",
+        "gitHead": "fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/LinusU/buffer-from/fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/LinusU/buffer-from/fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f/package.json",
+            "sha256": "f7cde31d1db3e71738045206397d472e1f12513643ba4b9fd60ea337f22b1e3f",
+            "byte_equal_shipped": true,
+            "source_name": "buffer-from",
+            "source_version": "1.1.2",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/LinusU/buffer-from/fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/LinusU/buffer-from/fa0c9264a1b7eddf8c1aa1bbd78ce0ac256c485f/LICENSE",
+            "sha256": "14275f5c8139d02054c5259d52a88ccbba662a86af18c30f071c8d082dc6004c",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.490193+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "commist",
+      "version": "3.2.0",
+      "lock_paths": [
+        "node_modules/commist"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/commist/3.2.0",
+      "registry_sha256": "2a1123e671cc4290aeed91758c28a7a692aec3ffa69ba1adaae8f0ba029ee97a",
+      "tarball_url": "https://registry.npmjs.org/commist/-/commist-3.2.0.tgz",
+      "tarball_size": 5040,
+      "tarball_sha256": "6a2b68ad39dffd24a6807765b87102e1ed4ecee4e942af009e1883fe2bdfc6c5",
+      "tarball_sha1": "da9c8e5f245ac21510badc4b10c46b5bcc9b56cd",
+      "tarball_sha512": "e0f20ca0f9e2868f8ba979a94b977736e1989dc1ba5d6964052546896c9c2f6d9d778d8e61d5068a5d825aece495a268371cb1512a4ee0c288054f78be258d03",
+      "lock_integrity": "sha512-4PIMoPniho+LqXmpS5d3NuGYncG6XWlkBSVGiWycL22dd42OYdUGil2CWuzklaJoNxyxUSpO4MKIBU94viWNAw==",
+      "registry_integrity": "sha512-4PIMoPniho+LqXmpS5d3NuGYncG6XWlkBSVGiWycL22dd42OYdUGil2CWuzklaJoNxyxUSpO4MKIBU94viWNAw==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "standard && tape test.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1086,
+          "sha256": "f56197ed3d0b2d65d9c5bd1b9ef4d2f480d30f42834d789fd8c375426c8d7bcc"
+        }
+      ],
+      "regular_file_count": 8,
+      "archive_directory_count": 0,
+      "archive_entry_count": 8,
+      "registry_file_count": 8,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 21098,
+      "registry_unpacked_size": 21098,
+      "gitHead": "dd593af9c366eabcccce995320521d8975488861",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "commist",
+        "version": "3.2.0",
+        "gitHead": "dd593af9c366eabcccce995320521d8975488861",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mcollina/commist/dd593af9c366eabcccce995320521d8975488861/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/commist/dd593af9c366eabcccce995320521d8975488861/package.json",
+            "sha256": "910ba906fb4a2c7a2d8d328374cf9334a5fca862d0b18644dd4c417099e43e4b",
+            "byte_equal_shipped": true,
+            "source_name": "commist",
+            "source_version": "3.2.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/mcollina/commist/dd593af9c366eabcccce995320521d8975488861/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/commist/dd593af9c366eabcccce995320521d8975488861/LICENSE",
+            "sha256": "f56197ed3d0b2d65d9c5bd1b9ef4d2f480d30f42834d789fd8c375426c8d7bcc",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:17.511063+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "concat-stream",
+      "version": "2.0.0",
+      "lock_paths": [
+        "node_modules/concat-stream"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/concat-stream/2.0.0",
+      "registry_sha256": "c3da5cb88e6afe34cc42a482fa9765a9ece6497c76ecd8d2d8292f6e69a9a21d",
+      "tarball_url": "https://registry.npmjs.org/concat-stream/-/concat-stream-2.0.0.tgz",
+      "tarball_size": 3791,
+      "tarball_sha256": "cc54997a7ce0221915ac863f5a684c0013563861b2eca63781ae1a8cc01e150c",
+      "tarball_sha1": "414cf5af790a48c60ab9be4527d56d5e41133cb1",
+      "tarball_sha512": "316b9f61d170e7771c1a3080f8e97b5c96290255bafe9ad2333b8f393467246706cee84b9f849caf3eea7faa3c6d1399e75e25b5acdc2052597af71f6e8d31ec",
+      "lock_integrity": "sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==",
+      "registry_integrity": "sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": [
+        "node >= 6.0"
+      ],
+      "scripts": {
+        "test": "tape test/*.js test/server/*.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "buffer-from": "^1.0.0",
+        "inherits": "^2.0.3",
+        "readable-stream": "^3.0.2",
+        "typedarray": "^0.0.6"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1084,
+          "sha256": "96b29c9aaa611a05349b362d48c2ffce0966fe408401a2d1a157be312c035b5f"
+        }
+      ],
+      "regular_file_count": 4,
+      "archive_directory_count": 0,
+      "archive_entry_count": 4,
+      "registry_file_count": 4,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 9556,
+      "registry_unpacked_size": 9556,
+      "gitHead": "ceaa101bd2e19c5878a98dd6cb875108f49bf5c5",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "concat-stream",
+        "version": "2.0.0",
+        "gitHead": "ceaa101bd2e19c5878a98dd6cb875108f49bf5c5",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/maxogden/concat-stream/ceaa101bd2e19c5878a98dd6cb875108f49bf5c5/package.json",
+            "error": "HTTPError: HTTP Error 404: Not Found"
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/maxogden/concat-stream/ceaa101bd2e19c5878a98dd6cb875108f49bf5c5/LICENSE",
+            "error": "HTTPError: HTTP Error 404: Not Found"
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.071569+00:00",
+        "canonical_repository_checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/max-mapper/concat-stream/ceaa101bd2e19c5878a98dd6cb875108f49bf5c5/package.json",
+            "canonical_repo_evidence": {
+              "url": "https://api.github.com/repos/maxogden/concat-stream",
+              "status": 200,
+              "final_url": "https://api.github.com/repositories/5280109",
+              "full_name": "max-mapper/concat-stream",
+              "html_url": "https://github.com/max-mapper/concat-stream",
+              "default_branch": "master"
+            },
+            "status": 200,
+            "sha256": "d2f8ce0714a1bbb494502b703d1a04c014393df23f77be0cf8755b9fbe46d6ab",
+            "source_version": "2.0.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": [],
+            "byte_equal_shipped": true
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/max-mapper/concat-stream/ceaa101bd2e19c5878a98dd6cb875108f49bf5c5/LICENSE",
+            "canonical_repo_evidence": {
+              "url": "https://api.github.com/repos/maxogden/concat-stream",
+              "status": 200,
+              "final_url": "https://api.github.com/repositories/5280109",
+              "full_name": "max-mapper/concat-stream",
+              "html_url": "https://github.com/max-mapper/concat-stream",
+              "default_branch": "master"
+            },
+            "status": 200,
+            "sha256": "96b29c9aaa611a05349b362d48c2ffce0966fe408401a2d1a157be312c035b5f",
+            "byte_equal_shipped": true
+          }
+        ]
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "event-target-shim",
+      "version": "5.0.1",
+      "lock_paths": [
+        "node_modules/event-target-shim"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/event-target-shim/5.0.1",
+      "registry_sha256": "f7c71fb98af9db1c0495a5d6927257f0ab5b5cbd20f2b2b4f1b78dd24c0089da",
+      "tarball_url": "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz",
+      "tarball_size": 37216,
+      "tarball_sha256": "f0717da2cde5c703b92e66906623724959c23ac14e9439c436b84c8a4f5b26bc",
+      "tarball_sha1": "5d4d3ebdf9583d63a5333ce2deb7480ab2b05789",
+      "tarball_sha512": "8bfd976e74b3feec51094ebe35d54980a5834cce36efe32a61b910cc3df6d43b8240952a3ae24a200d08336f96db1b581dd28e999e1d47a7c4c6c7784972fe59",
+      "lock_integrity": "sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==",
+      "registry_integrity": "sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=6"
+      },
+      "scripts": {
+        "preversion": "npm test",
+        "version": "npm run build && git add dist/*",
+        "postversion": "git push && git push --tags",
+        "clean": "rimraf .nyc_output coverage",
+        "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
+        "lint": "eslint src test scripts --ext .js,.mjs",
+        "build": "rollup -c scripts/rollup.config.js",
+        "pretest": "npm run lint",
+        "test": "run-s test:*",
+        "test:mocha": "nyc --require ./scripts/babel-register mocha test/*.mjs",
+        "test:karma": "karma start scripts/karma.conf.js --single-run",
+        "watch": "run-p watch:*",
+        "watch:mocha": "mocha test/*.mjs --require ./scripts/babel-register --watch --watch-extensions js,mjs --growl",
+        "watch:karma": "karma start scripts/karma.conf.js --watch",
+        "codecov": "codecov"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1082,
+          "sha256": "97d87142793695cd73243de7258694abe85b3b6060fca7f247b0a2afa8219678"
+        }
+      ],
+      "regular_file_count": 10,
+      "archive_directory_count": 0,
+      "archive_entry_count": 10,
+      "registry_file_count": 10,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 188883,
+      "registry_unpacked_size": 188883,
+      "gitHead": "410bad2ce333e7eeaafbc6acae0679aa685281c9",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "event-target-shim",
+        "version": "5.0.1",
+        "gitHead": "410bad2ce333e7eeaafbc6acae0679aa685281c9",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mysticatea/event-target-shim/410bad2ce333e7eeaafbc6acae0679aa685281c9/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mysticatea/event-target-shim/410bad2ce333e7eeaafbc6acae0679aa685281c9/package.json",
+            "sha256": "980bdd7706c72d04a4df2e3ee2c8ffccf3bc72bd8e7cd13ca38be00cafc6e8db",
+            "byte_equal_shipped": true,
+            "source_name": "event-target-shim",
+            "source_version": "5.0.1",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/mysticatea/event-target-shim/410bad2ce333e7eeaafbc6acae0679aa685281c9/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mysticatea/event-target-shim/410bad2ce333e7eeaafbc6acae0679aa685281c9/LICENSE",
+            "sha256": "97d87142793695cd73243de7258694abe85b3b6060fca7f247b0a2afa8219678",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.089398+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "events",
+      "version": "3.3.0",
+      "lock_paths": [
+        "node_modules/events"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/events/3.3.0",
+      "registry_sha256": "8b1930e75fe65d6811f2d9c7bbb420242f8db20a411613d2e00c4c1b4d962061",
+      "tarball_url": "https://registry.npmjs.org/events/-/events-3.3.0.tgz",
+      "tarball_size": 16574,
+      "tarball_sha256": "2c30dd630b58299bdfaac8688f763c6f312d29779c500b1e3701a1d4fb3b534b",
+      "tarball_sha1": "31a95ad0a924e2d2c419a813aeb2c4e878ea7400",
+      "tarball_sha512": "990c3ed9f9106c02f343b574318d08a9d9d734e793b4fe2bd2537dcfb0006b009782a79aedb0e28b6d0062b201ac577f1f1d0cd8e733e92d75d4268591471bd1",
+      "lock_integrity": "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==",
+      "registry_integrity": "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=0.8.x"
+      },
+      "scripts": {
+        "test": "node tests/index.js",
+        "test:browsers": "airtap -- tests/index.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1081,
+          "sha256": "631987b7616a325a5b97566c232418481ddf7dbb5ecadefb991e791876cc2599"
+        }
+      ],
+      "regular_file_count": 32,
+      "archive_directory_count": 0,
+      "archive_entry_count": 32,
+      "registry_file_count": 32,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 82778,
+      "registry_unpacked_size": 82778,
+      "gitHead": "aed9f91fee236bdedab8d593f7aa418ae6ed2718",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "events",
+        "version": "3.3.0",
+        "gitHead": "aed9f91fee236bdedab8d593f7aa418ae6ed2718",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/Gozala/events/aed9f91fee236bdedab8d593f7aa418ae6ed2718/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/Gozala/events/aed9f91fee236bdedab8d593f7aa418ae6ed2718/package.json",
+            "sha256": "878ad3687fef7efe3757c1872a3af998c95197129a7445d632486a9591ee542e",
+            "byte_equal_shipped": true,
+            "source_name": "events",
+            "source_version": "3.3.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/Gozala/events/aed9f91fee236bdedab8d593f7aa418ae6ed2718/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/Gozala/events/aed9f91fee236bdedab8d593f7aa418ae6ed2718/LICENSE",
+            "sha256": "631987b7616a325a5b97566c232418481ddf7dbb5ecadefb991e791876cc2599",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.188558+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "fast-unique-numbers",
+      "version": "9.0.27",
+      "lock_paths": [
+        "node_modules/fast-unique-numbers"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/fast-unique-numbers/9.0.27",
+      "registry_sha256": "c40739b3c2162a28f52898128dea5a4cfdaf13e5bcb4ef48dc00f92a511d66ac",
+      "tarball_url": "https://registry.npmjs.org/fast-unique-numbers/-/fast-unique-numbers-9.0.27.tgz",
+      "tarball_size": 6460,
+      "tarball_sha256": "e9f4df4d12edd065bb6f3dc70da723e0684849fb1d0a718ba77f53f1b35313bb",
+      "tarball_sha1": "df4f60fe6856fb1eafb9f2fa908942bf0ac7b1df",
+      "tarball_sha512": "9c303d00378834df12036bb6c02b54fac8961534c3a90477ed7be03c80c399ba1641e131cfb5f49889b1b9a37e90975d96222acb61695519a7bd167e8fc8b5fc",
+      "lock_integrity": "sha512-nDA9ADeINN8SA2u2wCtU+siWFTTDqQR37XvgPIDDmboWQeExz7X0mImxuaN+kJddliIqy2FpVRmnvRZ+j8i1/A==",
+      "registry_integrity": "sha512-nDA9ADeINN8SA2u2wCtU+siWFTTDqQR37XvgPIDDmboWQeExz7X0mImxuaN+kJddliIqy2FpVRmnvRZ+j8i1/A==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=18.2.0"
+      },
+      "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs && babel ./build/es2019 --config-file ./config/babel/build.json --out-dir ./build/node",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.json --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.json --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:expectation-chrome && npm run test:expectation-firefox && npm run test:expectation-node && npm run test:unit-browser && npm run test:unit-node",
+        "test:expectation-chrome": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" ]; then npx vitest --config config/vitest/expectation-chrome-current.ts; fi",
+        "test:expectation-firefox": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"firefox\" ]; then npx vitest --config config/vitest/expectation-firefox-current.ts; fi",
+        "test:expectation-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then npx vitest --config config/vitest/expectation-node.ts; fi",
+        "test:unit-browser": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" -o \"$TARGET\" = \"firefox\" -o \"$TARGET\" = \"safari\" ]; then npx vitest --config config/vitest/unit.ts; fi",
+        "test:unit-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then npx vitest --browser.enabled false --config config/vitest/unit.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.2",
+        "tslib": "^2.8.1"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 29,
+      "archive_directory_count": 0,
+      "archive_entry_count": 29,
+      "registry_file_count": 29,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 26551,
+      "registry_unpacked_size": 26551,
+      "gitHead": "f002b47147e8a820041cb97b9b8db6ed06f29813",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "fast-unique-numbers",
+        "version": "9.0.27",
+        "gitHead": "f002b47147e8a820041cb97b9b8db6ed06f29813",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/fast-unique-numbers/f002b47147e8a820041cb97b9b8db6ed06f29813/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/fast-unique-numbers/f002b47147e8a820041cb97b9b8db6ed06f29813/package.json",
+            "sha256": "372c6a40360457018fac7739ed37134d024f5e99e0e0554b9ee1dcb12d6a425b",
+            "byte_equal_shipped": true,
+            "source_name": "fast-unique-numbers",
+            "source_version": "9.0.27",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/fast-unique-numbers/f002b47147e8a820041cb97b9b8db6ed06f29813/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/fast-unique-numbers/f002b47147e8a820041cb97b9b8db6ed06f29813/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.175682+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "help-me",
+      "version": "5.0.0",
+      "lock_paths": [
+        "node_modules/help-me"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/help-me/5.0.0",
+      "registry_sha256": "cba79976e00c1b83b58bcefe5f7aabc2744d9eeb6c8e826a76ed3c2310a367c9",
+      "tarball_url": "https://registry.npmjs.org/help-me/-/help-me-5.0.0.tgz",
+      "tarball_size": 4698,
+      "tarball_sha256": "5c4df5422b6e17a0e37dc48eb2342b081dd12e6935aa19bdf2d5e8f3e79d97df",
+      "tarball_sha1": "b1ebe63b967b74060027c2ac61f9be12d354a6f6",
+      "tarball_sha512": "ef18289945fa00399c6331629341f303187fef7625291f5b985cdfe75099c11f9be98b735369b4bb8f61402a95e92be5a88aac6b1a2f7f076f6e7b30ddbff3a6",
+      "lock_integrity": "sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==",
+      "registry_integrity": "sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "standard && node test.js | tap-spec"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1087,
+          "sha256": "92ff7edfcfc974e452612d5d7f4977aa7be058ef62979210bcb5c899ae6db60d"
+        }
+      ],
+      "regular_file_count": 18,
+      "archive_directory_count": 0,
+      "archive_entry_count": 18,
+      "registry_file_count": 18,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 14574,
+      "registry_unpacked_size": 14574,
+      "gitHead": "b3a6efd475c465bb8c9645f3826fa99ac1f49c6d",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "help-me",
+        "version": "5.0.0",
+        "gitHead": "b3a6efd475c465bb8c9645f3826fa99ac1f49c6d",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mcollina/help-me/b3a6efd475c465bb8c9645f3826fa99ac1f49c6d/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/help-me/b3a6efd475c465bb8c9645f3826fa99ac1f49c6d/package.json",
+            "sha256": "43266b6908f8be7ce85d3ecc18ac0f4ec51d3ef94146ed5805adb04595ceffa0",
+            "byte_equal_shipped": true,
+            "source_name": "help-me",
+            "source_version": "5.0.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/mcollina/help-me/b3a6efd475c465bb8c9645f3826fa99ac1f49c6d/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/help-me/b3a6efd475c465bb8c9645f3826fa99ac1f49c6d/LICENSE",
+            "sha256": "92ff7edfcfc974e452612d5d7f4977aa7be058ef62979210bcb5c899ae6db60d",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.127125+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "mqtt",
+      "version": "5.16.0",
+      "lock_paths": [
+        "node_modules/mqtt"
+      ],
+      "reused_previous_tarball": true,
+      "registry_url": "https://registry.npmjs.org/mqtt/5.16.0",
+      "registry_sha256": "92e0a884d959cb982101d7b7186b8ce4a56bf111dc2a621b0320fa855c8df44b",
+      "tarball_url": "https://registry.npmjs.org/mqtt/-/mqtt-5.16.0.tgz",
+      "tarball_size": 447308,
+      "tarball_sha256": "c7d13d6dedf4c15063fb61d645c82d07d2a24f79b15736f313e96e116177950f",
+      "tarball_sha1": "c6721eb165f5bb6a8305219a35da7790a43ae10e",
+      "tarball_sha512": "1b456c12db89cf9b0952064969a0033157d6ed22053f3908b8747e77aae4fad05e4b07427ddf416884727117ddd806f21431262e514cf920d07ad8bff886ce9f",
+      "lock_integrity": "sha512-G0VsEtuJz5sJUgZJaaADMVfW7SIFPzkIuHR+d6rk+tBeSwdCfd9BaIRycRfd2AbyFDEmLlFM+SDQeti/+IbOnw==",
+      "registry_integrity": "sha512-G0VsEtuJz5sJUgZJaaADMVfW7SIFPzkIuHR+d6rk+tBeSwdCfd9BaIRycRfd2AbyFDEmLlFM+SDQeti/+IbOnw==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">=16.0.0"
+      },
+      "scripts": {
+        "lint": "eslint --ext .ts .",
+        "lint-fix": "eslint --fix --ext .ts .",
+        "build:ts": "rimraf build/ && tsc -p tsconfig.build.json",
+        "build:browser": "node esbuild.js",
+        "build": "npm run build:ts && npm run build:browser",
+        "prepare": "npm run build",
+        "unit-test:node": "node -r esbuild-register --test-concurrency 4 --test-reporter=junit --test-reporter-destination=junit.xml --test-reporter=spec --test-reporter-destination=stdout --test test/node/*.ts ",
+        "unit-test:browser": "wtr",
+        "test:node": "node_modules/.bin/nyc npm run unit-test:node",
+        "test:browser": "npm run build && npm run unit-test:browser",
+        "test": "npm run test:node",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+        "changelog-init": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+        "release": "read -p 'GITHUB_TOKEN: ' GITHUB_TOKEN && export GITHUB_TOKEN=$GITHUB_TOKEN && release-it"
+      },
+      "lifecycle_hooks": {
+        "prepare": "npm run build"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@types/readable-stream": "^4.0.21",
+        "@types/ws": "^8.18.1",
+        "commist": "^3.2.0",
+        "concat-stream": "^2.0.0",
+        "debug": "^4.4.1",
+        "help-me": "^5.0.0",
+        "lru-cache": "^10.4.3",
+        "minimist": "^1.2.8",
+        "mqtt-packet": "^9.0.2",
+        "readable-stream": "^4.7.0",
+        "rfdc": "^1.4.1",
+        "socks": "^2.8.6",
+        "split2": "^4.2.0",
+        "worker-timers": "^8.0.23",
+        "ws": "^8.18.3"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE.md",
+          "size": 1271,
+          "sha256": "81b51ef8ac2a8ac8f111ed34ab1a32d63e7f4f7de586bd65f5510fb1ba3a89eb"
+        }
+      ],
+      "regular_file_count": 107,
+      "archive_directory_count": 0,
+      "archive_entry_count": 107,
+      "registry_file_count": 107,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 1861519,
+      "registry_unpacked_size": 1861519,
+      "gitHead": "e53dd6ec52ea332cb8da81aff18b3da6b28ab71f",
+      "source_pointer_result": "MQTT version-only manifest difference; license bytes match",
+      "source_pointer_checks": {
+        "name": "mqtt",
+        "version": "5.16.0",
+        "gitHead": "e53dd6ec52ea332cb8da81aff18b3da6b28ab71f",
+        "checks": [
+          {
+            "package": "mqtt-5.16.0",
+            "url": "https://raw.githubusercontent.com/mqttjs/MQTT.js/e53dd6ec52ea332cb8da81aff18b3da6b28ab71f/package.json",
+            "gitHead": "e53dd6ec52ea332cb8da81aff18b3da6b28ab71f",
+            "path": "package.json",
+            "fetched_utc": "2026-11-12T18:23:35.215597+00:00",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mqttjs/MQTT.js/e53dd6ec52ea332cb8da81aff18b3da6b28ab71f/package.json",
+            "sha256": "2d392832c36645cc7a294b1d3fb952d2c053c6e05674231d444ea3ac3f2d94ae",
+            "byte_equal_shipped": false,
+            "json_equal_shipped": false,
+            "source_version": "5.15.2",
+            "different_top_level_fields": [
+              "version"
+            ]
+          },
+          {
+            "package": "mqtt-5.16.0",
+            "url": "https://raw.githubusercontent.com/mqttjs/MQTT.js/e53dd6ec52ea332cb8da81aff18b3da6b28ab71f/LICENSE.md",
+            "gitHead": "e53dd6ec52ea332cb8da81aff18b3da6b28ab71f",
+            "path": "LICENSE.md",
+            "fetched_utc": "2026-11-12T18:23:35.217744+00:00",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mqttjs/MQTT.js/e53dd6ec52ea332cb8da81aff18b3da6b28ab71f/LICENSE.md",
+            "sha256": "81b51ef8ac2a8ac8f111ed34ab1a32d63e7f4f7de586bd65f5510fb1ba3a89eb",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "reused_prior_checks"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": "https://registry.npmjs.org/-/npm/v1/attestations/mqtt@5.16.0",
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "mqtt-packet",
+      "version": "9.0.2",
+      "lock_paths": [
+        "node_modules/mqtt-packet"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/mqtt-packet/9.0.2",
+      "registry_sha256": "47438c0a48e91781260893b867fba43b4289f39355ca5b421661eefff9bf9ce5",
+      "tarball_url": "https://registry.npmjs.org/mqtt-packet/-/mqtt-packet-9.0.2.tgz",
+      "tarball_size": 31293,
+      "tarball_sha256": "80d04819e3b0ea9e83894338b5c8a5c2d55593a70bbbf468e340ad64cbb77914",
+      "tarball_sha1": "fe6ae2c36fe3f269d11b3fe663b53648f3b3700a",
+      "tarball_sha512": "32f218d01f3faa3abb6cac5d375783fa7ae58e879a6a2faa8cb2607d19f74e232ecf4a5a9ac2166366c53833d931236669bb0b00d5ec2e5e043285af95a4d958",
+      "lock_integrity": "sha512-MvIY0B8/qjq7bKxdN1eD+nrljoeaai+qjLJgfRn3TiMuz0pamsIWY2bFODPZMSNmabsLANXsLl4EMoWvlaTZWA==",
+      "registry_integrity": "sha512-MvIY0B8/qjq7bKxdN1eD+nrljoeaai+qjLJgfRn3TiMuz0pamsIWY2bFODPZMSNmabsLANXsLl4EMoWvlaTZWA==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "tape test.js | tap-spec && standard",
+        "ci": "tape test.js && node testRandom && standard"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "bl": "^6.0.8",
+        "debug": "^4.3.4",
+        "process-nextick-args": "^2.0.1"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE.md",
+          "size": 1249,
+          "sha256": "51c9c4054d580356e61a83ef0731046a9909c37e2495894d795828fd56041d27"
+        }
+      ],
+      "regular_file_count": 19,
+      "archive_directory_count": 0,
+      "archive_entry_count": 19,
+      "registry_file_count": 19,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 174230,
+      "registry_unpacked_size": 174230,
+      "gitHead": "e39fb28c10628720fb50e5eb355492684ff0caaa",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "mqtt-packet",
+        "version": "9.0.2",
+        "gitHead": "e39fb28c10628720fb50e5eb355492684ff0caaa",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mqttjs/mqtt-packet/e39fb28c10628720fb50e5eb355492684ff0caaa/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mqttjs/mqtt-packet/e39fb28c10628720fb50e5eb355492684ff0caaa/package.json",
+            "sha256": "6d1285192065709f96d35bea11eff6ea69490a6bcecd669066efdfd275903a64",
+            "byte_equal_shipped": true,
+            "source_name": "mqtt-packet",
+            "source_version": "9.0.2",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE.md",
+            "url": "https://raw.githubusercontent.com/mqttjs/mqtt-packet/e39fb28c10628720fb50e5eb355492684ff0caaa/LICENSE.md",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mqttjs/mqtt-packet/e39fb28c10628720fb50e5eb355492684ff0caaa/LICENSE.md",
+            "sha256": "51c9c4054d580356e61a83ef0731046a9909c37e2495894d795828fd56041d27",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:21.246164+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "node-forge",
+      "version": "1.4.0",
+      "lock_paths": [
+        "node_modules/node-forge"
+      ],
+      "reused_previous_tarball": true,
+      "registry_url": "https://registry.npmjs.org/node-forge/1.4.0",
+      "registry_sha256": "bab897062dd42d67cc7212c18a524d729e84d0900512038a5ec14bba74357bf8",
+      "tarball_url": "https://registry.npmjs.org/node-forge/-/node-forge-1.4.0.tgz",
+      "tarball_size": 435334,
+      "tarball_sha256": "bf9d7ca0d774235354697bd4b5e642af6505e7ce2066762c3b855138cf870820",
+      "tarball_sha1": "1c7b7d8bdc2d078739f58287d589d903a11b2fc2",
+      "tarball_sha512": "2daac51f4fba55fae2121a8c31c2d7d85ed2c125de5b09c400912c626e50296721895615bc9c95f6fed40ef52ffb0e473b6dd9a504d70effc6c5d0dd3323aea1",
+      "lock_integrity": "sha512-LarFH0+6VfriEhqMMcLX2F7SwSXeWwnEAJEsYm5QKWchiVYVvJyV9v7UDvUv+w5HO23ZpQTXDv/GxdDdMyOuoQ==",
+      "registry_integrity": "sha512-LarFH0+6VfriEhqMMcLX2F7SwSXeWwnEAJEsYm5QKWchiVYVvJyV9v7UDvUv+w5HO23ZpQTXDv/GxdDdMyOuoQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "(BSD-3-Clause OR GPL-2.0)",
+      "registry_license": "(BSD-3-Clause OR GPL-2.0)",
+      "shipped_license": "(BSD-3-Clause OR GPL-2.0)",
+      "engines": {
+        "node": ">= 6.13.0"
+      },
+      "scripts": {
+        "prepublish": "npm run build",
+        "build": "webpack",
+        "test-build": "webpack --config webpack-tests.config.js",
+        "test": "npm run test-node",
+        "test-node": "cross-env NODE_ENV=test mocha -t 30000 -R ${REPORTER:-spec} tests/unit/index.js",
+        "test-karma": "karma start",
+        "test-karma-sauce": "karma start karma-sauce.conf",
+        "test-server": "node tests/server.js",
+        "test-server-ws": "node tests/websockets/server-ws.js",
+        "test-server-webid": "node tests/websockets/server-webid.js",
+        "coverage": "rm -rf coverage && nyc --reporter=lcov --reporter=text-summary npm test",
+        "coverage-ci": "rm -rf coverage && nyc --reporter=lcovonly npm test",
+        "coverage-report": "nyc report",
+        "lint": "eslint *.js lib/*.js tests/*.js tests/**/*.js examples/*.js flash/*.js"
+      },
+      "lifecycle_hooks": {
+        "prepublish": "npm run build"
+      },
+      "native_or_compiled_asset_candidates": [
+        {
+          "path": "package/flash/swf/SocketPool.swf",
+          "size": 21162,
+          "sha256": "0ebae322dc751e77e18ceef4960bcda1d1634f53a49e7030fb640cf90f1d8839",
+          "magic_hex": "4357530e6796000078dac4bd07601bc5"
+        }
+      ],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 17972,
+          "sha256": "f63ff0e4e239244aa79280da2dd4811a0469e5e201caf5cbc0d97c3a1dff8e82"
+        }
+      ],
+      "regular_file_count": 59,
+      "archive_directory_count": 0,
+      "archive_entry_count": 59,
+      "registry_file_count": 59,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 1647637,
+      "registry_unpacked_size": 1647637,
+      "gitHead": "fa385f92440879601240020f158bed68e444e83a",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "node-forge",
+        "version": "1.4.0",
+        "gitHead": "fa385f92440879601240020f158bed68e444e83a",
+        "checks": [
+          {
+            "package": "node-forge-1.4.0",
+            "url": "https://raw.githubusercontent.com/digitalbazaar/forge/fa385f92440879601240020f158bed68e444e83a/package.json",
+            "gitHead": "fa385f92440879601240020f158bed68e444e83a",
+            "path": "package.json",
+            "fetched_utc": "2026-11-12T18:23:35.221434+00:00",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/digitalbazaar/forge/fa385f92440879601240020f158bed68e444e83a/package.json",
+            "sha256": "a907bca8a62d97478062f2bd8ed5cd47d00b79385d3f08a8cad1c3bd7e3eb5bf",
+            "byte_equal_shipped": true,
+            "json_equal_shipped": true,
+            "source_version": "1.4.0",
+            "different_top_level_fields": []
+          },
+          {
+            "package": "node-forge-1.4.0",
+            "url": "https://raw.githubusercontent.com/digitalbazaar/forge/fa385f92440879601240020f158bed68e444e83a/LICENSE",
+            "gitHead": "fa385f92440879601240020f158bed68e444e83a",
+            "path": "LICENSE",
+            "fetched_utc": "2026-11-12T18:23:35.227592+00:00",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/digitalbazaar/forge/fa385f92440879601240020f158bed68e444e83a/LICENSE",
+            "sha256": "f63ff0e4e239244aa79280da2dd4811a0469e5e201caf5cbc0d97c3a1dff8e82",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "reused_prior_checks"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "process",
+      "version": "0.11.10",
+      "lock_paths": [
+        "node_modules/process"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/process/0.11.10",
+      "registry_sha256": "9a783e4f2f94ddefc520423bd33a4cf11ab278c34344e160a15cb691ccd6681e",
+      "tarball_url": "https://registry.npmjs.org/process/-/process-0.11.10.tgz",
+      "tarball_size": 4669,
+      "tarball_sha256": "7c10569b3c9cb056152ad630d40f9f4fcc321a0013c2bb8384f036aaa674e6bb",
+      "tarball_sha1": "7332300e840161bda3e69a1d1d91a7d4bc16f182",
+      "tarball_sha512": "71d19e7ff76b585a32743d49b0ccee15ff35d349d997e193fb269c7366c471e7797fd463938cfe5ad1544c1bbd3e13a2f63fe37e604fbb498c118e3021d005f0",
+      "lock_integrity": "sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==",
+      "registry_integrity": "sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">= 0.6.0"
+      },
+      "scripts": {
+        "test": "mocha test.js",
+        "browser": "zuul --no-coverage --ui mocha-bdd --local 8080 -- test.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1098,
+          "sha256": "59a400d04c5078579acc27ddd6452c1bdf763f9506e01364700935fbb1a7c91b"
+        }
+      ],
+      "regular_file_count": 7,
+      "archive_directory_count": 0,
+      "archive_entry_count": 7,
+      "registry_file_count": null,
+      "count_observation": "registry fileCount absent or unmatched",
+      "unpacked_size": 15325,
+      "registry_unpacked_size": null,
+      "gitHead": "557aa46f283caccce603dbb9c376b3d81067c510",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "process",
+        "version": "0.11.10",
+        "gitHead": "557aa46f283caccce603dbb9c376b3d81067c510",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/shtylman/node-process/557aa46f283caccce603dbb9c376b3d81067c510/package.json",
+            "error": "HTTPError: HTTP Error 404: Not Found"
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/shtylman/node-process/557aa46f283caccce603dbb9c376b3d81067c510/LICENSE",
+            "error": "HTTPError: HTTP Error 404: Not Found"
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.115938+00:00",
+        "canonical_repository_checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/defunctzombie/node-process/557aa46f283caccce603dbb9c376b3d81067c510/package.json",
+            "canonical_repo_evidence": {
+              "url": "https://api.github.com/repos/shtylman/node-process",
+              "status": 200,
+              "final_url": "https://api.github.com/repositories/7580644",
+              "full_name": "defunctzombie/node-process",
+              "html_url": "https://github.com/defunctzombie/node-process",
+              "default_branch": "master"
+            },
+            "status": 200,
+            "sha256": "8501b4909630e60c9e9f68c4ca8ccb1964688500e61c60408a26d5480a9dd3d4",
+            "source_version": "0.11.10",
+            "json_equal_shipped": true,
+            "different_top_level_fields": [],
+            "byte_equal_shipped": true
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/defunctzombie/node-process/557aa46f283caccce603dbb9c376b3d81067c510/LICENSE",
+            "canonical_repo_evidence": {
+              "url": "https://api.github.com/repos/shtylman/node-process",
+              "status": 200,
+              "final_url": "https://api.github.com/repositories/7580644",
+              "full_name": "defunctzombie/node-process",
+              "html_url": "https://github.com/defunctzombie/node-process",
+              "default_branch": "master"
+            },
+            "status": 200,
+            "sha256": "59a400d04c5078579acc27ddd6452c1bdf763f9506e01364700935fbb1a7c91b",
+            "byte_equal_shipped": true
+          }
+        ]
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "readable-stream",
+      "version": "4.8.0",
+      "lock_paths": [
+        "node_modules/mqtt-packet/node_modules/readable-stream",
+        "node_modules/mqtt/node_modules/readable-stream"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/readable-stream/4.8.0",
+      "registry_sha256": "0b30afa5b2c83d10af336b10b1e3bdd1d09085ffee80f4875cc5cd655b9b2055",
+      "tarball_url": "https://registry.npmjs.org/readable-stream/-/readable-stream-4.8.0.tgz",
+      "tarball_size": 55130,
+      "tarball_sha256": "318f45395a1e1f4dab40782dbbd81ec07029b5d5c9afbbf9620c6129e95a67df",
+      "tarball_sha1": "22af894e6d60cb0064410fc376367ec4ce470adb",
+      "tarball_sha512": "da38534d4dc48a5a7fd83313ef581b728a82df97901dab0c247d111e4631c25c48bf7f8547a639c401592301062f12a48d9604165b2230d21dc14aa32b694b1d",
+      "lock_integrity": "sha512-2jhTTU3Eilp/2DMT71gbcoqC35eQHasMJH0RHkYxwlxIv3+FR6Y5xAFZIwEGLxKkjZYEFlsiMNIdwUqjK2lLHQ==",
+      "registry_integrity": "sha512-2jhTTU3Eilp/2DMT71gbcoqC35eQHasMJH0RHkYxwlxIv3+FR6Y5xAFZIwEGLxKkjZYEFlsiMNIdwUqjK2lLHQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+      },
+      "scripts": {
+        "build": "node build/build.mjs 18.19.0",
+        "postbuild": "prettier -w lib test",
+        "test": "tap --rcfile=./tap.yml test/parallel/test-*.js test/ours/test-*.js",
+        "test:prepare": "node test/browser/runner-prepare.mjs",
+        "test:browsers": "node test/browser/runner-browser.mjs",
+        "test:bundlers": "node test/browser/runner-node.mjs",
+        "test:readable-stream-only": "node readable-stream-test/runner-prepare.mjs",
+        "coverage": "c8 -c ./c8.json tap --rcfile=./tap.yml test/parallel/test-*.js test/ours/test-*.js",
+        "format": "prettier -w src lib test",
+        "test:format": "prettier -c src lib test",
+        "lint": "eslint src"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "abort-controller": "^3.0.0",
+        "buffer": "^6.0.3",
+        "events": "^3.3.0",
+        "process": "^0.11.10",
+        "string_decoder": "^1.3.0"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 2337,
+          "sha256": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54"
+        }
+      ],
+      "regular_file_count": 36,
+      "archive_directory_count": 0,
+      "archive_entry_count": 36,
+      "registry_file_count": 36,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 218700,
+      "registry_unpacked_size": 218700,
+      "gitHead": "ffeeda66ce1c154ab43ada0f74e7110896a5d9dc",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "readable-stream",
+        "version": "4.8.0",
+        "gitHead": "ffeeda66ce1c154ab43ada0f74e7110896a5d9dc",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/nodejs/readable-stream/ffeeda66ce1c154ab43ada0f74e7110896a5d9dc/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/nodejs/readable-stream/ffeeda66ce1c154ab43ada0f74e7110896a5d9dc/package.json",
+            "sha256": "556669bd6ac945c4ecc6bf4886aaa26b0b9a65d79446a33f44c31857362be62f",
+            "byte_equal_shipped": true,
+            "source_name": "readable-stream",
+            "source_version": "4.8.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/nodejs/readable-stream/ffeeda66ce1c154ab43ada0f74e7110896a5d9dc/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/nodejs/readable-stream/ffeeda66ce1c154ab43ada0f74e7110896a5d9dc/LICENSE",
+            "sha256": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.253971+00:00"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "rfdc",
+      "version": "1.4.1",
+      "lock_paths": [
+        "node_modules/rfdc"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/rfdc/1.4.1",
+      "registry_sha256": "5ad11c6198f439f52b264ef030ca87a9da5068c501e26114f8760b46d125194b",
+      "tarball_url": "https://registry.npmjs.org/rfdc/-/rfdc-1.4.1.tgz",
+      "tarball_size": 6828,
+      "tarball_sha256": "559af1871d927b198ddfa472da35839ba31b01fdf4645206aae279cab91d566a",
+      "tarball_sha1": "778f76c4fb731d93414e8f925fbecf64cce7f6ca",
+      "tarball_sha512": "ab56f737942445459497b8b2ca569a8f790ea484f43768bd32a2044173fbdc656c37d730ddf771f17eb77049968491a2d8f3c2176dc88e9ee4b66777f6b6b020",
+      "lock_integrity": "sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==",
+      "registry_integrity": "sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "tap -R min test && npm run lint",
+        "bench": "node benchmark",
+        "lint": "standard --fix",
+        "cov": "tap --100 test",
+        "cov-ui": "tap --coverage-report=html test",
+        "ci": "standard && tap --100 --coverage-report=text-lcov test | codecov --pipe"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1101,
+          "sha256": "1ce941682a96c7b898ecd125d0f2e22319758ea6f3adbf498a65d649b0f3f7dd"
+        }
+      ],
+      "regular_file_count": 9,
+      "archive_directory_count": 0,
+      "archive_entry_count": 9,
+      "registry_file_count": 9,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 27150,
+      "registry_unpacked_size": 27150,
+      "gitHead": "29ea53f8ccc618495b40cfafba475952b62be847",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "rfdc",
+        "version": "1.4.1",
+        "gitHead": "29ea53f8ccc618495b40cfafba475952b62be847",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/davidmarkclements/rfdc/29ea53f8ccc618495b40cfafba475952b62be847/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/davidmarkclements/rfdc/29ea53f8ccc618495b40cfafba475952b62be847/package.json",
+            "sha256": "587604c366b2f0f40e660ef8496d0480dd0cd839cfc3e64b32f644a7a2a549cf",
+            "byte_equal_shipped": true,
+            "source_name": "rfdc",
+            "source_version": "1.4.1",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/davidmarkclements/rfdc/29ea53f8ccc618495b40cfafba475952b62be847/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/davidmarkclements/rfdc/29ea53f8ccc618495b40cfafba475952b62be847/LICENSE",
+            "sha256": "1ce941682a96c7b898ecd125d0f2e22319758ea6f3adbf498a65d649b0f3f7dd",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.177019+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "smart-buffer",
+      "version": "4.2.0",
+      "lock_paths": [
+        "node_modules/smart-buffer"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/smart-buffer/4.2.0",
+      "registry_sha256": "bf6c3d78b5db406dfc3369b846f62f161c752598eaf0b27b8e2bbe74d774d7a2",
+      "tarball_url": "https://registry.npmjs.org/smart-buffer/-/smart-buffer-4.2.0.tgz",
+      "tarball_size": 21539,
+      "tarball_sha256": "3d9815e4cbd1beb947ac6bc8e33eb7d4d380e781fff696c2c9b55096af6450a1",
+      "tarball_sha1": "6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae",
+      "tarball_sha512": "f7884ad0787cacfa90976c577371ec681a0e5ca576d0c4e83e4717bf06c84962c4b3eeb8b01ab9905827da42431dbd4faf2f72acfd1dc6b088f5145c8bb4572a",
+      "lock_integrity": "sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==",
+      "registry_integrity": "sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">= 6.0.0",
+        "npm": ">= 3.0.0"
+      },
+      "scripts": {
+        "prepublish": "npm install -g typescript && npm run build",
+        "test": "NODE_ENV=test mocha --recursive --require ts-node/register test/**/*.ts",
+        "coverage": "NODE_ENV=test nyc npm test",
+        "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=text-lcov | coveralls",
+        "lint": "tslint --type-check --project tsconfig.json 'src/**/*.ts'",
+        "build": "tsc -p ./"
+      },
+      "lifecycle_hooks": {
+        "prepublish": "npm install -g typescript && npm run build"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1087,
+          "sha256": "c46e2c333e1c9e6fcfd130cf91b8e54bf67b60fabbc04996f7e199b990353ff3"
+        }
+      ],
+      "regular_file_count": 14,
+      "archive_directory_count": 0,
+      "archive_entry_count": 14,
+      "registry_file_count": 14,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 138027,
+      "registry_unpacked_size": 138027,
+      "gitHead": "2ce01c95312343325997b19e52daa166dc227930",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "smart-buffer",
+        "version": "4.2.0",
+        "gitHead": "2ce01c95312343325997b19e52daa166dc227930",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/JoshGlazebrook/smart-buffer/2ce01c95312343325997b19e52daa166dc227930/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/JoshGlazebrook/smart-buffer/2ce01c95312343325997b19e52daa166dc227930/package.json",
+            "sha256": "188644cdf467d6a768ad25ed3ee8eb845dc5cb29aadc4c88ca7c5cb5f631d66a",
+            "byte_equal_shipped": true,
+            "source_name": "smart-buffer",
+            "source_version": "4.2.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/JoshGlazebrook/smart-buffer/2ce01c95312343325997b19e52daa166dc227930/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/JoshGlazebrook/smart-buffer/2ce01c95312343325997b19e52daa166dc227930/LICENSE",
+            "sha256": "c46e2c333e1c9e6fcfd130cf91b8e54bf67b60fabbc04996f7e199b990353ff3",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.184692+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "socks",
+      "version": "2.8.10",
+      "lock_paths": [
+        "node_modules/socks"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/socks/2.8.10",
+      "registry_sha256": "27b3852523bf0a2265228085b98b7e0902aa0ff5a6cc1c551dac840cf63256fd",
+      "tarball_url": "https://registry.npmjs.org/socks/-/socks-2.8.10.tgz",
+      "tarball_size": 29738,
+      "tarball_sha256": "812407171bec5ac333d04fb27ea2c8a201eb86e7b1f0fc11701e1b04c2237800",
+      "tarball_sha1": "23aab4dccc1fdae110aaf4fa51cd190552432dc5",
+      "tarball_sha512": "7b4572be4553c1561588da2f46467d6a8761c55972a0c9fb78985550fc59f9e2bd3ffec2064c6fbec04e1ea14f107e35ebbdba5bcb4b5d75e32b0aa04c4aeb09",
+      "lock_integrity": "sha512-e0VyvkVTwVYViNovRkZ9aodhxVlyoMn7eJhVUPxZ+eK9P/7CBkxvvsBOHqFPEH416726W8tLXXXjKwqgTErrCQ==",
+      "registry_integrity": "sha512-e0VyvkVTwVYViNovRkZ9aodhxVlyoMn7eJhVUPxZ+eK9P/7CBkxvvsBOHqFPEH416726W8tLXXXjKwqgTErrCQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": {
+        "node": ">= 10.0.0",
+        "npm": ">= 3.0.0"
+      },
+      "scripts": {
+        "prepublish": "npm install -g typescript && npm run build",
+        "test": "NODE_ENV=test mocha --recursive --require ts-node/register test/**/*.ts",
+        "prettier": "prettier --write ./src/**/*.ts --config .prettierrc.yaml",
+        "lint": "eslint 'src/**/*.ts'",
+        "build": "rm -rf build typings && prettier --write ./src/**/*.ts --config .prettierrc.yaml && tsc -p .",
+        "build-raw": "rm -rf build typings && tsc -p ."
+      },
+      "lifecycle_hooks": {
+        "prepublish": "npm install -g typescript && npm run build"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "ip-address": "^10.1.1",
+        "smart-buffer": "^4.2.0"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1082,
+          "sha256": "4f4f28866154c8d758241a64296e8790d45d7d912ff7b029930778c06d8f2a72"
+        }
+      ],
+      "regular_file_count": 31,
+      "archive_directory_count": 0,
+      "archive_entry_count": 31,
+      "registry_file_count": 31,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 156009,
+      "registry_unpacked_size": 156009,
+      "gitHead": "ff3347684f29e68eb67d04e23d1ed466e7e55c76",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "socks",
+        "version": "2.8.10",
+        "gitHead": "ff3347684f29e68eb67d04e23d1ed466e7e55c76",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/JoshGlazebrook/socks/ff3347684f29e68eb67d04e23d1ed466e7e55c76/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/JoshGlazebrook/socks/ff3347684f29e68eb67d04e23d1ed466e7e55c76/package.json",
+            "sha256": "1fe8018dc97df9031e1247b1449595e15f1606f19a63bbda902abdf12668a6cd",
+            "byte_equal_shipped": true,
+            "source_name": "socks",
+            "source_version": "2.8.10",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/JoshGlazebrook/socks/ff3347684f29e68eb67d04e23d1ed466e7e55c76/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/JoshGlazebrook/socks/ff3347684f29e68eb67d04e23d1ed466e7e55c76/LICENSE",
+            "sha256": "4f4f28866154c8d758241a64296e8790d45d7d912ff7b029930778c06d8f2a72",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.205252+00:00"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "split2",
+      "version": "4.2.0",
+      "lock_paths": [
+        "node_modules/split2"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/split2/4.2.0",
+      "registry_sha256": "113447596ab7b00cc2fb5dde52ffb6c1832da1bd069f2f1077c8d2eaa5e5eda6",
+      "tarball_url": "https://registry.npmjs.org/split2/-/split2-4.2.0.tgz",
+      "tarball_size": 4668,
+      "tarball_sha256": "e0061e7f042fc5ff6dcda8afb66619757d92ab1ff514a28a5904f2ebde27bf54",
+      "tarball_sha1": "c9c5920904d148bab0b9f67145f245a86aadbfa4",
+      "tarball_sha512": "51c8dc24e5a49eb36417a3cb5fcdea70733a28781528d915eb663c6b9b980d5bfdc9d19057000730aa877498ded554d6a658c6d1662908386b09d00e607e135a",
+      "lock_integrity": "sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==",
+      "registry_integrity": "sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "ISC",
+      "registry_license": "ISC",
+      "shipped_license": "ISC",
+      "engines": {
+        "node": ">= 10.x"
+      },
+      "scripts": {
+        "lint": "standard --verbose",
+        "unit": "nyc --lines 100 --branches 100 --functions 100 --check-coverage --reporter=text tape test.js",
+        "coverage": "nyc --reporter=html --reporter=cobertura --reporter=text tape test/test.js",
+        "test:report": "npm run lint && npm run unit:report",
+        "test": "npm run lint && npm run unit",
+        "legacy": "tape test.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 764,
+          "sha256": "c372ef2fa1dfcb124ed807609751e75e3a009f108c5724916b489288fcb88a0c"
+        }
+      ],
+      "regular_file_count": 6,
+      "archive_directory_count": 0,
+      "archive_entry_count": 6,
+      "registry_file_count": 6,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 17419,
+      "registry_unpacked_size": 17419,
+      "gitHead": "919b26b59c9762b817a121f4416ccc44d82043ad",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "split2",
+        "version": "4.2.0",
+        "gitHead": "919b26b59c9762b817a121f4416ccc44d82043ad",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/mcollina/split2/919b26b59c9762b817a121f4416ccc44d82043ad/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/split2/919b26b59c9762b817a121f4416ccc44d82043ad/package.json",
+            "sha256": "87b734c3087c8d9ed5d76d1bff00db30f960831ba8705dd18d73b180d08d2140",
+            "byte_equal_shipped": true,
+            "source_name": "split2",
+            "source_version": "4.2.0",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/mcollina/split2/919b26b59c9762b817a121f4416ccc44d82043ad/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/mcollina/split2/919b26b59c9762b817a121f4416ccc44d82043ad/LICENSE",
+            "sha256": "c372ef2fa1dfcb124ed807609751e75e3a009f108c5724916b489288fcb88a0c",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:25.216580+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "typedarray",
+      "version": "0.0.6",
+      "lock_paths": [
+        "node_modules/typedarray"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/typedarray/0.0.6",
+      "registry_sha256": "142278da66296a0baee26a93cac30dc35e5e43a4c5eee939811b8779c7389aed",
+      "tarball_url": "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz",
+      "tarball_size": 7481,
+      "tarball_sha256": "3f324b75a9581c4c85cec25e8cd30831ccaa3c87770cee2ff4b9167055004108",
+      "tarball_sha1": "867ac74e3864187b1d3d47d996a78ec5c8830777",
+      "tarball_sha512": "fda0831066ad1af67604893e1e62dfe227c2245c2f28535bf7f25e64f32e95f805ada727f5015c01fe463bc07f9b07948d2a1b952e489f471686aa5fb3fe4f40",
+      "lock_integrity": "sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==",
+      "registry_integrity": "sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "test": "tape test/*.js test/server/*.js"
+      },
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1565,
+          "sha256": "26181ebee1063f3dc6766a3b6d05999a0da058f172eadf2ca5d15105ffd9735a"
+        }
+      ],
+      "regular_file_count": 8,
+      "archive_directory_count": 0,
+      "archive_entry_count": 8,
+      "registry_file_count": null,
+      "count_observation": "registry fileCount absent or unmatched",
+      "unpacked_size": 25955,
+      "registry_unpacked_size": null,
+      "gitHead": null,
+      "source_pointer_result": "registry gitHead absent",
+      "source_pointer_checks": {
+        "name": "typedarray",
+        "version": "0.0.6",
+        "gitHead": null,
+        "checks": [],
+        "status": "no_registry_gitHead"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "@types/readable-stream",
+      "version": "4.0.25",
+      "lock_paths": [
+        "node_modules/@types/readable-stream"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/@types%2Freadable-stream/4.0.25",
+      "registry_sha256": "6895f99b8d272ccd16b6e25f178e603a5bbbd51989aedb4fc030f0fe1147c0cb",
+      "tarball_url": "https://registry.npmjs.org/@types/readable-stream/-/readable-stream-4.0.25.tgz",
+      "tarball_size": 5953,
+      "tarball_sha256": "e4099a09e8328b796b546b015d52e759e1715af768aac5fb514951633fbb60a0",
+      "tarball_sha1": "2987b68f413ca24ad151f644cf6545277bd87338",
+      "tarball_sha512": "ec6b312fc59de57de387bdffaa05bb5829db06f192743f14dc4e098aebacdfff08f8f376d03b65909b70161affb089977c30d0d99d378bff70362205dd3552b3",
+      "lock_integrity": "sha512-7GsxL8Wd5X3jh73/qgW7WCnbBvGSdD8U3E4Jiuus3/8I+PN20DtlkJtwFhr/sImXfDDQ2Z03i/9wNiIF3TVSsw==",
+      "registry_integrity": "sha512-7GsxL8Wd5X3jh73/qgW7WCnbBvGSdD8U3E4Jiuus3/8I+PN20DtlkJtwFhr/sImXfDDQ2Z03i/9wNiIF3TVSsw==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {},
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@types/node": "*"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "readable-stream/LICENSE",
+          "size": 1141,
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+        }
+      ],
+      "regular_file_count": 4,
+      "archive_directory_count": 1,
+      "archive_entry_count": 5,
+      "registry_file_count": 5,
+      "count_observation": "matches regular files plus archive directory entries",
+      "unpacked_size": 32475,
+      "registry_unpacked_size": 32475,
+      "gitHead": null,
+      "source_pointer_result": "registry gitHead absent",
+      "source_pointer_checks": {
+        "name": "@types/readable-stream",
+        "version": "4.0.25",
+        "gitHead": null,
+        "checks": [],
+        "status": "no_registry_gitHead"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "@types/ws",
+      "version": "8.18.2",
+      "lock_paths": [
+        "node_modules/@types/ws"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/@types%2Fws/8.18.2",
+      "registry_sha256": "1375bb310e0bea17cdde97b9c3e662b6ca5116fe0b1f3f1d8c27f43c029c1fd4",
+      "tarball_url": "https://registry.npmjs.org/@types/ws/-/ws-8.18.2.tgz",
+      "tarball_size": 6029,
+      "tarball_sha256": "9d774304de5397f58da47b31f68b69cf0ff84ef7b1087cf4fea27729f8db83fe",
+      "tarball_sha1": "25d6321b30ef0fddf6cc7052b4eef9ce4e412b6e",
+      "tarball_sha512": "ebb31097e7e958a5534f53587679a8dd4e2c73fc4fa3fcd00677159c8ef8aa641ad33fdbfb583a898a8d98608f6f13becf3d9a9256f4f1ad281df7a0895774ff",
+      "lock_integrity": "sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==",
+      "registry_integrity": "sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {},
+      "lifecycle_hooks": {},
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@types/node": "*"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "ws/LICENSE",
+          "size": 1141,
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+        }
+      ],
+      "regular_file_count": 5,
+      "archive_directory_count": 1,
+      "archive_entry_count": 6,
+      "registry_file_count": 6,
+      "count_observation": "matches regular files plus archive directory entries",
+      "unpacked_size": 42711,
+      "registry_unpacked_size": 42711,
+      "gitHead": null,
+      "source_pointer_result": "registry gitHead absent",
+      "source_pointer_checks": {
+        "name": "@types/ws",
+        "version": "8.18.2",
+        "gitHead": null,
+        "checks": [],
+        "status": "no_registry_gitHead"
+      },
+      "registry_signature_count": 2,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "unbash",
+      "version": "6.0.1",
+      "lock_paths": [
+        "node_modules/unbash"
+      ],
+      "reused_previous_tarball": true,
+      "registry_url": "https://registry.npmjs.org/unbash/6.0.1",
+      "registry_sha256": "825c72a2f9337ead65be332e20d6cbb622c6b91b3b48603a4bd0970dc1b41b26",
+      "tarball_url": "https://registry.npmjs.org/unbash/-/unbash-6.0.1.tgz",
+      "tarball_size": 67982,
+      "tarball_sha256": "e5de4bcfb165783f81ba7f2ab493e3bd9353107cbb8a01f17cfa2e9dd4b0ec15",
+      "tarball_sha1": "f1f87f708f1c2ced01f3a4461762c26dd84498c1",
+      "tarball_sha512": "d1d6fd792e62ab26eec78d732e45faf6793dd0a4dc8bb17b799fa05f3106fd0ec4d2d02a1018518797e466f93537b8d3ed09065aaab7e22f121463c511ed55f0",
+      "lock_integrity": "sha512-0db9eS5iqybux41zLkX69nk90KTci7F7eZ+gXzEG/Q7E0tAqEBhRh5fkZvk1N7jT7QkGWqq34i8SFGPFEe1V8A==",
+      "registry_integrity": "sha512-0db9eS5iqybux41zLkX69nk90KTci7F7eZ+gXzEG/Q7E0tAqEBhRh5fkZvk1N7jT7QkGWqq34i8SFGPFEe1V8A==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "ISC",
+      "registry_license": "ISC",
+      "shipped_license": "ISC",
+      "engines": {
+        "node": ">=14"
+      },
+      "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "format": "oxfmt",
+        "lint": "oxlint",
+        "prepack": "tsc -p tsconfig.build.json",
+        "test": "node --test test/*.test.ts",
+        "test:types": "tsc -p tsconfig.build.json && tsc",
+        "playground": "pnpx rolldown src/parser.ts -f esm -m -o playground/parser.js && pnpx rolldown src/printer.ts -f esm -m -o playground/printer.js && sed -i 's/id=\"version\">[^<]*/id=\"version\">'\"$(node -p \"require('.\\x2fpackage.json').version\")\"'/' playground/index.html",
+        "bench": "pnpm build && node bench/all.ts",
+        "release": "release-it"
+      },
+      "lifecycle_hooks": {
+        "prepack": "tsc -p tsconfig.build.json"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 738,
+          "sha256": "a8715bd6ba5604134c8bfea951ebc2379ae9e71e78262275f7f87a50c845ae96"
+        }
+      ],
+      "regular_file_count": 43,
+      "archive_directory_count": 0,
+      "archive_entry_count": 43,
+      "registry_file_count": 43,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 361844,
+      "registry_unpacked_size": 361844,
+      "gitHead": null,
+      "source_pointer_result": "registry gitHead absent",
+      "source_pointer_checks": {
+        "name": "unbash",
+        "version": "6.0.1",
+        "gitHead": null,
+        "checks": [],
+        "status": "no_registry_gitHead"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "worker-factory",
+      "version": "7.0.50",
+      "lock_paths": [
+        "node_modules/worker-factory"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/worker-factory/7.0.50",
+      "registry_sha256": "2178aad179f0bd792187c87ac70b5b151cad89855072edef28b5bbe3b52b3302",
+      "tarball_url": "https://registry.npmjs.org/worker-factory/-/worker-factory-7.0.50.tgz",
+      "tarball_size": 15826,
+      "tarball_sha256": "653c7c3341ab653d95c572df96db0a2ec35cc8f6f5989669a61b81a2d9ae8fe0",
+      "tarball_sha1": "ee0de2727bd47fb90175e8149e13878e2e7d20be",
+      "tarball_sha512": "861c1cd06fac170338a81ba12485019f6a7525ff2ffc5c262d400d05ffd0f8bb76b88f267c86508576994000a87500f847b669e9c9ffebbd366c8bcd9f6a6e25",
+      "lock_integrity": "sha512-hhwc0G+sFwM4qBuhJIUBn2p1Jf8v/FwmLUANBf/Q+Lt2uI8mfIZQhXaZQACodQD4R7Zp6cn/6702bIvNn2puJQ==",
+      "registry_integrity": "sha512-hhwc0G+sFwM4qBuhJIUBn2p1Jf8v/FwmLUANBf/Q+Lt2uI8mfIZQhXaZQACodQD4R7Zp6cn/6702bIvNn2puJQ==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:integration && npm run test:unit",
+        "test:integration": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"integration\" ]; then npx vitest --config config/vitest/integration.ts; fi",
+        "test:unit": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ]; then npx vitest --config config/vitest/unit.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.7",
+        "fast-unique-numbers": "^9.0.27",
+        "tslib": "^2.8.1"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 165,
+      "archive_directory_count": 0,
+      "archive_entry_count": 165,
+      "registry_file_count": 165,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 63876,
+      "registry_unpacked_size": 63876,
+      "gitHead": "552d223340dc025b33890f3b8572a554ca0fc4b9",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "worker-factory",
+        "version": "7.0.50",
+        "gitHead": "552d223340dc025b33890f3b8572a554ca0fc4b9",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-factory/552d223340dc025b33890f3b8572a554ca0fc4b9/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-factory/552d223340dc025b33890f3b8572a554ca0fc4b9/package.json",
+            "sha256": "99f91cdcad2c1ace781be8bd60c2f7b610be98b533cb9938afae59a73fb306aa",
+            "byte_equal_shipped": true,
+            "source_name": "worker-factory",
+            "source_version": "7.0.50",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-factory/552d223340dc025b33890f3b8572a554ca0fc4b9/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-factory/552d223340dc025b33890f3b8572a554ca0fc4b9/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:28.995147+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "worker-timers",
+      "version": "8.0.34",
+      "lock_paths": [
+        "node_modules/worker-timers"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/worker-timers/8.0.34",
+      "registry_sha256": "67523b0bb323bdd38acf19ead66ad916f0a12a5845e9e6b9e57bbf03666e9756",
+      "tarball_url": "https://registry.npmjs.org/worker-timers/-/worker-timers-8.0.34.tgz",
+      "tarball_size": 12022,
+      "tarball_sha256": "0b2aec1c0ea0c320052bffafaeefc83feec49abeae9940da0958b66b7e334dbb",
+      "tarball_sha1": "88d4a1faef8c4aaf9b0f3d89b424d2e260c5abc1",
+      "tarball_sha512": "5972fe0eab26d06e9d9c2ebaad0b2f337b4f4f669d85ba928ab5940991a096400b3abf28712d0a9695348ae29b8df9493a5bb7c9d66290c115ad89c738cf6cbb",
+      "lock_integrity": "sha512-WXL+Dqsm0G6dnC66rQsvM3tPT2adhbqSirWUCZGglkALOr8ocS0KlpU0iuKbjflJOlu3ydZikMEVrYnHOM9suw==",
+      "registry_integrity": "sha512-WXL+Dqsm0G6dnC66rQsvM3tPT2adhbqSirWUCZGglkALOr8ocS0KlpU0iuKbjflJOlu3ydZikMEVrYnHOM9suw==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "build": "rimraf build/* && webpack --config config/webpack/worker-es2019.js && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs && babel ./build/es2019 --config-file ./config/babel/build.json --out-dir ./build/node",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:integration-browser && npm run test:integration-node",
+        "test:integration-browser": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"integration\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" -o \"$TARGET\" = \"firefox\" -o \"$TARGET\" = \"safari\" ]; then npx vitest --config config/vitest/integration.ts; fi",
+        "test:integration-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"integration\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then npx vitest --browser.enabled false --config config/vitest/integration.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.7",
+        "tslib": "^2.8.1",
+        "worker-timers-broker": "^8.0.18",
+        "worker-timers-worker": "^9.0.15"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 20,
+      "archive_directory_count": 0,
+      "archive_entry_count": 20,
+      "registry_file_count": 20,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 41774,
+      "registry_unpacked_size": 41774,
+      "gitHead": "581d942995024b240a114c964d2a44d27f70e651",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "worker-timers",
+        "version": "8.0.34",
+        "gitHead": "581d942995024b240a114c964d2a44d27f70e651",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers/581d942995024b240a114c964d2a44d27f70e651/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers/581d942995024b240a114c964d2a44d27f70e651/package.json",
+            "sha256": "cdda049f52e138e3008374db2bb7f12bbfa6bba00df7479a12f5d9ae7e99a569",
+            "byte_equal_shipped": true,
+            "source_name": "worker-timers",
+            "source_version": "8.0.34",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers/581d942995024b240a114c964d2a44d27f70e651/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers/581d942995024b240a114c964d2a44d27f70e651/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:28.999562+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "worker-timers-broker",
+      "version": "8.0.18",
+      "lock_paths": [
+        "node_modules/worker-timers-broker"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/worker-timers-broker/8.0.18",
+      "registry_sha256": "09b6cbb422b8f1eb3ebc92b769d320d7f09ccd445855d368ffe5572f3af96528",
+      "tarball_url": "https://registry.npmjs.org/worker-timers-broker/-/worker-timers-broker-8.0.18.tgz",
+      "tarball_size": 8716,
+      "tarball_sha256": "0dc44f1e00bc53b67f7171a8c9ee54688b07cbcee3ff08666bbf55b87dc6a95e",
+      "tarball_sha1": "271ec8380f34f6167b53d7954f70aa2934d448ed",
+      "tarball_sha512": "16b8f30d55f5c0a7d93748116c216abfc547b939dc1b8b1b23f586120e2d49241e22c9f0aa0e1805858c00760b26d50311862688aeb950a16b54c564da2ac34a",
+      "lock_integrity": "sha512-FrjzDVX1wKfZN0gRbCFqv8VHuTncG4sbI/WGEg4tSSQeIsnwqg4YBYWMAHYLJtUDEYYmiK65UKFrVMVk2irDSg==",
+      "registry_integrity": "sha512-FrjzDVX1wKfZN0gRbCFqv8VHuTncG4sbI/WGEg4tSSQeIsnwqg4YBYWMAHYLJtUDEYYmiK65UKFrVMVk2irDSg==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:unit",
+        "test:unit": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ]; then npx vitest --config config/vitest/unit.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.7",
+        "broker-factory": "^3.1.15",
+        "fast-unique-numbers": "^9.0.27",
+        "tslib": "^2.8.1",
+        "worker-timers-worker": "^9.0.15"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 55,
+      "archive_directory_count": 0,
+      "archive_entry_count": 55,
+      "registry_file_count": 55,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 35444,
+      "registry_unpacked_size": 35444,
+      "gitHead": "1bcadfb7002224aab6e18a080db36ee3258fe817",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "worker-timers-broker",
+        "version": "8.0.18",
+        "gitHead": "1bcadfb7002224aab6e18a080db36ee3258fe817",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-broker/1bcadfb7002224aab6e18a080db36ee3258fe817/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-broker/1bcadfb7002224aab6e18a080db36ee3258fe817/package.json",
+            "sha256": "27849e8838fe8df2e3980f2d25004a15c0c69a78b05bdfbf54614bbf292f0d50",
+            "byte_equal_shipped": true,
+            "source_name": "worker-timers-broker",
+            "source_version": "8.0.18",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-broker/1bcadfb7002224aab6e18a080db36ee3258fe817/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-broker/1bcadfb7002224aab6e18a080db36ee3258fe817/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:29.024763+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    },
+    {
+      "name": "worker-timers-worker",
+      "version": "9.0.15",
+      "lock_paths": [
+        "node_modules/worker-timers-worker"
+      ],
+      "reused_previous_tarball": false,
+      "registry_url": "https://registry.npmjs.org/worker-timers-worker/9.0.15",
+      "registry_sha256": "80707ff23e786c8612bf704bac590eb6a3d80782e23df84eb15db1037b6c6824",
+      "tarball_url": "https://registry.npmjs.org/worker-timers-worker/-/worker-timers-worker-9.0.15.tgz",
+      "tarball_size": 7852,
+      "tarball_sha256": "3fce8a9fb8479ddff14c8807aceb0f6e3cbd2f9c8b101c9010d5a186e59eb563",
+      "tarball_sha1": "9c0b575af77440de5af933b62a70330d6687b166",
+      "tarball_sha512": "28a51eee567f022827af9d47ea13948a4f0bc139c88288c7ff59708658bc03ca88108c9ec288194e9369316e41e8117b9e6c013a45284d881fd47dd04a172348",
+      "lock_integrity": "sha512-KKUe7lZ/Aignr51H6hOUik8LwTnIgojH/1lwhli8A8qIEIyewogZTpNpMW5B6BF7nmwBOkUoTYgf1H3QShcjSA==",
+      "registry_integrity": "sha512-KKUe7lZ/Aignr51H6hOUik8LwTnIgojH/1lwhli8A8qIEIyewogZTpNpMW5B6BF7nmwBOkUoTYgf1H3QShcjSA==",
+      "lock_sri_match": true,
+      "registry_sri_match": true,
+      "registry_sha1_match": true,
+      "lock_license": "MIT",
+      "registry_license": "MIT",
+      "shipped_license": "MIT",
+      "engines": null,
+      "scripts": {
+        "build": "rimraf build/* && tsc --project src/tsconfig.json && rollup --config config/rollup/bundle.mjs",
+        "lint": "npm run lint:config && npm run lint:src && npm run lint:test",
+        "lint:config": "eslint --config config/eslint/config.mjs --ext .cjs --ext .js --ext .mjs --report-unused-disable-directives config/",
+        "lint:src": "tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts",
+        "lint:test": "eslint --config config/eslint/test.mjs --ext .js --report-unused-disable-directives test/",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "test": "npm run lint && npm run build && npm run test:integration && npm run test:unit",
+        "test:integration": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"integration\" ]; then npx vitest --config config/vitest/integration.ts; fi",
+        "test:unit": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ]; then npx vitest --config config/vitest/unit.ts; fi"
+      },
+      "lifecycle_hooks": {
+        "prepublishOnly": "npm run build",
+        "prepare": "husky"
+      },
+      "native_or_compiled_asset_candidates": [],
+      "os": null,
+      "cpu": null,
+      "libc": null,
+      "gypfile": null,
+      "dependencies": {
+        "@babel/runtime": "^7.29.7",
+        "tslib": "^2.8.1",
+        "worker-factory": "^7.0.50"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {},
+      "peerDependenciesMeta": {},
+      "standalone_notice_files": [
+        {
+          "path": "package/LICENSE",
+          "size": 1076,
+          "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde"
+        }
+      ],
+      "regular_file_count": 55,
+      "archive_directory_count": 0,
+      "archive_entry_count": 55,
+      "registry_file_count": 55,
+      "count_observation": "matches regular-file count",
+      "unpacked_size": 29907,
+      "registry_unpacked_size": 29907,
+      "gitHead": "8c19a38cf564c659f8c4d88fb41a877c36f46bef",
+      "source_pointer_result": "manifest and license bytes match pinned source",
+      "source_pointer_checks": {
+        "name": "worker-timers-worker",
+        "version": "9.0.15",
+        "gitHead": "8c19a38cf564c659f8c4d88fb41a877c36f46bef",
+        "checks": [
+          {
+            "path": "package.json",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-worker/8c19a38cf564c659f8c4d88fb41a877c36f46bef/package.json",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-worker/8c19a38cf564c659f8c4d88fb41a877c36f46bef/package.json",
+            "sha256": "e6df576432f384eeb1c5188976f5d07137c54786a7e4d875f910cc1f9fb25da4",
+            "byte_equal_shipped": true,
+            "source_name": "worker-timers-worker",
+            "source_version": "9.0.15",
+            "json_equal_shipped": true,
+            "different_top_level_fields": []
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-worker/8c19a38cf564c659f8c4d88fb41a877c36f46bef/LICENSE",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/chrisguttandin/worker-timers-worker/8c19a38cf564c659f8c4d88fb41a877c36f46bef/LICENSE",
+            "sha256": "04238a17c611b988a3ef5934e6c247acd4a344c837f60b223f3d9ffb57aa4dde",
+            "byte_equal_shipped": true
+          }
+        ],
+        "status": "checked",
+        "observed_utc": "2026-11-12T18:38:28.993950+00:00"
+      },
+      "registry_signature_count": 1,
+      "registry_attestation_url": null,
+      "publisher_signature_or_attestation_verified": false
+    }
+  ]
+}

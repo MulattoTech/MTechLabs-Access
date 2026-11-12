@@ -7,7 +7,8 @@
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "start": "node admin.mjs",
-    "gateway": "node gateway.mjs"
+    "gateway": "node gateway.mjs",
+    "qualify:upstream": "node qualify-upstream.mjs"
   },
   "peerDependencies": { "@modelcontextprotocol/sdk": "1.32.2" },
   "peerDependenciesMeta": { "@modelcontextprotocol/sdk": { "optional": true } },

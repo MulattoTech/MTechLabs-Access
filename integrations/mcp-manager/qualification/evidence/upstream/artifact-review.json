@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T18:42:42.181258+00:00",
+  "reviewer": "github_inventory independent read-only artifact peer",
+  "scope": "Exact Desktop Commander npm 0.3.1 and 0.3.3 artifacts plus all 31 added lock paths / 29 unique dependency artifacts; corrected actual Access control/candidate lock delta",
+  "verdict": "ARTIFACT_IDENTITY_AND_CORRECTED_LOCK_VERIFIED_STATIC_REVIEW_COMPLETE",
+  "accessSourceContext": {
+    "tree": "ec74014abab108fbd3476c2f5e74771d7af0d638",
+    "normalUpstreamArgv": [
+      "--no-onboarding"
+    ],
+    "ownerSuppliedContext": true,
+    "repositoryModified": false
+  },
+  "packages": [
+    {
+      "version": "0.3.1",
+      "url": "https://registry.npmjs.org/@wonderwhy-er/desktop-commander/-/desktop-commander-0.3.1.tgz",
+      "tarballBytes": 1698882,
+      "tarballSha256": "9661ecb819c3b47b8dfd8e2b58a6754ad1bb00c225518517d8ff0e3e0492f06d",
+      "tarballSha512": "731eca4ec70b17de7569d1e60cb5420c8553a89fc18352ed75120b668a39c1afd431ec8e7cc02e38938406e94d30a04a6f95ddde71c342707d697ae837d170e4",
+      "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+      "integrityMatches": true,
+      "sha1Matches": true,
+      "fileCount": 292,
+      "unpackedBytes": 4126145,
+      "gitHead": "7251da501d760e6eb5f95d802d9b42c741190950",
+      "noticeFiles": [
+        {
+          "path": "package/LICENSE",
+          "bytes": 1108,
+          "sha256": "e77cff545e0506903bf6a4bf29169fa40911eb76d70d239267df10c5c59370dd",
+          "tarMode": "0o644"
+        }
+      ],
+      "packageMetadataMismatches": [],
+      "type": "module",
+      "engines": {
+        "node": ">=22.12.0"
+      },
+      "bin": {
+        "desktop-commander": "dist/index.js",
+        "setup": "dist/setup-claude-server.js",
+        "remove": "dist/uninstall-claude-server.js"
+      },
+      "sdkDependency": "^1.32.1",
+      "postinstall": "node dist/track-installation.js && node dist/npm-scripts/verify-ripgrep.js || node -e \"process.exit(0)\"",
+      "prepare": "npm run build",
+      "lockfileOrShrinkwrapShipped": false,
+      "originalTypeScriptSourceShipped": false,
+      "nativeExecutablesOrWasmInMainTarball": false
+    },
+    {
+      "version": "0.3.3",
+      "url": "https://registry.npmjs.org/@wonderwhy-er/desktop-commander/-/desktop-commander-0.3.3.tgz",
+      "tarballBytes": 1766017,
+      "tarballSha256": "42390020cceb1cdfa537506fcd70f61eae10ab226c098403f1c5a77c350b07b3",
+      "tarballSha512": "86d16e123ee775a436d3a3ff79063a9803f1fc912132858de682139568b00605e75bc530ebdf0c931d18c9daf73b5ee2eae54ca35a6bd660c1bac3ec4e145804",
+      "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+      "integrityMatches": true,
+      "sha1Matches": true,
+      "fileCount": 311,
+      "unpackedBytes": 4349837,
+      "gitHead": "bce370e9395f5bc74eda34913e5ae1dee48df8f8",
+      "noticeFiles": [
+        {
+          "path": "package/LICENSE",
+          "bytes": 1108,
+          "sha256": "e77cff545e0506903bf6a4bf29169fa40911eb76d70d239267df10c5c59370dd",
+          "tarMode": "0o644"
+        }
+      ],
+      "packageMetadataMismatches": [],
+      "type": "module",
+      "engines": {
+        "node": ">=22.12.0"
+      },
+      "bin": {
+        "desktop-commander": "dist/index.js",
+        "setup": "dist/setup-claude-server.js",
+        "remove": "dist/uninstall-claude-server.js"
+      },
+      "sdkDependency": "^1.32.1",
+      "postinstall": "node dist/track-installation.js && node dist/npm-scripts/verify-ripgrep.js || node -e \"process.exit(0)\"",
+      "prepare": "npm run build",
+      "lockfileOrShrinkwrapShipped": false,
+      "originalTypeScriptSourceShipped": false,
+      "nativeExecutablesOrWasmInMainTarball": false
+    }
+  ],
+  "deltaCounts": {
+    "added": 28,
+    "removed": 9,
+    "changed": 36,
+    "unchanged": 247
+  },
+  "directDependencyDelta": {
+    "added": {
+      "mqtt": "5.16.0",
+      "node-forge": "1.4.0",
+      "unbash": "6.0.1"
+    },
+    "removed": {
+      "@desktop-commander/telemetry-contract": "file:vendor/telemetry-contract"
+    },
+    "changed": {}
+  },
+  "optionalDependencyDelta": {},
+  "provenance": {
+    "0.3.1": {
+      "sourceManifestJsonDifferences": {},
+      "sourceLicenseMatchesTarball": true,
+      "attestationSubjectSha512Matches": true,
+      "slsaSourceCommit": "51c7fbf2350d8c039707e9f26151ed792f2891c7",
+      "gitHead": "7251da501d760e6eb5f95d802d9b42c741190950",
+      "sourceCommitToGitHeadCommits": 1,
+      "releaseCommitChangedFiles": [
+        "package.json",
+        "server.json",
+        "src/version.ts"
+      ],
+      "releaseDeltaIsVersionOnly": true,
+      "cryptographicSignatureOrSigstoreVerified": false
+    },
+    "0.3.3": {
+      "sourceManifestJsonDifferences": {},
+      "sourceLicenseMatchesTarball": true,
+      "attestationSubjectSha512Matches": true,
+      "slsaSourceCommit": "6cb7f9d444d9e6442cb6c02c6fba572e06c92145",
+      "gitHead": "bce370e9395f5bc74eda34913e5ae1dee48df8f8",
+      "sourceCommitToGitHeadCommits": 1,
+      "releaseCommitChangedFiles": [
+        "manifest.json",
+        "package-lock.json",
+        "package.json",
+        "server.json",
+        "src/version.ts"
+      ],
+      "releaseDeltaIsVersionOnly": true,
+      "cryptographicSignatureOrSigstoreVerified": false
+    }
+  },
+  "topLevelLicense": {
+    "license": "MIT",
+    "copyright": "2024-2025 Eduard Ruzga and Desktop Commander Contributors",
+    "bytes": 1108,
+    "sha256": "e77cff545e0506903bf6a4bf29169fa40911eb76d70d239267df10c5c59370dd",
+    "unchanged": true,
+    "completeText": "MIT License\n\nCopyright (c) 2024-2025 Eduard Ruzga and Desktop Commander Contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "separateNoticeFiles": [
+      "LICENSE"
+    ]
+  },
+  "newDirectLicenses": [
+    {
+      "package": "mqtt",
+      "version": "5.16.0",
+      "declared": "MIT",
+      "embedded": "MIT/BSD-3-Clause short bundled notices; actual resolved MQTT dependency closure reviewed, complete browser-bundle provenance/notice inventory not established"
+    },
+    {
+      "package": "node-forge",
+      "version": "1.4.0",
+      "declared": "(BSD-3-Clause OR GPL-2.0)",
+      "embedded": "BSD alternative explicitly offered; additional MIT, Tom Wu permissive, BSD-labelled and public-domain origins; OpenSSL-derived attribution has unresolved version/terms evidence"
+    },
+    {
+      "package": "unbash",
+      "version": "6.0.1",
+      "declared": "ISC",
+      "embedded": "No additional license/notice detected; JavaScript parser without WASM/native addon"
+    }
+  ],
+  "newDirectNativeAndLifecycle": "No new direct package declares preinstall/install/postinstall or ships Node addon/WASM/binding.gyp. Forge legacy SWF is not a Node native addon. Other build lifecycle declarations and transitive prerequisites are retained in the dependency report.",
+  "compiledFindings": [
+    {
+      "area": "Tool metadata",
+      "evidence": [
+        "dist/server.js",
+        "dist/tools/schemas.js"
+      ],
+      "finding": "Only server.js diff is one added paragraph in kill_process description, documenting managed-command tree termination and negative node:local PID guidance. Static names, input schemas and annotation definitions show no edits; schemas.js is byte-identical. Actual SDK-generated tool metadata remains a harness gate."
+    },
+    {
+      "area": "Ordinary stdio versus remote auth",
+      "evidence": [
+        "dist/index.js:14,36-39,50,64,117-124",
+        "dist/npm-scripts/remote.js:20,107-108",
+        "dist/remote-device/device.js:793-814"
+      ],
+      "finding": "Entrypoint bytes are identical. Normal argv --no-onboarding stays in stdio; remote activation requires argv[2] remote or the separately guarded device entry. Static imports still load remote/MQTT/Forge code. This is static reachability evidence, not an observed runtime network or credential-read test."
+    },
+    {
+      "area": "Remote backend trust",
+      "evidence": [
+        "dist/remote-device/remote-utils.js",
+        "dist/remote-device/device.js:425-436,566-590",
+        "dist/remote-device/device-authenticator.js:43,120",
+        "dist/remote-device/remote-channel.js:180"
+      ],
+      "finding": "Compiled0.3.3 contains the published origin/path checks, three fixed Supabase origins, saved endpoint-pair binding and redirect:error guards. These protect the outbound upstream remote client, and do not qualify Access-owned OAuth. Shared staging/development device directory remains unchanged in scope."
+    },
+    {
+      "area": "Command reading and process admission",
+      "evidence": [
+        "dist/command-manager.js",
+        "dist/utils/posix-commands.js",
+        "dist/utils/powershell-commands.js",
+        "dist/utils/cmd-commands.js",
+        "dist/utils/command-wrappers.js",
+        "dist/utils/shell-script-files.js",
+        "dist/tools/improved-process-tools.js:125-162"
+      ],
+      "finding": "Adds shell-specific reading for POSIX/PowerShell/cmd, wrapper and script-file inspection, and unbash on ordinary process-tool import path. start_process selects the actual shell before inspection; blocked/error verdicts refuse, unseen verdicts can proceed with a note. This is not complete command containment or a sandbox."
+    },
+    {
+      "area": "Process termination",
+      "evidence": [
+        "dist/tools/process.js:79-89",
+        "dist/utils/process-tree.js",
+        "dist/terminal-manager.js"
+      ],
+      "finding": "kill_process first asks terminalManager.forceTerminate for an owned start_process session, reports a failed tree termination, and only falls back to terminatePid for an unrelated PID. General process-tree engine logic is unchanged apart from its explanatory comment."
+    },
+    {
+      "area": "Windows shell/bootstrap",
+      "evidence": [
+        "dist/utils/shell.js",
+        "dist/terminal-manager.js",
+        "dist/bootstrap.js",
+        "dist/utils/threadpool-size.js"
+      ],
+      "finding": "Shared getShellEnvironment repairs PATHEXT/ProgramData. New bootstrap helper can relaunch with preserved Node/script/argv and lifetime channel on Windows libuv before1.52; pre-set UV_THREADPOOL_SIZE and newer libuv affect that branch. Supported host Node/libuv and owned shutdown need real qualification."
+    },
+    {
+      "area": "Search",
+      "evidence": [
+        "dist/handlers/edit-search-handlers.js",
+        "dist/utils/ripgrep-resolver.js",
+        "dist/handlers/search-answers.js",
+        "dist/handlers/search-handlers.js",
+        "dist/search-manager.js",
+        "dist/npm-scripts/verify-ripgrep.js",
+        "dist/handlers/edit-search-handlers.d.ts",
+        "dist/utils/ripgrep-resolver.d.ts",
+        "dist/handlers/search-answers.d.ts",
+        "dist/handlers/search-handlers.d.ts",
+        "dist/search-manager.d.ts",
+        "dist/npm-scripts/verify-ripgrep.d.ts"
+      ],
+      "finding": "All12 shipped search/ripgrep artifacts are byte-identical, including search-manager and ripgrep resolver/verifier. Shared shell resolver/environment changes and newly resolved dependencies can still affect behavior; unchanged search bytes are not a runtime equivalence proof."
+    },
+    {
+      "area": "PDF/browser",
+      "evidence": [
+        "dist/tools/pdf/markdown.js:595-617,704-710",
+        "dist/utils/system-info.js:6-8",
+        "dist/index.js:117-124"
+      ],
+      "finding": "The PDF delta prioritizes system Chromium over Puppeteer cache under MCP_CLIENT_DOCKER=true and adds --no-sandbox for that marker. Marker is an environment equality check, not a container verification. Existing stdio initialization still preemptively checks/downloads Chrome and preloads documents. Non-Docker browser cache/profile behavior still needs disposable-host proof."
+    }
+  ],
+  "selectedFileIdentities": [
+    {
+      "path": "dist/index.js",
+      "0.3.1": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+      "0.3.3": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b"
+    },
+    {
+      "path": "dist/server.js",
+      "0.3.1": "8772e70baa8a19b6a3799b0d012392f96b4db67149971fa6eb9453d90993eced",
+      "0.3.3": "0c5d8937612ae52c3107f0fc31861b81a530c4f707fbc2199a1e0ed53f0eda83"
+    },
+    {
+      "path": "dist/tools/schemas.js",
+      "0.3.1": "7d4c62e2099d757d8fba68011cfe25d3088426f56c0b77d5b8fa3edb4ec49c2c",
+      "0.3.3": "7d4c62e2099d757d8fba68011cfe25d3088426f56c0b77d5b8fa3edb4ec49c2c"
+    },
+    {
+      "path": "dist/tools/process.js",
+      "0.3.1": "d9c85fb1d15751f356c616c886cb2004717669227c4186b85e7442a025d4e9eb",
+      "0.3.3": "9ee445b1baf18ffff297a435a31be1eb3ebb3151c97eaa4ed2bce10d1a43fee2"
+    },
+    {
+      "path": "dist/tools/improved-process-tools.js",
+      "0.3.1": "0b087ae2464e7fa17e6bddb3a9cb1247f08ccadb2521afe6469c7a7d3eb4bc68",
+      "0.3.3": "e0be1ddbec830a209d00cff6bee3d737eae9656cfafbc8aeeccbff97290c6602"
+    },
+    {
+      "path": "dist/terminal-manager.js",
+      "0.3.1": "92a97f083a5b650a86dc3ecfd029dd3a371ca7a0636d9d1f93233a2b70a68e41",
+      "0.3.3": "020bbcc524cef58a6e2413e2b5386672a587abf97ade8452ca2d659c8ec24c60"
+    },
+    {
+      "path": "dist/command-manager.js",
+      "0.3.1": "5667731ddae561b1680572704277bfe39451159e29c53110d4cb06eb9adcdbcf",
+      "0.3.3": "bef82732027e467747d645dd27213d662b66bb773e880b8b4d732e23c27e1cc1"
+    },
+    {
+      "path": "dist/bootstrap.js",
+      "0.3.1": "0541ff14ab9cd75fc84272c535902f8efc2f7f3d046d4c2ce8f95115cc59fdb4",
+      "0.3.3": "ba635d4c38d27477b5cbf6aa92473497e1fd796d01dd3cfb3cf40bd73eccc695"
+    },
+    {
+      "path": "dist/utils/shell.js",
+      "0.3.1": "100f66f589691ff0b5337b3034c58abbcebbc61dc594b2a21b78bcd954cdd2fe",
+      "0.3.3": "430143ddc1d728f0092c1836f85513aa67598d057abd1f9a344eaec2147c6c32"
+    },
+    {
+      "path": "dist/utils/threadpool-size.js",
+      "0.3.1": null,
+      "0.3.3": "3b1310dff7dc3496bf70ca5ab0bfa8b19596da6819b23537ea1659f870f3c0af"
+    },
+    {
+      "path": "dist/tools/pdf/markdown.js",
+      "0.3.1": "61685462f9abb2517e4691fbc7baebea23260e776d3e216d941480551450e982",
+      "0.3.3": "ece461975a0bb20a80e187431ca6a53281a691206f87711fc6a4700d76c3206b"
+    },
+    {
+      "path": "dist/ui/file-preview/preview-runtime.js",
+      "0.3.1": "5236825837a2be4afc29c67cd5f15350d8b3ebec5a214477161c9cf410afa1f4",
+      "0.3.3": "5236825837a2be4afc29c67cd5f15350d8b3ebec5a214477161c9cf410afa1f4"
+    },
+    {
+      "path": "dist/ui/config-editor/config-editor-runtime.js",
+      "0.3.1": "cdf6cfb869af8b321156dc42868f959b1913fa13201587772b667d4de17e2fcb",
+      "0.3.3": "cdf6cfb869af8b321156dc42868f959b1913fa13201587772b667d4de17e2fcb"
+    },
+    {
+      "path": "dist/handlers/edit-search-handlers.js",
+      "0.3.1": "8f3b60d694d1cee03baa50d6648006b1ab4c929da7098bd46f5be7921db65ad3",
+      "0.3.3": "8f3b60d694d1cee03baa50d6648006b1ab4c929da7098bd46f5be7921db65ad3"
+    },
+    {
+      "path": "dist/utils/ripgrep-resolver.js",
+      "0.3.1": "55632d49b2002108675503056f92a070becf979fc8ec06b2c90ca54e102fc804",
+      "0.3.3": "55632d49b2002108675503056f92a070becf979fc8ec06b2c90ca54e102fc804"
+    },
+    {
+      "path": "dist/handlers/search-answers.js",
+      "0.3.1": "800072d144e0854e32ce2b4e9c78a9f5af45a8a326f84771bfd20eed5d3fdaf6",
+      "0.3.3": "800072d144e0854e32ce2b4e9c78a9f5af45a8a326f84771bfd20eed5d3fdaf6"
+    },
+    {
+      "path": "dist/handlers/search-handlers.js",
+      "0.3.1": "91af23fda9345c08093b269ba9f98e2ec3de5d9e44c39fcde5ad3a5c32f7a8e4",
+      "0.3.3": "91af23fda9345c08093b269ba9f98e2ec3de5d9e44c39fcde5ad3a5c32f7a8e4"
+    },
+    {
+      "path": "dist/search-manager.js",
+      "0.3.1": "5fba97e067c028bc2ef3270f764df1a7d408fbf598f3245167ca2dac16f27b53",
+      "0.3.3": "5fba97e067c028bc2ef3270f764df1a7d408fbf598f3245167ca2dac16f27b53"
+    },
+    {
+      "path": "dist/npm-scripts/verify-ripgrep.js",
+      "0.3.1": "d329a04487fcdc52a21f5817da871f16d4f0cc1907c4a2c51c6bc1e5eb0affae",
+      "0.3.3": "d329a04487fcdc52a21f5817da871f16d4f0cc1907c4a2c51c6bc1e5eb0affae"
+    },
+    {
+      "path": "dist/handlers/edit-search-handlers.d.ts",
+      "0.3.1": "8f3b60d694d1cee03baa50d6648006b1ab4c929da7098bd46f5be7921db65ad3",
+      "0.3.3": "8f3b60d694d1cee03baa50d6648006b1ab4c929da7098bd46f5be7921db65ad3"
+    },
+    {
+      "path": "dist/utils/ripgrep-resolver.d.ts",
+      "0.3.1": "4fc9730b4d564c8f434add28f84961c6ecdad5ac82f7b981ab521bbf519eb73c",
+      "0.3.3": "4fc9730b4d564c8f434add28f84961c6ecdad5ac82f7b981ab521bbf519eb73c"
+    },
+    {
+      "path": "dist/handlers/search-answers.d.ts",
+      "0.3.1": "9dc2a281a42e26041d22c1d7ece9e442502c773de3b01860373b8ca9dcab3a83",
+      "0.3.3": "9dc2a281a42e26041d22c1d7ece9e442502c773de3b01860373b8ca9dcab3a83"
+    },
+    {
+      "path": "dist/handlers/search-handlers.d.ts",
+      "0.3.1": "e4a896182fc0c458babe961fcbe0ec29f07277edd023b617bcb47b3d4c916193",
+      "0.3.3": "e4a896182fc0c458babe961fcbe0ec29f07277edd023b617bcb47b3d4c916193"
+    },
+    {
+      "path": "dist/search-manager.d.ts",
+      "0.3.1": "bd926188380fbe8ba98bc8c5c97480b79f1b54634811c3336b228093a653b42c",
+      "0.3.3": "bd926188380fbe8ba98bc8c5c97480b79f1b54634811c3336b228093a653b42c"
+    },
+    {
+      "path": "dist/npm-scripts/verify-ripgrep.d.ts",
+      "0.3.1": "d76318eeb4f81bbf0c8c89dac783f807de5625affae25cd1c9ef1aab9e1e3ed2",
+      "0.3.3": "d76318eeb4f81bbf0c8c89dac783f807de5625affae25cd1c9ef1aab9e1e3ed2"
+    }
+  ],
+  "sourceContractChangedNamesOrSchemasOrAnnotations": false,
+  "upstreamDescriptionChange": [
+    "kill_process: one additional paragraph"
+  ],
+  "runtimeContractQualified": false,
+  "installationPrerequisites": [
+    "Install and compare the recorded exact control/candidate locks; corrected source lock is statically reconciled, installation behavior remains a hosted runtime gate.",
+    "Record actual ripgrep binary: resolver can fall back to system PATH/common installations; successful postinstall alone does not demonstrate availability.",
+    "Qualify Chromium/Puppeteer/native document support and cache ownership on disposable hosts; --no-onboarding does not suppress browser acquisition.",
+    "Qualify configured Windows shells/Node/libuv, command inspection and owned process-tree/EOF cleanup."
+  ],
+  "limitations": [
+    "No npm install, upstream import/execution/build, production verifier, credential read or repository mutation was performed. All writes are owned scratch evidence.",
+    "SHA-512/SHA-1 verify archive bytes against registry metadata. Registry signatures/Sigstore chains and builder identity were not cryptographically verified.",
+    "Decoded publication/provenance subjects match archive SHA-512. SLSA resolved source commits are one version-only release commit before npm gitHead; exact comparisons are retained. This is not a reproduced source build.",
+    "Neither main tarball ships package-lock.json/npm-shrinkwrap.json or original TypeScript sources. Existing dependency ranges do not pin the actual installation closure.",
+    "All 31 added paths / 29 unique dependency artifacts were checked. The actual MQTT normal/optional dependency graph has no unresolved edges. Unchanged baseline dependency notices and complete bundled-browser component inventory were not re-audited; this is not whole-distribution license or redistribution clearance.",
+    "Desktop Commander UI bundles are byte-identical across versions; the package ships only its root LICENSE as a separately named license/notice file. No license/copyright text was detected in those UI bundles. Bundled third-party notice completeness was not established.",
+    "Twenty-four added artifacts provide registry gitHead: 23 pinned manifest/LICENSE pairs match shipped bytes, while MQTT differs only in manifest version. Five lack gitHead. Full source build equivalence was not reproduced; Forge legacy SWF lacks ActionScript source in its tarball.",
+    "Normal --no-onboarding stdio does not imply offline startup. The index initializes feature flags and background Chrome support; a postinstall script targets installation telemetry and ripgrep verification, with a fallback that masks nonzero exit status.",
+    "This inspection does not approve production rollout, claim a reachable Access OAuth vulnerability was repaired, establish runtime53-tool equivalence, or grant final legal/redistribution clearance."
+  ],
+  "dependencyRightsReport": "added-dependencies/lock-extension-report.json",
+  "compiledPatch": "Full compiled delta is retained in the original read-only evidence directory; selected compiled hashes and findings are in this report.",
+  "metadataPatch": "dist_server.js.patch",
+  "evidenceDirectory": "This commit-ready subset; raw tarballs/extracted distributions remain in separately retained scratch evidence.",
+  "upstreamCodeExecuted": false,
+  "npmInstallExecuted": false,
+  "productionChanged": false,
+  "lockAudit": {
+    "controlLockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "candidateLockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+    "correctedDeltaSha256": "782b408f55857c6d6d978232b53f8bebe64bbdaaba8feefb83d3f2ebfea86a63",
+    "controlEntries": 651,
+    "candidateEntries": 681,
+    "addedPaths": 31,
+    "uniqueAddedArtifacts": 29,
+    "removedPaths": 1,
+    "changedPaths": 2,
+    "changedExistingPaths": [
+      "",
+      "node_modules/@wonderwhy-er/desktop-commander"
+    ],
+    "allOtherExistingEntriesExactlyMatchControl": true,
+    "sdkVersion": "1.32.2",
+    "sdkEntryExactlyUnchanged": true,
+    "correctedOwnerDeltaIndependentlyRecomputed": true,
+    "mqttClosure": {
+      "paths": 45,
+      "edges": 73,
+      "addedPaths": 29,
+      "existingPaths": 16,
+      "missingNormalOrOptional": [],
+      "optionalNativePeersAbsent": [
+        "bufferutil",
+        "utf-8-validate"
+      ]
+    },
+    "newArtifactIdentityChecks": {
+      "lockSha512Passed": 29,
+      "registrySha512Passed": 29,
+      "registrySha1Passed": 29,
+      "shippedLicenseTextPresent": 29,
+      "licenseLabelsAgree": 29
+    },
+    "newUniqueArtifactLicenseCounts": {
+      "MIT": 26,
+      "ISC": 2,
+      "(BSD-3-Clause OR GPL-2.0)": 1
+    },
+    "newLockLicenseExpressions": [
+      "(BSD-3-Clause OR GPL-2.0)"
+    ],
+    "newPreinstallInstallPostinstallDeclarations": [],
+    "newNativeAddonWasmBindingGypAssets": [],
+    "existingInstallScriptFlags": {
+      "node_modules/@wonderwhy-er/desktop-commander": "0.3.3",
+      "node_modules/fsevents": "2.3.3",
+      "node_modules/puppeteer": "25.16.0"
+    },
+    "sourcePointers": {
+      "gitHeadPresent": 24,
+      "matchingManifestAndLicenseBytes": 23,
+      "manifestVersionOnlyMismatch": [
+        "mqtt@5.16.0"
+      ],
+      "gitHeadMissing": [
+        "@babel/runtime@7.29.14",
+        "@types/readable-stream@4.0.25",
+        "@types/ws@8.18.2",
+        "typedarray@0.0.6",
+        "unbash@6.0.1"
+      ]
+    },
+    "resolvedFinding": {
+      "id": "LOCK-LIBC-METADATA",
+      "status": "RESOLVED",
+      "initialCandidateSha256": "fd80a897bf5405a04cbc7240f0c9eeca59ef96dae7e3f25592faa32cc936636d",
+      "description": "Initial npm lock-only regeneration removed libc metadata from 16 unchanged Sharp/libvips entries; registry and control retained it. Owner restored only those fields. All16 records now exactly match control.",
+      "receipt": "lock-audit/libc-repair-receipt.json"
+    }
+  },
+  "lockDependencyRightsReport": "added-dependencies/lock-extension-report.json"
+}

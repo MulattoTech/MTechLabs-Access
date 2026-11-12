@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T18:40:10.631443+00:00",
+  "status": "LIBC_METADATA_FINDING_RESOLVED",
+  "currentSnapshots": [
+    {
+      "source": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/upstream-package-lock.json",
+      "file": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/lock-audit/candidate-package-lock-corrected.json",
+      "sha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+      "bytes": 330771
+    },
+    {
+      "source": "/workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/qualification/lock-delta.json",
+      "file": "/workspace/scratch/a92a3aacdca1/dc-npm-artifacts-20261112/lock-audit/lock-delta-corrected.json",
+      "sha256": "782b408f55857c6d6d978232b53f8bebe64bbdaaba8feefb83d3f2ebfea86a63",
+      "bytes": 19801
+    }
+  ],
+  "delta": {
+    "added": [
+      "node_modules/@babel/runtime",
+      "node_modules/@types/readable-stream",
+      "node_modules/@types/ws",
+      "node_modules/abort-controller",
+      "node_modules/broker-factory",
+      "node_modules/buffer-from",
+      "node_modules/commist",
+      "node_modules/concat-stream",
+      "node_modules/event-target-shim",
+      "node_modules/events",
+      "node_modules/fast-unique-numbers",
+      "node_modules/help-me",
+      "node_modules/mqtt",
+      "node_modules/mqtt-packet",
+      "node_modules/mqtt-packet/node_modules/bl",
+      "node_modules/mqtt-packet/node_modules/buffer",
+      "node_modules/mqtt-packet/node_modules/readable-stream",
+      "node_modules/mqtt/node_modules/buffer",
+      "node_modules/mqtt/node_modules/readable-stream",
+      "node_modules/node-forge",
+      "node_modules/process",
+      "node_modules/rfdc",
+      "node_modules/smart-buffer",
+      "node_modules/socks",
+      "node_modules/split2",
+      "node_modules/typedarray",
+      "node_modules/unbash",
+      "node_modules/worker-factory",
+      "node_modules/worker-timers",
+      "node_modules/worker-timers-broker",
+      "node_modules/worker-timers-worker"
+    ],
+    "removed": [
+      "node_modules/@wonderwhy-er/desktop-commander/node_modules/@desktop-commander/telemetry-contract"
+    ],
+    "changed": [
+      "",
+      "node_modules/@wonderwhy-er/desktop-commander"
+    ]
+  },
+  "repairedPaths": [
+    "node_modules/@img/sharp-libvips-linux-arm",
+    "node_modules/@img/sharp-libvips-linux-arm64",
+    "node_modules/@img/sharp-libvips-linux-ppc64",
+    "node_modules/@img/sharp-libvips-linux-riscv64",
+    "node_modules/@img/sharp-libvips-linux-s390x",
+    "node_modules/@img/sharp-libvips-linux-x64",
+    "node_modules/@img/sharp-libvips-linuxmusl-arm64",
+    "node_modules/@img/sharp-libvips-linuxmusl-x64",
+    "node_modules/@img/sharp-linux-arm",
+    "node_modules/@img/sharp-linux-arm64",
+    "node_modules/@img/sharp-linux-ppc64",
+    "node_modules/@img/sharp-linux-riscv64",
+    "node_modules/@img/sharp-linux-s390x",
+    "node_modules/@img/sharp-linux-x64",
+    "node_modules/@img/sharp-linuxmusl-arm64",
+    "node_modules/@img/sharp-linuxmusl-x64"
+  ],
+  "repairScope": "Only 16 libc fields changed from pre-restoration candidate; all now exactly match control. All new artifact entries are unchanged.",
+  "allOtherExistingEntriesExactlyMatchControl": true,
+  "sdk1322EntryExactlyUnchanged": true,
+  "correctedOwnerDeltaRecomputedExactly": true
+}
