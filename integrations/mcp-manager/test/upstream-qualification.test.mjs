@@ -8,7 +8,7 @@ import path from 'node:path';
 import {
   validateQualificationHost, createQualificationWorkspace, assertOwnedWorkspace,
   qualificationEnvironment, admitInstalledUpstream, compareToolContracts, isBlockedProbe,
-  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe,
+  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe, observeToolFailure,
 } from '../lib/upstream-qualification.mjs';
 import { runQualification } from '../qualify-upstream.mjs';
 
@@ -16,6 +16,27 @@ const host = { CI: 'true', GITHUB_ACTIONS: 'true', RUNNER_ENVIRONMENT: 'github-h
   MTERM_DISPOSABLE_UPSTREAM_QUALIFICATION: '1', GITHUB_SHA: 'a'.repeat(40), RUNNER_TEMP: os.tmpdir() };
 const version = '0.3.3';
 const integrity = 'sha512-' + Buffer.alloc(64, 7).toString('base64');
+
+test('hosted tool failures retain fixed diagnostic signals and hashes without raw error payloads', () => {
+  const secret = 'fixture-secret-value-not-to-log';
+  const message = `Error: Failed to launch the browser process!\nNo usable sandbox!\n/home/private/${secret}\nhttps://user:${secret}@example.invalid/?token=${secret}`;
+  const result = observeToolFailure({ isError: true, content: [{ type: 'text', text: message }] });
+  assert.deepEqual(result.signals, ['browser_launch', 'browser_sandbox']);
+  assert.equal(result.textBytes, Buffer.byteLength(message));
+  assert.match(result.textSha256, /^[a-f0-9]{64}$/);
+  assert.equal(result.malformed, false); assert.equal(result.textEncoding, 'utf-8');
+  assert.doesNotMatch(JSON.stringify(result), /fixture-secret|private|example|https|No usable/);
+  const missing = observeToolFailure({ isError: true, content: [{ type: 'text', text: 'Cannot find package secret-package; ERR_MODULE_NOT_FOUND' }] });
+  assert.deepEqual(missing.signals, ['module_load']);
+  assert.deepEqual(missing.errorCodes, ['ERR_MODULE_NOT_FOUND']);
+  assert.doesNotMatch(JSON.stringify(missing), /secret-package/);
+  const unknown = observeToolFailure({ isError: true, content: [{ type: 'text', text: secret.repeat(2000) }] });
+  assert.deepEqual(unknown.signals, []); assert.equal(unknown.inspectionTruncated, true);
+  assert.ok(Buffer.byteLength(JSON.stringify(unknown)) < 1024);
+  const malformed = observeToolFailure({ isError: true, content: [{ type: 'image', data: secret }] });
+  assert.equal(malformed.malformed, true); assert.equal(malformed.textSha256, null); assert.deepEqual(malformed.signals, []);
+  assert.doesNotMatch(JSON.stringify(malformed), /fixture-secret/);
+});
 
 const searchRoot = path.resolve('/owned/search');
 const searchId = 'search_1_1234567890123';

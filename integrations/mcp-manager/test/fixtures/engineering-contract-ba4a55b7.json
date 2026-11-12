@@ -1,0 +1,728 @@
+{
+  "sourceRepository": "MulattoTech/MTechLabs-Access",
+  "sourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "contractSha256": "2f66aaf72db1583aa3940acb5a0374bb5298e90eec5e5bba0ec733ba25549cfe",
+  "tools": [
+    {
+      "name": "mterm_math_evaluate",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "Math expression, e.g. sqrt(2)+1",
+            "maxLength": 500
+          },
+          "precision": {
+            "type": "integer",
+            "description": "Decimal digits",
+            "minimum": 8,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "expression"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_math_solve",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "equation": {
+            "type": "string",
+            "description": "Equation such as x^2=4",
+            "maxLength": 500
+          },
+          "variable": {
+            "type": "string",
+            "description": "Variable to solve for",
+            "maxLength": 16
+          }
+        },
+        "required": [
+          "equation",
+          "variable"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_math_verify",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "string",
+            "description": "First expression",
+            "maxLength": 500
+          },
+          "right": {
+            "type": "string",
+            "description": "Second expression",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "left",
+          "right"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_math_convert_units",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Decimal numeric value",
+            "maxLength": 80
+          },
+          "from": {
+            "type": "string",
+            "description": "Source unit",
+            "maxLength": 12
+          },
+          "to": {
+            "type": "string",
+            "description": "Target unit",
+            "maxLength": 12
+          }
+        },
+        "required": [
+          "value",
+          "from",
+          "to"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_system_inventory",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_container_list",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_list",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_inspect",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact local Hyper-V virtual machine name",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_network_map",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_disk_health",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_diagnostics",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "hours": {
+            "type": "integer",
+            "description": "Lookback hours",
+            "minimum": 1,
+            "maximum": 168
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_change_plan",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact local Hyper-V virtual machine name",
+            "maxLength": 80
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "start",
+              "shutdown",
+              "checkpoint"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "action"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_start",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact local Hyper-V virtual machine name",
+            "maxLength": 80
+          },
+          "confirmName": {
+            "type": "string",
+            "description": "Repeat the exact VM name to confirm",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "name",
+          "confirmName"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_shutdown",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact local Hyper-V virtual machine name",
+            "maxLength": 80
+          },
+          "confirmName": {
+            "type": "string",
+            "description": "Repeat the exact VM name to confirm",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "name",
+          "confirmName"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_vm_checkpoint_create",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact local Hyper-V virtual machine name",
+            "maxLength": 80
+          },
+          "confirmName": {
+            "type": "string",
+            "description": "Repeat the exact VM name to confirm",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "name",
+          "confirmName"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_repo_inspect",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          }
+        },
+        "required": [
+          "rootId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_code_diagnostics",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          }
+        },
+        "required": [
+          "rootId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_code_review_diff",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "base": {
+            "type": "string",
+            "description": "Optional Git base ref; defaults to HEAD",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "rootId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_code_symbols",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "query": {
+            "type": "string",
+            "description": "Function, class or identifier to locate",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "rootId",
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_code_references",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Exact identifier to search",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "rootId",
+          "symbol"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_test_run",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "command": {
+            "type": "string",
+            "enum": [
+              "npm-test",
+              "npm-lint",
+              "pytest",
+              "git-diff-check"
+            ]
+          }
+        },
+        "required": [
+          "rootId",
+          "command"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_patch_apply_checked",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "patch": {
+            "type": "string",
+            "description": "Unified diff",
+            "maxLength": 20000
+          },
+          "expectedHead": {
+            "type": "string",
+            "description": "Expected 40-character HEAD SHA",
+            "maxLength": 40
+          },
+          "apply": {
+            "type": "boolean",
+            "description": "Actually apply the patch; false validates only"
+          }
+        },
+        "required": [
+          "rootId",
+          "patch",
+          "expectedHead",
+          "apply"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_git_worktree_create",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "name": {
+            "type": "string",
+            "description": "Unique lowercase worktree name, e.g. sprint-one",
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "rootId",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_job_submit",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "repo_diagnostics",
+              "run_tests",
+              "vm_inventory"
+            ]
+          },
+          "rootId": {
+            "type": "string",
+            "description": "Configured local repository root identifier",
+            "maxLength": 32
+          },
+          "relativePath": {
+            "type": "string",
+            "description": "Relative directory inside the configured root; defaults to .",
+            "maxLength": 512
+          },
+          "command": {
+            "type": "string",
+            "enum": [
+              "npm-test",
+              "npm-lint",
+              "pytest",
+              "git-diff-check"
+            ]
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_job_status",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Job UUID",
+            "maxLength": 36
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_job_logs",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Job UUID",
+            "maxLength": 36
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_job_cancel",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Job UUID",
+            "maxLength": 36
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "mterm_job_resume",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Job UUID",
+            "maxLength": 36
+          },
+          "confirm": {
+            "type": "boolean",
+            "description": "I verified the previous outcome before requeueing"
+          }
+        },
+        "required": [
+          "id",
+          "confirm"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

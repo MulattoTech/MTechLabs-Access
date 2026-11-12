@@ -115,6 +115,28 @@ wire diagnosis and actual red/green regressions are retained under `evidence/`.
 Revised hosted qualification and exact immutable review remain required. The guard
 unit tests use inert files and never install or run upstream.
 
+## Linux PDF investigation
+
+The third attempt passed the root and manager jobs and the full Windows
+qualification. Both Windows versions completed all ten real stages, including
+PDF creation/read fidelity and admission release, followed by clean EOF shutdown.
+Both Linux versions passed search, blocklist and owned process-tree checks, then
+failed PDF creation with `write_pdf_tool_error`. The original receipt does not
+identify the underlying error, and static review establishes no browser cause.
+
+The next candidate observes only the fixed owned PDF fixture's public error
+before preserving that same failure. Reports contain fixed diagnostic rule IDs,
+whitelisted error codes, byte count, exact UTF-8 text SHA-256 and whether the
+16,384-character inspection was truncated or the response malformed. They never
+retain raw error text, paths, URLs, stacks or arbitrary response metadata. These
+are matched signals, not root-cause conclusions. Browser arguments, host guards,
+all stage assertions, stderr handling and production code remain unchanged.
+
+This candidate normally integrates descriptor main `499255ad` from PR25, whose
+actual-main root 123 and manager 79 tests passed. The combined local manager suite
+passes 100/100. The imported metadata retains the same 53-tool contract; only the
+28 MTerm descriptions are more detailed in both control and candidate lanes.
+
 ## Limits and deployment
 
 This is a bounded compatibility qualification, not full security certification,

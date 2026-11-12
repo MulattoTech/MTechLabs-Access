@@ -6,6 +6,36 @@ import { createHash, randomUUID } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+
+// Diagnostics are observations, not inferred causes. Never retain error text,
+// paths, URLs, module names or other values supplied in a tool response.
+export function observeToolFailure(result) {
+  const malformed = !Array.isArray(result?.content) || result.content.length !== 1 ||
+    result.content[0]?.type !== 'text' || typeof result.content[0].text !== 'string';
+  const text = malformed ? '' : result.content[0].text;
+  const sample = text.slice(0, 16384);
+  const patterns = {
+    browser_launch: /Failed to launch (?:the )?(?:browser|chrome)|browser is already running/i,
+    browser_sandbox: /No usable sandbox|Running as root without --no-sandbox|Failed to move to new namespace|SUID sandbox helper/i,
+    browser_crashpad: /chrome_crashpad_handler|crashpad.*database/i,
+    browser_missing: /Could not find Chrome|requires Chrome or Chromium|Browser was not found|Chrome executable.*not found/i,
+    browser_protocol: /DevTools|Protocol error|Target closed|Session closed/i,
+    module_load: /Cannot find (?:module|package)|ERR_MODULE_NOT_FOUND|MODULE_NOT_FOUND/i,
+    native_library: /error while loading shared libraries|cannot open shared object|ERR_DLOPEN_FAILED|invalid ELF header/i,
+    filesystem_denied: /EACCES|EPERM|EROFS|Access denied|read-only file system|outside.*allowed|not.*allowed director/i,
+    filesystem_missing: /ENOENT|no such file or directory/i,
+    network: /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|ERR_CONNECTION_REFUSED|certificate.*(?:invalid|verify|expired)/i,
+    timeout: /Timed out|TimeoutError|ETIMEDOUT/i,
+  };
+  const codes = ['EACCES', 'EPERM', 'EROFS', 'ENOENT', 'ENOTFOUND', 'EAI_AGAIN', 'ECONNREFUSED', 'ETIMEDOUT',
+    'ERR_MODULE_NOT_FOUND', 'MODULE_NOT_FOUND', 'ERR_DLOPEN_FAILED', 'ERR_CONNECTION_REFUSED'];
+  return { isError: result?.isError === true, malformed, textEncoding: 'utf-8',
+    textBytes: Buffer.byteLength(text), textSha256: malformed ? null : sha256(text),
+    inspectedCharacters: sample.length,
+    inspectionTruncated: text.length > sample.length,
+    signals: Object.entries(patterns).filter(([, pattern]) => pattern.test(sample)).map(([id]) => id),
+    errorCodes: codes.filter(code => new RegExp('(?<![A-Z_])' + code + '(?![A-Z_])').test(sample)) };
+}
 // Both published packages intentionally remove internal structured search facts
 // at the public MCP boundary. Parse only the known, bounded fixture wire format.
 export function parseSearchProbe(result, { kind, root, sessionId, offset = 0, length = 2, requireComplete = false }) {

@@ -17,7 +17,7 @@ import { atomicWriteJson } from './lib/policy.mjs';
 import {
   validateQualificationHost, createQualificationWorkspace, assertOwnedWorkspace,
   qualificationEnvironment, admitInstalledUpstream, compareToolContracts, sha256, isBlockedProbe,
-  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe,
+  isOwnedConfiguration, isBoundedProcessTail, parseSearchProbe, observeToolFailure,
 } from './lib/upstream-qualification.mjs';
 
 const exec = promisify(execFile);
@@ -117,6 +117,9 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
   };
   const call = async (name, args, timeout = 30000) => {
     const response = await client.callTool({ name, arguments: args }, CallToolResultSchema, { timeout });
+    if (response.isError === true && stage === 'pdf_create_and_read_fidelity' && name === 'write_pdf') {
+      report.pdfFailure = { tool: name, stage, fixture: 'owned-fixed-markdown-v1', ...observeToolFailure(response) };
+    }
     assert.notEqual(response.isError, true, name + '_tool_error');
     return response;
   };

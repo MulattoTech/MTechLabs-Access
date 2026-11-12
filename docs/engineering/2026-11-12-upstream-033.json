@@ -3,7 +3,7 @@
   "changeId": "2026-11-12-upstream-033",
   "provider": "OpenAI",
   "model": "GPT-6 Astra Pro (self-reported)",
-  "updatedAt": "2026-11-12T19:21:37.407615+00:00",
+  "updatedAt": "2026-11-12T19:43:32.998280+00:00",
   "baseSourceSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
   "sourceRepository": "MulattoTech/MTechLabs-Access",
   "trackingIssue": "https://github.com/MulattoTech/MTerm-CLI/issues/10",
@@ -20,7 +20,10 @@
     "Count published UUID.json heartbeat records rather than concurrent atomic-write temporary files in the existing shared-admission fixture and new probe.",
     "Validate the published MCP text-only search, command denial and process-start responses; both pinned upstream versions deliberately strip internal structured facts for these handlers. Do not bypass the public gateway boundary.",
     "Bind every search row to one of six owned files and exact matched text; require clean completed status, consistent total counts, complete bounded pages, correct more flags and disjoint full file coverage. Permit singular running results.",
-    "Replace the existing pause test sleep with explicit started, queued and release barriers after a hosted timing failure; no production admission behavior changes."
+    "Replace the existing pause test sleep with explicit started, queued and release barriers after a hosted timing failure; no production admission behavior changes.",
+    "After both Linux lanes failed PDF creation while both Windows lanes fully passed, retain only fixed diagnostic rule IDs, whitelisted error codes, byte count and SHA256 of the exact UTF-8 public PDF error. Inspect at most16384 characters; no raw text, paths, URLs, stack or arbitrary metadata. This observes signals, not a proven cause.",
+    "Keep all qualification assertions and hosted/browser boundaries unchanged; do not set MCP_CLIENT_DOCKER, add no-sandbox flags, change stderr handling or weaken any gate.",
+    "Normally integrate independently reviewed and merged descriptor main499255ad, preserving its140 verified blobs and unchanged runtime contract. Publication has real parents92f5579b and499255ad; local synthetic checkpoint history is not published."
   ],
   "tests": [
     {
@@ -78,6 +81,26 @@
     {
       "command": "npm test after public-wire and pause-barrier correction",
       "result": "GREEN:95/95, zero failures/skips/cancellations. Includes75 existing manager tests and20 qualification tests. No actual upstream executed locally. Exact revised hosted qualification and immutable review remain required."
+    },
+    {
+      "command": "Exact92f5579b hosted run (independent retained receipt)",
+      "result": "FAIL overall: root123/123, manager95/95 and Windows qualification pass. Both Windows versions pass all10 real stages, including PDF creation/read and admission release, then clean exit0. Both Linux lanes pass search/blocklist/process-tree stages but fail write_pdf_tool_error; no underlying cause is established by that receipt."
+    },
+    {
+      "command": "PDF error observer regression before implementation",
+      "result": "RED: missing observeToolFailure export; no actual upstream executed."
+    },
+    {
+      "command": "node --test test/upstream-qualification.test.mjs after diagnostic-only correction",
+      "result": "GREEN:21/21; payload sentinels, malformed/unknown/oversized errors prove fixed bounded observations without raw values. Full merged candidate suite and fresh hosted qualification remain required."
+    },
+    {
+      "command": "Actual Access main499255ad pushrun43292737244",
+      "result": "PASS:123/123 root and79/79 manager, with check/build/generated-UI verification; exact main tree04d1d397 and parentsba4+60 independently observed. This qualifies the descriptor source, not installed UI/deployment."
+    },
+    {
+      "command": "npm test after normal descriptor integration and final PDF diagnostic-only change",
+      "result": "GREEN:100/100, zero failures/skips/cancellations. Current combined candidate uses all21 qualification guards and79 other manager tests. Hosted diagnostic attempt remains pending; Linux PDF still unqualified."
     }
   ],
   "roadmapUpdates": [
@@ -113,7 +136,17 @@
     "access-public-wire-diagnosis-e7a4e434.md": "f9953cb91c894c29e30bba5fdf3048c20a77ce136d32cd6908e6e66c4ab93f37",
     "access-public-wire-red.tap": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
     "access-wire-review-red.tap": "ed6e65df7951fc46c18c76df7b41fa9bd125749b88352258f3971a9481cf9db3",
-    "access-public-wire-final.tap": "0bb31aee8f300c31a77d15521d23e3a91a39a40571580ffa6113b4b61391fb06"
+    "access-public-wire-final.tap": "0bb31aee8f300c31a77d15521d23e3a91a39a40571580ffa6113b4b61391fb06",
+    "peer-access24-92f5579b-receipt.json": "d9348d4cab9f21799878c5a8bc174749050f8b46fc6bba361bc2f5943066c98a",
+    "peer-access24-92f5579b-receipt.md": "851b7ca8e33ddf24f9676770b83ad22838c896577ce5bca58568bb5bb0e1f397",
+    "access-tool-diagnostics-red.tap": "ba2291863b7d5327107e6ea715c519b90c0ad4060eed24946708e62065d991cf",
+    "access-tool-diagnostics-focused.tap": "38551bc0cfaa92e1c6962ba7cd0b4808da19506893a253bb41870a1dd3579568",
+    "access-linux-pdf-diagnosis.json": "eef02f16d5b6849dee900a8fdd8f86328971999302e4d44797b85915f0181223",
+    "access-linux-pdf-diagnosis.md": "5cac95fca340039308fa95832ae5da353a08ec2d2213fc22a5f81ae1e8c78f58",
+    "peer-access-descriptions-review-60f188a8.json": "4b8bbd00627f3aa331210a522642b83ef602d740fcbd7a3cf5b61829b46cce53",
+    "access-diagnostics-integrated-green.tap": "1760009bbdfc18716746d4ed80ba8f109412b28d88a7dd73d7c0a41aad7d3389",
+    "peer-access-main-499255ad-receipt.json": "e341a67a133ac346052796a3d627f826f8d486a7b7005f06055168df35fbfd9d",
+    "peer-access-main-499255ad-receipt.md": "337d48bb59a16303d2527ffd9d0ac865f71021be6d0e1b69b3cd277dd5906753"
   },
   "files": [
     ".github/workflows/check.yml",
@@ -136,5 +169,7 @@
       "storedSha256": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
       "transformation": "Trailing whitespace removed from TAP lines; assertion text and results unchanged."
     }
-  }
+  },
+  "integratedMainSha": "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+  "integratedMainTree": "04d1d397de37cb730b191f47bbe9877d0a94b7a3"
 }

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:30:43.411375+00:00",
+  "status": "BLOCKED_MANAGED_MCP_PAUSE_TEST",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "pr": 25,
+  "candidateSha": "834bd0154a6838475dfdd1c10fd79d162edb7949",
+  "candidateTree": "19081c847f0cba092eaba7c5c28423791edec058",
+  "parentAndBaseSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "actualMainAtObservation": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "checkoutMergeSha": "64d48cb4c3b09172c9d5e63aca21628a072d7dc4",
+  "checkoutMergeTreeEqualsCandidate": true,
+  "run": {
+    "id": 43290464737,
+    "html_url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43290464737",
+    "event": "pull_request",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "checks": [
+    {
+      "id": 131435026308,
+      "name": "managed-mcp",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43290464737/job/131435026308",
+      "headSha": "834bd0154a6838475dfdd1c10fd79d162edb7949",
+      "status": "completed",
+      "conclusion": "failure",
+      "counts": {
+        "tests": 79,
+        "pass": 78,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "checkoutShaObserved": true,
+      "failedSteps": [
+        "Run npm test"
+      ],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access25-834bd015-evidence/job-131435026308.log",
+        "bytes": 24264,
+        "sha256": "6d37cad5ea6f0ebf9c1f499c70e1bb40eab4258158c69fdaf1c7b7812b1294b0"
+      }
+    },
+    {
+      "id": 131435025778,
+      "name": "test",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43290464737/job/131435025778",
+      "headSha": "834bd0154a6838475dfdd1c10fd79d162edb7949",
+      "status": "completed",
+      "conclusion": "success",
+      "counts": {
+        "tests": 123,
+        "pass": 123,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "checkoutShaObserved": true,
+      "failedSteps": [],
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access25-834bd015-evidence/job-131435025778.log",
+        "bytes": 49833,
+        "sha256": "b762d0b50b8e8a07d4631013793eb0ce41a7824947daaeef152e608caca123dd"
+      }
+    }
+  ],
+  "requiredCheckNames": [
+    "test",
+    "managed-mcp"
+  ],
+  "upstreamQualificationJobInThisBranch": false,
+  "failure": {
+    "test": "pause rejects queued work without killing an already dispatched command",
+    "declaredAt": "test/gateway.test.mjs:51:1",
+    "failedAt": "test/gateway.test.mjs:58:44",
+    "type": "TypeError",
+    "message": "Cannot read properties of undefined (reading 'code')",
+    "sameObservedErrorAsAccess24Candidate112": true,
+    "underlyingCauseEstablishedByThisReceipt": false
+  },
+  "scope": "Independent descriptor candidate based directly on existing Access main; no dependency on PR24 qualification gate or runtime pin change is inferred.",
+  "reviewerActions": {
+    "rerun": false,
+    "githubMutation": false,
+    "sourceMutation": false,
+    "upstreamLocalExecution": false,
+    "productionAction": false
+  },
+  "mergeEligibleFromTheseChecks": false
+}
