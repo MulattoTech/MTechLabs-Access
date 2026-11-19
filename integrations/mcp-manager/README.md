@@ -53,11 +53,30 @@ origin. It does not create or rotate hosted accounts.
   independent native file/shell execution. Desktop Commander's allowed folders
   and command blocklist are guardrails, not OS isolation.
 
-ChatGPT and Claude.ai may use the separately protected self-hosted remote route
-after a supported connector/OAuth setup. Existing vendor-hosted connections are
-preserved and remain separate. Neither local installation nor self-hosting
+ChatGPT, Claude.ai and Gemini Web may use the separately protected self-hosted
+owner remote route after their own supported connector/OAuth setup. A historical
+Gemini Web test on 2026-11-19 verified owner OAuth, discovery of 32 read-only
+tools and a real Get File Information call. See
+[Gemini Web verification](verification-20261119-gemini-web.md); these results
+are not proof of current Gemini sign-in, tool parity or write/execute permission.
+Existing vendor-hosted connections are preserved and remain separate. Neither local installation nor self-hosting
 changes AI-model limits, client-plan availability, or the quotas of a hosted
 connection that is still in use. Browser login must be verified separately.
+
+## Owner-only Gemini diagnostics
+
+The `/admin/mcp` admin page includes Gemini-specific historical connection
+and read-only file execution evidence, plus the latest Gemini-named
+*protocol initialize* observation. It also displays up to 32 recent remote
+tool names, outcomes and durations from the upgraded origin manager. Those
+recent entries are **all-client, unattributed, memory-only diagnostics**, not
+proof that Gemini performed any particular tool call. This stateless bridge
+does not track a verified browser client identity per request.
+
+Only bounded tool metadata enters the owner-gated management status; no
+arguments, file paths, file contents, outputs or secrets are collected.
+See the [owner runbook](RUNBOOK.md#gemini-execution-evidence-and-attribution)
+and [dated Gemini verification](verification-20261119-gemini-web.md).
 
 ## Paths and installation
 
