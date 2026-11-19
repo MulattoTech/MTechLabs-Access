@@ -133,6 +133,13 @@ export function projectManagerStatus(value) {
       lastToolListCount:count(remote.lastToolListCount),lastSuccessfulRequestAt:date(remote.lastSuccessfulRequestAt),
       lastSuccessfulToolAt:date(remote.lastSuccessfulToolAt),clientIdentityTracked:false,
       resourceSupport:bool(remote.resourceSupport),promptSupport:bool(remote.promptSupport),
+      // Tool metadata is intentionally not attributed to a browser client: this transport is stateless.
+      // Do not pass through arguments, file paths, outputs or client-supplied identity fields.
+      recentToolCalls:Array.isArray(remote.recentToolCalls)?remote.recentToolCalls.slice(0,32).filter(item=>
+        object(item)&&typeof item.toolName==='string'&&/^[a-zA-Z0-9_.:-]{1,100}$/.test(item.toolName)&&
+        ['succeeded','tool-error','denied','unverified'].includes(item.outcome)).map(item=>({
+          time:date(item.time),toolName:item.toolName,outcome:item.outcome,durationMs:count(item.durationMs),clientAttribution:'unknown',
+        })):null,
       observedClients:(Array.isArray(remote.observedClients)?remote.observedClients:[]).slice(0,8).filter(item=>object(item)&&item.evidence==='protocol-initialize'&&typeof item.name==='string'&&/^[a-zA-Z0-9][a-zA-Z0-9 _.@()-]{0,79}$/.test(item.name)).map(item=>({
         name:item.name,version:typeof item.version==='string'&&/^[a-zA-Z0-9_.+-]{1,40}$/.test(item.version)?item.version:null,
         lastInitializedAt:date(item.lastInitializedAt),evidence:'protocol-initialize',

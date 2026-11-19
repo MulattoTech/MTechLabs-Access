@@ -60,6 +60,33 @@ Before release: run root `npm test`, `npm run check`, `npm run build`, manager t
 
 **Rollback:** Revert only the owner UI/docs revision or restore the previously verified Worker deployment after review; preserve the configured Cloudflare Access application, redirect allowlist, existing OAuth clients, private plugin ID, tunnel, origin manager, and active sessions. No credential rotation or connection removal is part of this change.
 
+## November 19 follow-up: dedicated Gemini evidence and remote call history
+
+The first owner screenshot showed a generic observed-client row (`Gemini`,
+version `1.0.0`) but no Gemini-specific file-test details. The original
+GitHub PR was still open and no website deployment had occurred.
+The owner-facing source was extended with a standalone Gemini section:
+historical OAuth/discovery and the exact read-only `Get File Information`
+result, plus a live observed-protocol status that does **not** claim a
+current authenticated session.
+
+The local bridge now offers an optional, memory-only ring buffer of up to 32
+recent remote tool calls, recording only tool name, completion time, outcome,
+and elapsed milliseconds. Worker projection strips unrecognized fields and
+always sets `clientAttribution: unknown`. No arguments, paths, result bodies,
+or credentials are recorded. Historical calls cannot be backfilled. An older
+manager reports no event-feed capability, not zero executions.
+
+**Release is two-part:** the Cloudflare Worker serves the updated owner page
+and safe status projection; the separately running Windows MCP manager must
+be updated to the exact reviewed origin-manager source and safely restarted
+for the live event feed. Never overwrite its runtime while jobs are active.
+The stateless per-request transport still cannot identify which of the three
+browser clients performed a particular `tools/call`. True per-client
+attribution is **NOT VERIFIED** and requires an authenticated client-specific
+identity/session correlation design. Do not use inference from client labels,
+timestamps or access IPs.
+
 ## Handoff
 
 Continue in this order: review tests and PR exact head; resolve CI failures if any; obtain any required merge/release approvals; deploy using the established `mtechlabs-access-codes` Worker workflow only when gates pass; inspect owner-only UI; perform an owner-driven fresh Gemini read-only tool call; then record exact deployment version and callback recheck. Do not restart the initial source audit or assume a historical tool test is a real-time heartbeat.

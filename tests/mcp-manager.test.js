@@ -268,6 +268,43 @@ test('remote backend status is projected without inventing browser sign-in evide
   assert.equal(unknown.state,'unknown');assert.equal(unknown.endpoint,null);assert.equal(unknown.sdkLoaded,null);assert.equal(unknown.activeHttpRequests,null);
 });
 
+test('recent remote tool events are bounded, sanitized, and never assigned to Gemini without identity evidence',()=>{
+  const raw=sample();raw.remoteMcp={state:'ready',recentToolCalls:[
+    {time:'2026-11-19T19:10:00.000Z',toolName:'get_file_info',outcome:'succeeded',durationMs:12,
+      clientAttribution:'Gemini',arguments:{path:'C:/secret/passwords.txt'},output:'PRIVATE',token:'TOP-SECRET'},
+    {time:'2026-11-19T19:11:00.000Z',toolName:'start_process',outcome:'denied',durationMs:3,clientAttribution:'Claude'},
+    {time:'not-a-time',toolName:'not ok <script>',outcome:'succeeded',durationMs:-1},
+  ]};
+  const events=projectManagerStatus(raw).remoteMcp.recentToolCalls;
+  assert.equal(events.length,2);
+  assert.deepEqual(events.map(e=>e.clientAttribution),['unknown','unknown']);
+  assert.deepEqual(events.map(e=>e.outcome),['succeeded','denied']);
+  assert.equal(events[0].toolName,'get_file_info');
+  assert.equal(events[0].durationMs,12);
+  for(const secret of ['TOP-SECRET','PRIVATE','passwords.txt','Gemini','Claude'])assert.equal(JSON.stringify(events).includes(secret),false);
+  raw.remoteMcp={state:'ready'};
+  assert.equal(projectManagerStatus(raw).remoteMcp.recentToolCalls,null,'older manager is not mistaken for an empty event log');
+});
+
+test('owner-only Gemini diagnostic panel distinguishes the verified file test and live unattributed activity',async t=>{
+  const env=await fixture(t);mockNetwork(t);
+  const response=await get(env,'/admin/mcp'),html=await response.text();
+  assert.equal(response.status,200);
+  assert.match(html,/id="mcp-gemini-evidence"/);
+  assert.match(html,/id="mcp-gemini-live"/);
+  assert.match(html,/Get File Information/);
+  assert.match(html,/3,041 bytes/);
+  assert.match(html,/2026-10-05T21:13:14\.048Z/);
+  assert.match(html,/32 read-only tools/);
+  assert.match(html,/historical test/i);
+  const js=await (await get(env,'/admin/mcp/assets/mcp.js')).text();
+  assert.match(js,/function geminiDiagnostics\(/);
+  assert.match(js,/recentToolCalls/);
+  assert.match(js,/Client attribution unavailable/);
+  assert.match(js,/observedClients/);
+  assert.doesNotMatch(js,/MCP_MANAGER_TOKEN/);
+});
+
 test('connect instructions link the private ChatGPT connector without claiming individual OAuth status',async()=>{
   const html=await readFile(new URL('../public/mcp.html',import.meta.url),'utf8');
   assert.match(html,/https:\/\/mcp\.m-techlabs\.com\/mcp/);assert.match(html,/dynamic client registration \(DCR\)/);

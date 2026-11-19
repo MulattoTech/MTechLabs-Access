@@ -35,6 +35,28 @@ function remoteStatus(remote){
     (clients.length?`<div class="table-wrap"><table><thead><tr><th>Client-reported name</th><th>Version</th><th>Last initialized</th></tr></thead><tbody>${clients.map(client=>`<tr><td>${esc(client.name)}</td><td>${esc(client.version||'Unknown')}</td><td>${esc(time(client.lastInitializedAt))}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">No client initialization has been recorded since this manager started.</p>')+
     '<p class="small muted">These labels are supplied by clients. They identify protocol observations, not a verified OAuth account or a persistent connection. Confirm sign-in in each client.</p>';
 }
+function geminiDiagnostics(remote){
+  if(!remote)return '<p class="muted">Live manager status is unavailable. The historical Gemini file result above remains a dated observation, not a current connection check.</p>';
+  const clients=Array.isArray(remote.observedClients)?remote.observedClients:[];
+  const reported=clients.filter(item=>/^Gemini(?:$|[ ._-])/i.test(item.name||'')).sort((a,b)=>(Date.parse(b.lastInitializedAt)||0)-(Date.parse(a.lastInitializedAt)||0))[0];
+  const clientInfo=reported
+    ?'<dl class="mcp-metrics">'+metric('Client-reported name',reported.name)+metric('Client-reported version',reported.version||'Unknown')+metric('Last protocol initialize',time(reported.lastInitializedAt))+'</dl><p class="small muted">An initialize message reached the bridge; this is not OAuth account identity, a heartbeat, or proof that a later file call came from Gemini.</p>'
+    :'<p class="muted">No Gemini-named protocol initialization is currently recorded by this manager. This does not prove that Gemini is disconnected.</p>';
+  const events=remote.recentToolCalls;
+  let calls;
+  if(!Array.isArray(events)){
+    calls='<p class="muted">This running manager does not expose recent tool-call metadata. Deployment of the corresponding origin-manager update is required before this live history is available.</p>';
+  }else if(!events.length){
+    calls='<p class="muted">No remote tool invocations are recorded in the bounded in-memory window. Older calls and calls before the manager update are not backfilled.</p>';
+  }else{
+    const rows=events.map(item=>'<tr><td>'+esc(time(item.time))+'</td><td><code>'+esc(item.toolName||'Unknown')+'</code></td><td>'+esc(item.outcome||'unknown')+'</td><td>'+esc(Number.isInteger(item.durationMs)?item.durationMs+' ms':'Unknown')+'</td></tr>').join('');
+    calls='<div class="table-wrap mcp-gemini-events"><table><thead><tr><th>Completed</th><th>Tool</th><th>Outcome</th><th>Duration</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }
+  return '<h4>Gemini protocol observation (not a verified account session)</h4>'+clientInfo+
+    '<h4>Recent MCP tool calls — all web clients</h4><p class="small muted"><strong>Client attribution unavailable.</strong> This stateless bridge cannot assign these calls to Gemini, ChatGPT or Claude. Tool-call metadata is held in memory, limited to 32 events, and excludes argument values, file paths and outputs.</p>'+
+    calls+'<p class="small muted">Backend-wide last successful tool: '+esc(time(remote.lastSuccessfulToolAt))+
+    '. Latest tool-list page size across all clients: '+esc(amount(remote.lastToolListCount))+'. Neither is Gemini-specific.</p>';
+}
 function coordinatorStatus(status){
   const coordinator=status?.coordinator,limits=status?.limits;
   if(!shared(status)||!coordinator||coordinator.scope!=='shared-state-directory')return '<p class="notice">Shared scheduling is not verified. Older gateways may still apply their limit per instance. Finish existing work and reconnect those clients after upgrading.</p>';
@@ -112,6 +134,7 @@ function render(){
   $('#mcp-policy-state').textContent=dirty?'Unsaved edits. Background refresh is paused.':!value?.connected?'Policy is unavailable. Refresh status before sending or retrying a change.':!status?.policyValid?'Local policy is invalid. Repair it on the PC before making changes here.':`Current policy: ${status.policy.enabled?(isShared&&status.coordinator?.available!==true?'enabled, execution blocked until shared admission is verified':'accepting new calls'):'paused'}, ${status.policy.readOnly?'read-only tools':'write-capable tools'}, up to ${status.policy.maxInflight} concurrent call(s) ${isShared?'across enrolled gateways':'per instance (legacy)'}.`;
   $('#mcp-policy-state').classList.toggle('mcp-policy-dirty',dirty);
   $('#mcp-remote-status').innerHTML=remoteStatus(status?.remoteMcp);
+  $('#mcp-gemini-live').innerHTML=geminiDiagnostics(status?.remoteMcp);
   $('#mcp-coordinator').innerHTML=status?coordinatorStatus(status):'<p class="muted">Scheduler status is unknown while the manager is offline.</p>';
   $('#mcp-deployment').innerHTML=deploymentStatus(status);
   const resources=status?.resources,limits=status?.limits;
