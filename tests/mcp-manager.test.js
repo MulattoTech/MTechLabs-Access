@@ -221,6 +221,29 @@ test('owner page assets use existing security headers and explain real control b
   for(const path of ['/admin/mcp/assets/mcp.js','/admin/mcp/assets/mcp.css','/admin/mcp/assets/style.css'])assert.equal((await get(env,path)).status,200);
 });
 
+test('Gemini Web connection card documents the exact OAuth and historical verification boundaries',async t=>{
+  const env=await fixture(t);mockNetwork(t);
+  const response=await get(env,'/admin/mcp');
+  assert.equal(response.status,200);
+  const html=await response.text();
+  assert.match(html,/<h3>ChatGPT web<\/h3>/);
+  assert.match(html,/<h3>Claude\.ai<\/h3>/);
+  assert.match(html,/<h3>Gemini Web<\/h3>/);
+  assert.equal((html.match(/class="mcp-client-card"/g)||[]).length,3);
+  assert.match(html,/https:\/\/mcp\.m-techlabs\.com\/mcp/);
+  assert.match(html,/https:\/\/gemini\.google\.com\/customize\/connectors/);
+  assert.match(html,/plugins_6aed1a85300481919559498b458ed278/);
+  const gemini=html.match(/<article class="mcp-client-card"[^>]*>[\s\S]*?<\/article>/g)?.find(card=>card.includes('<h3>Gemini Web</h3>'));
+  assert.ok(gemini,'Gemini Web must have its own connection card');
+  for(const item of [/November 19, 2026/,/32 read-only tools/,/Get File Information/,/PKCE/,/automatic registration/i,/manual public-client/i,/no client secret/i,/Cloudflare Access/,/Current connection: unknown/i]){
+    assert.match(gemini,item);
+  }
+  assert.doesNotMatch(gemini,/connected now|live session verified|all tools verified/i);
+  assert.doesNotMatch(html,/oauth-redirect\.googleusercontent\.com\/r\/user_bound_custom-mcp-/);
+  const css=await (await get(env,'/admin/mcp/assets/mcp.css')).text();
+  assert.match(css,/\.mcp-client-grid/);
+});
+
 test('management inventory is display-only and cannot create delegated local-tool grants',async t=>{
   const env=await fixture(t);mockNetwork(t);
   const response=await get(env,'/admin/access/api/bootstrap'),data=await response.json();

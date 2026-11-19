@@ -51,8 +51,18 @@ Remote endpoint: `https://mcp.m-techlabs.com/mcp`
 - Claude: **Customize → Connectors → Add custom connector**. Enter the endpoint,
   select sign-in/OAuth and **Register automatically**, then authorize using the
   owner Google account. Enable the connector for the conversation.
+- Gemini Web: open [Gemini connectors](https://gemini.google.com/customize/connectors),
+  add a custom MCP connector called **MTerm CLI Desktop Bridge**, and use the endpoint above.
+  Prefer automatic OAuth client registration. If manual setup is necessary, use the
+  Gemini-specific, already registered **public OAuth client with PKCE and no client secret**
+  and its exact approved redirect, rather than a generic client ID or a new wildcard.
+  Complete Cloudflare Access owner authorization and select the connector for a
+  read-only test. On **2026-11-19**, Gemini displayed **32 read-only tools** and
+  successfully invoked **Get File Information**; this is historical evidence,
+  not current session health or write/process-execution parity.
+  See [Gemini verification record](verification-20261119-gemini-web.md).
 - Do not select “No authentication” and do not paste the origin service token.
-  It stays server-side and is not required for either client.
+  It stays server-side and is not required for any browser client.
 - Ask the client to list the managed tools and read the harmless installation
   file `H:\MTechLabs\MCP\package.json` first. Enable editing only when needed.
 

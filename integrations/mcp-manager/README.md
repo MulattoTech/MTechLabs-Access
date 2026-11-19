@@ -53,9 +53,13 @@ origin. It does not create or rotate hosted accounts.
   independent native file/shell execution. Desktop Commander's allowed folders
   and command blocklist are guardrails, not OS isolation.
 
-ChatGPT and Claude.ai may use the separately protected self-hosted remote route
-after a supported connector/OAuth setup. Existing vendor-hosted connections are
-preserved and remain separate. Neither local installation nor self-hosting
+ChatGPT, Claude.ai and Gemini Web may use the separately protected self-hosted
+owner remote route after their own supported connector/OAuth setup. A historical
+Gemini Web test on 2026-11-19 verified owner OAuth, discovery of 32 read-only
+tools and a real Get File Information call. See
+[Gemini Web verification](verification-20261119-gemini-web.md); these results
+are not proof of current Gemini sign-in, tool parity or write/execute permission.
+Existing vendor-hosted connections are preserved and remain separate. Neither local installation nor self-hosting
 changes AI-model limits, client-plan availability, or the quotas of a hosted
 connection that is still in use. Browser login must be verified separately.
 
