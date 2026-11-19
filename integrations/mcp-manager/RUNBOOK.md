@@ -71,7 +71,7 @@ authorization. A healthy backend does not prove either personal account has
 finished its OAuth consent. Leave the original hosted connector installed until
 the new connection has passed a real task in each client.
 
-The private ChatGPT package is version 0.2.0, ID
+The historical 2026-11-08 private ChatGPT package version was 0.2.0; the owner later verified the same private plugin at v0.2.3 (2026-11-12). The website recovery download for 0.2.3 is prepared as a source-equivalent archive and must be independently deployed and verified. Original plugin ID:
 `plugins_6aed1a85300481919559498b458ed278`, with published release
 `pluginrel_6aeead9219788191b50e40e9cc1c3e37`. It is private to the owner's
 account, not a public app listing. Package publication, account installation,

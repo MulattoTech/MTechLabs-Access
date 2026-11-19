@@ -68,7 +68,7 @@ test('owner-only plugin recovery download returns the exact pinned release',asyn
  assert.equal(metaResponse.status,200);
  assert.equal(metaResponse.headers.get('Cache-Control'),'no-store');
  const meta=await metaResponse.json();
- assert.equal(meta.version,'0.2.1');
+ assert.equal(meta.version,'0.2.3');
  assert.match(meta.sha256,/^[a-f0-9]{64}$/);
  const zipResponse=await get(env,'/admin/mcp/plugin/latest.tar.gz');
  assert.equal(zipResponse.status,200);
