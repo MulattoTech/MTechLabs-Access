@@ -2,6 +2,8 @@
 
 **Status: design and diagnostic source only. Not installed, merged, or authorized for activation.**
 
+**Proposed operational protected-root/rollback change plan (design only):** [Operational isolation and rollback review plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md). This records current parent ACL/namespace hazards, C: trust-root candidates, a reviewed sign-in startup wrapper, normalized deployed source provenance, explicit approvals and no-go conditions. **It neither provisions DEV nor authorizes a production cutover.**
+
 **Hosted acceptance and billing-admission handoff:** [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) consolidates PR #45's exact five-job source/fixture requirements, the latest failed-before-execution run, immutable evidence review and post-merge/main gates. Local preflight tests below **do not** waive these prerequisites.
 
 This directory contains a narrowly scoped Windows PowerShell 7 preflight for the proposed independent MTerm-CLI DEV environment. It does **not** implement account provisioning, permissions changes, production relocation, reference-authority installation, startup migration, or routing changes. It belongs to [issue #46](https://github.com/MulattoTech/MTechLabs-Access/issues/46), which follows successful source qualification of [issue #44 / PR #45](https://github.com/MulattoTech/MTechLabs-Access/pull/45). GitHub Actions billing admission and the required five hosted gates remain unresolved.
