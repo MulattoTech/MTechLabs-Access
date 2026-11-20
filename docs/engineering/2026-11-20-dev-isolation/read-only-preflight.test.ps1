@@ -74,6 +74,70 @@ if ($denied.paths[0].status -ne 'unverified' -or
     throw 'acl_denial_did_not_fail_closed'
 }
 
+# A path lookup that fails must be reported as unverified, not terminate the
+# entire diagnostic or turn the denied H: ancestor into a false "absent" result.
+$lookupDenied = (& {
+    function Test-Path {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [string]$PathType)
+        if ($LiteralPath -eq 'H:\') { throw 'synthetic_path_lookup_denied' }
+        if ($PathType) { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType }
+        else { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath }
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $lookupDenied 'path_lookup_denied'
+if ($lookupDenied.paths[0].status -ne 'unverified' -or
+    @($lookupDenied.blockers | Where-Object {$_ -eq 'acl-unverified:hRoot'}).Count -ne 1) {
+    throw 'path_lookup_denial_not_unverified'
+}
+
+$baselineLookupDenied = (& {
+    function Test-Path {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [string]$PathType)
+        if ($LiteralPath -like '*acl-baseline-20261120.json') { throw 'synthetic_baseline_lookup_denied' }
+        if ($PathType) { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType }
+        else { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath }
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $baselineLookupDenied 'baseline_lookup_denied'
+if ($baselineLookupDenied.baseline.status -ne 'unverified' -or
+    @($baselineLookupDenied.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 1) {
+    throw 'baseline_lookup_denial_not_unverified'
+}
+
+$accountDenied = (& {
+    function Get-LocalUser {
+        [CmdletBinding()]
+        param([string]$Name)
+        throw 'synthetic_local_account_access_denied'
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $accountDenied 'account_query_denied'
+if ($accountDenied.devAccount -ne 'unverified' -or
+    @($accountDenied.blockers | Where-Object {$_ -eq 'dev-principal-not-provisioned'}).Count -ne 1) {
+    throw 'account_query_denial_misclassified_as_absent'
+}
+
+$profileDenied = (& {
+    function Test-Path {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [string]$PathType)
+        if ($LiteralPath -eq 'C:\Users\MTermDev') { throw 'synthetic_dev_profile_lookup_denied' }
+        if ($PathType) { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType }
+        else { Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath }
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $profileDenied 'dev_profile_lookup_denied'
+if ($profileDenied.devProfile -ne 'unverified' -or
+    @($profileDenied.blockers | Where-Object {$_ -eq 'dev-principal-not-provisioned'}).Count -ne 1) {
+    throw 'dev_profile_denial_misclassified_as_absent'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -81,13 +145,17 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 4
+    passed = 8
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
     ordinaryAssessmentInactive = $true
     missingBaselineFailsClosed = $true
     syntheticAclDenialFailsClosed = $true
+    pathLookupDenialFailsClosed = $true
+    baselineLookupDenialFailsClosed = $true
+    accountQueryDeniedIsUnverified = $true
+    devProfileDeniedIsUnverified = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
