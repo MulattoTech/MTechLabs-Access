@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R40",
+  "scope": "read-only, exact PR45 source-controlled upstream 0.3.1 versus 0.3.3 npm lockfile delta",
+  "createdUtc": "2026-11-20T21:39:10.015373+00:00",
+  "pr45": {
+    "head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "base": "15e851b11984592803d37599b639772e51e5c8c0",
+    "openDraftUnmergedVerifiedSeparately": true
+  },
+  "sourceIdentity": {
+    "controlRepoPath": "integrations/mcp-manager/qualification/control-package-lock.json",
+    "controlGitBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92",
+    "controlSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "candidateRepoPath": "integrations/mcp-manager/upstream-package-lock.json",
+    "candidateGitBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d",
+    "candidateSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+    "bytesCompared": [
+      317405,
+      330771
+    ],
+    "gitObjectRead": true,
+    "localCopiesVerifiedWithGitBlobAndSha256": true
+  },
+  "comparison": {
+    "schemaVersion": 1,
+    "controlLockEntries": 651,
+    "candidateLockEntries": 681,
+    "unchangedOrChangedCommonEntries": 650,
+    "addedLockEntries": 31,
+    "removedLockEntries": 1,
+    "candidateAddedNonoptionalEntries": 31,
+    "candidateAddedInstallScriptFlags": 0,
+    "addedPackageSummaries": [
+      {
+        "path": "node_modules/@babel/runtime",
+        "version": "7.29.14",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/@types/readable-stream",
+        "version": "4.0.25",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/@types/ws",
+        "version": "8.18.2",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/abort-controller",
+        "version": "3.0.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/broker-factory",
+        "version": "3.1.15",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/buffer-from",
+        "version": "1.1.2",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/commist",
+        "version": "3.2.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/concat-stream",
+        "version": "2.0.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/event-target-shim",
+        "version": "5.0.1",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/events",
+        "version": "3.3.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/fast-unique-numbers",
+        "version": "9.0.27",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/help-me",
+        "version": "5.0.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt",
+        "version": "5.16.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt-packet",
+        "version": "9.0.2",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt-packet/node_modules/bl",
+        "version": "6.1.6",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt-packet/node_modules/buffer",
+        "version": "6.0.3",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt-packet/node_modules/readable-stream",
+        "version": "4.8.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt/node_modules/buffer",
+        "version": "6.0.3",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/mqtt/node_modules/readable-stream",
+        "version": "4.8.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/node-forge",
+        "version": "1.4.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/process",
+        "version": "0.11.10",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/rfdc",
+        "version": "1.4.1",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/smart-buffer",
+        "version": "4.2.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/socks",
+        "version": "2.8.10",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/split2",
+        "version": "4.2.0",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/typedarray",
+        "version": "0.0.6",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/unbash",
+        "version": "6.0.1",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/worker-factory",
+        "version": "7.0.50",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/worker-timers",
+        "version": "8.0.34",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/worker-timers-broker",
+        "version": "8.0.18",
+        "optional": false,
+        "installScriptFlag": false
+      },
+      {
+        "path": "node_modules/worker-timers-worker",
+        "version": "9.0.15",
+        "optional": false,
+        "installScriptFlag": false
+      }
+    ],
+    "removedPackageSummaries": [
+      {
+        "path": "node_modules/@wonderwhy-er/desktop-commander/node_modules/@desktop-commander/telemetry-contract",
+        "version": "0.1.1"
+      }
+    ],
+    "changedCommonEntrySummaries": [
+      {
+        "path": "",
+        "changedFields": [
+          "dependencies"
+        ],
+        "controlVersion": "1.0.0",
+        "candidateVersion": "1.0.0"
+      },
+      {
+        "path": "node_modules/@wonderwhy-er/desktop-commander",
+        "changedFields": [
+          "bundleDependencies",
+          "dependencies",
+          "integrity",
+          "resolved",
+          "version"
+        ],
+        "controlVersion": "0.3.1",
+        "candidateVersion": "0.3.3"
+      }
+    ],
+    "changedCommonEntryCount": 2,
+    "sourcePinsAndLockStructuresQualified": true,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "unqualifiedSample": [],
+    "registryOrPackageArchiveAccessed": false,
+    "npmOrInstalledCodeExecuted": false,
+    "currentLivePRHeadRecheckedByThisScript": false,
+    "networkCapabilityEquivalentToActualEgress": false,
+    "publisherTrustOrRuntimeClosureAttested": false,
+    "historicalPdfFailureResolved": false,
+    "hostedSourceAcceptanceVerified": false,
+    "prMergeAuthorized": false,
+    "devActivationAuthorized": false
+  },
+  "newSyntheticRegressionCases": {
+    "passed": 23,
+    "failed": 0
+  },
+  "newSourceSha256": {
+    "read-only-upstream-lock-delta.py": "4f87deda0c7b454a0428ef357b60bb96be7877392c83e8608995bdf708a44c2d",
+    "read-only-upstream-lock-delta.test.py": "8fcf4ab4d6f84c3d220c57d09906418137acdec61eb1ad2d5d6003d357f9d062"
+  },
+  "securityInterpretation": [
+    "All 31 candidate-only lock entries are nonoptional, including mqtt, node-forge, socks and worker-related libraries; these are declared package graph changes, not evidence of live egress, traffic or a vulnerability.",
+    "One nested 0.3.1 vendor/telemetry-contract lock entry is absent from the 0.3.3 candidate, but this cannot prove removal of runtime telemetry.",
+    "A source-pinned compare confirms lockfile bytes and package-entry metadata only; it does not authenticate npm registry publisher signatures or installed archive bytes.",
+    "The historical 0.3.1 PDF timeout remains unresolved and rejected; no PDF tool was invoked in this source-only comparison.",
+    "Candidate Windows/Linux hosted source/native/upstream qualification is still not available because the only recorded five-job run failed before steps, following the account billing/spending admission restriction.",
+    "The comparison does not authorize PR merge, protected-root installation, network access, Windows user/ACL changes, production source relocation or DEV activation."
+  ],
+  "safety": {
+    "npmInvoked": false,
+    "packageCodeExecuted": false,
+    "ownerHostProductionFilesChanged": false,
+    "sourceTreeCheckoutModified": false,
+    "networkOperationsDuringChecker": false,
+    "ghFetchWasReadOnly": true,
+    "prodCutoverAuthorized": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
