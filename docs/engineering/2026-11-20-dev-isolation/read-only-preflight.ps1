@@ -15,11 +15,13 @@ function Get-PrincipalKind([string]$name) {
     return 'other'
 }
 function Get-PathSummary([string]$id, [string]$absolutePath) {
-    $exists = Test-Path -LiteralPath $absolutePath
     $result = [ordered]@{id=$id;status='absent';daclProtected=$null;reparse=$null;
         broadMutationAllowCount=0;inheritableBroadMutationCount=0;ownerKind=$null}
-    if (-not $exists) {return [pscustomobject]$result}
     try {
+        # An inaccessible Test-Path must not terminate the entire assessment
+        # or be silently reported as an absent production ancestor.
+        $exists = Test-Path -LiteralPath $absolutePath -ErrorAction Stop
+        if (-not $exists) {return [pscustomobject]$result}
         $item = Get-Item -LiteralPath $absolutePath -Force
         $acl = Get-Acl -LiteralPath $absolutePath
         $result.status = 'observed'
@@ -71,8 +73,8 @@ foreach ($name in $paths.Keys) { $records[$name] = Get-PathSummary $name $paths[
 $baselineStatus = 'unavailable'
 $baselineMatchCount = 0
 $baselineName = Join-Path $env:LOCALAPPDATA 'MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json'
-if (Test-Path -LiteralPath $baselineName -PathType Leaf) {
-    try {
+try {
+    if (Test-Path -LiteralPath $baselineName -PathType Leaf -ErrorAction Stop) {
         $hash = (Get-FileHash -LiteralPath $baselineName -Algorithm SHA256).Hash.ToLowerInvariant()
         if ($hash -ne '07053c2a8075e3003f809898632152cc446d16b9b356919f2dad200308c27d9f') {
             $baselineStatus='hash-mismatch'
@@ -86,8 +88,8 @@ if (Test-Path -LiteralPath $baselineName -PathType Leaf) {
             }
             $baselineStatus = if ($baselineMatchCount -eq 9) {'matched'} else {'drift'}
         }
-    } catch { $baselineStatus='unverified' }
-}
+    }
+} catch { $baselineStatus='unverified' }
 
 $startup = 'unverified'
 try {
@@ -116,10 +118,19 @@ try {
 
 $devAccount = 'unverified'
 try {
-    $user = Get-LocalUser -Name 'MTermDev' -ErrorAction SilentlyContinue
-    $devAccount = if ($null -eq $user) {'absent'} else {'present-not-qualified'}
+    # Only the specific not-found error establishes absence. A denied account
+    # query must remain unverified, never become an apparent negative result.
+    $user = Get-LocalUser -Name 'MTermDev' -ErrorAction Stop
+    $devAccount = if ($null -eq $user) {'unverified'} else {'present-not-qualified'}
+} catch {
+    if ($_.FullyQualifiedErrorId -like 'UserNotFound,*') { $devAccount = 'absent' }
+}
+$devProfile = 'unverified'
+try {
+    $devProfile = if (Test-Path -LiteralPath 'C:\Users\MTermDev' -ErrorAction Stop) {
+        'present-not-qualified'
+    } else { 'absent' }
 } catch {}
-$devProfile = if (Test-Path -LiteralPath 'C:\Users\MTermDev') {'present-not-qualified'} else {'absent'}
 
 $blockers = @()
 foreach ($name in @('hRoot','hMTechLabs','hProduction')) {
