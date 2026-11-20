@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R37",
+  "scope": "non-executing installed 0.3.1 npm install and lifecycle metadata evidence",
+  "receiptCreatedUtc": "2026-11-20T21:16:20.405969+00:00",
+  "selectedProductionPackage": "@wonderwhy-er/desktop-commander",
+  "selectedProductionPackageVersion": "0.3.1",
+  "readOnlyOwnerHost": {
+    "installedClosureManifests": 612,
+    "fullAuditPasses": 2,
+    "matchingMetadataFingerprints": true,
+    "directInstallHookPackages": 2,
+    "preinstallEntries": 0,
+    "installEntries": 0,
+    "postinstallEntries": 2,
+    "conditionalPrepareHookPackages": 46,
+    "packagesWithOtherNpmLifecycleHooks": 177,
+    "otherNonLifecycleScriptEntries": 2813,
+    "npmHasInstallScriptFlags": 2,
+    "npmHasInstallScriptFlagsMatchedAcrossBothLocks": true,
+    "implicitBindingGypCandidates": 0,
+    "unqualifiedLifecycleEntries": 0,
+    "metadataFingerprintSha256": "9bda7986e204a73d41634ddd6c52a1e6cb8212e56555a452af7c882bb5571d79",
+    "priorR35NamespaceFingerprintSha256": "d688b1465a53fcefdc5a1b036765128d50aeeaedae176e06721946bebb6bc1c7"
+  },
+  "postinstallHooks": [
+    {
+      "package": "@wonderwhy-er/desktop-commander",
+      "version": "0.3.1",
+      "commandSha256": "2a591d0e6783dcade4c33e40e4e84c57bd79a4ec9e0c61536b46d9bb26fe5c1b",
+      "sourceFilesReadOnlyHashes": {
+        "dist/track-installation.js": "a4398f1603529964c7b4357d18965222256bd8df7e9558c233a135c6f3ea0ae7",
+        "dist/npm-scripts/verify-ripgrep.js": "d329a04487fcdc52a21f5817da871f16d4f0cc1907c4a2c51c6bc1e5eb0affae"
+      },
+      "staticObservedPotentialSideEffects": [
+        "Install-source tracking logic can send HTTPS POST requests to telemetry endpoints",
+        "Postinstall also verifies ripgrep executable availability"
+      ]
+    },
+    {
+      "package": "puppeteer",
+      "version": "25.16.0",
+      "commandSha256": "b0ea937d008d34db1c32320e92535bc65c31ca0fec3d47027b174ee6362bb786",
+      "sourceFilesReadOnlyHashes": {
+        "install.mjs": "9bead093d947d534640c1c6c725c06d5bb5cf526e745d2e98bf8a252f52d1247"
+      },
+      "staticObservedPotentialSideEffects": [
+        "Installed postinstall entry can import a browser installer and call downloadBrowsers()"
+      ]
+    }
+  ],
+  "tests": {
+    "newLifecycleSynthetic": {
+      "passed": 23,
+      "failed": 0
+    },
+    "cumulativePythonSynthetic": {
+      "passed": 167,
+      "failed": 0
+    },
+    "windowsOwnerHostPreflight": {
+      "passed": 49,
+      "failed": 0
+    },
+    "portableWindowsAcl": {
+      "passed": 15,
+      "failed": 0
+    },
+    "aclMutationSensitivity": {
+      "mutantsRejected": 7,
+      "total": 7
+    }
+  },
+  "newFilesSha256": {
+    "read-only-upstream-lifecycle.py": "ddf6681de1bf7e82c1c1a80ea4ffea13c220ffa1aedbfeeb38f8c6a032b5887d",
+    "read-only-upstream-lifecycle.test.py": "73c1d5ca597d0be65936bdddd80cf180f525a7d199efd4c89af0c3f35cc88d6e"
+  },
+  "futureStagingDecision": "Evaluate independently approved script-disabled/offline staging and separately provision required ripgrep/browser/native assets. Never silently invoke installed H: postinstall scripts.",
+  "limits": [
+    "Source manifests and both npm lockfiles are point-in-time observations of an H: package namespace with broad inherited write permissions; matching metadata is not publisher authenticity.",
+    "Static code review confirms potential telemetry and browser-download paths only; no actual historical or current execution, outbound requests, download or user tracking was observed.",
+    "prepare and other lifecycle script counts are not an assertion that those scripts execute during ordinary registry dependency installation; behavior depends on npm operation, source form and version.",
+    "The scanner verifies script values are bounded strings and lock hasInstallScript flags align with direct hooks; it is not a complete shell-command parser, script sandbox or browser/native runtime attestation.",
+    "No future npm install or production cutover may be conducted without approved source, host/user privilege separation, external network/secret controls, and independently verified rollback.",
+    "PR45 mandatory hosted Windows/Linux acceptance, merge and actual-main checks remain pending after billing admission failure, and DEV activation remains disabled."
+  ],
+  "safety": {
+    "installedScriptsExecuted": false,
+    "npmInvoked": false,
+    "networkRequestsInitiated": false,
+    "productionPackagesOrManagerModified": false,
+    "accountsOrAclsModified": false,
+    "secretsOrTokensRead": false,
+    "cloudflareOrConnectorModified": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
