@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "Read-only installed npm v3 two-lock metadata cross-check against 612 declared-closure manifests",
+  "observedUtc": "2026-11-20T20:33:03.894304+00:00",
+  "audit": {
+    "schemaVersion": 1,
+    "scope": "read-only installed manifests and both npm v3 lock metadata snapshots",
+    "installedManifestRoots": 612,
+    "dependencyRecordsCompared": 612,
+    "identicalLockAndVersionRecords": 612,
+    "recordsWithIntegrityMetadata": 611,
+    "bundledRecordsWithoutArchiveIntegrity": 1,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "unqualifiedSample": [],
+    "lockConsistencyPassed": true,
+    "projectLockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "installedLockSha256": "4f33fa78027b182572d5e940e0c2d660995548825f7850d23684a6b449f9dadd",
+    "priorIdentityPassed": true,
+    "noPackageExecuted": true,
+    "noRegistryOrNetworkAccess": true,
+    "noFilesModified": true,
+    "archiveIntegrityVerifiedAgainstRegistry": false,
+    "semverRangeSatisfactionVerified": false,
+    "nativeAndDynamicLoaderAttested": false,
+    "effectiveWindowsAclAttested": false,
+    "devActivationAuthorized": false
+  },
+  "observedInstalledPackage": {
+    "name": "@wonderwhy-er/desktop-commander",
+    "version": "0.3.1"
+  },
+  "projectLock": {
+    "installedClosureEntriesCompared": 612,
+    "topLevelLockEntriesObserved": 651
+  },
+  "installedTreeLock": {
+    "installedClosureEntriesCompared": 612,
+    "lockEntriesObserved": 612
+  },
+  "bundledNoIntegrityClarification": {
+    "package": "@desktop-commander/telemetry-contract",
+    "version": "0.1.1",
+    "inBundle": true,
+    "archiveIntegrityMetadataAbsent": true,
+    "interpretation": "A bundled package does not require a separately downloaded archive integrity entry; this is NOT a proof of bundle byte integrity."
+  },
+  "newSyntheticRegressionSuite": {
+    "run": 18,
+    "passed": 18,
+    "failed": 0
+  },
+  "priorSyntheticSuites": {
+    "identity": {
+      "passed": 15,
+      "failed": 0
+    },
+    "closure": {
+      "passed": 17,
+      "failed": 0
+    }
+  },
+  "newDiagnosticSourceSha256": {
+    "read-only-upstream-lock.py": "667af1604f86ef859b62d9aeee0a64a02289d73d111748e4b5699d7e844890cf",
+    "read-only-upstream-lock.test.py": "86dd614c69938a45e56935e47b46f41d5f7c768dc65de494a043f8533e5027e6"
+  },
+  "limitations": [
+    "Both npm lockfiles and the installed package tree reside beneath the historically broad-write H: namespace; consistency is NOT independent trust or a signature.",
+    "The exact lock entry check compares recorded metadata and versions, but does not hash downloaded archives against npm registry provenance or inspect package-lock signing keys.",
+    "An integrity field being present is not the same as validating its content or the source bytes loaded by the active Node process.",
+    "The path check and file reads are point-in-time, not race-free handle-based object identity or qualified ancestor rights.",
+    "Not all optional/peer, dynamic JavaScript, native module, browser/PDF or downloaded helper runtime paths are proven by declared manifest and lockfile metadata.",
+    "GitHub-hosted Windows/Linux acceptance on draft PR45 is required before source release; this does not authorize DEV or live production changes."
+  ],
+  "safety": {
+    "liveManagerOrPackagesExecuted": false,
+    "npmInstallOrUpdate": false,
+    "liveSourceOrConfigChanged": false,
+    "windowsAclOrAccountsChanged": false,
+    "credentialsOpened": false,
+    "cloudflareOrConnectorChanged": false,
+    "githubActionsRerun": false,
+    "pr45Merged": false,
+    "devActivated": false
+  }
+}

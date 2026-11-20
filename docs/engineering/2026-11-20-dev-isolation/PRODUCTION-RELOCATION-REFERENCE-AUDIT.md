@@ -111,6 +111,12 @@ The sanitized [R30 receipt](sanitized-upstream-closure-20261120.json), [bounded 
 
 **Strict limit:** the declared `package.json` closure is not the complete JavaScript execution graph. Dynamic imports, browser/helper downloads, OS package loading, plugins, peer dependencies and optional platform-specific paths may differ. File hashes are snapshots, not upstream provenance or loaded-process attestation; no installed module was executed.
 
+## Npm project/installed-tree lock consistency (R32)
+
+Read-only comparison of the existing project npm lockfile and `node_modules/.package-lock.json` found **identical package entry metadata for 612/612 packages in the declared closure** and **612/612 installed manifest version matches**. The npm v3 project lock has **651** entries total, while the installed-tree lock has **612**; the audit's matched set is exactly the declared installed 612-package closure, not all possible unused/dynamic runtime paths. Both lockfiles contain **611 entries with archive-integrity metadata** and **one `inBundle: true` package without a separate archive integrity field**. Package identity/name checking (R31) remains a prerequisite.
+
+The [source-only two-lock checker](read-only-upstream-lock.py), [18 disposable negative regression tests](read-only-upstream-lock.test.py), and [sanitized point-in-time receipt](sanitized-upstream-lock-20261120.json) are retained on the isolated design branch. A future protected-root build must stage and independently verify its reviewed lockfiles *and* actual installed package closure, rejecting H: write-capable fallback; matching lock metadata alone does not prove content hash, registry provenance, immutable loaded source, version-range satisfaction, native/browser resolution or real DEV-token access denial. No production package was installed, imported, executed or edited.
+
 ## 3. Deployment-version and executable compatibility gate
 
 The previously verified installed `admin.mjs` and `manage.ps1` match the owner's working checkout bytes (Windows CRLF), and after line-ending normalization match the recorded prior deployment commit `9373fadc00689dd782143ab5e49664536f460b8b`. **Their PR #45 head versions are different source blobs.** A cutover to accepted PR45/main source would therefore be not merely a move: it would combine a new filesystem trust root with a source-version change. Review, stage, qualify and roll back those changes as independently distinguishable operations.
