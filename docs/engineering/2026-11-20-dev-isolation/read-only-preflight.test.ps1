@@ -224,6 +224,31 @@ if ($metadataDenied.paths[2].status -ne 'unverified' -or
     throw 'item_metadata_denial_not_rejected'
 }
 
+# A verified baseline must be parsed from the same captured bytes that were
+# hashed. Neither of the former independent file-reader cmdlets is allowed to
+# influence its result now, even when both are deliberately made unavailable.
+$separateReadersDenied = (& {
+    function Get-FileHash { throw 'synthetic_first_baseline_open_denied' }
+    function Get-Content { throw 'synthetic_second_baseline_open_denied' }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $separateReadersDenied 'separate_readers_denied'
+if ($separateReadersDenied.baseline.status -ne 'matched' -or
+    $separateReadersDenied.baseline.matchingPaths -ne 9 -or
+    @($separateReadersDenied.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 0) {
+    throw 'baseline_verification_depends_on_separate_file_reads'
+}
+
+# AST source check complements, but does not replace, the runtime scenario.
+# Byte-length bound, strict decoding, and a single FileStream must be visible.
+if (@($commands | Where-Object {$_ -in @('Get-FileHash','Get-Content')}).Count -ne 0 -or
+    $rawSource -notmatch 'FileStream\]::new' -or
+    $rawSource -notmatch '\$file\.Length -gt 65536' -or
+    $rawSource -notmatch 'UTF8Encoding\]::new\(\$false, \$true\)' -or
+    $rawSource -notmatch '\$sha\.ComputeHash\(\$bytes\)') {
+    throw 'baseline_same_bytes_read_contract_missing'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -231,7 +256,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 15
+    passed = 17
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -247,6 +272,8 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     reparseSubstitutionFailsClosed = $true
     typeSubstitutionFailsClosed = $true
     metadataDenialFailsClosed = $true
+    noSeparateBaselineReaderDependencies = $true
+    sameBytesBoundAndEncodingGuardsPresent = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
