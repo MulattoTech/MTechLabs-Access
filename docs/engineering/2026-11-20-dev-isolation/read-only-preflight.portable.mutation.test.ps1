@@ -14,30 +14,32 @@ if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf) -or
 }
 $source = Get-Content -LiteralPath $sourcePath -Raw
 $portable = Get-Content -LiteralPath $testPath -Raw
+$sourceHashBefore = (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash
+$testHashBefore = (Get-FileHash -LiteralPath $testPath -Algorithm SHA256).Hash
 
 # Pin the host's actual pwsh command. Child processes read only synthetic ACL
 # helpers; each is restricted by test source design, not an OS sandbox.
 $childShell = (Get-Command pwsh -CommandType Application -ErrorAction Stop).Source
 $mutations = @(
-    @{name='mutation-rights-skipped';
+    @{name='mutation-rights-skipped'; expectedFailure='fixture_mismatch:authenticated-modify-active:broadMutationAllowCount';
       old='if (($bits -band $danger) -eq 0) {continue}';
       replacement='if ($true) {continue}'},
-    @{name='inherit-only-misclassified';
+    @{name='inherit-only-misclassified'; expectedFailure='fixture_mismatch:authenticated-inherit-only:broadMutationAllowCount';
       old='$inheritOnly = [bool]($rule.PropagationFlags -band [Security.AccessControl.PropagationFlags]::InheritOnly)';
       replacement='$inheritOnly = $false'},
-    @{name='builtin-system-disowned';
+    @{name='builtin-system-disowned'; expectedFailure='fixture_mismatch:no-write-aces:ownerKind';
       old="'S-1-5-18' { return 'system' }";
       replacement="'S-1-5-18' { return 'other' }"},
-    @{name='unknown-sid-trusted';
+    @{name='unknown-sid-trusted'; expectedFailure='fixture_mismatch:custom-sid-modify:unclassifiedMutationAllowCount';
       old="default { return 'other' }";
       replacement="default { return 'administrators' }"},
-    @{name='broad-grant-underreported';
+    @{name='broad-grant-underreported'; expectedFailure='fixture_mismatch:authenticated-modify-active:broadMutationAllowCount';
       old='$isBroad = $principal -in @(''authenticated-users'',''everyone'',''builtin-users'')';
       replacement='$isBroad = $false'},
-    @{name='reparse-point-ignored';
+    @{name='reparse-point-ignored'; expectedFailure='fixture_mismatch:reparse-detected:reparse';
       old='$result.reparse = [bool]($item.Attributes -band [IO.FileAttributes]::ReparsePoint)';
       replacement='$result.reparse = $false'},
-    @{name='denied-path-reported-observed';
+    @{name='denied-path-reported-observed'; expectedFailure='case_status_mismatch:path-denied';
       old='$result.status = ''unverified''';
       replacement='$result.status = ''observed'''}
 )
@@ -94,12 +96,14 @@ try {
         if($mutated -ceq $source) {throw ('mutation_did_not_change_source:' + $mutation.name)}
         $result=Invoke-Fixture ([string]$mutation.name) $mutated
 
-        # Require a semantic fixture assertion failure, not just an unrelated
-        # tool error, syntax failure or missing dependency.
-        $semantic=$result.output.Contains('fixture_mismatch:') -or
-            $result.output.Contains('case_status_mismatch:')
-        if($result.exitCode -eq 0 -or -not $semantic){
-            throw ('portable_fixture_did_not_reject_mutation:' + $mutation.name)
+        # Only the precise, causally expected first fixture assertion counts
+        # as a killed mutant. A generic unrelated fixture failure is not proof.
+        $firstFailure=[regex]::Match(
+            $result.output,
+            '(?:fixture_mismatch|case_status_mismatch):[a-zA-Z0-9_-]+(?::[a-zA-Z0-9_-]+)?')
+        if($result.exitCode -eq 0 -or -not $firstFailure.Success -or
+           $firstFailure.Value -cne [string]$mutation.expectedFailure){
+            throw ('portable_fixture_unexpected_mutant_failure:' + $mutation.name)
         }
         $rejected++
         $receipts.Add([pscustomobject]@{name=$mutation.name;rejected=$true})
@@ -110,6 +114,13 @@ try {
         [IO.Directory]::Delete($scratchRoot,$true)
     }
 }
+# A claimed cleanup/source integrity status must be verified, not hardcoded.
+$scratchGone = -not (Test-Path -LiteralPath $scratchRoot)
+$sourceUnchanged = ((Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ceq $sourceHashBefore)
+$testUnchanged = ((Get-FileHash -LiteralPath $testPath -Algorithm SHA256).Hash -ceq $testHashBefore)
+if (-not $scratchGone -or -not $sourceUnchanged -or -not $testUnchanged) {
+    throw 'portable_mutation_cleanup_or_source_integrity_failed'
+}
 [pscustomobject]@{
     schemaVersion=1
     suite='portable-acl-fixture-sensitivity'
@@ -119,7 +130,8 @@ try {
     mutations=$receipts.ToArray()
     ownerBaselineUsed=$false
     productionRuntimeQueried=$false
-    originalSourceModified=$false
-    scratchRemoved=$true
+    originalSourceModified=(-not ($sourceUnchanged -and $testUnchanged))
+    scratchRemoved=$scratchGone
+    exactFailureClassification=$true
     activationAuthorized=$false
 } | ConvertTo-Json -Depth 4 -Compress
