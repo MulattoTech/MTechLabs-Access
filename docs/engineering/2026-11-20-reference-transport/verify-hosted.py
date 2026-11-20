@@ -98,8 +98,8 @@ TRANSPORT_FROZEN = {
     "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
     "test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
     "test/reference-transport-native.test.mjs": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
-    "test/fixtures/reference-transport-native.ps1": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
-    "test/fixtures/reference-transport-child.mjs": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+    "test/fixtures/reference-transport-native.ps1": "045d81cf525bf6189bbfdc2b2cff569a165e90b6bd5c06895e39ad21d4565dcb",
+    "test/fixtures/reference-transport-child.mjs": "21c26b4fa12fe0dd2cf170196957fe6b90109f6ae8c3fc3a2c24d3a8b4348483",
     "test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
 }
 TRANSPORT_SOURCES = [

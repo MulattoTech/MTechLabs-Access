@@ -91,6 +91,14 @@ function buildFailureProbe(source) {
   if (current.split(catchAnchor).length !== 2 || current.split(finallyAnchor).length !== 2) throw new Error('fixture_probe_diagnostic_anchor_invalid');
   splice('current_rejection_and_cleanup', current, current.replace(catchAnchor, "    } catch { Write-FixtureProbeStage 56; return @{ status = 'unverified' } }")
     .replace(finallyAnchor, '    finally { Write-FixtureProbeStage 57; if ($null -ne $snapshot) { $snapshot.Dispose() }; Write-FixtureProbeStage 58 }'));
+  splice('input_encoding_initialization', '    [Console]::InputEncoding = [System.Text.UTF8Encoding]::new($false, $true)',
+    '    Write-FixtureProbeStage 70\n    $fixtureProbeInputEncoding = [System.Text.UTF8Encoding]::new($false, $true)\n    Write-FixtureProbeStage 71\n    Write-FixtureProbeStage 72\n    [Console]::InputEncoding = $fixtureProbeInputEncoding\n    Write-FixtureProbeStage 73');
+  splice('output_encoding_initialization', '    [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)',
+    '    Write-FixtureProbeStage 74\n    $fixtureProbeOutputEncoding = [System.Text.UTF8Encoding]::new($false)\n    Write-FixtureProbeStage 75\n    Write-FixtureProbeStage 76\n    [Console]::OutputEncoding = $fixtureProbeOutputEncoding\n    Write-FixtureProbeStage 77');
+  splice('buffer_initialization', '    $buffer = New-Object char[] 16385',
+    '    Write-FixtureProbeStage 78\n    $buffer = New-Object char[] 16385\n    Write-FixtureProbeStage 79');
+  splice('length_initialization', '    $length = 0',
+    '    Write-FixtureProbeStage 80\n    $length = 0\n    Write-FixtureProbeStage 81');
   splice('stdin_begin', '    while ($length -lt $buffer.Length) {', '    Write-FixtureProbeStage 2\n    while ($length -lt $buffer.Length) {');
   splice('stdin_read', '        $read = [Console]::In.Read($buffer, $length, $buffer.Length - $length)',
     '        Write-FixtureProbeStage 7\n        $read = [Console]::In.Read($buffer, $length, $buffer.Length - $length)\n        Write-FixtureProbeStage 8');
@@ -134,7 +142,7 @@ async function failureProbeDiagnostic(originalExecFile) {
     }
     const derivative = buildFailureProbe(text);
     record.derivativeSourceSha256 = hash(derivative.source); record.anchorCount = derivative.anchors.length; record.anchorsMatched = true;
-    if (record.anchorCount !== 27 || record.derivativeSourceSha256 !== '4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1') {
+    if (record.anchorCount !== 31 || record.derivativeSourceSha256 !== 'cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4') {
       throw new Error('fixture_probe_diagnostic_derivative_mismatch');
     }
     filename = path.join(process.cwd(), 'reference-probe-diagnostic-' + randomBytes(12).toString('hex') + '.ps1');
@@ -164,7 +172,7 @@ async function failureProbeDiagnostic(originalExecFile) {
           for (const line of diagnostic.split('\n').filter(Boolean)) {
             if (!line.startsWith(probeTraceMarker)) { record.otherStderrLines = Math.min(1024, record.otherStderrLines + 1); continue; }
             const match = /^MTERM_PROBE_DIAGNOSTIC ([0-9]{1,2}) ([0-9]{1,6})$/.exec(line);
-            if (!match || ![1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64].includes(Number(match?.[1])) || Number(match?.[2]) > 600000) {
+            if (!match || ![1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81].includes(Number(match?.[1])) || Number(match?.[2]) > 600000) {
               record.malformedTrace = true; continue;
             }
             if (record.stages.length >= 128) { record.traceOverflow = true; continue; }
