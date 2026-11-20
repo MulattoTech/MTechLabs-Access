@@ -190,9 +190,18 @@ try {
 $listener = [ordered]@{production='unverified';development='unverified'}
 try {
     $sockets = @(Get-NetTCPConnection -State Listen -ErrorAction Stop)
-    $prod = @($sockets | Where-Object {$_.LocalAddress -eq '127.0.0.1' -and $_.LocalPort -eq 19740})
+    # An exclusive loopback binding requires one listener on the entire port.
+    # Counting only 127.0.0.1 would miss a second 0.0.0.0, :: or alternate
+    # address listener and falsely report the expected binding as exclusive.
+    $prodPort = @($sockets | Where-Object {$_.LocalPort -eq 19740})
     $dev = @($sockets | Where-Object {$_.LocalPort -eq 19741})
-    $listener.production = if ($prod.Count -eq 1) {'listener-present'} else {'absent-or-ambiguous'}
+    $listener.production = if ($prodPort.Count -eq 0) {
+        'listener-absent'
+    } elseif ($prodPort.Count -eq 1 -and $prodPort[0].LocalAddress -eq '127.0.0.1') {
+        'listener-present'
+    } else {
+        'listener-nonexclusive'
+    }
     $listener.development = if ($dev.Count -eq 0) {'listener-absent'} else {'listener-present'}
 } catch {}
 
@@ -230,7 +239,11 @@ foreach ($name in @('hRoot','hMTechLabs','hProduction')) {
 if ($baselineStatus -ne 'matched') {$blockers += 'baseline-not-matched'}
 if ($devAccount -ne 'present-not-qualified' -or $devProfile -ne 'present-not-qualified') {$blockers += 'dev-principal-not-provisioned'}
 if ($startup -ne 'configured-exact') {$blockers += 'startup-unverified'}
-if ($listener.production -ne 'listener-present') {$blockers += 'production-listener-unverified'}
+if ($listener.production -eq 'listener-nonexclusive') {
+    $blockers += 'production-listener-nonexclusive'
+} elseif ($listener.production -ne 'listener-present') {
+    $blockers += 'production-listener-unverified'
+}
 # This is a pre-provisioning diagnostic. A DEV port being occupied before
 # authorization can mask another process or stale deployment.
 if ($listener.development -eq 'listener-present') {
