@@ -2,7 +2,11 @@
 # Runs only on disposable copies of reviewed source. Never executes preflight top level.
 #requires -Version 7.0
 [CmdletBinding()]
-param()
+param(
+    # Bounded child-runner execution; defaults to 30 seconds per disposable
+    # helper fixture. Reducing this threshold is useful only in failure tests.
+    [ValidateRange(1000, 60000)][int]$ChildTimeoutMs = 30000
+)
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
@@ -30,7 +34,7 @@ $mutations = @(
     @{name='builtin-system-disowned'; expectedFailure='fixture_mismatch:no-write-aces:ownerKind';
       old="'S-1-5-18' { return 'system' }";
       replacement="'S-1-5-18' { return 'other' }"},
-    @{name='unknown-sid-trusted'; expectedFailure='fixture_mismatch:custom-sid-modify:unclassifiedMutationAllowCount';
+    @{name='unknown-sid-trusted'; expectedFailure='fixture_mismatch:custom-sid-modify:inheritableUnclassifiedMutationCount';
       old="default { return 'other' }";
       replacement="default { return 'administrators' }"},
     @{name='broad-grant-underreported'; expectedFailure='fixture_mismatch:authenticated-modify-active:broadMutationAllowCount';
@@ -71,9 +75,46 @@ try {
         [Management.Automation.Language.Parser]::ParseFile(
             $srcFile,[ref]$tokens,[ref]$errors) | Out-Null
         if(@($errors).Count -ne 0) {throw 'mutation_source_parse_failed'}
-        $captured=(& $childShell -NoLogo -NoProfile -NonInteractive -File $testFile 2>&1 | Out-String)
-        $exitCode=$LASTEXITCODE
-        return [pscustomobject]@{exitCode=$exitCode;output=$captured}
+        # Never let an intentionally broken child block this runner forever.
+        # Use .NET Process with separate async pipe drains to avoid stdout/stderr
+        # deadlocks, and terminate only the child process tree we started.
+        $start = [Diagnostics.ProcessStartInfo]::new()
+        $start.FileName = $childShell
+        $start.UseShellExecute = $false
+        $start.CreateNoWindow = $true
+        $start.RedirectStandardOutput = $true
+        $start.RedirectStandardError = $true
+        foreach($arg in @('-NoLogo','-NoProfile','-NonInteractive','-File',$testFile)){
+            [void]$start.ArgumentList.Add($arg)
+        }
+        $process = [Diagnostics.Process]::new()
+        $process.StartInfo = $start
+        try {
+            if(-not $process.Start()) { throw 'portable_child_start_failed' }
+            $stdout = $process.StandardOutput.ReadToEndAsync()
+            $stderr = $process.StandardError.ReadToEndAsync()
+            if(-not $process.WaitForExit($ChildTimeoutMs)) {
+                try { $process.Kill($true) } catch {
+                    if(-not $process.HasExited) { throw 'portable_child_tree_termination_failed' }
+                }
+                if(-not $process.WaitForExit(5000)) { throw 'portable_child_did_not_exit' }
+                throw ('portable_fixture_timed_out:' + $caseName)
+            }
+            if(-not $stdout.Wait(5000) -or -not $stderr.Wait(5000)) {
+                throw ('portable_child_output_drain_failed:' + $caseName)
+            }
+            $captured = $stdout.Result + [Environment]::NewLine + $stderr.Result
+            if($captured.Length -gt 65536) {
+                throw ('portable_child_output_exceeded_limit:' + $caseName)
+            }
+            return [pscustomobject]@{exitCode=$process.ExitCode;output=$captured}
+        } finally {
+            if(-not $process.HasExited) {
+                try { $process.Kill($true) } catch {}
+                [void]$process.WaitForExit(5000)
+            }
+            $process.Dispose()
+        }
     }
 
     $baseline=Invoke-Fixture 'control' $source
