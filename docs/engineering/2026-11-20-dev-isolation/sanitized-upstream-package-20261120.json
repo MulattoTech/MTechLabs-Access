@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "classification": "Read-only installed package identity and ACL inventory; NOT effective-access qualification, process attestation or deployment authorization",
+  "observedUtc": {
+    "identity": "2026-11-20T19:51:43.7193341Z",
+    "principalRights": "2026-11-20T19:52:16.0106907Z"
+  },
+  "selectedBy": "Existing H:\\MTechLabs\\MCP\\state\\manager.json serverPath and serverPackageJsonPath; raw config omitted",
+  "installedPackage": {
+    "name": "@wonderwhy-er/desktop-commander",
+    "version": "0.3.1",
+    "type": "module",
+    "withinExpectedProductionNodeModules": true,
+    "entryRelativeToPackageRoot": "dist\\index.js",
+    "entryMatchesPackageMainOrBin": true,
+    "packageFileAndEntryShareRoot": true,
+    "packageJson": {
+      "bytes": 6035,
+      "sha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657"
+    },
+    "entryFile": {
+      "bytes": 7425,
+      "sha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b"
+    }
+  },
+  "accessControl": {
+    "pathTypesObserved": [
+      "node_modules directory",
+      "package root directory",
+      "package.json file",
+      "dist/index.js file"
+    ],
+    "allObservedExist": true,
+    "allObservedReparseFlagsFalse": true,
+    "daclProtectedByObject": {
+      "nodeModules": false,
+      "packageRoot": false,
+      "packageJson": false,
+      "entryFile": false
+    },
+    "inheritedAuthenticatedUsersModify": {
+      "principalCategory": "authenticated-users",
+      "mask": "0x001301BF",
+      "appliesToCurrentObject": true,
+      "inherited": true,
+      "observedOn": [
+        "packageRoot",
+        "packageJson",
+        "entryFile"
+      ]
+    },
+    "builtinUsersObserved": {
+      "principalCategory": "builtin-users",
+      "mask": "0x001200A9",
+      "effectiveAceClassification": "ReadAndExecute, Synchronize, NOT a write-capable allow entry",
+      "observedOn": [
+        "packageRoot",
+        "packageJson",
+        "entryFile"
+      ]
+    },
+    "noRawSidsExported": true,
+    "rawSecurityDescriptorsExported": false,
+    "actualDevTokenChecked": false,
+    "parentDeleteChildAccessVerified": false,
+    "hardlinkAliasesVerified": false
+  },
+  "versionBoundary": {
+    "installedControlVersion": "0.3.1",
+    "qualificationCandidateVersion": "0.3.3",
+    "exactInstalledPackageVersionEqualsControl": true,
+    "localSelectedNodeFileMetadataVersion": "27.0.0-alpha.0.0.0",
+    "pr45HostedNodeMajor": 24,
+    "sourceCandidateAccepted": false,
+    "hostRuntimeCompatibilityQualified": false
+  },
+  "migrationImpact": {
+    "preferredDisposition": "Under separately approved protected-root plan, stage source-verified package and metadata in protected code root; verify parent ACLs and actual standard DEV token cannot mutate/replace/alias source; do not share owner-writable H: ancestors.",
+    "productionStateNotModified": true,
+    "installedEntryNotExecuted": true,
+    "namesOrHashesNotProofOfLoadedProductionProcess": true,
+    "noDevPackageVersionOrPathAssigned": true
+  },
+  "safety": {
+    "rawManagerConfigExported": false,
+    "tokenOrCredentialFileOpened": false,
+    "secretValuesExported": false,
+    "userSidOrSDDLExported": false,
+    "currentHostFilesModified": false,
+    "servicesOrProcessesChanged": false,
+    "githubWorkflowsRerun": false,
+    "devActivationAuthorized": false
+  },
+  "limits": [
+    "Only selected package metadata/entry and four path ACL observations were inspected; transitive dependencies and package contents were not fully hashed or attested.",
+    "An active inherited Authenticated Users Modify ACE is observed, not actual effective access with a separate MTermDev user or a demonstrated exploit.",
+    "No hardlink identity test, named-pipe test, native cross-account fixture or full parent path identity attestation was performed.",
+    "A matching package main/bin declaration is a metadata consistency check, not proof that installed processes loaded the expected entry.",
+    "Future migration must separately approve and test protected parent/child ACLs, supply chain integrity, actual runtime compatibility, backup and rollback."
+  ]
+}
