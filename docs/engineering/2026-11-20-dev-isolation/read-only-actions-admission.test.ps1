@@ -38,6 +38,16 @@ $helper=$definitions[0].Extent.Text
     $names=@('test','managed-mcp','managed-mcp-windows',
         'Upstream qualification / ubuntu-latest / Node 24',
         'Upstream qualification / windows-latest / Node 24')
+    function New-Pr {
+        return @{
+            number=45
+            headRefOid='f0855c1227aacc49071581bb52ba5566bc07ffce'
+            baseRefOid='15e851b11984592803d37599b639772e51e5c8c0'
+            state='OPEN'
+            isDraft=$true
+            mergedAt=$null
+        }
+    }
     function New-Run {
         $jobs=@(foreach($name in $names){
             $steps=@(foreach($label in $required[$name]){
@@ -59,15 +69,18 @@ $helper=$definitions[0].Extent.Text
     function Check(
         [string]$name,[hashtable]$run,
         [bool]$admission,[bool]$workflowSuccess,[bool]$requiredObserved,
-        [string]$reason,[int]$jobsWithSteps,[int]$stagesObserved
+        [string]$reason,[int]$jobsWithSteps,[int]$stagesObserved,
+        [hashtable]$pr=$null,[bool]$expectCurrentPr=$true
     ){
-        $r=Get-AdmissionReport -Run $run -Id $id -ExpectedSha $sha
+        if($null -eq $pr){$pr=New-Pr}
+        $r=Get-AdmissionReport -Run $run -Pr $pr -Id $id -PrNumber 45 -ExpectedSha $sha -ExpectedBase '15e851b11984592803d37599b639772e51e5c8c0'
         if($r.admissionObserved -ne $admission -or
            $r.workflowReportedSuccess -ne $workflowSuccess -or
            $r.requiredTestStagesObserved -ne $requiredObserved -or
            $r.reason -cne $reason -or
            $r.completedWithSteps -ne $jobsWithSteps -or
            $r.observedRequiredStages -ne $stagesObserved -or
+           $r.currentPrCandidateMatched -ne $expectCurrentPr -or
            $r.independentlyVerified -ne $false -or
            $r.actualMainAccepted -ne $false -or
            $r.devActivationAuthorized -ne $false) {
@@ -145,6 +158,30 @@ $helper=$definitions[0].Extent.Text
     $run=@{}
     if(Check 'missing_metadata' $run $false $false $false 'metadata_unverified' 0 0){$passed++}
 
+    $run=New-Run;$pr=New-Pr;$pr.headRefOid='0000000000000000000000000000000000000000'
+    if(Check 'pr_current_head_advanced' $run $false $false $false 'current_pr_head_mismatch' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.baseRefOid='0000000000000000000000000000000000000000'
+    if(Check 'pr_base_advanced' $run $false $false $false 'current_pr_base_mismatch' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.number=46
+    if(Check 'wrong_pr_number' $run $false $false $false 'current_pr_state_unqualified' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.state='CLOSED'
+    if(Check 'closed_pr' $run $false $false $false 'current_pr_state_unqualified' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.isDraft=$false
+    if(Check 'not_draft_pr' $run $false $false $false 'current_pr_state_unqualified' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.mergedAt='2026-11-20T12:00:00Z'
+    if(Check 'merged_pr' $run $false $false $false 'current_pr_state_unqualified' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=@{}
+    if(Check 'missing_pr_fields' $run $false $false $false 'metadata_unverified' 0 0 $pr $false){$passed++}
+
+    $run=New-Run;$pr=New-Pr;$pr.headRefOid=''
+    if(Check 'blank_current_pr_head' $run $false $false $false 'current_pr_head_mismatch' 0 0 $pr $false){$passed++}
+
     [pscustomobject]@{
         schemaVersion=1
         suite='offline-actions-admission-and-required-stage-classification'
@@ -152,6 +189,7 @@ $helper=$definitions[0].Extent.Text
         failed=0
         expectedJobCount=5
         expectedRequiredStageCount=10
+        pinnedCurrentPrIdentityChecked=$true
         githubQueried=$false
         productionQueried=$false
         independentlyVerified=$false
