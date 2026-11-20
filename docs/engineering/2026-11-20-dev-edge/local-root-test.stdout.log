@@ -1,0 +1,251 @@
+
+> mtechlabs-access-codes@1.0.0 test
+> node --test --test-isolation=none tests/*.test.js
+
+✔ new approved users, unknown accounts and unregistered applications default to deny (95.674456ms)
+✔ a per-app grant does not authorize another app, owner admin or other users (2.76367ms)
+✔ pending, suspended and revoked account state defeats existing per-app grants (3.385151ms)
+✔ owner access survives direct denials; dashboard cannot alter the recovery owner (24.681947ms)
+✔ explicit user grant overrides groups; inherited deny beats inherited allow (2.031809ms)
+✔ legacy apps reject pretend viewer/editor roles and owner assignment is never delegated (13.756476ms)
+✔ code sessions check the latest grant, user status, expiry and revocation version (4.894082ms)
+✔ guild passphrase rotation and disable invalidate every old anonymous session (3.340882ms)
+✔ owner routes reject forged identity headers, non-owner tokens and tokens for Code Bot (8.190646ms)
+✔ CSRF token is bound to the session as well as the exact origin (2.353326ms)
+✔ gateway revocation denies an old Access JWT before contacting its origin (4.191827ms)
+✔ D1-style batches roll back all mutations if one statement fails (1.425272ms)
+✔ Code Watch interface and application metadata remain guild-neutral (2.596862ms)
+✔ identical reordered snapshots write no evidence/code rows while effective last_seen advances (11.161025ms)
+✔ omission freezes prior observation and later unchanged snapshots cannot keep it fresh (11.140734ms)
+✔ large cold import stays below 30 D1 calls and 48 unchanged scans stay far below 20000 writes (499.893737ms)
+ℹ 1200-observation archive: 288 SQLite row changes for 48 unchanged scans; 9 D1 calls per scan. Index billing and unrelated app writes are separate.
+✔ source Retry-After is honored beyond the default backoff without another upstream request (3.357958ms)
+✔ a source enabled after bootstrap suppresses its first-seen historical backlog (4.631126ms)
+✔ date-only expiry remains active through its UTC day and expires at next midnight in JS and SQL (3.668739ms)
+✔ source snapshot publication rolls back atomically if an evidence insert fails (2.405326ms)
+✔ 50 simultaneous visitors obtain one global scan lease and one scan run (3.752458ms)
+✔ manual and scheduled callers share the same 15-minute cooldown after release (2.159677ms)
+✔ a running lease cannot be replaced even if cooldown is accidentally expired (1.644952ms)
+✔ atomic rate limiting caps concurrent callers and resets only at server time boundary (3.392162ms)
+✔ all 13 historical seeds remain suppressed after successful corroboration (4.776941ms)
+✔ first live baseline is suppressed; newly discovered later codes queue exactly once (8.638557ms)
+✔ a source recovering after initial failure does not announce its backlog as new (4.771082ms)
+✔ source failures preserve cached evidence and display the upstream failure (4.461944ms)
+✔ personal redeemed state does not verify global validity or leak to another person (3.021228ms)
+✔ two pages from one publication do not masquerade as independent corroboration (0.12938ms)
+✔ catalog contains distinct stable cards and current user-facing app endpoints (0.346736ms)
+✔ owner sees all enabled cards; an approved person sees only separately granted apps (8.871638ms)
+✔ unverified and suspended visitors cannot obtain the catalog (2.811605ms)
+✔ person-specific visibility hides only that viewer and cannot bypass global or app grants (30.368133ms)
+✔ owner switch persists globally without changing app grants or entry policies (10.482356ms)
+✔ DEV edge descriptor and authorization API capability is available (0.23894ms)
+✔ dedicated DEV entry capability exists without a scheduled production worker (0.19439ms)
+✔ DEV descriptor is canonically ordered deeply copied and frozen without activation (1.375867ms)
+✔ DEV descriptor rejects missing unknown array null and nonplain records (2.843374ms)
+✔ DEV descriptor refuses getters hidden keys and symbols without invoking accessors (1.825561ms)
+✔ DEV descriptor rejects authority claims owner aliases and malformed instance identifiers (2.729913ms)
+✔ DEV descriptor rejects every production or development endpoint alias and retarget (3.574432ms)
+✔ DEV descriptor independently separates all routing store and credential identities (2.041093ms)
+✔ DEV descriptor fixes credential and authorization bindings without production defaults (1.494789ms)
+✔ DEV descriptor binds exact manager ports and loopback Host declarations (2.125844ms)
+✔ DEV descriptor pins issuer and challenge metadata to canonical dedicated URLs (0.982989ms)
+✔ DEV runtime matcher proves declarations only and returns no runtime or activation authority (0.62814ms)
+✔ DEV runtime matcher is compatible with the complete existing validated runtime plan schema (6.959553ms)
+✔ DEV runtime matcher rejects every mismatched routing field port and top-level binding (1.990807ms)
+✔ DEV valid owner reaches the disabled terminal with no body backend or production work (3.861882ms)
+✔ DEV rejects invalid routes before reading configuration keys database or body (7.223466ms)
+✔ DEV method and explicit Origin refusals precede all configuration and identity work (7.767276ms)
+✔ DEV permits only declared browser origins or absent Origin while staying disabled (4.874141ms)
+✔ DEV metadata remains explicitly unavailable without fabricated OAuth discovery or owner lookup (1.92901ms)
+✔ DEV config requires exact canonical JSON and rejects duplicate reordered or oversized text before authentication (7.983967ms)
+✔ DEV captures only data environment bindings and rejects relevant accessors without invoking them (3.965547ms)
+✔ DEV bearer bytes must match their declaration and cannot reuse production credentials (12.198288ms)
+✔ DEV authorization store is mandatory distinct by handle and never falls back to production DB (6.332565ms)
+✔ DEV ignores a poison production DB getter and does not read production bearer configuration (1.726127ms)
+✔ DEV human authentication requires a real assertion rather than cookies bearer or descriptive identity (3.217091ms)
+✔ DEV signed assertions bind exact issuer signature algorithm and application token type (12.0511ms)
+✔ DEV admits one exact audience and rejects production mixed duplicate or malformed audiences (14.527948ms)
+✔ DEV JWT lifetime and human identity shape are checked before owner state access (10.006716ms)
+✔ DEV exact owner subject and normalized email must both match before database access (7.374339ms)
+✔ DEV owner row must be currently approved strictly typed and match the pinned owner (27.955094ms)
+✔ DEV owner revocation is read on every request and equality revokes the prior token (3.927519ms)
+✔ DEV authorization storage failure remains private and never consults grants or retries (2.642994ms)
+✔ DEV descriptor token store and prepare are captured before the first asynchronous digest (4.86652ms)
+✔ DEV pending key verification cannot retarget its captured descriptor or authorization store (2.259841ms)
+✔ DEV rechecks token expiry after the awaited owner-row lookup (2.638537ms)
+✔ DEV request claims headers and body cannot enable activation or leak private traces (2.336691ms)
+✔ dedicated DEV entry exposes only the disabled DEV surface and no production fallback (3.775634ms)
+✔ Worker reserves the canonical DEV resource even when a website grant would allow its hostname (4.824714ms)
+✔ Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing (5.248419ms)
+✔ Worker reserved DEV routes do not eagerly touch a poison production DB binding (0.532813ms)
+✔ Worker configured DEV route authorizes only its captured DEV owner and remains activation disabled (2.927369ms)
+✔ Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing (4.165366ms)
+✔ MCP page, assets and API reject unauthenticated and non-owner callers (13.579872ms)
+✔ owner-only plugin recovery download returns the exact pinned release (7.200416ms)
+✔ unconfigured manager is explicit, creates owner CSRF session and never contacts an origin (3.758327ms)
+✔ status uses only the fixed origin, minimal headers and manual redirects (4.346486ms)
+✔ configuration cannot target a caller-selected, alternate or insecure origin (7.172622ms)
+✔ an accidental service credential echo in an allowlisted label fails closed (3.0998ms)
+✔ redirects, non-JSON, oversized responses and failures remain offline without response disclosure (10.38408ms)
+✔ verified owner policy update relays only three fields and records safe audit events (3.919917ms)
+✔ invalid or expanded policy payloads never reach the local API (19.732023ms)
+✔ policy writes require current owner session, correct audience and exact-origin CSRF (9.140815ms)
+✔ unknown actions and wrong methods never become an arbitrary proxy (5.851862ms)
+✔ unverified policy reply is not retried or represented as success (3.456721ms)
+✔ owner session revocation blocks a policy write before the local API (2.745612ms)
+✔ toolkit status projects capability gates and durable jobs without local paths or job output (0.649533ms)
+✔ toolkit controls are owner-only, CSRF guarded and verify exact capability persistence (6.201021ms)
+✔ owner can request bounded job cancel and resume without arbitrary origin routes (6.649985ms)
+✔ owner page assets use existing security headers and explain real control boundaries (9.262872ms)
+✔ Gemini Web connection card documents the exact OAuth and historical verification boundaries (3.617639ms)
+✔ management inventory is display-only and cannot create delegated local-tool grants (4.221773ms)
+✔ unknown status values are not shown as healthy or zero and arbitrary fields are dropped (0.306603ms)
+✔ remote backend status is projected without inventing browser sign-in evidence (0.370612ms)
+✔ recent remote tool events are bounded, sanitized, and never assigned to Gemini without identity evidence (0.45935ms)
+✔ owner-only Gemini diagnostic panel distinguishes the verified file test and live unattributed activity (3.494189ms)
+✔ connect instructions link the private ChatGPT connector without claiming individual OAuth status (1.506928ms)
+✔ admin and manager UI retain separate permissions, controlled refresh and no browser credential (1.025184ms)
+✔ shared scheduling, resource use and installation records retain only bounded safe evidence (0.801649ms)
+✔ expanded fleet concurrency and bounded remote capacity survive Worker projection (0.217216ms)
+✔ legacy, unavailable and malformed scheduler evidence never establishes a shared healthy limit (0.416063ms)
+✔ remote client labels prove only protocol initialization and discard arbitrary identity fields (0.274775ms)
+✔ scheduler and initialization histories are bounded before browser projection (0.55708ms)
+✔ job submission is owner-scoped, strictly typed, verified and never accepts shell payloads (10.393509ms)
+{"event":"mterm_mcp_request","requestId":"208ada68-54cb-48d7-8ca9-e8a940488113","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"2724dd79-f8f2-4961-b958-d42655b12c24","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+✔ remote MCP requires a signed Access assertion, not cookies, bearer or descriptive email (1.458414ms)
+{"event":"mterm_mcp_request","requestId":"6b4867a1-bcb2-44de-a1af-24ccc2f2428e","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"500ac6a9-805c-4e9c-8be1-3ef6e145666f","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"2175b235-39c3-43fc-a4c7-1363fcab0eb0","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"73a2faf6-cd7d-4f7f-81c7-154dbd53f455","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"3c18a838-bd4f-4f6b-899a-99fe0236a848","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"44647921-8898-4b75-ad70-ad1f3aef0e2c","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"b739fde7-441e-4939-8ab3-c4bcdeca25a8","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"c200365c-dedf-4a76-a13f-86dbf91dbb04","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"0dce3172-70ed-4a4c-b0c0-14a802b4e651","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"a8b4dac8-20b3-466f-9e9a-1d57fb67bac3","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"26e6dbe5-e004-4b75-89a4-160a17605369","phase":"access-authentication","rpcMethod":"unparsed","status":401,"originStatus":null,"durationMs":0}
+✔ remote MCP verifies signature, issuer, dedicated audience, time and human identity (10.431538ms)
+{"event":"mterm_mcp_request","requestId":"bab07f1a-1439-455b-a914-e619d43c4367","phase":"access-authentication","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"30f18260-ec71-4365-b43a-37e39dc7183e","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"6aceb92c-500a-4aa7-bc34-729afe8ee1b8","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"f3bac0d1-7a26-4166-9e12-ee46b1fab729","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"9688c5c5-0d25-4c84-8de5-90efe726b805","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"9b81d811-3ec1-4167-b973-7a3476842b87","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"fa18575f-dfd5-438c-a644-d9b1f9e7fec8","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"5b09bbb6-60b2-41c1-84b6-8548f728a91f","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"3838d337-3e76-4c3b-bdf1-1e9dc55fb8fa","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"ad02d1f6-b87f-43cc-8c53-3c456d1b7c66","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"6004252c-a0c7-49a8-a834-a0f502830229","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+✔ remote MCP allows only the exact owner and current approved owner row (9.374741ms)
+{"event":"mterm_mcp_request","requestId":"2d40de25-324c-4765-b7ba-37eeb54e5884","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"91a949c9-6ac1-4202-8203-e3653a0fc7e5","phase":"owner-authorization","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"b644b8ba-ef90-4f4f-909f-714df03f1618","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+✔ owner revocation is checked on every request, with equality revoked and fresh token accepted (3.698475ms)
+✔ missing configuration, alternate origin and DB failure fail closed (7.891653ms)
+{"event":"mterm_mcp_request","requestId":"404f14ce-630b-44b8-97ed-892696df90cc","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"2bfc5099-bbed-42d7-b203-a5e25e946a01","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"6fe1508c-250f-4234-abdf-3e034a52cc40","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"4916b677-3fe4-4a54-a703-a283863d3894","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"814dcecf-065a-45c9-8cda-5aff8b0b90ea","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"3ce1ed2e-3a4b-485a-8ac5-577c5f0a6288","phase":"request-routing","rpcMethod":"unparsed","status":404,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"068d23c2-be2a-4784-b38a-c4609bde6942","phase":"request-validation","rpcMethod":"unparsed","status":405,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"9c0ab21f-c668-494e-bd8b-23be28a4e7f2","phase":"request-validation","rpcMethod":"unparsed","status":405,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"fe0feec4-8637-445c-8697-9033c7aea428","phase":"request-validation","rpcMethod":"unparsed","status":405,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"1d3b3eb1-240d-4c7a-8cb0-22b34796ede3","phase":"request-validation","rpcMethod":"unparsed","status":405,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"093d334e-5606-4409-8b51-fb29fc9ee8e8","phase":"request-validation","rpcMethod":"unparsed","status":405,"originStatus":null,"durationMs":0}
+✔ the adapter accepts only its HTTPS hostname, exact path, no query and POST method (9.016451ms)
+{"event":"mterm_mcp_request","requestId":"4435b9fa-bb7b-4e51-a5fd-68ba076b8d1c","phase":"request-validation","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"e3d0d04d-dcc3-41e9-86a1-938ed6f2b435","phase":"request-validation","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"33f1365c-1ef8-49ce-aa68-934197fef744","phase":"request-validation","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"e28fd059-92b1-4299-95c0-b1a2b2fed914","phase":"request-validation","rpcMethod":"unparsed","status":403,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"f530ccd3-3073-474f-8b15-dccf802acd75","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"23c051fa-d6eb-4c7e-b4b0-5bd4a201bfc6","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"7f64d707-5879-49ae-8020-3c68ce15002e","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"fe5e39b4-0613-4d4f-af1f-587a57b427e2","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"2c016be4-0fbf-43d9-a1e7-24b67d79de89","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"4075afe7-08ee-436e-9379-5b363fff0439","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+✔ explicit untrusted origins are denied; cloud clients need no Origin header (10.354269ms)
+{"event":"mterm_mcp_request","requestId":"0fcdd2e3-888b-43b9-9e02-6e04c3e6d06b","phase":"request-validation","rpcMethod":"unparsed","status":415,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"2c7bf203-5569-483a-ae7d-4514dbc9eeba","phase":"request-validation","rpcMethod":"unparsed","status":415,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"bfdab647-b09b-48dd-888f-c0bc2a3c9da5","phase":"request-validation","rpcMethod":"unparsed","status":415,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"75dc4444-b346-4898-abbf-9a0339fd5f96","phase":"request-validation","rpcMethod":"unparsed","status":406,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"fe58e00c-2ba3-498e-b6fb-2d7ba2d0131f","phase":"request-validation","rpcMethod":"unparsed","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"3fe22679-78f3-43ea-ba0d-52d3e54baf03","phase":"request-validation","rpcMethod":"unparsed","status":400,"originStatus":null,"durationMs":0}
+✔ content type, encoding, accept and protocol version are validated before the PC is contacted (6.268666ms)
+{"event":"mterm_mcp_request","requestId":"bc9cd302-5dd2-47d0-b0d3-c1968e365d41","phase":"request-validation","rpcMethod":"other","status":400,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"bc2fcc1e-ba95-4781-8cb7-2b6afae2d63c","phase":"request-validation","rpcMethod":"other","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"97406161-c3bb-4f74-aa5a-8a7efcc9f2cc","phase":"request-validation","rpcMethod":"other","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"7a38c228-3088-4cb2-8f0e-89113cfb1e2a","phase":"request-validation","rpcMethod":"other","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"68342067-e14e-4f47-ab7c-d51c0ec24752","phase":"request-validation","rpcMethod":"other","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"0f6bf683-f3cf-4978-94d8-d91369bc3aa7","phase":"request-validation","rpcMethod":"unparsed","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"26048e06-7987-4a36-9c81-cf7b07130963","phase":"request-validation","rpcMethod":"unparsed","status":400,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"be7998bb-8765-43c0-9970-3800af3a325b","phase":"request-validation","rpcMethod":"unparsed","status":413,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"9582adf5-dd1c-42bf-b392-9be4d8a64f08","phase":"request-validation","rpcMethod":"unparsed","status":413,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"316a88a1-1639-47b8-b26c-90da59cdfb76","phase":"request-validation","rpcMethod":"unparsed","status":413,"originStatus":null,"durationMs":1}
+✔ malformed, batched, invalid UTF-8 and over-limit request bodies never reach the origin (15.961041ms)
+{"event":"mterm_mcp_request","requestId":"a9ab9c6e-eefa-4e79-bc46-f23078c201aa","phase":"origin-response","rpcMethod":"tools/list","status":200,"originStatus":200,"durationMs":1}
+✔ successful request uses one fixed origin, a minimal private header set and preserves MCP metadata (1.61148ms)
+{"event":"mterm_mcp_request","requestId":"8be87fb3-e28f-42a5-9cb5-a3f69b5067a9","phase":"origin-response","rpcMethod":"notifications/initialized","status":202,"originStatus":202,"durationMs":1}
+✔ notifications accept an empty202 without inventing a session or swallowing a body (2.186799ms)
+✔ redirects, authentication failures, nonJSON and malformed responses cannot leak upstream data or trigger retries (19.268592ms)
+✔ response declared size and actual byte size are both capped at8MiB (133.104472ms)
+{"event":"mterm_mcp_request","requestId":"0c42ba5f-d00d-4ea5-8917-5189c0ac2178","phase":"origin-response","rpcMethod":"tools/list","status":429,"originStatus":429,"durationMs":1}
+✔ valid upstream protocol errors and tool-denial details pass through unchanged (2.538092ms)
+✔ origin deadline aborts once and reports an unverified outcome, never a successful or unexecuted tool call (2.617214ms)
+✔ response-body stall is bounded even after origin response headers arrive (2.40733ms)
+{"event":"mterm_mcp_request","requestId":"b06372b1-4c66-434f-9714-134f784123e7","phase":"request-validation","rpcMethod":"unparsed","status":408,"originStatus":null,"durationMs":1}
+✔ request-body stall is rejected before contacting the PC (4.576061ms)
+✔ 32 concurrent owner-authorized requests remain isolated and traceable (19.770037ms)
+✔ only allowlisted MCP method names appear in diagnostics (1.392171ms)
+✔ an ambiguous origin failure records a safe trace without leaking credentials (1.21665ms)
+✔ owner recovery archive matches the verified canonical private plugin source (4.299273ms)
+✔ future archive generation is content-equivalent and deterministic on this runtime (4.908264ms)
+✔ a Viewer with a valid session and CSRF token cannot create a global player report (3.461218ms)
+✔ individually approved Guild Member and higher native roles can report without marking personal redemption (5.99961ms)
+✔ Viewer redeemed controls and cached refresh remain available without changing global validity (3.951515ms)
+✔ downgrading a live individual session to Viewer blocks its next report request (2.848772ms)
+✔ shared guild sessions still cannot submit public reports but can use their own checklist (3.37198ms)
+✔ a reporting-capable role cannot bypass report CSRF or exact-origin protection (2.708265ms)
+✔ accepts authentic Access JWT for exact issuer and application (2.505862ms)
+✔ accepts the documented human application-token shape without confusing identity_nonce with evaluation nonce (1.143366ms)
+✔ rejects wrong application, issuer and missing audience configuration (4.657196ms)
+✔ rejects expired, missing expiry, premature and future-issued tokens (5.625602ms)
+✔ rejects forged signatures and unapproved algorithm/header key selectors (2.575479ms)
+✔ service tokens and evaluation tokens are not human application identities (4.682224ms)
+✔ pins JWKS fetch to Cloudflare team domain, blocks arbitrary issuer URL (2.454703ms)
+✔ parallel requests share bounded JWKS fetch and unknown kids do not stampede (2.978813ms)
+✔ JWKS outage and oversized token fail closed (1.005334ms)
+✔ uses Workers-supported manual redirects and refuses redirected signing keys (1.233896ms)
+✔ external evaluation authorizes only verified identity and signs the nonce-bound result (4.791433ms)
+✔ external evaluation signs denials and never accepts a truthy nonboolean callback result (7.790332ms)
+✔ external evaluation rejects ordinary user tokens, expiry and issuer mismatch before callback (6.969318ms)
+✔ external evaluation has no GET authorization or exception/secret disclosure (1.295712ms)
+✔ password hashes use independent salts and authenticate exact case-sensitive passphrases (79.735593ms)
+✔ CSRF origin check blocks absent, null, same-site sibling and other origins (0.348786ms)
+✔ tokens are independent random values and hashes normalize neither passwords nor email aliases (1.004837ms)
+✔ the exact 13 historical seeds are uppercase, unique and immutable (0.111839ms)
+✔ Codex live-shaped JSON preserves factual rewards and public provenance (0.385723ms)
+✔ case-insensitive duplicates collapse and conflicting source claims become unknown (0.233993ms)
+✔ old listings and absent codes do not create inferred expiration (0.179872ms)
+✔ explicit expired flags and supported expiry timestamps are retained (0.190848ms)
+✔ malformed records, personal referral codes, and invalid reward quantities are excluded (0.165039ms)
+✔ source schema changes and challenge pages fail honestly (0.433364ms)
+✔ wiki history uses only Promo Codes table and joins malformed extra reward cells (0.950415ms)
+✔ wiki evergreen adapter excludes navigation, scripts and generic prose (0.554758ms)
+✔ Pocket Gamer handles unknown rewards, entities, both expiry separators and scoped sections (0.500836ms)
+✔ GamesRadar distinguishes struck entries and removes new markers without asserting redemption (0.25848ms)
+✔ fetch is restricted to registered endpoints and never follows redirects (0.505503ms)
+✔ disabled sources make no network call (0.195545ms)
+✔ network failures and 429 preserve empty result payload and honest source state (0.410079ms)
+✔ response bytes are bounded even when Content-Length is absent (0.653607ms)
+✔ unexpected successful HTML challenges are not accepted as JSON (0.286272ms)
+✔ source responses cannot return an unbounded number of records (0.9736ms)
+ℹ tests 170
+ℹ suites 0
+ℹ pass 170
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1661.14809

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "phase": "first-focused-working-candidate",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/mcp-dev-edge.test.js"
+  ],
+  "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+  "startedAt": "2026-11-20T10:08:44.393798+00:00",
+  "finishedAt": "2026-11-20T10:08:45.062353+00:00",
+  "exitCode": 0,
+  "totals": {
+    "tests": 42,
+    "pass": 42,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceInputsBefore": {
+    "src/mcp-dev-edge.js": "a63b77d9f2306a8ee9b112b431d76dea54c45caf8f11a509b92a8bec55965484",
+    "src/mcp-dev-entry.js": "e1b48326d7ef159263a18de0d13edffe6c633c39907d3442941afe4a6f9eb8dd",
+    "src/index.js": "4837e23c7ab3fa8cf678f3107e8ca06f46a19fc83ac4b02f95861b9f5234af9b",
+    "src/security.js": "272c32a3f9bd0284c1ab78c0a4cf285a9a46a7c1d717c9423deebedebff88db5",
+    "src/db.js": "a92fa26b0c97b07f2dd3b4cabc83029de7e7e63f85921bc70855738ccea3b6c2",
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+    "tests/mcp-dev-edge.test.js": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee"
+  },
+  "sourceInputsAfter": {
+    "src/mcp-dev-edge.js": "a63b77d9f2306a8ee9b112b431d76dea54c45caf8f11a509b92a8bec55965484",
+    "src/mcp-dev-entry.js": "e1b48326d7ef159263a18de0d13edffe6c633c39907d3442941afe4a6f9eb8dd",
+    "src/index.js": "4837e23c7ab3fa8cf678f3107e8ca06f46a19fc83ac4b02f95861b9f5234af9b",
+    "src/security.js": "272c32a3f9bd0284c1ab78c0a4cf285a9a46a7c1d717c9423deebedebff88db5",
+    "src/db.js": "a92fa26b0c97b07f2dd3b4cabc83029de7e7e63f85921bc70855738ccea3b6c2",
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+    "tests/mcp-dev-edge.test.js": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee"
+  },
+  "inputsUnchanged": true,
+  "node": "v24.22.3",
+  "stdout": {
+    "path": "/workspace/scratch/86162842804d/dev_edge_boundary/candidate-focused-first.stdout",
+    "sha256": "fe8be37257e2afe5fc9d142d68bae1651a3a7e824cf0ec9534f6109cdf15293b",
+    "bytes": 10299
+  },
+  "stderr": {
+    "path": "/workspace/scratch/86162842804d/dev_edge_boundary/candidate-focused-first.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "limits": [
+    "No host, provider or production backend calls; fetch and DB are observed fixtures.",
+    "Tests author is not independent whole-source approver."
+  ]
+}

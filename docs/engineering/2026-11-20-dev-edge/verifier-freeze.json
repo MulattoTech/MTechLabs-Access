@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "frozen": true,
+  "verifier": {
+    "path": "/workspace/scratch/86162842804d/dev_edge_boundary/review_hosted.py",
+    "sha256": "dec1086982be0f19ba3c4663f7ea97a252bd2c9b1e433e57a7c5e902620c9dde",
+    "bytes": 46344
+  },
+  "previousVerifier": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/review_hosted.py",
+    "sha256": "734ef75091d3c58f56906d0669055ed12571f31c1bbfcc85d144810a355a6f05",
+    "unchanged": true
+  },
+  "newFrozenTest": {
+    "path": "tests/mcp-dev-edge.test.js",
+    "sha256": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee",
+    "groups": 42
+  },
+  "changes": [
+    "Require immutable committed test blob SHA and exact42 registered unique titles.",
+    "Require each of42 root cases PASS exactly once, no skips, bound to exact checked-out tree.",
+    "Record immutable edge/entry/index source hashes.",
+    "Disclose additional test authorship and source-only edge qualification limits."
+  ],
+  "priorGatesPreserved": [
+    "five distinct successful jobs and exact checkout/head/run binding",
+    "10 production Host regression titles/hash in all4 manager jobs",
+    "49 protocol titles/hash in all4 manager jobs",
+    "portable fixture privacy regression in all4 manager jobs",
+    "11 reference native cases exact roles/control/stage/hash schema",
+    "54 runtime probe plus26 launcher and actual current/listener reports",
+    "two raw archive digest/size bindings, all40 stages,53 tools and owned cleanup/model0",
+    "separate candidate/main runs with disjoint all5 job and both2 artifact IDs"
+  ],
+  "validation": {
+    "pythonCompilationPassed": true,
+    "all42TitlesObservedExactlyOnceInFullLocalRootLog": true,
+    "priorCheckLinesRemoved": false
+  },
+  "limits": [
+    "Evidence-only, no network or product/test/native/upstream execution.",
+    "Manifest identities are supplied for each frozen phase; missing input never passes.",
+    "This reviewer authored42 edge tests; whole-source approval belongs to a separate reviewer."
+  ]
+}

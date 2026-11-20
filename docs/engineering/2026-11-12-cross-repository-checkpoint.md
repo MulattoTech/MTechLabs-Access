@@ -9,7 +9,42 @@ and hosted evidence; one writer owns implementation changes.
 ## Current continuation state — 2026-11-20 UTC
 
 - The current approved source continuation is
-  [issue40](https://github.com/MulattoTech/MTechLabs-Access/issues/40), based on
+  [issue42](https://github.com/MulattoTech/MTechLabs-Access/issues/42), on
+  `feat/dev-edge-boundary-20261120` from actual main
+  `2a4e3fba0544bb22ff15785dcf1ae46c61891c3f`. It adds a closed independent DEV
+  edge descriptor, explicit DEV namespace reservation and a dedicated owner
+  authorization entry. The descriptor binds exact resources, backend and
+  loopback Host declarations, Access issuer/application/audience, connector,
+  owner subject, credential fingerprint and separate authorization-store
+  declaration. Successful owner checks remain terminal with activation disabled
+  and no backend dispatch. The frozen 42-case independent suite passed unchanged;
+  the exact prior main exposed two capability gaps and four causal routing
+  failures, including the reviewer-found trailing-dot namespace escape.
+  Local root tests passed 170/170, manager tests passed 339 plus 25 Windows skips,
+  and check/build/generated-file gates passed without retry. All 257 selected
+  source inputs remained unchanged. The
+  [retained qualification evidence](2026-11-20-dev-edge/README.md) includes the
+  frozen hosted verifier. Immutable whole-patch review and exact candidate/main
+  acceptance remain integration gates at preparation of this commit. No live
+  resource allocation or configuration changes are included. Production and
+  generic website authorization remain separate.
+
+- Access [issue40](https://github.com/MulattoTech/MTechLabs-Access/issues/40) /
+  [PR41](https://github.com/MulattoTech/MTechLabs-Access/pull/41) completed normally
+  at actual main `2a4e3fba0544bb22ff15785dcf1ae46c61891c3f`, preserving reviewed
+  tree `502fc1a2de54ef111316747e4bc3c096922d76c7`. All five accepted candidate
+  and five distinct actual-main jobs passed: root128, Linux manager339 plus25
+  platform skips, Windows manager441 plus2 platform skips. The 49 protocol cases,
+  11 new Windows integration groups, prior native regressions and both upstream
+  versions passed their required gates with cleanup and zero model calls.
+  Independent source and hosted acceptance, retained rejected candidates,
+  claim release and explicit closure are in the
+  [final delivery receipt](https://github.com/MulattoTech/MTechLabs-Access/issues/40#issuecomment-7036335037).
+  The preparation history below remains evidence of what was known before merge;
+  this accepted receipt supersedes its pending integration status.
+
+- The preparation checkpoint for completed
+  [issue40](https://github.com/MulattoTech/MTechLabs-Access/issues/40) was based on
   actual main `60d7f5bae965dab2ea73805d8df411bc8b2b937e`. The
   [authenticated production-reference API](../../integrations/mcp-manager/PRODUCTION-REFERENCE.md)
   adds a distinct read-only consumer, fixed registered-target authority and
@@ -119,15 +154,16 @@ and hosted evidence; one writer owns implementation changes.
   credentials, policies, the dirty owner CLI checkout and working wrappers remain
   untouched by these source repairs.
 
-**Current action:** qualify and integrate Access40 through the normal
-expected-head workflow, then append its actual delivery receipt to the issue
-before claim release and explicit completion. This adds the restricted reference
-source interface; successful diagnostics retain every unqualified/disabled
-outcome. A protected trusted bootstrap/transport, separate DEV edge mapping,
-effective OS/ancestor protections, actual upstream roots and operational launcher
-remain prerequisites before real DEV provisioning and activation. The next
-eligible source slice is the closed independent DEV edge descriptor and owner
-authorization boundary; live allocation and deployment remain separate work.
+**Current action:** implement and independently qualify Access42's closed DEV
+edge mapping and owner authorization boundary, then integrate through the normal
+expected-head workflow and retain distinct actual-main acceptance before claim
+release and explicit closure. The DEV entry must never enter website grants or
+production configuration fallback, and successful authorization must preserve
+disabled activation. A protected trusted bootstrap/transport, effective
+OS/ancestor protections, actual upstream roots and operational launcher remain
+prerequisites before real DEV provisioning. Provider resource/DB identity and
+live routing/grant qualification remain separate from declaration validation;
+live allocation and deployment are separate work.
 No production cutover, wrapper removal or paid model call follows from source CI.
 The original CLI/DCP/WEB acceptance metrics and broader issues remain unchanged.
 

@@ -6,6 +6,7 @@ import {homepageApi} from './homepage.js';
 import {mcpApi} from './mcp.js';
 import {PLUGIN_RELEASE} from './plugin-release.generated.js';
 import {remoteMcp} from './mcp-remote.js';
+import {devRemoteMcp,DEV_MCP_HOST,DEV_MCP_ORIGIN_HOST} from './mcp-dev-edge.js';
 import {acquireScan,executeScan,codeList,recomputeStatuses} from './codes.js';
 import {PUBLIC_HTML,ADMIN_HTML,PUBLIC_JS,ADMIN_JS,CSS,MCP_HTML,MCP_JS,MCP_CSS} from './ui.generated.js';
 
@@ -20,10 +21,15 @@ async function abuseLimit(request,env,scope,limit=20,period=900) {
   if(!state.allowed)throw new HttpError(429,`Too many attempts. Try again after ${new Date(state.resetAt*1000).toISOString()}.`);
 }
 async function handle(request,env,ctx) {
-  const url=new URL(request.url),path=url.pathname,db=env.DB;
+  const url=new URL(request.url),path=url.pathname;
   // The dedicated MCP host has its own Access audience and owner check. It
   // never enters the website's D1 application-grant or legacy-gateway paths.
   if(url.hostname==='mcp.m-techlabs.com')return remoteMcp(request,env,ctx);
+  // Reserve both DEV names and denial-only trailing-dot aliases, even without
+  // configuration. The dedicated handler still requires its exact public URL.
+  const reservedDevHost=url.hostname.replace(/\.+$/,'');
+  if(reservedDevHost===DEV_MCP_HOST||reservedDevHost===DEV_MCP_ORIGIN_HOST)return devRemoteMcp(request,env);
+  const db=env.DB;
   const isCodes=url.hostname===env.CODE_HOST;
   const isHub=[env.HUB_HOST,`www.${env.HUB_HOST}`].includes(url.hostname);
   if(!isCodes&&!isHub){
