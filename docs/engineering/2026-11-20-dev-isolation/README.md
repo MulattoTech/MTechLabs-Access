@@ -6,6 +6,17 @@
 
 This directory contains a narrowly scoped Windows PowerShell 7 preflight for the proposed independent MTerm-CLI DEV environment. It does **not** implement account provisioning, permissions changes, production relocation, reference-authority installation, startup migration, or routing changes. It belongs to [issue #46](https://github.com/MulattoTech/MTechLabs-Access/issues/46), which follows successful source qualification of [issue #44 / PR #45](https://github.com/MulattoTech/MTechLabs-Access/pull/45). GitHub Actions billing admission and the required five hosted gates remain unresolved.
 
+### Read-only GitHub Actions admission report
+
+[`read-only-actions-admission.ps1`](read-only-actions-admission.ps1) uses authenticated `gh run view` **only for metadata**, pinning `MulattoTech/MTechLabs-Access` and the expected PR45 SHA. It reports all five named job status/conclusion/step counts, and distinguishes a blocked-before-start run from jobs whose test commands actually executed. No reruns, billing changes, downloads, artifacts, logs, source merge or DEV activation. A status of `admissionObserved=true` is **not** a release or security acceptance verdict.
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.ps1 -RunId 44742255585
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.test.ps1
+```
+
+The first invocation is expected to exit **1** for the current failed-billing run, reporting `completedWithSteps=0`; it should not be retried as a GitHub workflow. The second runs **13 offline synthetic classifier cases**, without GitHub or production inspection. For actual independent hosted artifact verification later, follow [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) and the repository's frozen evidence verifier.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
