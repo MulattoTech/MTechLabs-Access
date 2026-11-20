@@ -119,14 +119,17 @@ async function devSnapshot(configPath, planPath, expected, signal) {
   for (const file of controls) {
     if (!within(state.filename, file.filename)) fail();
   }
-  if (!samePath(own.filename, plan.development.manager.configPath) ||
-      !samePath(selected.filename, path.join(state.filename, 'dev-runtime-plan.json'))) fail();
+  if (!samePath(selected.filename, path.join(state.filename, 'dev-runtime-plan.json'))) fail();
   const manager = {};
   for (const key of ['nodePath', 'entryPath', 'configPath']) {
     checkSignal(signal);
     manager[key] = await actual(plan.development.manager[key]);
     if (key !== 'configPath' && overlap(state.filename, manager[key].filename)) fail();
   }
+  // Compare independently resolved identities, not a canonical filename with
+  // an unexpanded declaration (ordinary Windows TEMP may use an 8.3 name).
+  // Retain every identity/drift field; an alias must resolve to this exact file.
+  if (canonical(own.identity) !== canonical(manager.configPath.identity)) fail();
   distinct([manager.entryPath, own]);
   const runtime = [];
   for (const key of RUNTIME_KEYS) {

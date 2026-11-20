@@ -1,24 +1,44 @@
 {
   "schemaVersion": 1,
-  "phase": "local-working-candidate",
-  "startedAt": "2026-11-20T08:54:13.968869Z",
-  "finishedAt": "2026-11-20T08:54:18.983032Z",
+  "startedAt": "2026-11-20T09:13:22.453670Z",
   "nodeVersion": "v24.22.3",
   "platform": "linux",
-  "baseCommit": "60d7f5bae965dab2ea73805d8df411bc8b2b937e",
+  "baseCommit": "7f2fba881530e25e4550a2c236a35f7d190aa377",
   "workingTreeWasCandidate": true,
   "repoPath": "/workspace/scratch/86162842804d/MTechLabs-Access",
   "sourceInputCount": 217,
   "sourceInputsBefore": {
-    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-inputs-before.json",
-    "sha256": "c1c0eaaabcd59bceb9dc92f25ca4361b445bf3750a707ea322f55f6f1461b866"
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-inputs-before.json",
+    "sha256": "31c683ed0e6435c894ca59635783776f67e56e8ddfd54e0c9342fb3375ac475a"
   },
   "sourceInputsAfter": {
-    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-inputs-after.json",
-    "sha256": "c1c0eaaabcd59bceb9dc92f25ca4361b445bf3750a707ea322f55f6f1461b866"
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-inputs-after.json",
+    "sha256": "31c683ed0e6435c894ca59635783776f67e56e8ddfd54e0c9342fb3375ac475a"
   },
   "sourceInputsStable": true,
   "changedInputs": {},
+  "changedFromOriginalLocalGates": {
+    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": {
+      "first": {
+        "sha256": "2996fe26674603d3306c2fca185675c677f36e1789cd138515012d5ed66bc179",
+        "bytes": 16432
+      },
+      "revised": {
+        "sha256": "22f885d3b3f2baa65d9b7165c4582d636bad8c165e939a3e8980d9ebc6d3ffee",
+        "bytes": 16680
+      }
+    },
+    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": {
+      "first": {
+        "sha256": "22d0e68b478c9dbbdce96dba416c5686d116fd62465433f26dd8caf42fa9f7e4",
+        "bytes": 21993
+      },
+      "revised": {
+        "sha256": "fc7d56653aefa2e72f3c8e870e73ebbe06a26e6e057c57ebac932cde37ec0d27",
+        "bytes": 28559
+      }
+    }
+  },
   "frozenProtocolTestSha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
   "sourceInputHashes": {
     ".github/workflows/check.yml": "de994aae5acefd11f5762436d88500e4e9dd0f74d886f973b2af90a9463b4aad",
@@ -66,7 +86,7 @@
     "integrations/mcp-manager/lib/coordinator.mjs": "7ada372d57b674d5e0f88c376588e2b44252a39327aeabe843a40dd27609b1a0",
     "integrations/mcp-manager/lib/dev-instance.mjs": "016b54e62c34a19f7d6f899f20c51e4fc808c9543c000be12dd9fd5ea4d1d47e",
     "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
-    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": "2996fe26674603d3306c2fca185675c677f36e1789cd138515012d5ed66bc179",
+    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": "22f885d3b3f2baa65d9b7165c4582d636bad8c165e939a3e8980d9ebc6d3ffee",
     "integrations/mcp-manager/lib/dev-runtime.mjs": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
     "integrations/mcp-manager/lib/engineering-descriptions.mjs": "73543c47fc500f38e94d0c804d726fad00e074b70eff59a4d8f0cd692e0ebd1e",
     "integrations/mcp-manager/lib/engineering-tools.mjs": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b",
@@ -159,7 +179,7 @@
     "integrations/mcp-manager/test/dev-runtime-identity.test.mjs": "c461334cd1d24713597af39a1091ded48513988b7cb8c1296b9a8e82e216160a",
     "integrations/mcp-manager/test/dev-runtime-plan.test.mjs": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
     "integrations/mcp-manager/test/dev-runtime-production-route.test.mjs": "22ba217c175238b11e1352a5fe45771ca83f38c4a9186e95603f74c8f14aced7",
-    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": "22d0e68b478c9dbbdce96dba416c5686d116fd62465433f26dd8caf42fa9f7e4",
+    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": "fc7d56653aefa2e72f3c8e870e73ebbe06a26e6e057c57ebac932cde37ec0d27",
     "integrations/mcp-manager/test/dev-runtime-reserved.test.mjs": "57765ec40348c853776571a249b236f62b3ce0f2c7a4c949d67b9e5cdab3b994",
     "integrations/mcp-manager/test/dev-runtime.test.mjs": "cb4e0f2faa8028aa0703fedde234f369f16ba6bff94e05a3ee067554da8a2d99",
     "integrations/mcp-manager/test/engineering-descriptions.test.mjs": "b6a2953337e75c31c829c43815dcc97e3a8a5a720b8a6129732a9b97713b1cec",
@@ -239,6 +259,18 @@
     "tests/security.test.js": "c0228c0f414929ce070d5b8f655cd2637edea9c759765815cb609334767b60ac",
     "tests/sources.test.js": "f63a09d704643d6db192b83552d56233b71d29e3295608f6d041fe87d3d454b1"
   },
+  "priorLocalReceipt": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-gates.json",
+    "sha256": "d7b597b8a239800b02ac6a2df99ac9c07d4939ca45729ad6c7e472a5101538d7"
+  },
+  "limits": [
+    "Linux local source qualification only; Windows native cells require hosted Windows execution.",
+    "No installed-host, Cloudflare, account, grant, deployment, production listener or model qualification.",
+    "Reviewer authored 141 runtime-plan, 10 production-route and 49 production-reference protocol test cases; this is not an independent whole-source review."
+  ],
+  "phase": "final-local-working-candidate",
+  "scope": "Passing root/check/build/generated-UI and standalone manager command set; earlier failed execution explicitly retained",
+  "finishedAt": "2026-11-20T09:15:27.210101+00:00",
   "gates": [
     {
       "command": [
@@ -246,18 +278,18 @@
         "test"
       ],
       "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
-      "startedAt": "2026-11-20T08:54:14.039006Z",
-      "finishedAt": "2026-11-20T08:54:16.469626Z",
-      "durationSeconds": 2.431,
+      "startedAt": "2026-11-20T09:13:22.523146Z",
+      "finishedAt": "2026-11-20T09:13:25.188727Z",
+      "durationSeconds": 2.666,
       "exitCode": 0,
       "stdout": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-test.stdout.log",
-        "sha256": "c82d3e32c9d3be56d9ae5571806d27370f511b3149b8370cb3d2f489e560fb77",
-        "bytes": 25063
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-test.stdout.log",
+        "sha256": "ab97f3459ed9ee3d587398cfaa789ed32d75468f42016e896ce6e9bef8f077e0",
+        "bytes": 25060
       },
       "stderr": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-test.stderr.log",
-        "sha256": "31bcd61eb8ec4c75e7d30902d64989f530255e23443ba63b556d821fc36c0091",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-test.stderr.log",
+        "sha256": "3385c6fd249a700749407c865ca5b636ef06377367191190196920158959c08c",
         "bytes": 4711
       },
       "observedTotals": {
@@ -277,17 +309,17 @@
         "check"
       ],
       "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
-      "startedAt": "2026-11-20T08:54:16.470555Z",
-      "finishedAt": "2026-11-20T08:54:17.276899Z",
-      "durationSeconds": 0.806,
+      "startedAt": "2026-11-20T09:13:25.191190Z",
+      "finishedAt": "2026-11-20T09:13:25.931194Z",
+      "durationSeconds": 0.74,
       "exitCode": 0,
       "stdout": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-check.stdout.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-check.stdout.log",
         "sha256": "b80e9f9f1c05b7e196e99f120c2995ce1605685b84c3b6f5897b1b6410838c31",
         "bytes": 327
       },
       "stderr": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-check.stderr.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-check.stderr.log",
         "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829",
         "bytes": 150
       },
@@ -300,17 +332,17 @@
         "build"
       ],
       "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
-      "startedAt": "2026-11-20T08:54:17.277450Z",
-      "finishedAt": "2026-11-20T08:54:17.510791Z",
-      "durationSeconds": 0.233,
+      "startedAt": "2026-11-20T09:13:25.931377Z",
+      "finishedAt": "2026-11-20T09:13:26.153417Z",
+      "durationSeconds": 0.222,
       "exitCode": 0,
       "stdout": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-build.stdout.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-build.stdout.log",
         "sha256": "6fd616f87fd2e65e74b78bd8f3eef116aa81f92e40b0b0bf6fa12cfaab0b9eff",
         "bytes": 109
       },
       "stderr": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-root-build.stderr.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-root-build.stderr.log",
         "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829",
         "bytes": 150
       },
@@ -325,17 +357,17 @@
         "src/ui.generated.js"
       ],
       "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
-      "startedAt": "2026-11-20T08:54:17.510911Z",
-      "finishedAt": "2026-11-20T08:54:17.516119Z",
-      "durationSeconds": 0.005,
+      "startedAt": "2026-11-20T09:13:26.153636Z",
+      "finishedAt": "2026-11-20T09:13:26.157246Z",
+      "durationSeconds": 0.004,
       "exitCode": 0,
       "stdout": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-generated-diff.stdout.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-generated-diff.stdout.log",
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "bytes": 0
       },
       "stderr": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-generated-diff.stderr.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-generated-diff.stderr.log",
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "bytes": 0
       },
@@ -347,27 +379,19 @@
         "test"
       ],
       "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager",
-      "startedAt": "2026-11-20T08:54:14.039206Z",
-      "finishedAt": "2026-11-20T08:54:18.968857Z",
-      "durationSeconds": 4.93,
+      "startedAt": "2026-11-20T09:14:19.372397+00:00",
+      "finishedAt": "2026-11-20T09:14:24.038546+00:00",
+      "durationSeconds": 4.666,
       "exitCode": 0,
       "stdout": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-manager-test.stdout.log",
-        "sha256": "ab4a1c079a3951484b4981e03776ed38f1397fc130d2171b215edd0ed1abcefb",
-        "bytes": 32549
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-manager-retry.stdout.log",
+        "sha256": "6d84a27c73adfb0f3a9266489eb282d447dfcfb7652c306dac2a06b24b35d097",
+        "bytes": 32745
       },
       "stderr": {
-        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/local-manager-test.stderr.log",
+        "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-manager-retry.stderr.log",
         "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829",
         "bytes": 150
-      },
-      "observedTotals": {
-        "tests": 362,
-        "pass": 338,
-        "fail": 0,
-        "cancelled": 0,
-        "skipped": 24,
-        "todo": 0
       },
       "observedSkips": [
         [
@@ -431,6 +455,10 @@
           "Requires native Windows reference filesystem and identity APIs"
         ],
         [
+          "registered reference binds differing declared and canonical config spellings to the same actual file identity",
+          "Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
           "runtime input snapshots bind selected DEV and production files without state writes",
           "Requires native Windows filesystem and identity APIs"
         ],
@@ -466,15 +494,69 @@
           "Windows launcher verifies executable, entry, configuration and listener identity",
           "Requires native Windows PowerShell and Windows argument parsing"
         ]
-      ]
+      ],
+      "observedTotals": {
+        "tests": 363,
+        "pass": 338,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 25,
+        "todo": 0
+      }
     }
   ],
   "allCommandsPassed": true,
-  "initialGitStatus": " M docs/engineering/2026-11-12-cross-repository-checkpoint.md\n M integrations/mcp-manager/DEV-RUNTIME.md\n M integrations/mcp-manager/lib/dev-runtime.mjs\n?? integrations/mcp-manager/PRODUCTION-REFERENCE.md\n?? integrations/mcp-manager/lib/dev-runtime-reference.mjs\n?? integrations/mcp-manager/lib/production-reference.mjs\n?? integrations/mcp-manager/lib/runtime-files.mjs\n?? integrations/mcp-manager/test/dev-runtime-reference.test.mjs\n?? integrations/mcp-manager/test/production-reference.test.mjs\n",
-  "finalGitStatus": " M docs/engineering/2026-11-12-cross-repository-checkpoint.md\n M integrations/mcp-manager/DEV-RUNTIME.md\n M integrations/mcp-manager/lib/dev-runtime.mjs\n?? integrations/mcp-manager/PRODUCTION-REFERENCE.md\n?? integrations/mcp-manager/lib/dev-runtime-reference.mjs\n?? integrations/mcp-manager/lib/production-reference.mjs\n?? integrations/mcp-manager/lib/runtime-files.mjs\n?? integrations/mcp-manager/test/dev-runtime-reference.test.mjs\n?? integrations/mcp-manager/test/production-reference.test.mjs\n",
-  "limits": [
-    "Linux local source qualification only; Windows native cells require hosted Windows execution.",
-    "No installed-host, Cloudflare, account, grant, deployment, production listener or model qualification.",
-    "Reviewer authored 141 runtime-plan, 10 production-route and 49 production-reference protocol test cases; this is not an independent whole-source review."
-  ]
+  "all217SourceInputsStillMatch": true,
+  "earlierAttempt": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-gates.json",
+    "sha256": "68431bf27df7dae01308b634f4afcfabe91c6952ed904906b782f3df02ae3a2f",
+    "managerTotals": {
+      "tests": 363,
+      "pass": 337,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 25,
+      "todo": 0
+    },
+    "failureTitle": "idle read-only backend closes gracefully; possible background work defers automatic teardown",
+    "failure": "SDK POST received HTTP503: The local MCP bridge is unavailable.",
+    "cause": "Not established. The unchanged test uses a 60 ms idle timeout, but no timing-cause or defect-elimination claim is made.",
+    "managerStdout": {
+      "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-manager-test.stdout.log",
+      "sha256": "0f561421ea5cddfb75a87ea3ae2711d97ad0d222eea6882c6c5500ed63b7f93a",
+      "bytes": 33388
+    },
+    "managerStderr": {
+      "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-local-manager-test.stderr.log",
+      "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829",
+      "bytes": 150
+    }
+  },
+  "focusedResult": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-idle-focused.json",
+    "sha256": "6b04c8ea5e3fbd6bd79bc090fc03ea7b3c83f5295034e752ba6ac80219f120d9",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=^idle read-only backend closes gracefully; possible background work defers automatic teardown$",
+      "test/remote.test.mjs"
+    ],
+    "totals": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0
+  },
+  "standaloneManagerRetry": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/revised-manager-retry.json",
+    "sha256": "2a857c0b37a9b7e0ef25f889386b721de1343ae62bade6f870358ae168b69531",
+    "exitCode": 0
+  },
+  "noHiddenRetry": true,
+  "earlierFailureStillRetained": true,
+  "noSourceOrTestEditsBetweenAttempts": true
 }

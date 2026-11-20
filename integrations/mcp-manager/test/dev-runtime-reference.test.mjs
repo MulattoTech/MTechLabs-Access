@@ -13,6 +13,8 @@ import { createProductionReferenceRegistration, createRegisteredProductionRefere
 import { createProductionReferenceAuthority, createProductionReferenceClient } from '../lib/production-reference.mjs';
 import { captureWindowsRuntime } from '../lib/runtime-identity.mjs';
 import { requireValidatedDevConfig } from '../lib/dev-instance.mjs';
+import { windowsPath } from '../lib/dev-runtime-plan.mjs';
+import { stableFileSnapshot } from '../lib/runtime-files.mjs';
 import { runtimeInputs, directorySnapshot, hash } from './fixtures/runtime-inputs.mjs';
 
 const native = { skip: process.platform !== 'win32' ? 'Requires native Windows reference filesystem and identity APIs' : false, timeout: 90000 };
@@ -21,8 +23,9 @@ const hash64 = 'a'.repeat(64);
 function nativeTest(name, body) {
   cases.push(name);
   test(name, native, async t => {
-    const evidence = { name, nodeFilesystemWriteCalls: 0, requestedNativeRoles: [], realNative: false };
+    const evidence = { name, nodeFilesystemWriteCalls: 0, requestedNativeRoles: [], realNative: false, unmodifiedControls: 0 };
     await body(t, evidence);
+    assert.ok(evidence.unmodifiedControls >= 1, 'every native case must first complete an unmodified round trip');
     completed.push(evidence);
   });
 }
@@ -95,6 +98,15 @@ function realNativeSpy(t, evidence) {
 async function inspect(f, client, exchange) {
   return inspectDevRuntimeWithReference(f.dev.configPath, f.planPath, client, exchange);
 }
+async function control(f, client, exchange, evidence) {
+  const report = await inspect(f, client, exchange);
+  privateReport(report, f);
+  assert.equal(report.productionReference.evidence, 'authenticated-point-in-time');
+  assert.equal(report.productionReference.topologyVerified, true);
+  assert.equal(report.productionReference.credentialsDistinct, true);
+  evidence.unmodifiedControls++;
+  return report;
+}
 function privateReport(report, f) {
   assert.equal(report.qualified, false); assert.equal(report.upstreamEnabled, false);
   assert.equal(report.runningSourceVerified, false); assert.equal(report.routing.liveVerified, false);
@@ -128,7 +140,7 @@ nativeTest('registered reference handles privately pin deep copied configs and p
   declaration.plan.production.routing.backendId = 'mutated-after-registration';
   const watch = watchFilesystem(t, evidence);
   try {
-    const report = await inspect(f, keys.client, authority);
+    const report = await control(f, keys.client, authority, evidence);
     assert.equal(report.productionReference.registrationSha256, registration.sha256);
     assert.equal(report.productionReference.topologyVerified, true);
     assert.equal(report.productionReference.credentialsDistinct, true);
@@ -148,7 +160,7 @@ nativeTest('restricted reference consumer reads no production paths and requests
     return false;
   });
   try {
-    const report = await inspect(f, keys.client, authority);
+    const report = await control(f, keys.client, authority, evidence);
     assert.equal(forbiddenReads, 0); assert.deepEqual(evidence.requestedNativeRoles, [['development']]);
     assert.equal(report.productionReference.evidence, 'authenticated-point-in-time');
     privateReport(report, f);
@@ -159,17 +171,22 @@ nativeTest('restricted reference consumer reads no production paths and requests
 
 nativeTest('restricted reference treats wrong-account OS profiles as data without looking up production profile paths', async (t, evidence) => {
   const f = await runtimeInputs(t), registration = createProductionReferenceRegistration(input(f)), keys = pair(registration);
-  syntheticNative(t, evidence, async () => ({ status: 'unverified' }), { status: 'observed',
-    sid: f.plan.production.principalSid, profileDirectory: f.prod.profile, pid: process.pid, creationFileTime: '134385640000000000' });
-  t.mock.method(os, 'userInfo', () => ({ homedir: f.prod.profile }));
+  const current = { status: 'observed', sid: f.plan.development.principalSid,
+    profileDirectory: await fs.realpath(f.dev.profile), pid: process.pid, creationFileTime: '134385640000000000' };
+  syntheticNative(t, evidence, async () => ({ status: 'unverified' }), current);
+  t.mock.method(os, 'userInfo', () => ({ homedir: current.profileDirectory }));
   let productionReads = 0;
   const watch = watchFilesystem(t, evidence, filename => {
     if (filename.toLowerCase().startsWith(f.prod.directory.toLowerCase())) { productionReads++; return true; } return false;
   });
   try {
+    const baseline = await control(f, keys.client, syntheticAuthority(registration, keys.privateKey), evidence);
+    assert.equal(baseline.currentIdentity.status, 'matched');
+    current.sid = f.plan.production.principalSid; current.profileDirectory = f.prod.profile;
     const report = await inspect(f, keys.client, syntheticAuthority(registration, keys.privateKey));
     assert.equal(report.currentIdentity.status, 'unverified');
     assert.equal(productionReads, 0); privateReport(report, f);
+    evidence.wrongProfileComparedAsData = true;
   } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.consumerProductionReads = productionReads;
 });
@@ -180,35 +197,47 @@ nativeTest('registered authority refuses config retargeting after its first conf
   const authority = createRegisteredProductionReferenceAuthority(registration, keys.privateKey);
   const unregistered = path.join(f.prod.directory, 'private-unregistered-target');
   const originalWrite = fs.writeFile;
-  let changed = false, unexpectedReads = 0;
+  let enabled = false, changed = false, unexpectedReads = 0, attackExchangeCalls = 0;
   const watch = watchFilesystem(t, evidence, filename => {
     if (filename === unregistered) { unexpectedReads++; return true; } return false;
   }, async filename => {
-    if (!changed && filename === f.prod.config.policyPath) {
+    if (enabled && !changed && filename === f.prod.config.policyPath) {
       changed = true;
       await originalWrite(f.prod.configPath, JSON.stringify({ ...f.prod.config, tokenPath: unregistered }));
     }
   });
   try {
-    await assert.rejects(inspect(f, keys.client, authority), { message: 'runtime_reference_unverified' });
+    await control(f, keys.client, authority, evidence);
+    enabled = true;
+    await assert.rejects(inspect(f, keys.client, (request, options) => {
+      attackExchangeCalls++; return authority(request, options);
+    }), { message: 'runtime_reference_unverified' });
     assert.equal(changed, true); assert.equal(unexpectedReads, 0);
+    assert.equal(attackExchangeCalls, 1);
   } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.unregisteredPathReads = unexpectedReads;
+  evidence.attackExchangeCalls = attackExchangeCalls; evidence.mutationApplied = changed;
 });
 
 nativeTest('registered authority refuses actual DEV control drift across production native observation', async (t, evidence) => {
   const f = await runtimeInputs(t), registration = createProductionReferenceRegistration(input(f)), keys = pair(registration);
-  const originalWrite = fs.writeFile; let changed = false;
+  const originalWrite = fs.writeFile; let enabled = false, changed = false, attackExchangeCalls = 0;
   syntheticNative(t, evidence, async role => {
-    if (role === 'production') { changed = true; await originalWrite(f.dev.config.policyPath, '{"changed":true}'); }
+    if (enabled && role === 'production') { changed = true; await originalWrite(f.dev.config.policyPath, '{"changed":true}'); }
     return { status: 'unverified' };
   });
   const authority = createRegisteredProductionReferenceAuthority(registration, keys.privateKey);
   const watch = watchFilesystem(t, evidence);
   try {
-    await assert.rejects(inspect(f, keys.client, authority), { message: 'runtime_reference_unverified' });
+    await control(f, keys.client, authority, evidence);
+    enabled = true;
+    await assert.rejects(inspect(f, keys.client, (request, options) => {
+      attackExchangeCalls++; return authority(request, options);
+    }), { message: 'runtime_reference_unverified' });
     assert.equal(changed, true);
+    assert.equal(attackExchangeCalls, 1);
   } finally { watch.restore(); syncBuiltinESMExports(); }
+  evidence.attackExchangeCalls = attackExchangeCalls; evidence.mutationApplied = changed;
 });
 
 nativeTest('restricted consumer refuses local retargeting after exchange before following substituted controls', async (t, evidence) => {
@@ -216,19 +245,24 @@ nativeTest('restricted consumer refuses local retargeting after exchange before 
   syntheticNative(t, evidence);
   const authority = syntheticAuthority(registration, keys.privateKey);
   const unregistered = path.join(f.dev.config.stateDirectory, 'private-substitute');
-  const originalWrite = fs.writeFile; let unexpectedReads = 0;
+  const originalWrite = fs.writeFile; let unexpectedReads = 0, attackExchangeCalls = 0, mutationApplied = false;
   const watch = watchFilesystem(t, evidence, filename => {
     if (filename === unregistered) { unexpectedReads++; return true; } return false;
   });
   try {
+    await control(f, keys.client, authority, evidence);
     await assert.rejects(inspect(f, keys.client, async (request, options) => {
+      attackExchangeCalls++;
       const result = await authority(request, options);
       await originalWrite(f.dev.configPath, JSON.stringify({ ...f.dev.config, tokenPath: unregistered }));
+      mutationApplied = true;
       return result;
     }), { message: 'runtime_reference_unverified' });
     assert.equal(unexpectedReads, 0);
+    assert.equal(attackExchangeCalls, 1); assert.equal(mutationApplied, true);
   } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.unregisteredPathReads = unexpectedReads;
+  evidence.attackExchangeCalls = attackExchangeCalls; evidence.mutationApplied = mutationApplied;
 });
 
 nativeTest('registered authority compares actual digest-only credentials and never returns credential values', async (t, evidence) => {
@@ -237,55 +271,86 @@ nativeTest('registered authority compares actual digest-only credentials and nev
   const authority = createRegisteredProductionReferenceAuthority(registration, keys.privateKey);
   const devOriginal = await fs.readFile(f.dev.config.tokenPath);
   const originalCopy = fs.copyFile, originalWrite = fs.writeFile;
-  const watch = watchFilesystem(t, evidence);
+  let phase = 'control';
+  const credentialReads = { overlap: { development: 0, production: 0 }, plaintext: { development: 0, production: 0 } };
+  const exchanges = { overlap: 0, plaintext: 0 };
+  const watch = watchFilesystem(t, evidence, () => false, async filename => {
+    if (phase === 'control') return;
+    if (filename === f.dev.config.tokenPath) credentialReads[phase].development++;
+    if (filename === f.prod.config.tokenPath) credentialReads[phase].production++;
+  });
+  const exchange = (request, options) => { exchanges[phase]++; return authority(request, options); };
   try {
+    await control(f, keys.client, authority, evidence);
     await originalCopy(f.prod.config.tokenPath, f.dev.config.tokenPath);
-    await assert.rejects(inspect(f, keys.client, authority), { message: 'runtime_reference_unverified' });
+    phase = 'overlap';
+    await assert.rejects(inspect(f, keys.client, exchange), { message: 'runtime_reference_unverified' });
     await originalWrite(f.dev.config.tokenPath, devOriginal);
     await originalWrite(f.prod.config.tokenPath, 'private-plaintext-fixture-0123456789abcdef');
-    await assert.rejects(inspect(f, keys.client, authority), error => {
+    phase = 'plaintext';
+    await assert.rejects(inspect(f, keys.client, exchange), error => {
       assert.equal(error.message, 'runtime_reference_unverified');
       assert.equal(String(error).includes('private-plaintext'), false); return true;
     });
+    for (const name of ['overlap', 'plaintext']) {
+      assert.equal(exchanges[name], 1);
+      assert.ok(credentialReads[name].development > 0 && credentialReads[name].production > 0);
+    }
   } finally { watch.restore(); syncBuiltinESMExports(); }
+  evidence.credentialAttackExchanges = exchanges;
+  evidence.actualCredentialFilesRead = { overlap: true, plaintext: true };
 });
 
 nativeTest('restricted reference inputs reject profile junctions and shared entry or control identities before exchange', async (t, evidence) => {
   const f = await runtimeInputs(t), registration = createProductionReferenceRegistration(input(f)), keys = pair(registration);
-  let calls = 0;
+  syntheticNative(t, evidence);
+  const authority = syntheticAuthority(registration, keys.privateKey);
+  let calls = 0, rejections = 0;
   const exchange = () => { calls++; throw new Error('must-not-exchange'); };
-  async function refuses() {
-    const watch = watchFilesystem(t, evidence);
-    try { await assert.rejects(inspect(f, keys.client, exchange), { message: 'runtime_reference_unverified' }); }
-    finally { watch.restore(); }
-  }
-  await fs.rmdir(f.dev.profile); await fs.symlink(f.prod.profile, f.dev.profile, 'junction');
-  await refuses();
-  await fs.unlink(f.dev.profile); await fs.mkdir(f.dev.profile);
+  const originals = { rmdir: fs.rmdir, symlink: fs.symlink, unlink: fs.unlink, mkdir: fs.mkdir, link: fs.link, writeFile: fs.writeFile };
   const entry = await fs.readFile(f.dev.entryPath);
-  await fs.unlink(f.dev.entryPath); await fs.link(f.prod.entryPath, f.dev.entryPath);
-  await refuses();
-  await fs.unlink(f.dev.entryPath); await fs.writeFile(f.dev.entryPath, entry);
-  const alias = path.join(f.dev.config.stateDirectory, 'linked-token');
-  await fs.link(f.dev.config.tokenPath, alias);
-  await refuses();
-  assert.equal(calls, 0);
+  const watch = watchFilesystem(t, evidence);
+  async function refuses(name) {
+    await assert.rejects(inspect(f, keys.client, exchange), { message: 'runtime_reference_unverified' });
+    rejections++; evidence.rejectedMutations.push(name);
+  }
+  evidence.rejectedMutations = [];
+  try {
+    await control(f, keys.client, authority, evidence);
+    await originals.rmdir(f.dev.profile); await originals.symlink(f.prod.profile, f.dev.profile, 'junction');
+    await refuses('profile-junction');
+    await originals.unlink(f.dev.profile); await originals.mkdir(f.dev.profile);
+    await control(f, keys.client, authority, evidence);
+    await originals.unlink(f.dev.entryPath); await originals.link(f.prod.entryPath, f.dev.entryPath);
+    await refuses('entry-hardlink');
+    await originals.unlink(f.dev.entryPath); await originals.writeFile(f.dev.entryPath, entry);
+    await control(f, keys.client, authority, evidence);
+    const alias = path.join(f.dev.config.stateDirectory, 'linked-token');
+    await originals.link(f.dev.config.tokenPath, alias);
+    await refuses('control-hardlink');
+    await originals.unlink(alias);
+    await control(f, keys.client, authority, evidence);
+    assert.equal(calls, 0); assert.equal(rejections, 3);
+  } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.exchangeCalls = calls;
 });
 
 nativeTest('restricted reference errors omit callback secrets and have no direct-read fallback', async (t, evidence) => {
   const f = await runtimeInputs(t), registration = createProductionReferenceRegistration(input(f)), keys = pair(registration);
   syntheticNative(t, evidence);
-  let productionReads = 0;
+  let productionReads = 0, throwingExchangeCalls = 0, invalidClientExchangeCalls = 0;
   const watch = watchFilesystem(t, evidence, filename => {
     if (filename.toLowerCase().startsWith(f.prod.directory.toLowerCase())) { productionReads++; return true; } return false;
   });
   try {
-    await assert.rejects(inspect(f, keys.client, () => { throw new Error('PrivateCallbackSecret0123456789'); }), { message: 'runtime_reference_unverified' });
-    await assert.rejects(inspect(f, {}, () => { throw new Error('must-not-run'); }), { message: 'runtime_reference_unverified' });
+    await control(f, keys.client, syntheticAuthority(registration, keys.privateKey), evidence);
+    await assert.rejects(inspect(f, keys.client, () => { throwingExchangeCalls++; throw new Error('PrivateCallbackSecret0123456789'); }), { message: 'runtime_reference_unverified' });
+    await assert.rejects(inspect(f, {}, () => { invalidClientExchangeCalls++; throw new Error('must-not-run'); }), { message: 'runtime_reference_unverified' });
     assert.equal(productionReads, 0);
+    assert.equal(throwingExchangeCalls, 1); assert.equal(invalidClientExchangeCalls, 0);
   } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.consumerProductionReads = productionReads;
+  evidence.throwingExchangeCalls = throwingExchangeCalls; evidence.invalidClientExchangeCalls = invalidClientExchangeCalls;
 });
 
 nativeTest('native restricted reference inspects its own caller and owned DEV listener without production observation or writes', async (t, evidence) => {
@@ -328,7 +393,7 @@ nativeTest('native restricted reference inspects its own caller and owned DEV li
     if ([f.prod.directory, f.plan.production.profileDirectory].some(root => filename.toLowerCase().startsWith(root.toLowerCase()))) { productionReads++; return true; } return false;
   });
   try {
-    const report = await inspect(f, keys.client, syntheticAuthority(registration, keys.privateKey));
+    const report = await control(f, keys.client, syntheticAuthority(registration, keys.privateKey), evidence);
     assert.equal(report.currentIdentity.status, 'matched');
     assert.equal(report.developmentListener.status, 'matched');
     assert.deepEqual(evidence.requestedNativeRoles, [[], ['development']]);
@@ -340,6 +405,44 @@ nativeTest('native restricted reference inspects its own caller and owned DEV li
     evidence.consumerProductionReads = productionReads;
   } finally { watch.restore(); syncBuiltinESMExports(); child.stdin.end(); await exited; }
   assert.deepEqual(await Promise.all([directorySnapshot(f.prod.directory), directorySnapshot(f.dev.directory)]), before);
+});
+
+nativeTest('registered reference binds differing declared and canonical config spellings to the same actual file identity', async (t, evidence) => {
+  const f = await runtimeInputs(t), registration = createProductionReferenceRegistration(input(f)), keys = pair(registration);
+  const declared = f.dev.configPath;
+  const physical = path.join(f.dev.config.stateDirectory, 'canonical-manager-control.json');
+  await fs.rename(declared, physical);
+  const canonicalFilename = await fs.realpath(physical);
+  assert.notEqual(windowsPath(declared), windowsPath(canonicalFilename),
+    'the alias difference must survive case and dot normalization');
+  // Deterministic ordinary-alias decision fixture. The file, handle, inode and
+  // metadata are real Windows files; only resolution of this one spelling is
+  // mapped. This is not a claim that native 8.3 allocation is enabled.
+  let aliasHandleOpens = 0;
+  for (const method of ['lstat', 'realpath', 'open']) {
+    const original = fs[method];
+    t.mock.method(fs, method, (filename, ...rest) => {
+      const isAlias = windowsPath(String(filename)) === windowsPath(declared);
+      if (isAlias && method === 'open') aliasHandleOpens++;
+      return original(isAlias ? physical : filename, ...rest);
+    });
+  }
+  syntheticNative(t, evidence);
+  const authority = createRegisteredProductionReferenceAuthority(registration, keys.privateKey);
+  const watch = watchFilesystem(t, evidence);
+  try {
+    const throughAlias = await stableFileSnapshot(declared, 16384);
+    const throughCanonical = await stableFileSnapshot(canonicalFilename, 16384);
+    assert.deepEqual(throughAlias.identity, throughCanonical.identity);
+    assert.deepEqual(throughAlias.bytes, throughCanonical.bytes);
+    await control(f, keys.client, authority, evidence);
+    assert.ok(aliasHandleOpens >= 5, 'both consumer and authority must read the registered alias repeatedly');
+    assert.deepEqual(evidence.requestedNativeRoles, [['development'], ['production']]);
+  } finally { watch.restore(); syncBuiltinESMExports(); }
+  evidence.canonicalAliasFixture = 'controlled filesystem alias; not a native 8.3 allocation';
+  evidence.declaredCanonicalDifferent = true;
+  evidence.actualFileIdentityEqual = true;
+  evidence.aliasHandleOpens = aliasHandleOpens;
 });
 
 after(async () => {

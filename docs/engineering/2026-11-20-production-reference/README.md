@@ -24,14 +24,24 @@ hosted acceptance, actual-main receipt and claim release belong to
   is deliberately retained as historical evidence.
 - `local-gates.json` binds all 217 captured code, test and configuration inputs
   before and after qualification. Node v24.22.3 on Linux: root 128/128; manager
-  362 total, 338 pass, 24 Windows-specific skips, no failures/cancellations/TODOs.
+  363 total, 338 pass, 25 Windows-specific skips, no failures/cancellations/TODOs.
   Root check, build and generated UI comparison all exited zero. The final
   protocol source SHA-256 is
   `7a2ba4a9699a1e4c95ed95bc10db841c5513daf7a39d8464ee88565e220d4c30`.
-- `integration-implementation-receipt.json` binds the four integration files and
-  focused Linux checks. It is an implementation-author receipt, not independent
-  source acceptance or a native Windows pass. The receipt's absolute paths name
+- `integration-implementation-receipt.json` binds the initial four integration
+  files and focused Linux checks. `integration-alias-fix-receipt.json` binds the
+  subsequent Windows spelling correction and strengthened native fixtures;
+  focused Linux checks passed 154 with 19 Windows skips. These are
+  implementation-author receipts, not independent source acceptance or native
+  Windows passes. The receipts' absolute paths name
   the original scratch evidence; hashes identify the recorded log contents.
+
+The first revised full manager attempt failed the unchanged idle read-only
+backend teardown test with an SDK POST 503. Its isolated run then passed 1/1,
+and one standalone full manager repeat passed 338 with 25 skips. The final local
+receipt retains the failed attempt, its log hashes and both follow-ups explicitly.
+The 60 ms test timeout suggests sensitivity to scheduling, but the cause was not
+established. No source or assertion was changed to obtain the repeat pass.
 
 The protocol test author also runs the hosted evidence verifier and discloses
 authorship of the 49 new protocol, 10 previous route and 141 previous runtime-plan
@@ -40,9 +50,27 @@ must accept the immutable whole-source candidate.
 
 ## Hosted gates and limits
 
-At preparation of this commit, ten disposable native Windows integration cases
-and all exact-candidate/actual-main hosted checks are pending. Acceptance requires
-all five jobs on each revision, all frozen protocol titles, the ten native case
+The first hosted candidate, head `9e765ec59210897baf509f3331d1022a1f4d6a56`
+and checkout `12f97057aa7fb604d70c2562a94321e8b3994b57`, was rejected in
+[run 44707303036](https://github.com/MulattoTech/MTechLabs-Access/actions/runs/44707303036).
+Both Windows jobs had six new integration failures (441 total, 433 pass, two
+skips). Root and Linux jobs passed. The retained
+`first-hosted-candidate-rejection.json` binds the complete reviewed logs and seven
+native source hashes, and explains why the four completed negative cases did not
+provide sufficient evidence of their intended rejection stage. These results
+are preserved rather than counted as successful qualification.
+
+The correction compares the bounded config snapshot with the independently
+resolved declared config's complete file identity. It preserves canonical path,
+device/inode, link count, size and time checks. The native suite now has eleven
+cases. Every case requires a successful unmodified inspection, and negative
+cases record the reached exchange, mutation or credential-read stage. The added
+alias case uses a controlled resolver mapping backed by real Windows file and
+handle identities; it does not claim native 8.3 allocation qualification.
+
+At preparation of this commit, corrected disposable native Windows integration
+cases and exact revised-candidate/actual-main hosted checks remain pending. Acceptance requires
+all five jobs on each revision, all frozen protocol titles, the eleven native case
 titles and their seven source bindings, existing native identity/probe tests,
 both upstream qualification versions, complete stage/cleanup evidence and zero
 model calls. Actual-main run, job and archive IDs must differ from the candidate.
