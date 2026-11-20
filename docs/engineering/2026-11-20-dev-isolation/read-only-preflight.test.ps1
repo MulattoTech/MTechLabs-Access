@@ -684,6 +684,91 @@ foreach ($scenario in @(
     }
 }
 
+# A socket can be rebound or change ownership between the first inventory and
+# the Win32_Process lookup. The second inventory must observe the same sole
+# loopback binding and owner PID. All six fixtures are entirely synthetic; no
+# real sockets, services, or user accounts are changed.
+foreach($scenario in @(
+    @{name='owner_pid_changed_after_query'; kind='changed-pid'; recheck='changed'; invocation='unverified'; blocker='production-owner-binding-drift'},
+    @{name='binding_changed_after_query'; kind='changed-address'; recheck='changed'; invocation='unverified'; blocker='production-owner-binding-drift'},
+    @{name='extra_socket_after_query'; kind='extra-socket'; recheck='changed'; invocation='unverified'; blocker='production-owner-binding-drift'},
+    @{name='socket_gone_after_query'; kind='gone'; recheck='changed'; invocation='unverified'; blocker='production-owner-binding-drift'},
+    @{name='second_socket_query_denied'; kind='query-denied'; recheck='not-run'; invocation='unverified'; blocker='production-invocation-unverified'},
+    @{name='stable_socket_owner'; kind='stable'; recheck='matched'; invocation='invocation-fields-match'; blocker=$null}
+)){
+    $global:MTIssue46R12State = [pscustomobject]@{kind=$scenario.kind;reads=0}
+    try {
+        $resultText = & {
+            function Get-NetTCPConnection {
+                [CmdletBinding()]param([string]$State)
+                $global:MTIssue46R12State.reads++
+                $first = [pscustomobject]@{
+                    LocalPort=19740;LocalAddress='127.0.0.1';OwningProcess=424242;State='Listen'
+                }
+                if($global:MTIssue46R12State.reads -eq 1) { return $first }
+                switch($global:MTIssue46R12State.kind) {
+                    'changed-pid' {
+                        return [pscustomobject]@{
+                            LocalPort=19740;LocalAddress='127.0.0.1';OwningProcess=424243;State='Listen'
+                        }
+                    }
+                    'changed-address' {
+                        return [pscustomobject]@{
+                            LocalPort=19740;LocalAddress='0.0.0.0';OwningProcess=424242;State='Listen'
+                        }
+                    }
+                    'extra-socket' {
+                        return @($first, [pscustomobject]@{
+                            LocalPort=19740;LocalAddress='::';OwningProcess=424243;State='Listen'
+                        })
+                    }
+                    'gone' { return @() }
+                    'query-denied' { throw 'synthetic_second_inventory_denied' }
+                    'stable' { return $first }
+                    default { throw 'unknown_synthetic_socket_case' }
+                }
+            }
+            function Get-CimInstance {
+                [CmdletBinding()]param([string]$ClassName,[string]$Filter)
+                $exe = 'C:\Program Files\nodejs\node.exe'
+                $entry = 'H:\MTechLabs\MCP\runtime\admin.mjs'
+                $config = 'H:\MTechLabs\MCP\state\manager.json'
+                return [pscustomobject]@{
+                    ProcessId=424242
+                    ExecutablePath=$exe
+                    CommandLine=('"' + $exe + '" "' + $entry + '" --config "' + $config + '"')
+                }
+            }
+            & $source
+        }
+        $snapshot=$resultText|ConvertFrom-Json -AsHashtable
+        Assert-Inactive $snapshot $scenario.name
+        $relevant=@($snapshot.blockers|Where-Object {
+            $_ -eq 'production-owner-binding-drift' -or $_ -eq 'production-invocation-unverified'
+        })
+        if($global:MTIssue46R12State.reads -ne 2 -or
+            $snapshot.listeners.production -ne 'listener-present' -or
+            $snapshot.listeners.productionSocketRecheck -ne $scenario.recheck -or
+            $snapshot.listeners.productionInvocation -ne $scenario.invocation -or
+            ($null -eq $scenario.blocker -and $relevant.Count -ne 0) -or
+            ($null -ne $scenario.blocker -and
+                ($relevant.Count -ne 2 -and $scenario.recheck -eq 'changed')) -or
+            ($null -ne $scenario.blocker -and $scenario.recheck -eq 'not-run' -and
+                ($relevant.Count -ne 1 -or $relevant[0] -ne $scenario.blocker)) -or
+            ($null -ne $scenario.blocker -and
+                $scenario.blocker -notin $relevant)){
+            throw ('socket_recheck_fail_closed_contract_' + $scenario.name)
+        }
+        if($resultText.Contains('CommandLine') -or
+            $resultText.Contains('C:\Program Files\nodejs') -or
+            $resultText.Contains('424242')){
+            throw ('socket_recheck_output_leaked_private_data_' + $scenario.name)
+        }
+    } finally {
+        Remove-Variable -Name MTIssue46R12State -Scope Global -ErrorAction SilentlyContinue
+    }
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -691,7 +776,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 43
+    passed = 49
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -723,6 +808,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     absentCandidatesRemainUnclaimed = $true
     productionPortExclusiveBindingChecked = $true
     productionOwnerInvocationChecked = $true
+    productionOwnerRecheckedAfterProcessLookup = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
