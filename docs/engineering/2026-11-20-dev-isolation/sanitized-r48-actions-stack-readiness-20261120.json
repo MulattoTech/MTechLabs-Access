@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "project": "MulattoTech/MTechLabs-Access",
+  "checkpoint": "R48",
+  "createdUtc": "2026-11-20T22:56:24.911065+00:00",
+  "scope": "read-only GitHub Actions repository settings, workflow-run metadata, personal billing usage endpoint accessibility and future stacked draft PR routing",
+  "frozenSource": {
+    "pr45Number": 45,
+    "pr45State": "open",
+    "pr45Draft": true,
+    "pr45Merged": false,
+    "pr45HeadBranch": "feat/dev-reference-transport-20261120",
+    "pr45HeadSha": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "pr45BaseBranch": "main",
+    "pr45BaseSha": "15e851b11984592803d37599b639772e51e5c8c0",
+    "candidateHeadBranch": "fix/access44-r43-native-array-candidate-20261120",
+    "candidateHeadSha": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "candidateAncestryIncludesPr45Head": true,
+    "candidateLocalAndRemoteHeadsEqual": true,
+    "candidateWorktreeClean": true,
+    "existingOpenPrs": [
+      45
+    ],
+    "candidateStackedPrExists": false,
+    "candidatePullRequestTriggeredRunsReturned": 0
+  },
+  "repoActionsSettings": {
+    "endpoint": "/repos/MulattoTech/MTechLabs-Access/actions/permissions",
+    "accessible": true,
+    "enabled": true,
+    "allowedActions": "all",
+    "shaPinningRequired": false,
+    "repositorySettingsConstituteBillingApproval": false
+  },
+  "billing": {
+    "requestedEndpoint": "/users/MulattoTech/settings/billing/usage/summary?year=2026&month=11&product=Actions",
+    "authenticatedOwnerMatched": true,
+    "httpStatus": 404,
+    "usageDataAvailable": false,
+    "accountBillingStatus": "UNVERIFIED",
+    "activeBillingHoldProven": false,
+    "runnerEligibilityProven": false,
+    "ownerMustVerifyInBillingAndLicensing": true,
+    "noAmountsOrPaymentDetailsReadOrReported": true
+  },
+  "observedActions": {
+    "lastListedRepoRunId": 44742255585,
+    "lastListedRepoRunCreatedUtc": "2026-11-20T13:12:21Z",
+    "lastListedRunEvent": "pull_request",
+    "lastListedRunConclusion": "failure",
+    "lastListedRunAttempt": 2,
+    "lastListedRunHead": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "lastListedRunRequiredJobs": 5,
+    "lastListedRunJobsWithExecutedSteps": 0,
+    "recentRepoRunsRead": 35,
+    "observedSuccessAfterLastListedFailedRun": false,
+    "lastListedRunProvesCurrentBillingState": false
+  },
+  "futureEvent": {
+    "pullRequestTriggerConfigured": true,
+    "pushToMainTriggerConfigured": true,
+    "directCandidateBranchPushTriggersWorkflow": false,
+    "proposedHead": "fix/access44-r43-native-array-candidate-20261120",
+    "proposedBase": "feat/dev-reference-transport-20261120",
+    "proposedDraftOnly": true,
+    "prCreationCanTriggerActionsImmediately": true,
+    "prCreationPerformed": false,
+    "newRunTriggered": false
+  },
+  "release": {
+    "mandatoryJobCount": 5,
+    "requiredStageCount": 10,
+    "nativeWindowsQualificationAccepted": false,
+    "upstreamControlPdfAccepted": false,
+    "independentlyReviewedArtifactsAvailable": false,
+    "separateActualMainAccepted": false,
+    "sourceReleaseAuthorized": false,
+    "devActivationAuthorized": false
+  },
+  "handoffSha256": "970b382aea05140f5682edf4879c4547283c73cf8c3f9d65fe8d3e68131e18e2",
+  "limitations": [
+    "A 404 on a personal billing API endpoint cannot establish active payment hold, zero usage, or restored billing eligibility; product availability and permission may differ.",
+    "No successful repo run observed after R7 in the most recent 35 returned runs; this does not establish that the account could not admit a new job right now.",
+    "An enabled repository Actions setting is insufficient proof of account-level runner spending eligibility.",
+    "Opening an otherwise reviewable draft stacked PR can start GitHub Actions; it is intentionally deferred until owner billing confirmation and a separate deliberate trigger decision.",
+    "No source-only checksum, synthetic test, workflow metadata or repo setting can replace genuine source/native/PDF hosted acceptance."
+  ],
+  "safety": {
+    "ghGetReadOnly": true,
+    "ownerHostProductionModified": false,
+    "userAccountsAclsKeysOrServicesModified": false,
+    "cloudflareOrConnectorModified": false,
+    "billingModified": false,
+    "prCreatedOrMerged": false,
+    "workflowRerun": false,
+    "devActivated": false
+  }
+}
