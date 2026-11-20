@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> mtechlabs-access-codes@1.0.0 build
+> node scripts/build.mjs
+
+Embedded 8 UI assets into the Worker module.

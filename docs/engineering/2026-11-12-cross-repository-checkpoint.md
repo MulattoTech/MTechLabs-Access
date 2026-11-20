@@ -8,6 +8,19 @@ and hosted evidence; one writer owns implementation changes.
 
 ## Current continuation state — 2026-11-20 UTC
 
+- The next approved Access source batch is tracked in
+  [issue34](https://github.com/MulattoTech/MTechLabs-Access/issues/34), based on
+  actual main `83d5c3791a4fc459cb4c2e536f97b1f5f77273d0`. The
+  [DEV foundation receipt](2026-11-20-dev-manager/README.md) records strict
+  independent manager configuration, loopback routing, credential/state checks,
+  exclusive ownership and drained shutdown. Local root 128/128 and manager
+  132 pass plus three Windows skips; the focused baseline has 16 expected
+  capability failures and fixed suite 17 pass plus two Windows skips. Hosted
+  candidate/main and immutable acceptance are pending at commit preparation;
+  the issue's final receipt is authoritative for subsequent acceptance.
+  DEV Desktop Commander execution is blocked pending independent OS-profile
+  and backend/App/grant qualification. This source work is not deployment.
+
 - CLI [PR265](https://github.com/MulattoTech/MTerm-CLI/pull/265) merged normally
   at `6f7b8e89e340e72e1ed26e627c165eb3d03f4382`, preserving reviewed tree
   `4094cd36501a84fe011526d1f46fc3ad0e5534f3`. All six candidate and six distinct
