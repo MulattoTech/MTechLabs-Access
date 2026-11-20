@@ -50,13 +50,13 @@ This is a **Windows-only unit suite**, designed to be runnable on a disposable G
 
 ### Portable fixture sensitivity checks (source mutations)
 
-[`read-only-preflight.portable.mutation.test.ps1`](read-only-preflight.portable.mutation.test.ps1) verifies that the independent portable ACL suite **fails** for seven deliberately broken classifier implementations, while the unmodified source **passes all 15 cases**. It creates disposable GUID-named directories under the user's temporary directory, writes **copies only**, runs child PowerShell 7 processes, verifies the failures are actual fixture assertions rather than syntax/tool failures, and deletes only its own temporary directory.
+[`read-only-preflight.portable.mutation.test.ps1`](read-only-preflight.portable.mutation.test.ps1) verifies that the independent portable ACL suite **fails** for seven deliberately broken classifier implementations, while the unmodified source **passes all 15 cases**. It creates disposable GUID-named directories under the user's temporary directory, writes **copies only**, runs child PowerShell 7 processes, requires the **exact first causal fixture assertion** expected for each mutation (rather than accepting any unrelated assertion failure), and deletes only its own temporary directory. The runner also verifies SHA-256 of both original inputs after cleanup before reporting that its source is unchanged or its scratch folder removed.
 
 ```powershell
 pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-preflight.portable.mutation.test.ps1
 ```
 
-The seven checked defects are ignored mutation bits, incorrect inherit-only propagation, disowned SYSTEM SID, unknown SID granted privileged status, misclassified broad grants, ignored reparse points, and an access-denied path reported as observed. The recorded Windows owner-host run passed the unmodified control and **rejected 7/7 mutants**.
+The seven checked defects are ignored mutation bits, incorrect inherit-only propagation, disowned SYSTEM SID, unknown SID granted privileged status, misclassified broad grants, ignored reparse points, and an access-denied path reported as observed. The recorded Windows owner-host run passed the unmodified control and **rejected 7/7 mutants at their specifically expected assertions**. A separate negative control deliberately supplied an incorrect expected assertion; the mutation runner exited nonzero as required, rather than counting it as a detected mutation.
 
 This suite is *test-sensitivity evidence* on **trusted reviewed source**, not seven additional native Windows identity/ACL acceptance tests. It does not execute the production preflight entrypoint or mutate any real ACL, key, service, account, or production file. It creates and removes **temporary copies**; it is not entirely filesystem-read-only. As with the portable helper test, PowerShell helper definitions are code, not an isolation sandbox for untrusted inputs.
 
