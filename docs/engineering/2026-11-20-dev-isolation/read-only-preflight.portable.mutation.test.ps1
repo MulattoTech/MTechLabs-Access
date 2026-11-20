@@ -84,7 +84,7 @@ try {
         $start.CreateNoWindow = $true
         $start.RedirectStandardOutput = $true
         $start.RedirectStandardError = $true
-        foreach($arg in @('-NoLogo','-NoProfile','-NonInteractive','-File',$testFile)){
+        foreach($arg in @('-NoLogo','-NoProfile','-NonInteractive','-File',$testFile,'-MachineFailureReport')){
             [void]$start.ArgumentList.Add($arg)
         }
         $process = [Diagnostics.Process]::new()
@@ -182,13 +182,15 @@ try {
         if($mutated -ceq $source) {throw ('mutation_did_not_change_source:' + $mutation.name)}
         $result=Invoke-Fixture ([string]$mutation.name) $mutated
 
-        # Only the precise, causally expected first fixture assertion counts
-        # as a killed mutant. A generic unrelated fixture failure is not proof.
-        $failurePattern='(?:fixture_mismatch|case_status_mismatch):[a-zA-Z0-9_-]+(?::[a-zA-Z0-9_-]+)?'
-        $firstFailure=[regex]::Match($result.stderr, $failurePattern)
-        $stdoutClaimsFailure=[regex]::IsMatch($result.stdout,$failurePattern)
-        if($result.exitCode -eq 0 -or $stdoutClaimsFailure -or -not $firstFailure.Success -or
-           $firstFailure.Value -cne [string]$mutation.expectedFailure){
+        # Only a caught fixture assertion counts: the reviewed child wrapper
+        # emits a dedicated exit code plus one exact machine marker *from its
+        # catch block*. A string printed to stderr before unrelated failure,
+        # or a marker in stdout, must not count as a killed mutant.
+        $expected='MTERM_FIXTURE_CAUGHT_EXCEPTION:' + [string]$mutation.expectedFailure
+        $actual=$result.stderr.Trim()
+        $stdoutClaimsFailure=[regex]::IsMatch($result.stdout,
+            '(?:MTERM_FIXTURE_CAUGHT_EXCEPTION:|fixture_mismatch:|case_status_mismatch:)')
+        if($result.exitCode -ne 42 -or $stdoutClaimsFailure -or $actual -cne $expected){
             throw ('portable_fixture_unexpected_mutant_failure:' + $mutation.name)
         }
         $rejected++
@@ -220,5 +222,6 @@ if (-not $scratchGone -or -not $sourceUnchanged -or -not $testUnchanged) {
     scratchRemoved=$scratchGone
     exactFailureClassification=$true
     stderrOnlyFailureValidation=$true
+    caughtFixtureExceptionValidated=$true
     activationAuthorized=$false
 } | ConvertTo-Json -Depth 4 -Compress
