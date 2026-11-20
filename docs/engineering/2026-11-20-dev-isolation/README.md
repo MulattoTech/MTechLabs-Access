@@ -2,6 +2,8 @@
 
 **Status: design and diagnostic source only. Not installed, merged, or authorized for activation.**
 
+**Read-only C: trust-parent clarification:** [`sanitized-c-root-authority-review-20261120.json`](sanitized-c-root-authority-review-20261120.json) resolves earlier unclassified `C:\Program Files` write-capable ACEs to **TrustedInstaller and CREATOR OWNER**, checks the existing Node/PowerShell executable ACL chain, and records the installed Node **27 alpha** file version versus PR #45's hosted Node 24 test environment. This is a disk-file/ACE snapshot, **not** actual DEV-token effective-access or live loaded-source attestation.
+
 **Proposed operational protected-root/rollback change plan (design only):** [Operational isolation and rollback review plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md). This records current parent ACL/namespace hazards, C: trust-root candidates, a reviewed sign-in startup wrapper, normalized deployed source provenance, explicit approvals and no-go conditions. **It neither provisions DEV nor authorizes a production cutover.**
 
 **Hosted acceptance and billing-admission handoff:** [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) consolidates PR #45's exact five-job source/fixture requirements, the latest failed-before-execution run, immutable evidence review and post-merge/main gates. Local preflight tests below **do not** waive these prerequisites.
