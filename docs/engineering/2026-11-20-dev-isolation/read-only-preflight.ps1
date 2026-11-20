@@ -83,11 +83,38 @@ try {
     }
     $baselineName = Join-Path $baselineRoot 'MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json'
     if (Test-Path -LiteralPath $baselineName -PathType Leaf -ErrorAction Stop) {
-        $hash = (Get-FileHash -LiteralPath $baselineName -Algorithm SHA256).Hash.ToLowerInvariant()
+        # Read a size-bounded snapshot through one handle. Hash and parse the
+        # same bytes; two separate opens would permit a file replacement between
+        # verification and JSON consumption. This is not native file-ID proof.
+        $file = [IO.FileStream]::new($baselineName, [IO.FileMode]::Open,
+            [IO.FileAccess]::Read, [IO.FileShare]::Read)
+        try {
+            if ($file.Length -lt 1 -or $file.Length -gt 65536) {
+                throw 'baseline_size_invalid'
+            }
+            $length = [int]$file.Length
+            $bytes = [byte[]]::new($length)
+            $offset = 0
+            while ($offset -lt $length) {
+                $read = $file.Read($bytes, $offset, $length - $offset)
+                if ($read -le 0) { throw 'baseline_truncated' }
+                $offset += $read
+            }
+            if ($file.ReadByte() -ne -1) { throw 'baseline_grew_during_read' }
+        } finally {
+            $file.Dispose()
+        }
+        $sha = [Security.Cryptography.SHA256]::Create()
+        try {
+            $hash = [BitConverter]::ToString($sha.ComputeHash($bytes)).Replace('-', '').ToLowerInvariant()
+        } finally {
+            $sha.Dispose()
+        }
         if ($hash -ne '07053c2a8075e3003f809898632152cc446d16b9b356919f2dad200308c27d9f') {
             $baselineStatus='hash-mismatch'
         } else {
-            $data = Get-Content -LiteralPath $baselineName -Raw | ConvertFrom-Json -AsHashtable
+            $baselineText = [Text.UTF8Encoding]::new($false, $true).GetString($bytes)
+            $data = $baselineText | ConvertFrom-Json -AsHashtable
             $expected = @($data.paths)
             if ($expected.Count -ne 9) { throw 'baseline_shape_invalid' }
             foreach ($p in $expected) {
