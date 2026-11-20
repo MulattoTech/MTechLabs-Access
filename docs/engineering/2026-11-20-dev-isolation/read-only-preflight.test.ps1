@@ -307,6 +307,67 @@ if ($unknownInherited.paths[2].status -ne 'observed' -or
     throw 'unfamiliar_inherit_only_ace_not_reported_or_exposed'
 }
 
+# Windows account names must not prove trusted privilege: only a translated
+# well-known SID may classify an ACE as SYSTEM or Administrators. This replaces
+# the previously reproduced blind spot with non-destructive synthetic rules.
+foreach ($fake in @(
+    @{ name='TEST_UNTRUSTED\Administrators'; label='fake_administrator_name' },
+    @{ name='TEST_UNTRUSTED\SYSTEM'; label='fake_system_name' }
+)) {
+    $spoofText = & {
+        param([string]$accountText)
+        function Get-Acl {
+            [CmdletBinding()]param([string]$LiteralPath)
+            $real = Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+            if ($LiteralPath -ne 'H:\MTechLabs\MCP') { return $real }
+            $rule = [Security.AccessControl.FileSystemAccessRule]::new(
+                [Security.Principal.NTAccount]::new($accountText),
+                [Security.AccessControl.FileSystemRights]::Modify,
+                [Security.AccessControl.InheritanceFlags]::ContainerInherit,
+                [Security.AccessControl.PropagationFlags]::None,
+                [Security.AccessControl.AccessControlType]::Allow)
+            return [pscustomobject]@{Owner=$real.Owner;Sddl=$real.Sddl;
+                AreAccessRulesProtected=$real.AreAccessRulesProtected;Access=@($real.Access)+@($rule)}
+        }
+        & $source
+    } $fake.name
+    $spoof = $spoofText | ConvertFrom-Json -AsHashtable
+    Assert-Inactive $spoof $fake.label
+    if ($spoof.paths[2].status -ne 'observed' -or
+        $spoof.paths[2].unclassifiedMutationAllowCount -ne 1 -or
+        $spoof.paths[2].inheritableUnclassifiedMutationCount -ne 1 -or
+        @($spoof.blockers | Where-Object {$_ -eq 'unclassified-ancestor-mutation:hProduction'}).Count -ne 1 -or
+        $spoofText.Contains('TEST_UNTRUSTED')) {
+        throw ('untrusted_privileged_name_bypassed_sid_check_' + $fake.label)
+    }
+}
+
+# A real well-known SID should still classify as privileged even when it arrives
+# as an NTAccount, so resolution doesn't misclassify the actual local SYSTEM.
+$knownSidText = & {
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        $real = Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+        if ($LiteralPath -ne 'H:\MTechLabs\MCP') { return $real }
+        $rule = [Security.AccessControl.FileSystemAccessRule]::new(
+            [Security.Principal.NTAccount]::new('NT AUTHORITY','SYSTEM'),
+            [Security.AccessControl.FileSystemRights]::Modify,
+            [Security.AccessControl.InheritanceFlags]::ContainerInherit,
+            [Security.AccessControl.PropagationFlags]::None,
+            [Security.AccessControl.AccessControlType]::Allow)
+        return [pscustomobject]@{Owner=$real.Owner;Sddl=$real.Sddl;
+            AreAccessRulesProtected=$real.AreAccessRulesProtected;Access=@($real.Access)+@($rule)}
+    }
+    & $source
+}
+$knownSid = $knownSidText | ConvertFrom-Json -AsHashtable
+Assert-Inactive $knownSid 'real_well_known_sid'
+if ($knownSid.paths[2].unclassifiedMutationAllowCount -ne 0 -or
+    $knownSid.paths[2].inheritableUnclassifiedMutationCount -ne 0 -or
+    @($knownSid.blockers | Where-Object {$_ -eq 'unclassified-ancestor-mutation:hProduction'}).Count -ne 0) {
+    throw 'real_well_known_sid_not_recognized'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -314,7 +375,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 19
+    passed = 22
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -334,6 +395,8 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     sameBytesBoundAndEncodingGuardsPresent = $true
     unknownMutablePrincipalFailsClosed = $true
     unknownInheritOnlyPrincipalFailsClosed = $true
+    privilegedNameSpoofingFailsClosed = $true
+    genuineBuiltinSidRecognized = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
