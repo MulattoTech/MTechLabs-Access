@@ -19,14 +19,19 @@ and hosted evidence; one writer owns implementation changes.
   or startup authority. The 49 frozen pure protocol groups passed their first
   candidate run unchanged. New-API absence on original main is recorded as a
   capability gap, not behavioral regression RED. Local root tests passed 128/128;
-  manager tests passed 338 with 25 Windows skips; check/build/generated UI gates
+  manager tests passed 339 with 25 Windows skips; check/build/generated UI gates
   passed with all 217 code/test/configuration inputs unchanged. The
   [local evidence](2026-11-20-production-reference/README.md) retains the receipts.
   The first candidate's Windows failure exposed a mixed canonical/declared path
   comparison. The corrected source compares complete resolved file identities;
   native rejection tests now prove successful controls and the intended stage.
+  Independent review also required canonical direct-child/reserved-name guards,
+  now covered by five alias rejection/restoration scenarios. A second candidate's
+  synthetic fingerprint/audience collision is corrected with a portable fixture
+  check; privacy assertions remain intact. Both rejected candidates are retained.
   The final local receipt also retains one unchanged idle-test failure and its
-  successful focused/full follow-ups without asserting its cause. Eleven disposable Windows
+  successful focused/full follow-ups without asserting its cause; final serial
+  gates passed without retry. Eleven disposable Windows
   integration cases, immutable whole-source review and exact hosted
   candidate/actual-main acceptance remain integration gates at preparation of
   this commit; issue40 receives the final exact-revision receipt. No operational

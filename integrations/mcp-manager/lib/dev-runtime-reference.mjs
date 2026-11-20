@@ -36,6 +36,10 @@ const within = (parent, child) => {
   return relative === '' || (!path.win32.isAbsolute(relative) && relative !== '..' && !relative.startsWith('..\\'));
 };
 const overlap = (a, b) => within(a, b) || within(b, a);
+function controlPlacement(stateDirectory, filename) {
+  const relative = path.win32.relative(windowsPath(stateDirectory), windowsPath(filename));
+  if (!within(stateDirectory, filename) || relative.includes('\\') || !relative || RESERVED.has(relative)) fail();
+}
 function supported() {
   if (process.platform !== 'win32') throw new Error('dev_runtime_platform_unsupported');
   if (process.env.NODE_OPTIONS || process.env.NODE_PATH) throw new Error('node_preload_environment_rejected');
@@ -88,8 +92,7 @@ function localDeclarations(config, plan, configPath, planPath) {
       !samePath(config.instance.productionConfigPath, plan.production.manager.configPath)) fail();
   // Reject obvious overlaps before following any DEV-config-derived paths.
   for (const file of [configPath, ...CONTROL_KEYS.map(key => config[key])]) {
-    const relative = path.win32.relative(windowsPath(config.stateDirectory), windowsPath(file));
-    if (!within(config.stateDirectory, file) || relative.includes('\\') || !relative || RESERVED.has(relative)) fail();
+    controlPlacement(config.stateDirectory, file);
   }
   for (const file of [plan.production.manager.configPath, plan.production.manager.entryPath,
     ...RUNTIME_KEYS.map(key => config[key]), plan.development.manager.nodePath, plan.development.manager.entryPath]) {
@@ -116,8 +119,10 @@ async function devSnapshot(configPath, planPath, expected, signal) {
     controls.push(await stableFileSnapshot(config[key], limit));
   }
   distinct(controls);
-  for (const file of controls) {
-    if (!within(state.filename, file.filename)) fail();
+  // A declared ordinary alias must not resolve to a reserved or nested control.
+  // The selected plan is the one explicit exception, bound exactly below.
+  for (const file of [own, ...controls.slice(2)]) {
+    controlPlacement(state.filename, file.filename);
   }
   if (!samePath(selected.filename, path.join(state.filename, 'dev-runtime-plan.json'))) fail();
   const manager = {};

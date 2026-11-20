@@ -19,7 +19,8 @@ import { runtimeInputs, directorySnapshot, hash } from './fixtures/runtime-input
 
 const native = { skip: process.platform !== 'win32' ? 'Requires native Windows reference filesystem and identity APIs' : false, timeout: 90000 };
 const cases = [], completed = [];
-const hash64 = 'a'.repeat(64);
+const fixtureConfigFingerprint = hash('MTerm-CLI synthetic production config fingerprint v1');
+const fixtureObservationFingerprint = hash('MTerm-CLI synthetic production observation fingerprint v1');
 function nativeTest(name, body) {
   cases.push(name);
   test(name, native, async t => {
@@ -39,7 +40,7 @@ function pair(registration) {
   return { ...keys, client: createProductionReferenceClient({ publicKey: keys.publicKey,
     registrationSha256: registration.sha256, instanceId: registration.instanceId }) };
 }
-const fixtureFacts = () => ({ productionConfigSha256: hash64, productionObservationSha256: hash64,
+const fixtureFacts = () => ({ productionConfigSha256: fixtureConfigFingerprint, productionObservationSha256: fixtureObservationFingerprint,
   productionListener: 'unverified', topologyVerified: true, credentialsDistinct: true });
 function syntheticAuthority(registration, privateKey) {
   return createProductionReferenceAuthority({ privateKey, registrationSha256: registration.sha256,
@@ -122,6 +123,21 @@ test('registered reference Windows integration refuses unsupported platforms bef
   assert.throws(() => createProductionReferenceRegistration({}), { message: 'dev_runtime_platform_unsupported' });
   assert.throws(() => createRegisteredProductionReferenceAuthority({}, {}), { message: 'dev_runtime_platform_unsupported' });
   await assert.rejects(inspectDevRuntimeWithReference('/unused', '/unused', {}, () => {}), { message: 'dev_runtime_platform_unsupported' });
+});
+
+test('synthetic reference fingerprints are distinct from the actual private fixture declarations', async t => {
+  const f = await runtimeInputs(t), facts = fixtureFacts();
+  const declaredStrings = [];
+  function collect(value) {
+    if (typeof value === 'string') declaredStrings.push(value);
+    else if (value && typeof value === 'object') for (const item of Object.values(value)) collect(item);
+  }
+  collect({ plan: f.plan, production: f.prod.config, development: f.dev.config });
+  for (const fingerprint of [facts.productionConfigSha256, facts.productionObservationSha256]) {
+    assert.match(fingerprint, /^[a-f0-9]{64}$/);
+    assert.equal(declaredStrings.includes(fingerprint), false, 'public synthetic fingerprint must not equal a private fixture declaration');
+  }
+  assert.notEqual(facts.productionConfigSha256, facts.productionObservationSha256);
 });
 
 nativeTest('registered reference handles privately pin deep copied configs and plan without writer authority', async (t, evidence) => {
@@ -416,20 +432,29 @@ nativeTest('registered reference binds differing declared and canonical config s
   assert.notEqual(windowsPath(declared), windowsPath(canonicalFilename),
     'the alias difference must survive case and dot normalization');
   // Deterministic ordinary-alias decision fixture. The file, handle, inode and
-  // metadata are real Windows files; only resolution of this one spelling is
+  // metadata are real Windows files; only resolution of selected spellings is
   // mapped. This is not a claim that native 8.3 allocation is enabled.
   let aliasHandleOpens = 0;
+  const originals = { rename: fs.rename, mkdir: fs.mkdir, rmdir: fs.rmdir, realpath: fs.realpath };
+  const aliases = new Map([[windowsPath(declared), physical]]);
+  let attackAlias, attackAliasRead = false;
   for (const method of ['lstat', 'realpath', 'open']) {
     const original = fs[method];
     t.mock.method(fs, method, (filename, ...rest) => {
-      const isAlias = windowsPath(String(filename)) === windowsPath(declared);
-      if (isAlias && method === 'open') aliasHandleOpens++;
-      return original(isAlias ? physical : filename, ...rest);
+      const key = windowsPath(String(filename));
+      const target = aliases.get(key);
+      if (target && method === 'open') {
+        if (key === windowsPath(declared)) aliasHandleOpens++;
+        if (key === attackAlias) attackAliasRead = true;
+      }
+      return original(target ?? filename, ...rest);
     });
   }
   syntheticNative(t, evidence);
   const authority = createRegisteredProductionReferenceAuthority(registration, keys.privateKey);
   const watch = watchFilesystem(t, evidence);
+  let attackExchanges = 0, placementCasesRead = 0;
+  const rejectedPlacements = [];
   try {
     const throughAlias = await stableFileSnapshot(declared, 16384);
     const throughCanonical = await stableFileSnapshot(canonicalFilename, 16384);
@@ -437,12 +462,54 @@ nativeTest('registered reference binds differing declared and canonical config s
     assert.deepEqual(throughAlias.bytes, throughCanonical.bytes);
     await control(f, keys.client, authority, evidence);
     assert.ok(aliasHandleOpens >= 5, 'both consumer and authority must read the registered alias repeatedly');
-    assert.deepEqual(evidence.requestedNativeRoles, [['development'], ['production']]);
+    // One reserved-name case for each control role, plus a nested config target.
+    // Every relocation preserves file identity/content, reaches the alias read,
+    // refuses before exchange, then restores and completes the full valid path.
+    for (const [name, alias, targetName] of [
+      ['config-reserved', declared, 'toolkit.json'],
+      ['config-nested', declared, 'nested-control/manager.json'],
+      ['policy-reserved', f.dev.config.policyPath, 'admission.sqlite'],
+      ['token-reserved', f.dev.config.tokenPath, 'manager-owner.lock'],
+      ['inventory-reserved', f.dev.config.inventoryPath, 'deployment.json'],
+    ]) {
+      const key = windowsPath(alias), previous = aliases.get(key), previousFile = previous ?? alias;
+      const target = path.join(f.dev.config.stateDirectory, ...targetName.split('/'));
+      const nested = targetName.includes('/');
+      const baseline = await stableFileSnapshot(alias, 65536);
+      if (nested) await originals.mkdir(path.dirname(target));
+      await originals.rename(previousFile, target);
+      aliases.set(key, target);
+      try {
+        const changed = await stableFileSnapshot(alias, 65536);
+        assert.equal(changed.identity.filename, windowsPath(await originals.realpath(target)));
+        for (const field of ['dev', 'ino', 'nlink', 'size']) assert.equal(changed.identity[field], baseline.identity[field]);
+        assert.deepEqual(changed.bytes, baseline.bytes);
+        const rolesBefore = evidence.requestedNativeRoles.length;
+        attackAlias = key; attackAliasRead = false;
+        await assert.rejects(inspect(f, keys.client, () => {
+          attackExchanges++; throw new Error('canonical_placement_must_precede_exchange');
+        }), { message: 'runtime_reference_unverified' });
+        assert.equal(attackAliasRead, true, 'the rejected inspection must read the relocated alias');
+        assert.equal(evidence.requestedNativeRoles.length, rolesBefore, 'canonical placement refuses before native observation');
+        placementCasesRead++; rejectedPlacements.push(name);
+      } finally {
+        attackAlias = undefined;
+        await originals.rename(target, previousFile);
+        if (previous === undefined) aliases.delete(key); else aliases.set(key, previous);
+        if (nested) await originals.rmdir(path.dirname(target));
+      }
+      await control(f, keys.client, authority, evidence);
+    }
+    assert.equal(attackExchanges, 0); assert.equal(placementCasesRead, 5);
+    assert.deepEqual(evidence.requestedNativeRoles, Array.from({ length: 6 }, () => [['development'], ['production']]).flat());
   } finally { watch.restore(); syncBuiltinESMExports(); }
   evidence.canonicalAliasFixture = 'controlled filesystem alias; not a native 8.3 allocation';
   evidence.declaredCanonicalDifferent = true;
   evidence.actualFileIdentityEqual = true;
   evidence.aliasHandleOpens = aliasHandleOpens;
+  evidence.canonicalPlacementRejections = rejectedPlacements;
+  evidence.canonicalPlacementAttackExchanges = attackExchanges;
+  evidence.canonicalPlacementCasesRead = placementCasesRead;
 });
 
 after(async () => {

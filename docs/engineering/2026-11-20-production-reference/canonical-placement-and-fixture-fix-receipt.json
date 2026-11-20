@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "author": "/root/runtime_review",
+  "kind": "canonical control placement and synthetic fixture corrections",
+  "createdAtUtc": "2026-11-20T09:23:37.725046+00:00",
+  "baseCommit": "c311657446a9bda6d34bd6dd62a3fb70b17b0248",
+  "baseTree": "7774671515c6dd1e499fc2740c9503f58e4a94f3",
+  "independentFinding": "Canonical control placement formerly enforced only within(state), allowing an ordinary declared alias to resolve to a reserved or nested actual control filename.",
+  "sourceFix": "Shared controlPlacement predicate now enforces nonempty direct-child, containment and RESERVED checks for both declared and canonical own config/policy/token/inventory. Selected plan remains the explicit exact canonical dev-runtime-plan.json exception. All file identity, hardlink, size and drift guards remain intact.",
+  "nativeRegression": {
+    "caseTitle": "registered reference binds differing declared and canonical config spellings to the same actual file identity",
+    "fixtureType": "controlled resolver mapping backed by real Windows file/handle identities; not native 8.3 allocation qualification",
+    "initialOrdinaryAliasSuccess": true,
+    "canonicalPlacementRejections": [
+      "config-reserved",
+      "config-nested",
+      "policy-reserved",
+      "token-reserved",
+      "inventory-reserved"
+    ],
+    "requiresSameDeviceInodeLinksSizeAndContentsAcrossRelocation": true,
+    "requiresActualAliasReadDuringEachRejectedInspection": true,
+    "attackExchangesExpected": 0,
+    "nativeRolesDuringEachFaultExpected": 0,
+    "restoreAndSuccessfulFullReferenceAfterEachFault": true,
+    "unmodifiedControlsExpected": 6,
+    "roleSequenceExpected": [
+      [
+        "development"
+      ],
+      [
+        "production"
+      ],
+      [
+        "development"
+      ],
+      [
+        "production"
+      ],
+      [
+        "development"
+      ],
+      [
+        "production"
+      ],
+      [
+        "development"
+      ],
+      [
+        "production"
+      ],
+      [
+        "development"
+      ],
+      [
+        "production"
+      ],
+      [
+        "development"
+      ],
+      [
+        "production"
+      ]
+    ],
+    "nativeCaseCount": 11
+  },
+  "candidate2FixtureFailure": {
+    "run": "44709484865",
+    "windowsTotalsEach": {
+      "tests": 442,
+      "pass": 434,
+      "fail": 6,
+      "skip": 2
+    },
+    "cause": "Synthetic production config/observation fingerprints repeated a 64 times, equal to the actual fixture production audience. The unchanged privateReport privacy assertion correctly rejected six synthetic-authority cases.",
+    "correction": "Use two domain-separated SHA-256 fingerprints. A new portable test checks both against all actual fixture declaration strings and each other. Privacy assertions are preserved.",
+    "portableRegressionTitle": "synthetic reference fingerprints are distinct from the actual private fixture declarations",
+    "localFixtureRedGreenReceiptSha256": "8d24de366a3b1f9b908a3dee7fe514dd792467e40f29e0099a75a98700e0ca46",
+    "localFixtureRedGreenReceiptPath": "/workspace/scratch/86162842804d/dev_production_reference_40/fixture-collision-local-checks.json"
+  },
+  "ownedFilesSha256": {
+    "lib/dev-runtime-reference.mjs": "8aa795a8f7efb63f6021bae9f012764fc4699137956568f38fde24d6ee3e4ab2",
+    "lib/runtime-files.mjs": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+    "lib/dev-runtime.mjs": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
+    "test/dev-runtime-reference.test.mjs": "57e926908dbd2bed5e40d2ad10b975330f829db37e0a48eae9ef7ad6627c9f3e"
+  },
+  "frozenProtocol49Sha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+  "localSyntaxPassed": true,
+  "localFocused": {
+    "name": "canonical-placement-local-focused",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "test/dev-runtime-reference.test.mjs",
+      "test/dev-runtime.test.mjs",
+      "test/dev-runtime-plan.test.mjs",
+      "test/dev-runtime-production-route.test.mjs"
+    ],
+    "exitCode": 0,
+    "totals": {
+      "tests": 174,
+      "suites": 0,
+      "pass": 155,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 19,
+      "todo": 0
+    },
+    "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/canonical-placement-local-focused.tap",
+    "stdoutSha256": "ba2ea760098cd14d95e872bbd2eb004a113df21f65e9917aff1f8136c34e13f7",
+    "stderrPath": "/workspace/scratch/86162842804d/dev_production_reference_40/canonical-placement-local-focused.stderr",
+    "stderrBytes": 0
+  },
+  "nativeQualification": "Pending candidate3 Windows CI; no new native pass is claimed by this receipt.",
+  "guardsWeakened": false,
+  "privacyAssertionWeakened": false,
+  "sourceCoreOrProtocol49Edited": false,
+  "activationAuthorized": false,
+  "qualified": false,
+  "upstreamEnabled": false,
+  "liveCalls": 0,
+  "commitsCreated": 0
+}

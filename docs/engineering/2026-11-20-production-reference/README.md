@@ -24,7 +24,7 @@ hosted acceptance, actual-main receipt and claim release belong to
   is deliberately retained as historical evidence.
 - `local-gates.json` binds all 217 captured code, test and configuration inputs
   before and after qualification. Node v24.22.3 on Linux: root 128/128; manager
-  363 total, 338 pass, 25 Windows-specific skips, no failures/cancellations/TODOs.
+  364 total, 339 pass, 25 Windows-specific skips, no failures/cancellations/TODOs.
   Root check, build and generated UI comparison all exited zero. The final
   protocol source SHA-256 is
   `7a2ba4a9699a1e4c95ed95bc10db841c5513daf7a39d8464ee88565e220d4c30`.
@@ -35,6 +35,12 @@ hosted acceptance, actual-main receipt and claim release belong to
   implementation-author receipts, not independent source acceptance or native
   Windows passes. The receipts' absolute paths name
   the original scratch evidence; hashes identify the recorded log contents.
+- `canonical-placement-and-fixture-fix-receipt.json` binds the final canonical
+  control restrictions, five alias rejection/restoration scenarios and portable
+  fixture check. Focused Linux checks passed 155 with 19 Windows skips.
+  `fixture-collision-local-checks.json` records a throwaway copy with the former
+  dummy values failing the portable fixture assertion and corrected values
+  passing. This is fixture-data evidence, not native Windows qualification.
 
 The first revised full manager attempt failed the unchanged idle read-only
 backend teardown test with an SDK POST 503. Its isolated run then passed 1/1,
@@ -42,6 +48,9 @@ and one standalone full manager repeat passed 338 with 25 skips. The final local
 receipt retains the failed attempt, its log hashes and both follow-ups explicitly.
 The 60 ms test timeout suggests sensitivity to scheduling, but the cause was not
 established. No source or assertion was changed to obtain the repeat pass.
+After the subsequent canonical-placement and fixture corrections, the final
+serial local gate run passed without a retry; its receipt keeps references to
+the earlier attempts.
 
 The protocol test author also runs the hosted evidence verifier and discloses
 authorship of the 49 new protocol, 10 previous route and 141 previous runtime-plan
@@ -67,6 +76,24 @@ cases. Every case requires a successful unmodified inspection, and negative
 cases record the reached exchange, mutation or credential-read stage. The added
 alias case uses a controlled resolver mapping backed by real Windows file and
 handle identities; it does not claim native 8.3 allocation qualification.
+
+The second draft, head `0439847839c5c28de084ac270fbad4c1b29bd6ed` and tree
+`7774671515c6dd1e499fc2740c9503f58e4a94f3`, was also rejected. Independent
+source review found that canonical control paths still needed the legacy
+direct-child and reserved-name restrictions, beyond containment alone. Its
+source-based counterexamples and execution limits are retained in
+`second-candidate-source-rejection.json`. The correction applies the restrictions
+to config, policy, token and inventory identities, while keeping the exact plan
+location exception; controlled aliases to reserved or nested locations must fail.
+
+Separately, [run 44709484865](https://github.com/MulattoTech/MTechLabs-Access/actions/runs/44709484865)
+reported six privacy assertion failures in each Windows job (442 total, 434 pass,
+two skips). The synthetic authority's dummy fingerprint was identical to the
+private audience sentinel. `second-candidate-ci-rejection.json` binds this fixture
+collision to the committed source and complete Windows logs. It does not infer a
+product privacy leak or native acceptance. Synthetic fingerprints are corrected
+without weakening the secrecy assertion, and a portable fixture check prevents
+the same mistake from being hidden behind a Windows-only skip.
 
 At preparation of this commit, corrected disposable native Windows integration
 cases and exact revised-candidate/actual-main hosted checks remain pending. Acceptance requires

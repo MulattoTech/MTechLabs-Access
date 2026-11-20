@@ -101,7 +101,10 @@ For each request, the authority:
    It does not reuse the legacy validator that re-reads config and follows newly
    read paths after asynchronous boundaries.
 4. Checks canonical state/profile separation, control placement and identities,
-   runtime placement, links/hardlinks, and the bounded DEV state topology.
+   runtime placement, links/hardlinks, and the bounded DEV state topology. DEV
+   config, policy, token and inventory must remain direct children of DEV state
+   with nonreserved names in both declared and canonical form. The plan has its
+   separate exact `dev-runtime-plan.json` location check.
 5. Reads both actual digest-only credential files and compares their effective
    digests internally. Plaintext credentials and equal credentials are refused.
 6. Checks the request's config/plan fingerprints and nonce-bound DEV snapshot
