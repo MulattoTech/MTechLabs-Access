@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "issue": "https://github.com/MulattoTech/MTechLabs-Access/issues/32",
+  "baselineCommit": "8322c04bdc722a9cd333a347448ae56eaa3b8b1d",
+  "baselineTree": "822e8c8b945e6cd75da010e5877701ae967a7e1b",
+  "frozenAt": "2026-11-20T06:00:03.995262+00:00",
+  "files": [
+    {
+      "path": "integrations/mcp-manager/manage.ps1",
+      "sha256": "daf5856c9e317b295340e0b1e8cb794be39f4a5695997d212389ec76086fb5e1",
+      "bytes": 3387
+    },
+    {
+      "path": "integrations/mcp-manager/test/fixtures/launcher-identity.ps1",
+      "sha256": "76850b30c31921c260e583ab480810dcbacea2ea521314e0f1c10539f4c433bf",
+      "bytes": 11254
+    },
+    {
+      "path": "integrations/mcp-manager/test/launcher-identity.test.mjs",
+      "sha256": "221f26996d3c03041487efafaf05955c6cbb4a24b134f735951f4c2162ecf1dc",
+      "bytes": 4034
+    }
+  ],
+  "decisionCases": [
+    "supported quoted invocation",
+    "unquoted entry and configuration without spaces",
+    "Windows path case variants",
+    "tab argument separators",
+    "different configuration",
+    "configuration suffix lookalike",
+    "missing configuration argument",
+    "duplicate configuration argument",
+    "extra trailing argument",
+    "entry suffix lookalike",
+    "expected entry appears only in unrelated argument",
+    "expected entry appears in eval text",
+    "unsupported Node flag",
+    "literal config flag is case sensitive",
+    "relative executable argument",
+    "unavailable command line",
+    "empty command line",
+    "different executable",
+    "returned process PID differs from listener",
+    "process disappeared before query",
+    "no listener",
+    "non-loopback listener",
+    "multiple listeners",
+    "established connection is not a listener",
+    "established connection does not hide the listener",
+    "foreign private argument stays out of diagnostics"
+  ],
+  "count": 26,
+  "executedAtFreeze": false,
+  "independentReview": {
+    "reviewer": "/root/repository_baseline",
+    "result": "CLEAR_BEFORE_RED",
+    "recordKind": "integration-owner transcription of independent review"
+  },
+  "execution": {
+    "runtime": "native Windows PowerShell 5.1 Desktop",
+    "sourceSelection": "actual top-level production function definitions via AST; no launcher body",
+    "observations": "simulated listener/CIM data; all cases captured before assertions",
+    "transport": "existing authenticated connector launches one bounded native PowerShell child with source and fixture in memory",
+    "childTimeoutMilliseconds": 30000,
+    "maximumOutputBytes": 262144,
+    "productionStateWrites": false,
+    "actualUpstreamQualification": false
+  },
+  "validRedRequires": [
+    "ordinary ownership decision mismatch",
+    "all positive controls valid",
+    "zero unexpected-error or invalid-return",
+    "zero side-effect attempts and query faults",
+    "complete 26-case report and known natural child exit"
+  ]
+}

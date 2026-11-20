@@ -155,6 +155,13 @@ launcher/scheduled task through the normal Windows deployment process if desired
 Do not run it as Administrator merely for convenience. An existing listener
 causes a clean failure; no process is killed to claim the port.
 
+The Windows shortcut launcher reuses a listener only after matching its owner PID,
+the expected executable, and the normalized absolute Windows entry/configuration
+paths from the native argument list. It requires exactly the supported entry and
+one literal `--config` pair; extra flags, lookalike paths and unavailable identity
+data are refused. This is invocation verification, not attestation of running file
+bytes or isolation from other processes under the same Windows user.
+
 The only accepted Host headers are localhost:19740, 127.0.0.1:19740, and the
 fixed mcp-origin.m-techlabs.com origin (optional :443). If an Origin header is
 present, it must be https://m-techlabs.com or https://www.m-techlabs.com.

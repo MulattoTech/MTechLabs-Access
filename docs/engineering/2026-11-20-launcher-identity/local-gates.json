@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0",
+  "runtime": {
+    "node": "v24.22.3",
+    "platform": "Linux",
+    "architecture": "x86_64"
+  },
+  "checks": {
+    "root-build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "bytes": 259,
+      "sha256": "37c3e3ec50d15837453fb5b68fcb283d1abf95c1bd0b78dfa87a0b4ab6612a67",
+      "totals": {},
+      "launcherSha256AtExecution": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0"
+    },
+    "root-check": {
+      "command": "npm run check",
+      "exitCode": 0,
+      "bytes": 477,
+      "sha256": "057dd26cd3b2e78c9db81c42ca894a3590f9835ef02345f59b6686d7479cabca",
+      "totals": {},
+      "launcherSha256AtExecution": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0"
+    },
+    "root-test": {
+      "command": "npm test (repository root)",
+      "exitCode": 0,
+      "bytes": 29760,
+      "sha256": "98279ef37e5b6358d6d3d3b4efcf02ad34723a0112e702a60a7b4717c66e06f6",
+      "totals": {
+        "tests": 128,
+        "pass": 128,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "launcherSha256AtExecution": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0"
+    },
+    "manager-test": {
+      "command": "npm test (integrations/mcp-manager)",
+      "exitCode": 0,
+      "bytes": 11820,
+      "sha256": "a3ccc7409f6964a01b59453a7c9762b86a43105f756ac0c6df03816d9c292693",
+      "totals": {
+        "tests": 116,
+        "pass": 115,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0
+      },
+      "launcherSha256AtExecution": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0"
+    }
+  },
+  "generatedUiDiffExitCode": 0,
+  "gitDiffCheckExitCode": 0,
+  "dependencyInstall": {
+    "command": "npm ci --ignore-scripts --no-audit --no-fund",
+    "workingDirectory": "integrations/mcp-manager",
+    "exitCode": 0,
+    "packagesAdded": 95
+  },
+  "limitations": [
+    "The one skipped manager parent is the newly added native Windows launcher fixture; its 26 decision cells ran separately on actual Windows PowerShell5.1 through the authenticated connector.",
+    "The ordinary Windows Node wrapper and the full source/upstream hosted matrix remain required; no real upstream qualification was run on the owner account."
+  ]
+}
