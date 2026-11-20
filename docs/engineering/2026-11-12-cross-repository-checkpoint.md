@@ -6,7 +6,48 @@ deployment and whole-requirement acceptance. OpenAI / GPT-6 Astra Pro is the
 self-reported implementation owner. Independent agents review immutable source
 and hosted evidence; one writer owns implementation changes.
 
-## Current continuation state — 2026-11-12 21:18 UTC
+## Current continuation state — 2026-11-20 UTC
+
+- CLI [PR265](https://github.com/MulattoTech/MTerm-CLI/pull/265) merged normally
+  at `6f7b8e89e340e72e1ed26e627c165eb3d03f4382`, preserving reviewed tree
+  `4094cd36501a84fe011526d1f46fc3ad0e5534f3`. All six candidate and six distinct
+  actual-main jobs passed. Windows source is 1622/1622; Unix source lanes pass
+  1610 plus 12 existing Windows-only skips. Each of five installed package lanes
+  passes all 27 new preflight cancellation cases. Real Linux containment passes
+  12 source and 12 installed cases with verified cleanup. Independent review is
+  clear. Bounded issue243 acceptance, original claim release and explicit closure
+  are recorded in its [final checkpoint](https://github.com/MulattoTech/MTerm-CLI/issues/243#issuecomment-7032004304).
+- Active Access [issue32](https://github.com/MulattoTech/MTechLabs-Access/issues/32)
+  repairs the Windows launcher's substring-based process ownership decision.
+  Branch `fix/launcher-process-identity-20261120` starts at exact main
+  `8322c04bdc722a9cd333a347448ae56eaa3b8b1d`. Native Windows PowerShell 5.1
+  observed 13 original false accepts; the unchanged 26-case fixture passes after
+  the narrow source correction. Independent source/evidence review is clear.
+  See [the retained qualification record](2026-11-20-launcher-identity/README.md).
+  Immutable publication, ordinary Windows wrapper execution, all five candidate
+  jobs and five actual-main jobs remain pending at this preparation checkpoint.
+- The current Access checkout was materialized through authenticated GitHub API
+  reads because local Git lacks a credential. All 279 unique blobs, 283 paths,
+  tree `822e8c8b945e6cd75da010e5877701ae967a7e1b` and the exact signed base
+  commit were verified. It has an explicit shallow boundary and clean baseline;
+  this is distinct from the older synthetic snapshot history described below.
+- Fresh live inspection still separates the working production bridge on
+  Desktop Commander 0.3.1 from the source-qualified 0.3.3 candidate. The canonical
+  plugin and Live Connection share a backend/App. Port4320 belongs to Fleet
+  Control, not an independently verified MTerm DEV instance. Production services,
+  credentials, policies, the dirty owner CLI checkout and working wrappers remain
+  untouched by these source repairs.
+
+**Current action:** qualify and integrate Access32 through the normal expected-head
+workflow, then append its actual delivery receipt to the same issue before claim
+release and explicit completion. The next structural work is a separately selected
+loopback DEV manager with disjoint state and verifiable listener identity. A real
+DEV bridge additionally needs an isolated upstream user profile and independent
+App/grant routing; different names or state directories alone are insufficient.
+No production cutover, wrapper removal or paid model call follows from source CI.
+The original CLI/DCP/WEB acceptance metrics and broader issues remain unchanged.
+
+## Historical continuation state — 2026-11-12 21:18 UTC
 
 The historical next-action sections below describe earlier checkpoints. These
 verified outcomes supersede them without discarding their failed or pending history.

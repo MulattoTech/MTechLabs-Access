@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "recordKind": "integration-owner transcription of independent agent review",
+  "reviewer": "/root/repository_baseline",
+  "result": "CLEAR_FOR_IMMUTABLE_CANDIDATE_PUBLICATION",
+  "originalSourceSha256": "daf5856c9e317b295340e0b1e8cb794be39f4a5695997d212389ec76086fb5e1",
+  "correctedSourceSha256": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0",
+  "fixtureSha256": "76850b30c31921c260e583ab480810dcbacea2ea521314e0f1c10539f4c433bf",
+  "wrapperSha256": "221f26996d3c03041487efafaf05955c6cbb4a24b134f735951f4c2162ecf1dc",
+  "rawOriginalToolSha256": "539cc42abae15f20e458d412850d81011f00800a5e199de8ddbf24e32ec19c12",
+  "rawGreenToolSha256": "89f28c053f9e0b2105040218e032125881d1073f0d93004714b1c73a42768c25",
+  "stages": [
+    {
+      "name": "pre-RED fixture review",
+      "result": "CLEAR",
+      "executedByReviewer": false
+    },
+    {
+      "name": "original Windows baseline evidence",
+      "result": "VALID_ORIGINAL_RED",
+      "passed": 13,
+      "failed": 13,
+      "total": 26
+    },
+    {
+      "name": "corrected source and evidence",
+      "result": "CLEAR",
+      "passed": 26,
+      "failed": 0,
+      "total": 26
+    }
+  ],
+  "findings": [],
+  "observations": [
+    "Exact 4-argument native parsing; all nonzero allocations freed in finally.",
+    "PID, executable, entry, literal --config and selected configuration checks are coherent.",
+    "All 13 originally false accepted cases corrected; all 13 original controls preserve their observations.",
+    "Frozen fixtures unchanged; complete capture; no query, side-effect, privacy or cleanup fault.",
+    "Initial installation constants and complete original main launch/mutex/shortcut body are byte-identical."
+  ],
+  "limits": [
+    "This is independent agent review, not a GitHub human approval.",
+    "Paths are normalized absolute Windows paths, not filesystem-object attestation.",
+    "Immutable commit/tree binding, ordinary Windows wrapper, all five candidate and five actual-main jobs remain required.",
+    "No production deployment or independent DEV acceptance is claimed."
+  ]
+}

@@ -135,6 +135,13 @@ setting was changed.
 
 The launcher is idempotent and will not stop another process to claim the port:
 
+The source launcher now checks the listener's returned owner PID and exact
+supported Node invocation, including the selected manager configuration. It does
+not treat an entry-path substring in another command as ownership. Unknown or
+unsupported invocation metadata fails closed without printing the other process's
+arguments. This source repair must follow the separate deployment procedure before
+it changes an installed launcher; see [the qualification record](../../docs/engineering/2026-11-20-launcher-identity/README.md).
+
 ```powershell
 powershell -NoProfile -ExecutionPolicy RemoteSigned -File "H:\MTechLabs\MCP\runtime\manage.ps1" -Action Status
 powershell -NoProfile -ExecutionPolicy RemoteSigned -File "H:\MTechLabs\MCP\runtime\manage.ps1" -Action Start
