@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "classification": "Read-only owner-host ACL and immediate namespace inventory; NOT effective-access qualification or execution authorization",
+  "observedUtc": {
+    "pathAcl": "2026-11-20T19:11:39.4619664Z",
+    "siblingInheritance": "2026-11-20T19:13:06.7180832Z"
+  },
+  "machineContext": "existing owner Windows context",
+  "rawSidExported": false,
+  "rawSddlExported": false,
+  "siblingNamesExported": false,
+  "sourceAndAclModificationPerformed": false,
+  "actualDevTokenUsed": false,
+  "crossAccountEffectiveAccessQualified": false,
+  "devActivationAuthorized": false,
+  "sharedHierarchy": {
+    "root": "H:\\MTechLabs",
+    "scannedImmediateObjects": 4,
+    "scanCapped": false,
+    "existingProductionDirectory": "H:\\MTechLabs\\MCP",
+    "otherSiblingDirectories": 3,
+    "otherSiblingActiveAuthenticatedUsersModify": 3,
+    "otherSiblingInheritedAuthenticatedUsersModify": 3,
+    "otherSiblingProtectedDacl": 0,
+    "otherSiblingReparsePoints": 0,
+    "hazard": "Changing H: or H:\\MTechLabs inheritance without sibling impact and restoration review may alter unrelated workloads"
+  },
+  "observedAncestorAces": [
+    {
+      "path": "H:\\",
+      "principalCategory": "authenticated-users",
+      "allowRightsMask": "0x001301BF",
+      "appliesToCurrentObject": true,
+      "inherited": false,
+      "rightsDescription": "Modify, Synchronize"
+    },
+    {
+      "path": "H:\\",
+      "principalCategory": "authenticated-users",
+      "allowRightsMask": "0xE0010000",
+      "appliesToCurrentObject": false,
+      "inheritable": true,
+      "rightsDescription": "inherit-only generic access mask"
+    },
+    {
+      "path": "H:\\MTechLabs",
+      "principalCategory": "authenticated-users",
+      "allowRightsMask": "0x001301BF",
+      "appliesToCurrentObject": true,
+      "inherited": true,
+      "rightsDescription": "Modify, Synchronize"
+    },
+    {
+      "path": "H:\\MTechLabs\\MCP",
+      "principalCategory": "authenticated-users",
+      "allowRightsMask": "0x001301BF",
+      "appliesToCurrentObject": true,
+      "inherited": true,
+      "rightsDescription": "Modify, Synchronize"
+    },
+    {
+      "path": "C:\\",
+      "principalCategory": "authenticated-users",
+      "allowRightsMask": "0x00000004",
+      "appliesToCurrentObject": true,
+      "inherited": false,
+      "rightsDescription": "CreateDirectories"
+    },
+    {
+      "path": "C:\\ProgramData",
+      "principalCategory": "builtin-users",
+      "allowRightsMask": "0x00000116",
+      "appliesToCurrentObject": true,
+      "inheritable": true,
+      "rightsDescription": "Write, ContainerInherit"
+    }
+  ],
+  "unclassifiedExposure": {
+    "path": "C:\\Program Files",
+    "otherIdentityWriteCapableAceCount": 3,
+    "activeOtherIdentityWriteCapableAceCount": 1,
+    "otherIdentityNamesDisclosed": false,
+    "consequence": "Manual owner and effective-rights inspection required; existing parent must not be presumed immutable"
+  },
+  "absentCandidatePaths": [
+    "H:\\MTechLabs\\MCP-DEV",
+    "C:\\Program Files\\MTechLabs",
+    "C:\\ProgramData\\MTechLabs",
+    "C:\\ProgramData\\MTechLabs\\ReferenceManager"
+  ],
+  "devLocalAccountObserved": "absent",
+  "devTcp19741ListenerCount": 0,
+  "knownPrivateAclBaseline": {
+    "pathOmitted": true,
+    "sha256": "07053c2a8075e3003f809898632152cc446d16b9b356919f2dad200308c27d9f",
+    "isOperationalRestorationBackup": false
+  },
+  "goNoGo": {
+    "preferredStrategyForReview": "Option A, production-first protected-root relocation",
+    "optionBSelected": false,
+    "requiresSuccessfulGithubHostedAcceptance": true,
+    "requiresExactOwnerAndTokenRights": true,
+    "requiresSiblingImpactAndRollbackReview": true,
+    "requiresProtectedBackupAndRestoreRehearsal": true,
+    "requiresSeparateOperationalApproval": true,
+    "mayProvisionAccount": false,
+    "mayChangeAcl": false,
+    "mayCutoverProduction": false,
+    "mayActivateDev": false
+  },
+  "limitations": [
+    "Directory entry ACL snapshots cannot prove effective access under the absent MTermDev token.",
+    "No native handle-based path identity, delete-child, rename, reparse, hardlink or parent namespace replacement test was performed.",
+    "Private owner/principal SID values and raw security descriptors are deliberately not included.",
+    "Proposed directory existence and observed inherited permissions can change after this snapshot.",
+    "GitHub source CI has not qualified this host or a protected broker and cannot authorize changes by itself."
+  ]
+}
