@@ -570,6 +570,58 @@ if(@($absentCandidates.paths|Where-Object{$_.id -in @('candidateProtectedCode','
     throw 'absent_candidate_roots_misreported'
 }
 
+# The production listener must be the sole listener anywhere on port 19740.
+# These scenarios alter ONLY the PowerShell inventory returned to this process,
+# never network adapters, binding state or any production service.
+foreach($scenario in @(
+    @{name='second_ipv4_wildcard';kind='extra-ipv4';status='listener-nonexclusive';blocker='production-listener-nonexclusive'},
+    @{name='second_ipv6_wildcard';kind='extra-ipv6';status='listener-nonexclusive';blocker='production-listener-nonexclusive'},
+    @{name='duplicate_loopback';kind='duplicate-loopback';status='listener-nonexclusive';blocker='production-listener-nonexclusive'},
+    @{name='only_wildcard';kind='only-wildcard';status='listener-nonexclusive';blocker='production-listener-nonexclusive'},
+    @{name='no_production_listener';kind='no-production';status='listener-absent';blocker='production-listener-unverified'},
+    @{name='unrelated_extra_listener';kind='unrelated-listener';status='listener-present';blocker=$null}
+)){
+    $output = & {
+        param([string]$kind)
+        function Get-NetTCPConnection {
+            [CmdletBinding()]
+            param([string]$State)
+            $existing = @(NetTCPIP\Get-NetTCPConnection -State Listen -ErrorAction Stop)
+            $other = @($existing | Where-Object {$_.LocalPort -ne 19740})
+            switch($kind) {
+                'extra-ipv4' {
+                    return @($existing) + @([pscustomobject]@{LocalAddress='0.0.0.0';LocalPort=19740;State='Listen'})
+                }
+                'extra-ipv6' {
+                    return @($existing) + @([pscustomobject]@{LocalAddress='::';LocalPort=19740;State='Listen'})
+                }
+                'duplicate-loopback' {
+                    return @($existing) + @([pscustomobject]@{LocalAddress='127.0.0.1';LocalPort=19740;State='Listen'})
+                }
+                'only-wildcard' {
+                    return @($other) + @([pscustomobject]@{LocalAddress='0.0.0.0';LocalPort=19740;State='Listen'})
+                }
+                'no-production' { return $other }
+                'unrelated-listener' {
+                    return @($existing) + @([pscustomobject]@{LocalAddress='0.0.0.0';LocalPort=19742;State='Listen'})
+                }
+                default { throw 'unknown_synthetic_listener_case' }
+            }
+        }
+        & $source
+    } $scenario.kind
+    $observation = $output | ConvertFrom-Json -AsHashtable
+    Assert-Inactive $observation $scenario.name
+    $matched = @($observation.blockers | Where-Object {
+        $_ -eq 'production-listener-unverified' -or $_ -eq 'production-listener-nonexclusive'
+    })
+    if($observation.listeners.production -ne $scenario.status -or
+       ($null -eq $scenario.blocker -and $matched.Count -ne 0) -or
+       ($null -ne $scenario.blocker -and ($matched.Count -ne 1 -or $matched[0] -ne $scenario.blocker))){
+        throw ('production_port_exclusivity_failed_' + $scenario.name)
+    }
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -577,7 +629,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 30
+    passed = 36
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -607,6 +659,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     candidateRootPresenceUnqualified = $true
     candidateRootUnreadableBlocked = $true
     absentCandidatesRemainUnclaimed = $true
+    productionPortExclusiveBindingChecked = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
