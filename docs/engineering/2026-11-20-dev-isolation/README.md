@@ -10,7 +10,7 @@ This directory contains a narrowly scoped Windows PowerShell 7 preflight for the
 
 `%LOCALAPPDATA%\MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json`
 
-There is no automatic ACL backup, restore, install, account creation, mutation or elevation behavior. This script reads that baseline **only to compare** current ACL SDDL strings, filesystem object types (file versus directory), and reparse-point flags; it never prints raw security descriptors, SIDs, owner names, account/profile paths, process command lines or token/credential contents. It checks eleven declared paths, including candidate directory names that currently do not exist. The candidate roots are *proposals*, not allocated or validated locations.
+There is no automatic ACL backup, restore, install, account creation, mutation or elevation behavior. This script reads that baseline **once into a bounded byte snapshot (maximum 64 KiB)**, verifies SHA-256 of those same bytes, strictly decodes UTF-8, and then compares current ACL SDDL strings, filesystem object types (file versus directory), and reparse-point flags. It does not separately reopen the file to parse it after hashing; it never prints raw security descriptors, SIDs, owner names, account/profile paths, process command lines or token/credential contents. It checks eleven declared paths, including candidate directory names that currently do not exist. The candidate roots are *proposals*, not allocated or validated locations.
 
 ## Invocation
 
@@ -26,13 +26,13 @@ A mismatch, inaccessible ACL or path lookup, denied account query, missing or no
 
 ## Repeatable non-destructive checks
 
-[read-only-preflight.test.ps1](read-only-preflight.test.ps1) exercises the diagnostic through fifteen bounded checks without installing software or altering system configuration:
+[read-only-preflight.test.ps1](read-only-preflight.test.ps1) exercises the diagnostic through seventeen bounded checks without installing software or altering system configuration:
 
 ```powershell
 pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-preflight.test.ps1
 ```
 
-It verifies successful parsing, a static deny-list of mutating/network command invocations, an ordinary read-only assessment with all activation flags false, fail-closed behavior when the local baseline is absent, and fail-closed behavior when `Get-Acl` is synthetically denied, and additional refusal cases for inaccessible path lookup, inaccessible baseline lookup, denied local-user query, and inaccessible DEV-profile lookup, missing/relative/remote `LOCALAPPDATA` baseline roots and public-output sanitization, synthetic reparse-point substitution with unchanged ACL, file/directory substitution, and denied filesystem-object metadata. It also checks the diagnostic's source hash is unchanged after execution. The test's output is a sanitized JSON receipt with `passed: 15` or a nonzero exit on failure. This is **not** an OS security proof or test under a DEV identity.
+It verifies successful parsing, a static deny-list of mutating/network command invocations, an ordinary read-only assessment with all activation flags false, fail-closed behavior when the local baseline is absent, and fail-closed behavior when `Get-Acl` is synthetically denied, and additional refusal cases for inaccessible path lookup, inaccessible baseline lookup, denied local-user query, and inaccessible DEV-profile lookup, missing/relative/remote `LOCALAPPDATA` baseline roots and public-output sanitization, synthetic reparse-point substitution with unchanged ACL, file/directory substitution, and denied filesystem-object metadata, independence from the former separate `Get-FileHash`/`Get-Content` baseline readers, and a static single-read/bounds/decoding contract. It also checks the diagnostic's source hash is unchanged after execution. The test's output is a sanitized JSON receipt with `passed: 17` or a nonzero exit on failure. This is **not** an OS security proof or test under a DEV identity.
 
 ## Recorded local qualification (2026-11-20)
 
@@ -44,6 +44,7 @@ It verifies successful parsing, a static deny-list of mutating/network command i
 - Negative controls: a thrown H: `Test-Path` reports `unverified` and `acl-unverified:hRoot` instead of terminating; denied baseline lookup is `unverified`; denied local-account lookup is **not** misreported as `absent`; denied DEV-profile lookup is `unverified`. All retain disabled activation flags.
 - Missing, relative or remote `LOCALAPPDATA` values produce a sanitized `baseline.status=unverified` report instead of terminating. Baseline reads are constrained to an absolute fixed local drive; the private snapshot is not loaded from a UNC path. The additional negative tests assert this, and check the public JSON for raw SID/private path leakage.
 - Synthetic namespace-substitution controls: a production ancestor that becomes a junction/reparse point while keeping its existing ACL must result in `baseline.status=drift`, `baseline-not-matched` and `reparse-ancestor:hProduction`; changing the object from directory to file must also cause drift; denying `Get-Item` metadata must report `unverified`. No live junction, file, or ACL was created or modified.
+- Single-read control: even with the former separate baseline cmdlets synthetically disabled, the same-byte hash/strict-decode path retains **9/9 baseline matches**. A static check requires one `FileStream`, the 64 KiB bound, strict UTF-8 and in-memory SHA-256. This narrows the verification/read inconsistency but does **not** attest a native file ID, safely handle all concurrent replacement races or authorize an operational trust anchor.
 - The local source file remained hash-stable during both tests. A source-only branch is used to preserve work without initiating another billing-blocked GitHub Actions run.
 
 These are owner-host diagnostics, **not GitHub-hosted, cross-account, native pipe/ACL or upstream qualifications**.
