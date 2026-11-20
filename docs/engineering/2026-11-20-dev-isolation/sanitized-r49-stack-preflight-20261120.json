@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R49",
+  "createdUtc": "2026-11-20T23:03:17.736539+00:00",
+  "scope": "live source/branch/pr/workflow metadata and read-only PR creation guard; NO Actions job or PR created",
+  "assessment": {
+    "schemaVersion": 1,
+    "scope": "read-only pre-PR exact source and account metadata (no billing attestation)",
+    "reviewedPR45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "reviewedCandidateHead": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "expectedStackedBase": "feat/dev-reference-transport-20261120",
+    "expectedStackedHead": "fix/access44-r43-native-array-candidate-20261120",
+    "structuralPreflightMatched": true,
+    "unqualifiedReasons": [],
+    "unqualifiedCount": 0,
+    "repositoryActionsEnabled": true,
+    "historicalJobStepCountZero": true,
+    "accountBillingEligibility": "UNVERIFIED",
+    "hostedRunnerAdmissionVerified": false,
+    "completeNativeAndUpstreamAcceptance": false,
+    "createDraftPRCurrentlyAuthorized": false,
+    "ciRerunAuthorized": false,
+    "sourceMergeAuthorized": false,
+    "productionModified": false,
+    "devActivationAuthorized": false
+  },
+  "rawMetadataSanitized": {
+    "candidateLocalHead": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "candidateRemoteHead": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "pr45RemoteHead": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "candidateCheckoutDirty": false,
+    "ancestorMatched": true,
+    "observedGitBlobs": {
+      "workflow": "7f099d79967aaaf612e575aa1d2a814dc88a8006",
+      "probe": "1b429f4cbcb3d888dd739ab5330ebf040faeb2f3",
+      "fixture": "03caeac1ac20d0b96affe1b5ae665be7f9f99d79"
+    },
+    "accountMatchesRepoOwner": true,
+    "pr45ReviewedIdentityMatched": true,
+    "openPrNumbers": [
+      45
+    ],
+    "repositoryActionsEnabled": true,
+    "latestRunId": 44742255585,
+    "latestRunStatus": "completed",
+    "latestRunConclusion": "failure",
+    "historicalRunJobs": [
+      {
+        "name": "test",
+        "stepCount": 0,
+        "conclusion": "failure"
+      },
+      {
+        "name": "Upstream qualification / ubuntu-latest / Node 24",
+        "stepCount": 0,
+        "conclusion": "failure"
+      },
+      {
+        "name": "Upstream qualification / windows-latest / Node 24",
+        "stepCount": 0,
+        "conclusion": "failure"
+      },
+      {
+        "name": "managed-mcp",
+        "stepCount": 0,
+        "conclusion": "failure"
+      },
+      {
+        "name": "managed-mcp-windows",
+        "stepCount": 0,
+        "conclusion": "failure"
+      }
+    ]
+  },
+  "syntheticTests": {
+    "passed": 29,
+    "failed": 0,
+    "readOnlyCommandsMocked": true
+  },
+  "sourceFilesSha256": {
+    "read-only-stacked-pr-preflight.py": "752b43676cce720fa6b82f1017ff48d78c426c24d48427db780302ceff6d26c0",
+    "read-only-stacked-pr-preflight.test.py": "8106bd138454d47599b7ea48d5759ff7f4657099af22f0ef00afe27c5d5d059c"
+  },
+  "limitation": [
+    "R49 verifies only exact source/PR/workflow/runner metadata; its success means structural consistency, never create-PR authorization.",
+    "GitHub repository Actions enabled is distinct from account billing/spending eligibility; no current eligible-run proof was obtained.",
+    "The historical run still had five jobs with zero steps; no newer PR candidate run was found in supported GitHub queries.",
+    "CI runner admission cannot be inferred from read-only APIs; a separately approved new run must genuinely start before accepting its evidence.",
+    "No real hosted Windows native identity/ACL/IPC fixture or upstream PDF qualification was performed.",
+    "Any changed PR head, base, candidate source, workflow or new open PR fails the exact pinned guard and requires re-review."
+  ],
+  "safety": {
+    "prCreated": false,
+    "workflowTriggeredOrRetried": false,
+    "ghCommandsAreGetOnly": true,
+    "npmOrPackageExecuted": false,
+    "prodOrDevServiceModified": false,
+    "accountsOrAclsOrCredentialsReadOrChanged": false,
+    "devActivated": false
+  }
+}
