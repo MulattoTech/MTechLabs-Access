@@ -27,6 +27,29 @@ Several verification/setup utilities **write to H: state or user client configur
 
 Tracked local-source search also found legacy-root references in `example-config.json`, tests, `README.md` and `RUNBOOK.md`. Examples, source tests, installed config, and private client settings have different authority; none should be treated as interchangeable. No raw client configuration, secret, token, or account-specific report content was exported.
 
+## Observed installed client mapping — redacted read-only check
+
+A separate **target-only** inspection of the three known local client configuration files ran on the existing Windows owner profile on **2026-11-20 at 19:41 UTC**. It did **not** run the side-effecting `verify-clients.mjs` executable, start any configured client, load a client SDK, call a tool, or write/print raw configuration or credential values. The stand-alone Python 3.11+ standard-library checker is [`read-only-local-client-audit.py`](read-only-local-client-audit.py); the [offline tests](read-only-local-client-audit.test.py) pass **21/21** synthetic cases. The sanitized observed receipt is [`sanitized-local-client-mappings-20261120.json`](sanitized-local-client-mappings-20261120.json).
+
+| Client configured in reviewed verifier | Managed entry observed | Gateway under old H: root | Manager config under old H: root |
+| --- | --- | --- | --- |
+| Codex | Yes | Yes | Yes |
+| Claude Code | Yes | Yes | Yes |
+| Claude Desktop | Yes | Yes | Yes |
+
+All three selected entries also match the **known Node executable path and expected five-argument client shape** in the previously reviewed source. This is deliberately a **subset** of the full verifier contract: environment variables/secret values are not returned or validated for a future deployment, and no actual session/authentication/source/ACL identity was tested.
+
+**Cutover decision:** all **three existing local stdio client entries** need a separately approved, individually backed-up **path/source remap** to the protected production gateway/config if the H: root is retired. Updating only the sign-in shortcut or `manage.ps1` leaves those clients invoking the legacy H: gateway. Preserve unrelated client settings, handle client-specific config syntax and reload/restart requirements, and verify rollback with read-only post-change checks plus separately approved authenticated client tests. A compatibility bridge or path alias retaining H: would retain a separate mutable-ancestor threat and is **not** automatically accepted as a fix.
+
+**Rerun (read-only, on an approved owner profile):**
+
+```powershell
+python3 -B .\read-only-local-client-audit.test.py
+python3 -B .\read-only-local-client-audit.py
+```
+
+The offline test creates and cleans only GUID-like disposable Python temporary fixtures. The live audit reads the three named client configs without modifying them. Executing from a different profile could enumerate a different set of files; the script does **not** attest the Windows user token, configuration inode, or permissions on ancestor paths. Do not treat a successful mapping match as approval to mutate any client.
+
 ## 3. Deployment-version and executable compatibility gate
 
 The previously verified installed `admin.mjs` and `manage.ps1` match the owner's working checkout bytes (Windows CRLF), and after line-ending normalization match the recorded prior deployment commit `9373fadc00689dd782143ab5e49664536f460b8b`. **Their PR #45 head versions are different source blobs.** A cutover to accepted PR45/main source would therefore be not merely a move: it would combine a new filesystem trust root with a source-version change. Review, stage, qualify and roll back those changes as independently distinguishable operations.
