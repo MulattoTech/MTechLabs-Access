@@ -25,6 +25,8 @@ The first invocation is expected to exit **1** for the current failed-billing ru
 
 **Installed client migration evidence:** [redacted three-client mapping snapshot](sanitized-local-client-mappings-20261120.json) confirms the known Codex, Claude Code and Claude Desktop entries still reference the old H: production gateway and config. [`read-only-local-client-audit.py`](read-only-local-client-audit.py) and its [21-case offline test suite](read-only-local-client-audit.test.py) can repeat only this targeted, non-executing configuration classification. No client was launched or modified; these are future cutover dependencies, not acceptance.
 
+**Production manager config relocation evidence:** the [redacted installed seven-field mapping](sanitized-production-config-paths-20261120.json) confirms **six** old H: package/state paths and **one** existing C: Node executable. The [source-reference migration audit](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) and [protected-root/rollback plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md) now require coordinated manager-config, launcher and three local client changes. No production config or token values were exported; path reads are **not** actual DEV-token ACL or loaded-source acceptance.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
