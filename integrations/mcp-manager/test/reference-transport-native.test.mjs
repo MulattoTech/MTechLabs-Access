@@ -136,6 +136,23 @@ test('protected reference transport qualifies separate disposable Windows identi
     sha256: sha256('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules'), entryCount: 1,
     includesWindowsPowerShellSystemModules: true, includesPowerShellCoreModules: false,
   });
+  assert.deepEqual(report.identityProgress, Object.fromEntries(['authority', 'development', 'unauthorized']
+    .map(role => [role, { profile: true, identity: true, token: true }])));
+  assert.equal(report.childOutputScope,
+    'decoded UTF-8; consumed stdout with LF line delimiters; stderr normalized LF; no raw byte completeness claim');
+  assert.equal(Number.isInteger(report.startedChildCount) && report.startedChildCount >= 9 && report.startedChildCount <= 256, true);
+  assert.equal(report.childDiagnostics.length, report.startedChildCount);
+  for (const [index, child] of report.childDiagnostics.entries()) {
+    assert.equal(child.sequence, index + 1);
+    assert.equal(child.actualExit, child.expectedExit);
+    assert.equal(child.diagnosticInvalid, false);
+    assert.equal(child.elapsedClamped, false);
+    assert.equal(child.stdoutTruncated, false);
+    assert.equal(child.stderrComplete, true);
+    assert.match(child.stdoutDecodedSha256, /^[a-f0-9]{64}$/);
+    assert.match(child.stderrDecodedSha256, /^[a-f0-9]{64}$/);
+    if (child.expectedStderrEmpty) assert.equal(child.stderrDecodedBytes, 0);
+  }
   assert.equal(report.failedStage, null);
   assert.deepEqual(report.watchdog, evidence.watchdog);
   assert.equal(report.nativeRuntime.platform, 'Win32NT');

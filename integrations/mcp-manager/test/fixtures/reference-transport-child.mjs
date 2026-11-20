@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash, generateKeyPairSync, randomBytes } from 'node:crypto';
 import { createInterface } from 'node:readline';
 import { syncBuiltinESMExports } from 'node:module';
-import { execFile } from 'node:child_process';
+import childProcess, { execFile } from 'node:child_process';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -20,6 +20,24 @@ const code = error => {
   } catch { /* Private fixture errors must not become public diagnostics. */ }
   return 'fixture_child_failed';
 };
+const systemError = error => {
+  const own = (value, key) => {
+    try { return Object.getOwnPropertyDescriptor(value, key)?.value; }
+    catch { return undefined; }
+  };
+  const rawCode = own(error, 'code'), info = own(error, 'info');
+  const rawErrno = own(error, 'errno') ?? own(info, 'errno');
+  const rawSyscall = own(error, 'syscall') ?? own(info, 'syscall');
+  const allowedCodes = ['EACCES', 'EPERM', 'ENOENT', 'ENOMEM', 'EAGAIN', 'EINVAL', 'ENOTDIR', 'ETIMEDOUT',
+    'EPIPE', 'EBADF', 'EEXIST', 'ENOBUFS', 'ERR_SYSTEM_ERROR', 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER', 'ABORT_ERR'];
+  const allowedSyscalls = ['uv_os_get_passwd', 'mkdir', 'open', 'read', 'stat', 'lstat', 'realpath', 'write', 'spawn', 'spawnSync'];
+  return {
+    code: Number.isSafeInteger(rawCode) && Math.abs(rawCode) <= 2147483648 ? rawCode : allowedCodes.includes(rawCode) ? rawCode : null,
+    errno: Number.isSafeInteger(rawErrno) && Math.abs(rawErrno) <= 2147483648 ? rawErrno : null,
+    syscall: allowedSyscalls.includes(rawSyscall) ? rawSyscall : null,
+  };
+};
+let identityDiagnostic = null;
 const lines = createInterface({ input: process.stdin, crlfDelay: Infinity });
 const input = lines[Symbol.asyncIterator]();
 const canonical = value => path.win32.resolve(value).toLowerCase();
@@ -54,21 +72,63 @@ async function timeout(promise, ms = 40000) {
   })]); } finally { clearTimeout(timer); }
 }
 async function identity() {
-  const { captureWindowsRuntime, WINDOWS_POWERSHELL } = await import('../../lib/runtime-identity.mjs');
-  const report = await captureWindowsRuntime();
-  const admin = await new Promise((resolve, reject) => execFile(WINDOWS_POWERSHELL,
-    ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command',
-      '$p=[Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent());[Console]::Out.Write($p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator).ToString().ToLowerInvariant())'],
-    { encoding: 'utf8', windowsHide: true, timeout: 15000 }, (error, stdout, stderr) => {
-      if (error || stderr || !['true', 'false'].includes(stdout)) reject(new Error('fixture_identity_unavailable'));
-      else resolve(stdout === 'true');
-    }));
-  if (report.current?.status !== 'observed' || report.current.pid !== process.pid ||
-      canonical(report.current.profileDirectory) !== canonical(os.userInfo().homedir)) {
-    throw new Error('fixture_identity_unavailable');
+  identityDiagnostic = { phase: 'load_native_capture', nativeStatus: null, pidMatched: null,
+    profileMatched: null, administratorProbeCompleted: false, administrator: null,
+    nativeInvocations: [], nativeInvocationOverflow: false };
+  const originalExecFile = childProcess.execFile;
+  // Observe the callbacks of the existing invocations only. No arguments,
+  // environment, limits, result, retry or additional probe is introduced.
+  childProcess.execFile = function (filename, args, options, callback) {
+    const started = performance.now(), phase = identityDiagnostic.phase;
+    return originalExecFile(filename, args, options, (error, stdout, stderr) => {
+      if (identityDiagnostic.nativeInvocations.length < 4) {
+        const output = String(stdout ?? '').replace(/\r\n/g, '\n');
+        const diagnostic = String(stderr ?? '').replace(/\r\n/g, '\n');
+        let signal = null, killed = false;
+        try {
+          const observedSignal = Object.getOwnPropertyDescriptor(error, 'signal')?.value;
+          if (typeof observedSignal === 'string' && /^SIG[A-Z]{1,12}$/.test(observedSignal)) signal = observedSignal;
+          killed = Object.getOwnPropertyDescriptor(error, 'killed')?.value === true;
+        } catch { /* Null or hostile throwable metadata stays unobserved. */ }
+        identityDiagnostic.nativeInvocations.push({ phase, failed: Boolean(error), systemError: systemError(error), signal, killed,
+          elapsedMilliseconds: Math.min(600000, Math.max(0, Math.floor(performance.now() - started))),
+          stdoutDecodedBytes: Buffer.byteLength(output), stdoutDecodedSha256: hash(output),
+          stderrDecodedBytes: Buffer.byteLength(diagnostic), stderrDecodedSha256: hash(diagnostic) });
+      } else identityDiagnostic.nativeInvocationOverflow = true;
+      callback(error, stdout, stderr);
+    });
+  };
+  syncBuiltinESMExports();
+  try {
+    const { captureWindowsRuntime, WINDOWS_POWERSHELL } = await import('../../lib/runtime-identity.mjs');
+    identityDiagnostic.phase = 'native_capture';
+    const report = await captureWindowsRuntime();
+    identityDiagnostic.nativeStatus = ['observed', 'unverified'].includes(report.current?.status) ? report.current.status : 'unexpected';
+    identityDiagnostic.phase = 'administrator_check';
+    const admin = await new Promise((resolve, reject) => execFile(WINDOWS_POWERSHELL,
+      ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command',
+        '$p=[Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent());[Console]::Out.Write($p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator).ToString().ToLowerInvariant())'],
+      { encoding: 'utf8', windowsHide: true, timeout: 15000 }, (error, stdout, stderr) => {
+        if (error || stderr || !['true', 'false'].includes(stdout)) reject(new Error('fixture_identity_unavailable'));
+        else resolve(stdout === 'true');
+      }));
+    identityDiagnostic.administratorProbeCompleted = true; identityDiagnostic.administrator = admin;
+    identityDiagnostic.phase = 'compare_identity';
+    if (report.current?.status === 'observed') {
+      identityDiagnostic.pidMatched = report.current.pid === process.pid;
+      if (identityDiagnostic.pidMatched) {
+        identityDiagnostic.profileMatched = canonical(report.current.profileDirectory) === canonical(os.userInfo().homedir);
+      }
+    }
+    if (report.current?.status !== 'observed' || !identityDiagnostic.pidMatched || !identityDiagnostic.profileMatched) {
+      throw new Error('fixture_identity_unavailable');
+    }
+    identityDiagnostic.phase = 'complete';
+    return { sid: report.current.sid, profile: report.current.profileDirectory, pid: process.pid,
+      isAdministrator: admin, realCurrentProcessMatched: true, osProfileMatchesNative: true };
+  } finally {
+    childProcess.execFile = originalExecFile; syncBuiltinESMExports();
   }
-  return { sid: report.current.sid, profile: report.current.profileDirectory, pid: process.pid,
-    isAdministrator: admin, realCurrentProcessMatched: true, osProfileMatchesNative: true };
 }
 async function profile(settings) {
   // os.userInfo uses the current token's OS profile. This bootstrap performs
@@ -306,5 +366,5 @@ try {
     }
     default: throw new Error('fixture_mode_invalid');
   }
-  emit({ ok: true, result }); lines.close();
-} catch (error) { emit({ ok: false, error: code(error) }); lines.close(); process.exitCode = 1; }
+  emit({ ok: true, result, identityDiagnostic }); lines.close();
+} catch (error) { emit({ ok: false, error: code(error), systemError: systemError(error), identityDiagnostic }); lines.close(); process.exitCode = 1; }

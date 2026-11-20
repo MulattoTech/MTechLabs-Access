@@ -166,11 +166,37 @@ fixed value. Product files, ACL and cleanup functions, native case assertions,
 timeouts and all prior verifier requirements remain unchanged.
 
 `module-path-r3-freeze.json` and `module-path-r3-frozen-inputs.json` bind this
-correction. The current verifier SHA-256 is
+correction. The revision 3 verifier SHA-256 is
 `5040504d6b98b272522ff56bb349c015c90a8a745230ea5f308fda931911f6f0`.
 Full local gates passed again with the same observed totals and stable inputs;
 the complete records are under `local-module-path-r3-*`. A new exact Windows
 candidate is required to establish the correction and remaining native behavior.
+
+## Child diagnostics, revision 4
+
+The module-path candidate `1b1bb9a57cd008e0e48cc54cbe112b3ae389a94f`, synthetic
+checkout `0cc85cefcc6f1a9af9261f7806fa76e08f66051b`, was rejected in
+[run44734494406](https://github.com/MulattoTech/MTechLabs-Access/actions/runs/44734494406).
+Both Windows jobs completed protected setup and all natural cleanup requirements,
+which establishes progress beyond the earlier module-loading failure. Both then
+failed with `fixture_child_exit_wrong` during the actual identity controls,
+before the first native case completed. The available report did not identify
+the failed child operation or its underlying fixed error.
+
+Revision 4 retains finite per-child role, operation, exit and elapsed-time
+metadata; bounded error identifiers; and decoded-output counts/digests. Identity
+diagnostics observe the existing calls and comparisons without changing their
+arguments, environment, timeouts, results or number of probes. Output digests
+are explicitly scoped to decoded and consumed text, not raw pipe bytes. Product
+files and every existing case, control, ACL, cleanup and timeout requirement
+remain unchanged. All 143 prior verifier requirements are retained.
+
+`child-diagnostic-r4-freeze.json` and `child-diagnostic-r4-frozen-inputs.json`
+bind the three changed test/helper inputs. The current verifier SHA-256 is
+`967e127a917a4262485524869aec4d8e28cd80387345e7610b44cff59d0064d7`.
+Full local gates passed again with the same observed totals and stable inputs;
+complete records are under `local-child-diagnostic-r4-*`. Native qualification
+and the underlying child failure remain unresolved pending a fresh exact run.
 
 ## Ownership
 

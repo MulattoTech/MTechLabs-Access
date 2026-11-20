@@ -97,9 +97,9 @@ TRANSPORT_FROZEN = {
     "test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
     "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
     "test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
-    "test/reference-transport-native.test.mjs": "dfe43ec2ecd5cef110f7c63928d088dea745846aa35c1a7ca262638853920ce2",
-    "test/fixtures/reference-transport-native.ps1": "c2fce8f0346904d9e76ade462e68a293449dcf515b4cca5b8deddad53d445d26",
-    "test/fixtures/reference-transport-child.mjs": "d1c1ced00467a59fc63cb49dfb47797bcb2c624f534d0a05685b1a5d47865fab",
+    "test/reference-transport-native.test.mjs": "674e3fec0bfa77fce4a2fd78b4801c1ab6019eff050523677bbc5fa92c64d3e7",
+    "test/fixtures/reference-transport-native.ps1": "11bcbd66475bc599ef4fed093a200b28c937db1c55f0a98b74d5926a34f5e123",
+    "test/fixtures/reference-transport-child.mjs": "691f2618b62fe3fd70fabdbbe45ad8c442cc84725fdff76a236e243fdf56ee6b",
     "test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
 }
 TRANSPORT_SOURCES = [
@@ -199,6 +199,7 @@ def transport_evidence(log, family, titles, bound):
     r = e["report"]
     exact_keys(r, ["schemaVersion", "fixture", "scope", "completedCases", "sourceSha256", "cleanup", "cleanupErrors", "failure", "failedStage",
                    "failureDiagnostic", "cleanupDiagnostics", "setupProgress", "modulePathObservation", "effectiveModulePathObservation",
+                   "identityProgress", "startedChildCount", "childDiagnostics", "childOutputScope",
                    "watchdog", "nativeRuntime", "elapsedMilliseconds", "copiedNodeSha256", "activationAuthorized", "qualified", "upstreamEnabled",
                    "nativeCompilerTemporaryActivityNotExcluded", "ownerHostTouched", "mappedNetworkDriveQualification",
                    "realProductionAccountQualification", "cloudflareOrConnectorGrantQualification"], "batch44_native_controller_report")
@@ -219,6 +220,71 @@ def transport_evidence(log, family, titles, bound):
         "sha256": digest(b"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules"), "entryCount": 1,
         "includesWindowsPowerShellSystemModules": True, "includesPowerShellCoreModules": False,
     }, "batch44_effective_desktop_system_module_path")
+    batch44_typed(r["identityProgress"], {role: {"profile": True, "identity": True, "token": True}
+        for role in ["authority", "development", "unauthorized"]}, "batch44_identity_progress")
+    require(r["childOutputScope"] == "decoded UTF-8; consumed stdout with LF line delimiters; stderr normalized LF; no raw byte completeness claim",
+            "batch44_child_output_scope")
+    require(type(r["startedChildCount"]) is int and 9 <= r["startedChildCount"] <= 256 and
+            isinstance(r["childDiagnostics"], list) and len(r["childDiagnostics"]) == r["startedChildCount"], "batch44_every_started_child_recorded")
+    node_modes = ["profile", "identity", "provision", "inspect", "inspect-denial", "server", "exchange-control", "signal-options",
+                  "bootstrap", "public-key", "change-public-pin", "exchange", "request", "access"]
+    modes = {"node-" + mode for mode in node_modes} | {"powershell-" + mode for mode in ["raw", "create", "token", "delayed", "authority"]} | {
+        "manager-inspect", "manager-status", "hostile-module-control"}
+    system_codes = [None, "EACCES", "EPERM", "ENOENT", "ENOMEM", "EAGAIN", "EINVAL", "ENOTDIR", "ETIMEDOUT", "EPIPE", "EBADF",
+                    "EEXIST", "ENOBUFS", "ERR_SYSTEM_ERROR", "ERR_CHILD_PROCESS_STDIO_MAXBUFFER", "ABORT_ERR"]
+    syscalls = [None, "uv_os_get_passwd", "mkdir", "open", "read", "stat", "lstat", "realpath", "write", "spawn", "spawnSync"]
+    def system_error(value):
+        exact_keys(value, ["code", "errno", "syscall"], "batch44_child_system_error")
+        require((value["code"] in system_codes or type(value["code"]) is int and abs(value["code"]) <= 2147483648) and
+                (value["errno"] is None or type(value["errno"]) is int and abs(value["errno"]) <= 2147483648) and
+                value["syscall"] in syscalls, "batch44_child_system_error_values")
+    for index, child in enumerate(r["childDiagnostics"]):
+        exact_keys(child, ["sequence", "role", "mode", "stage", "expectedExit", "actualExit", "expectedStderrEmpty",
+            "elapsedMilliseconds", "elapsedClamped", "errorIdentifier", "stderrErrorIdentifier", "reportedOk", "stdoutDecodedBytes",
+            "stdoutDecodedSha256", "stdoutTruncated", "stderrComplete", "stderrDecodedBytes", "stderrDecodedSha256", "messageCount",
+            "systemError", "identityDiagnostic", "diagnosticInvalid"], "batch44_child_diagnostic")
+        require(type(child["sequence"]) is int and child["sequence"] == index + 1 and child["role"] in
+                ["authority", "development", "unauthorized", "controller"] and child["mode"] in modes and
+                re.fullmatch(r"[a-z_]{1,100}", child["stage"]) is not None, "batch44_child_identity")
+        require(type(child["expectedExit"]) is int and child["expectedExit"] in [0, 1] and
+                type(child["actualExit"]) is int and child["actualExit"] == child["expectedExit"] and
+                type(child["expectedStderrEmpty"]) is bool and child["diagnosticInvalid"] is False and
+                child["elapsedClamped"] is False and child["stdoutTruncated"] is False and child["stderrComplete"] is True,
+                "batch44_child_completion")
+        for key in ["elapsedMilliseconds", "stdoutDecodedBytes", "stderrDecodedBytes", "messageCount"]:
+            require(type(child[key]) is int and 0 <= child[key] <= (600000 if key == "elapsedMilliseconds" else 1048576),
+                    "batch44_child_bounded:" + key)
+        for key in ["stdoutDecodedSha256", "stderrDecodedSha256"]:
+            require(isinstance(child[key], str) and re.fullmatch(r"[a-f0-9]{64}", child[key]) is not None, "batch44_child_digest:" + key)
+        for key in ["errorIdentifier", "stderrErrorIdentifier"]:
+            require(child[key] is None or isinstance(child[key], str) and
+                    re.fullmatch(r"(?:redacted_error_identifier|(?:fixture|runtime|dev_runtime|node_preload|invalid)_[a-z_]{1,70})", child[key]) is not None,
+                    "batch44_child_safe_identifier:" + key)
+        require(child["reportedOk"] is None or type(child["reportedOk"]) is bool, "batch44_child_result_type")
+        require(not child["expectedStderrEmpty"] or child["stderrDecodedBytes"] == 0 and child["stderrDecodedSha256"] == digest(b""),
+                "batch44_child_expected_stderr")
+        system_error(child["systemError"])
+        identity = child["identityDiagnostic"]
+        require((child["mode"] == "node-identity") == (identity is not None), "batch44_child_identity_diagnostic_present")
+        if identity is None: continue
+        exact_keys(identity, ["phase", "nativeStatus", "pidMatched", "profileMatched", "administratorProbeCompleted", "administrator",
+            "nativeInvocationOverflow", "nativeInvocations"], "batch44_child_identity_diagnostic")
+        require(child["mode"] == "node-identity" and identity["phase"] == "complete" and identity["nativeStatus"] == "observed" and
+                identity["pidMatched"] is True and identity["profileMatched"] is True and identity["administratorProbeCompleted"] is True and
+                type(identity["administrator"]) is bool and identity["nativeInvocationOverflow"] is False and
+                isinstance(identity["nativeInvocations"], list) and len(identity["nativeInvocations"]) == 2,
+                "batch44_child_identity_existing_checks_completed")
+        for native, phase in zip(identity["nativeInvocations"], ["native_capture", "administrator_check"]):
+            exact_keys(native, ["phase", "failed", "systemError", "signal", "killed", "elapsedMilliseconds", "stdoutDecodedBytes",
+                "stdoutDecodedSha256", "stderrDecodedBytes", "stderrDecodedSha256"], "batch44_child_existing_native_invocation")
+            require(native["phase"] == phase and native["failed"] is False and native["signal"] is None and native["killed"] is False,
+                    "batch44_child_existing_native_success")
+            system_error(native["systemError"])
+            for key in ["elapsedMilliseconds", "stdoutDecodedBytes", "stderrDecodedBytes"]:
+                require(type(native[key]) is int and 0 <= native[key] <= (600000 if key == "elapsedMilliseconds" else 1048576),
+                        "batch44_child_existing_native_bounded:" + key)
+            require(re.fullmatch(r"[a-f0-9]{64}", native["stdoutDecodedSha256"]) is not None and
+                    native["stderrDecodedBytes"] == 0 and native["stderrDecodedSha256"] == digest(b""), "batch44_child_existing_native_digests")
     require(type(r["elapsedMilliseconds"]) is int and 0 < r["elapsedMilliseconds"] <= 420000, "batch44_native_elapsed_bound")
     require(re.fullmatch(r"[a-f0-9]{64}", r["copiedNodeSha256"]) is not None, "batch44_copied_node_hash")
     exact_keys(r["sourceSha256"], TRANSPORT_SOURCES[:19], "batch44_copied_source_set")

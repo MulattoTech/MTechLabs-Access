@@ -20,6 +20,10 @@ $fixtureJournalPath = Join-Path $fixtureRoot 'fixture-owner.json'
 $fixtureRootOwned = $false
 $fixtureAccounts = @{}
 $fixtureChildren = [Collections.Generic.List[object]]::new()
+$fixtureChildDiagnostics = [Collections.Generic.List[object]]::new()
+$fixtureIdentityProgress = @{ authority = @{ profile = $false; identity = $false; token = $false };
+    development = @{ profile = $false; identity = $false; token = $false };
+    unauthorized = @{ profile = $false; identity = $false; token = $false } }
 $fixtureCases = [Collections.Generic.List[object]]::new()
 $fixtureFailure = $null
 $fixtureFailureDiagnostic = $null
@@ -96,6 +100,106 @@ function Module-Path-Observation([string]$value) {
     return @{ sha256 = (Hash-Text $value); entryCount = $entries.Count;
         includesWindowsPowerShellSystemModules = @($entries | Where-Object { $_.TrimEnd('\') -ieq 'C:\Windows\System32\WindowsPowerShell\v1.0\Modules' }).Count -gt 0;
         includesPowerShellCoreModules = @($entries | Where-Object { $_.TrimEnd('\') -match '\\PowerShell\\[67](?:[.0-9-]*)\\Modules$' }).Count -gt 0 }
+}
+function Safe-System-Error($Value) {
+    $rawCode = Field $Value 'code'; $rawErrno = Field $Value 'errno'; $rawSyscall = Field $Value 'syscall'
+    $allowedCodes = @('EACCES','EPERM','ENOENT','ENOMEM','EAGAIN','EINVAL','ENOTDIR','ETIMEDOUT','EPIPE','EBADF','EEXIST',
+        'ENOBUFS','ERR_SYSTEM_ERROR','ERR_CHILD_PROCESS_STDIO_MAXBUFFER','ABORT_ERR')
+    $allowedSyscalls = @('uv_os_get_passwd','mkdir','open','read','stat','lstat','realpath','write','spawn','spawnSync')
+    $numberCode = ($rawCode -is [int] -or $rawCode -is [long]) -and [Math]::Abs([long]$rawCode) -le 2147483648
+    $numberErrno = ($rawErrno -is [int] -or $rawErrno -is [long]) -and [Math]::Abs([long]$rawErrno) -le 2147483648
+    return @{ code = $(if ($numberCode -or $rawCode -cin $allowedCodes) { $rawCode } else { $null });
+        errno = $(if ($numberErrno) { $rawErrno } else { $null });
+        syscall = $(if ($rawSyscall -cin $allowedSyscalls) { $rawSyscall } else { $null }) }
+}
+function Safe-Identity-Diagnostic($Value) {
+    if ($null -eq $Value) { return $null }
+    Assert-Fixture ($Value.phase -cin @('load_native_capture','native_capture','administrator_check','compare_identity','complete')) 'fixture_child_diagnostic_invalid'
+    Assert-Fixture ($null -eq $Value.nativeStatus -or $Value.nativeStatus -cin @('observed','unverified','unexpected')) 'fixture_child_diagnostic_invalid'
+    foreach ($key in @('pidMatched','profileMatched','administrator')) {
+        Assert-Fixture ($null -eq (Field $Value $key) -or (Field $Value $key) -is [bool]) 'fixture_child_diagnostic_invalid'
+    }
+    Assert-Fixture ($Value.administratorProbeCompleted -is [bool] -and $Value.nativeInvocationOverflow -is [bool]) 'fixture_child_diagnostic_invalid'
+    $invocations = @($Value.nativeInvocations)
+    Assert-Fixture ($invocations.Count -le 4) 'fixture_child_diagnostic_invalid'
+    $safe = @()
+    foreach ($entry in $invocations) {
+        Assert-Fixture ($entry.phase -cin @('native_capture','administrator_check') -and $entry.failed -is [bool] -and $entry.killed -is [bool]) 'fixture_child_diagnostic_invalid'
+        Assert-Fixture ($null -eq $entry.signal -or $entry.signal -cmatch '^SIG[A-Z]{1,12}$') 'fixture_child_diagnostic_invalid'
+        foreach ($key in @('elapsedMilliseconds','stdoutDecodedBytes','stderrDecodedBytes')) {
+            $number = Field $entry $key
+            Assert-Fixture (($number -is [int] -or $number -is [long]) -and $number -ge 0 -and $number -le 1048576) 'fixture_child_diagnostic_invalid'
+        }
+        Assert-Fixture ($entry.stdoutDecodedSha256 -cmatch '^[a-f0-9]{64}$' -and $entry.stderrDecodedSha256 -cmatch '^[a-f0-9]{64}$') 'fixture_child_diagnostic_invalid'
+        $safe += @{ phase = $entry.phase; failed = $entry.failed; systemError = (Safe-System-Error $entry.systemError);
+            signal = $entry.signal; killed = $entry.killed; elapsedMilliseconds = $entry.elapsedMilliseconds;
+            stdoutDecodedBytes = $entry.stdoutDecodedBytes; stdoutDecodedSha256 = $entry.stdoutDecodedSha256;
+            stderrDecodedBytes = $entry.stderrDecodedBytes; stderrDecodedSha256 = $entry.stderrDecodedSha256 }
+    }
+    return @{ phase = $Value.phase; nativeStatus = $Value.nativeStatus; pidMatched = $Value.pidMatched;
+        profileMatched = $Value.profileMatched; administratorProbeCompleted = $Value.administratorProbeCompleted;
+        administrator = $Value.administrator; nativeInvocationOverflow = $Value.nativeInvocationOverflow; nativeInvocations = $safe }
+}
+function Child-Mode([string]$Executable, [string[]]$Arguments) {
+    if ($Executable -ieq $fixtureNode -and $Arguments.Count -eq 2 -and $Arguments[1] -cin
+        @('profile','identity','provision','inspect','inspect-denial','server','exchange-control','signal-options',
+          'bootstrap','public-key','change-public-pin','exchange','request','access')) { return 'node-' + $Arguments[1] }
+    if ($Arguments -ccontains '-EncodedCommand') { return 'hostile-module-control' }
+    if ($Arguments -ccontains '-Mode') {
+        $position = [Array]::IndexOf($Arguments, '-Mode')
+        if ($position + 1 -lt $Arguments.Count -and $Arguments[$position + 1] -cin @('Raw','Create','Token','Delayed','Authority')) {
+            return 'powershell-' + $Arguments[$position + 1].ToLowerInvariant()
+        }
+    }
+    if ($Arguments -ccontains '-Action') {
+        $position = [Array]::IndexOf($Arguments, '-Action')
+        if ($position + 1 -lt $Arguments.Count -and $Arguments[$position + 1] -cin @('Inspect','Status')) {
+            return 'manager-' + $Arguments[$position + 1].ToLowerInvariant()
+        }
+    }
+    return 'unknown-child-mode'
+}
+function Record-Child-Output($Record, [string]$Text) {
+    # These are decoded consumed text counts/digests, not a raw pipe byte claim.
+    $normalized = $Text.Replace("`r`n", "`n")
+    $Record.DecodedOutputBytes += [Text.Encoding]::UTF8.GetByteCount($normalized)
+    if ($Record.DecodedOutputBytes -le 1048576) { $null = $Record.DecodedOutput.Append($normalized) }
+    else { $Record.Diagnostic.stdoutTruncated = $true }
+}
+function Update-Child-Diagnostic($Record) {
+    if ($null -eq (Field $Record 'Diagnostic')) { return }
+    try {
+        $value = $Record.Diagnostic
+        $value.actualExit = $(if ($Record.Process.HasExited) { $Record.Process.ExitCode } else { $null })
+        if ($Record.Process.HasExited) { $Record.Watch.Stop() }
+        $value.elapsedMilliseconds = [Math]::Min(600000, $Record.Watch.ElapsedMilliseconds)
+        $value.elapsedClamped = $Record.Watch.ElapsedMilliseconds -gt 600000
+        $value.stdoutDecodedBytes = [Math]::Min(1048577, $Record.DecodedOutputBytes)
+        $value.stdoutDecodedSha256 = Hash-Text $Record.DecodedOutput.ToString()
+        $value.messageCount = $Record.Messages.Count
+        if ($Record.ErrorTask.IsCompleted -and -not $Record.ErrorTask.IsFaulted -and -not $Record.ErrorTask.IsCanceled) {
+            $text = $Record.ErrorTask.Result.Replace("`r`n", "`n")
+            $value.stderrComplete = $true
+            $value.stderrDecodedBytes = [Text.Encoding]::UTF8.GetByteCount($text)
+            $value.stderrDecodedSha256 = Hash-Text $text
+            if ($text.Trim() -cmatch '^(?:fixture|runtime|dev_runtime|node_preload|invalid)_[a-z_]{1,70}$') { $value.stderrErrorIdentifier = $text.Trim() }
+        }
+        $results = @($Record.Messages | Where-Object { (Field $_ 'ok') -is [bool] })
+        if ($results.Count -gt 0) {
+            $last = $results[-1]; $value.reportedOk = $last.ok
+            $errorCode = Field $last 'error'
+            if ($null -ne $errorCode) {
+                $value.errorIdentifier = $(if ($errorCode -cmatch '^(?:fixture|runtime|dev_runtime|node_preload|invalid)_[a-z_]{1,70}$') { $errorCode } else { 'redacted_error_identifier' })
+            }
+            $value.systemError = Safe-System-Error (Field $last 'systemError')
+            $value.identityDiagnostic = Safe-Identity-Diagnostic (Field $last 'identityDiagnostic')
+        }
+    } catch { $Record.Diagnostic.diagnosticInvalid = $true }
+}
+function Read-Child-Remaining($Record) {
+    $text = $Record.Process.StandardOutput.ReadToEnd()
+    Record-Child-Output $Record $text
+    return $text
 }
 function Remaining([int]$Maximum = 40000) {
     $left = 360000 - [int]$fixtureStarted.ElapsedMilliseconds
@@ -191,8 +295,17 @@ function Start-Child([string]$Role, [string]$Executable, [string[]]$Arguments, $
     }
     $process = [Diagnostics.Process]::new(); $process.StartInfo = $start
     Assert-Fixture ($process.Start()) 'fixture_child_start_failed'
+    $diagnostic = @{ sequence = $fixtureChildDiagnostics.Count + 1; role = $Role; mode = (Child-Mode $Executable $Arguments);
+        stage = $fixtureStage; expectedExit = 0; actualExit = $null; expectedStderrEmpty = $true;
+        elapsedMilliseconds = 0; elapsedClamped = $false; errorIdentifier = $null; stderrErrorIdentifier = $null; reportedOk = $null;
+        stdoutDecodedBytes = 0; stdoutDecodedSha256 = (Hash-Text ''); stdoutTruncated = $false;
+        stderrComplete = $false; stderrDecodedBytes = $null; stderrDecodedSha256 = $null;
+        messageCount = 0; systemError = (Safe-System-Error $null); identityDiagnostic = $null; diagnosticInvalid = $false }
     $record = [pscustomobject]@{ Process = $process; StartTicks = $process.StartTime.ToUniversalTime().Ticks;
-        Pending = $null; ErrorTask = $process.StandardError.ReadToEndAsync(); Messages = [Collections.Generic.List[object]]::new() }
+        Pending = $null; ErrorTask = $process.StandardError.ReadToEndAsync(); Messages = [Collections.Generic.List[object]]::new();
+        Watch = [Diagnostics.Stopwatch]::StartNew(); Diagnostic = $diagnostic;
+        DecodedOutput = [Text.StringBuilder]::new(); DecodedOutputBytes = [long]0 }
+    $fixtureChildDiagnostics.Add($diagnostic)
     $fixtureChildren.Add($record); Save-Journal
     $process.StandardInput.WriteLine(($Payload | ConvertTo-Json -Compress -Depth 24)); $process.StandardInput.Flush()
     if (-not $KeepInput) { $process.StandardInput.Close() }
@@ -207,6 +320,7 @@ function Read-Message($Record, [string]$Event = 'result', [int]$Budget = 40000) 
         if ($null -eq $Record.Pending) { $Record.Pending = $Record.Process.StandardOutput.ReadLineAsync() }
         Assert-Fixture ($Record.Pending.Wait([Math]::Max(1, $limit - [int]$watch.ElapsedMilliseconds))) 'fixture_message_timeout'
         $line = $Record.Pending.Result; $Record.Pending = $null
+        if ($null -ne $line) { Record-Child-Output $Record ($line + "`n") }
         Assert-Fixture ($null -ne $line -and $line.Length -le 131072) 'fixture_child_output_invalid'
         $value = $line | ConvertFrom-Json; $Record.Messages.Add($value)
         if ($Event -eq 'result' -and $null -ne (Field $value 'ok')) { return $value }
@@ -217,12 +331,15 @@ function Read-Message($Record, [string]$Event = 'result', [int]$Budget = 40000) 
     throw 'fixture_message_timeout'
 }
 function Finish-Child($Record, [int]$ExpectedExit = 0) {
+    $Record.Diagnostic.expectedExit = $ExpectedExit
     Assert-Fixture ($Record.Process.WaitForExit((Remaining 40000))) 'fixture_child_exit_timeout'
+    Update-Child-Diagnostic $Record
     Assert-Fixture ($Record.Process.ExitCode -eq $ExpectedExit) 'fixture_child_exit_wrong'
     Assert-Fixture ($Record.ErrorTask.Wait(1000) -and $Record.ErrorTask.Result -eq '') 'fixture_child_stderr'
 }
 function Node-Call([string]$Role, [string]$Mode, $Payload, [bool]$ExpectOk = $true) {
     $record = Start-Child $Role $fixtureNode @($fixtureChild, $Mode) $Payload
+    $record.Diagnostic.expectedExit = $(if ($ExpectOk) { 0 } else { 1 })
     $result = Read-Message $record
     Finish-Child $record $(if ($ExpectOk) { 0 } else { 1 })
     Assert-Fixture ((Field $result 'ok') -eq $ExpectOk) 'fixture_child_result_wrong'
@@ -357,7 +474,7 @@ function Cleanup-Fixture {
         } catch { Cleanup-Failure 'fixture_owned_process_cleanup_failed' $_ }
     }
     $fixtureCleanup.ownedChildrenExited = @($fixtureChildren | Where-Object { -not $_.Process.HasExited }).Count -eq 0
-    foreach ($record in @($fixtureChildren)) { try { $record.Process.Dispose() } catch { } }
+    foreach ($record in @($fixtureChildren)) { Update-Child-Diagnostic $record; try { $record.Process.Dispose() } catch { } }
     # Account SIDs were freshly created and journaled before any later setup.
     # Only processes proven to have one of those exact tokens are considered.
     foreach ($process in @(Owned-Account-Processes)) {
@@ -531,15 +648,18 @@ try {
     foreach ($role in @('authority','development','unauthorized')) {
         $profile = (Node-Call $role 'profile' @{ fixtureId = $FixtureId }).result
         Assert-Fixture ($profile.createdByOwnedUser -and $profile.noNativeCompilation) 'fixture_profile_temp_not_owned'
+        $fixtureIdentityProgress[$role].profile = $true
         $fixtureIdentities[$role] = $profile
         $identity = (Node-Call $role 'identity' @{}).result
         Assert-Fixture ($identity.sid -eq $fixtureAccounts[$role].Sid -and $identity.isAdministrator -eq $false -and
             $identity.realCurrentProcessMatched -and $identity.osProfileMatchesNative -and $identity.profile -ieq $profile.profile) 'fixture_actual_identity_mismatch'
+        $fixtureIdentityProgress[$role].identity = $true
         $identity | Add-Member -NotePropertyName temporary -NotePropertyValue $profile.temporary
         $fixtureIdentities[$role] = $identity
         $token = Token-Control $role
         Assert-Fixture ($token.usersPresent -and -not $token.administratorPresent -and $token.elevated -eq 0 -and
             $token.elevationType -eq 1 -and $token.prohibitedPrivileges -eq 0) 'fixture_standard_token_invalid'
+        $fixtureIdentityProgress[$role].token = $true
     }
     Assert-Fixture (@($fixtureIdentities.Values | ForEach-Object { $_.profile.ToLowerInvariant() } | Select-Object -Unique).Count -eq 3) 'fixture_profile_overlap'
     Add-Case 'separate reference accounts have actual standard tokens and independently loaded profiles' 3 @{
@@ -587,7 +707,7 @@ try {
             (Join-Path $fixtureRoot 'manage-dev.ps1'),'-Action',$action,'-NodePath',$fixtureNode,
             '-ConfigPath',$fixtureProvision.development.configPath,'-PlanPath',$fixtureProvision.planPath) @{}
         Assert-Fixture ($record.Process.WaitForExit((Remaining 45000))) 'fixture_public_wrapper_timeout'
-        $text = $record.Process.StandardOutput.ReadToEnd(); $diagnostic = $record.ErrorTask.Result
+        $text = Read-Child-Remaining $record; $diagnostic = $record.ErrorTask.Result
         Assert-Fixture ($record.Process.ExitCode -eq 0 -and $diagnostic -eq '') 'fixture_public_wrapper_failed'
         $report = $text | ConvertFrom-Json
         Assert-Fixture ($report.qualified -eq $false -and $report.upstreamEnabled -eq $false -and
@@ -637,7 +757,8 @@ try {
         $blocked = Start-Child 'authority' $fixturePowerShell @('-NoLogo','-NoProfile','-NonInteractive','-File',
             (Join-Path $fixtureRoot 'windows-reference.ps1'),'-Mode','Authority') @{}
         Assert-Fixture ($blocked.Process.WaitForExit((Remaining 30000))) 'fixture_pre_node_guard_timeout'
-        Assert-Fixture ($blocked.Process.ExitCode -eq 1 -and $blocked.Process.StandardOutput.ReadToEnd() -eq '' -and
+        $blocked.Diagnostic.expectedExit = 1; $blocked.Diagnostic.expectedStderrEmpty = $false
+        Assert-Fixture ($blocked.Process.ExitCode -eq 1 -and (Read-Child-Remaining $blocked) -eq '' -and
             $blocked.ErrorTask.Result.Trim() -eq 'runtime_reference_bootstrap_untrusted' -and -not (Test-Path -LiteralPath $sentinel)) 'fixture_entry_executed_before_pin'
     } finally { [IO.File]::WriteAllBytes($entry, $entryBytes) }
     $fixtureServer = Start-Authority $true; $null = Registered-Control $fixtureServer
@@ -955,6 +1076,9 @@ $fixtureReport = @{ schemaVersion = 1; fixture = 'protected-reference-transport'
     failureDiagnostic = $fixtureFailureDiagnostic; cleanupDiagnostics = @($fixtureCleanupDiagnostics);
     setupProgress = $fixtureSetup; modulePathObservation = $fixtureModulePathObservation;
     effectiveModulePathObservation = $fixtureEffectiveModulePathObservation;
+    identityProgress = $fixtureIdentityProgress; startedChildCount = $fixtureChildren.Count;
+    childDiagnostics = @($fixtureChildDiagnostics);
+    childOutputScope = 'decoded UTF-8; consumed stdout with LF line delimiters; stderr normalized LF; no raw byte completeness claim';
     failure = $fixtureFailure; failedStage = $(if ($fixtureFailure) { $fixtureStage } else { $null });
     watchdog = @{ workMilliseconds = 360000; cleanupMilliseconds = 60000; outerMilliseconds = 420000 };
     nativeRuntime = @{ platform = [Environment]::OSVersion.Platform.ToString(); powerShellEdition = $PSVersionTable.PSEdition;
