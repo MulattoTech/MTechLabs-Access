@@ -1,0 +1,48 @@
+# Access #46 — read-only DEV isolation preflight
+
+**Status: design and diagnostic source only. Not installed, merged, or authorized for activation.**
+
+This directory contains a narrowly scoped Windows PowerShell 7 preflight for the proposed independent MTerm-CLI DEV environment. It does **not** implement account provisioning, permissions changes, production relocation, reference-authority installation, startup migration, or routing changes. It belongs to [issue #46](https://github.com/MulattoTech/MTechLabs-Access/issues/46), which follows successful source qualification of [issue #44 / PR #45](https://github.com/MulattoTech/MTechLabs-Access/pull/45). GitHub Actions billing admission and the required five hosted gates remain unresolved.
+
+## Source
+
+[read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
+
+`%LOCALAPPDATA%\MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json`
+
+There is no automatic ACL backup, restore, install, account creation, mutation or elevation behavior. This script reads that baseline **only to compare** current ACL strings; it never prints raw security descriptors, SIDs, owner names, account/profile paths, process command lines or token/credential contents. It checks eleven declared paths, including candidate directory names that currently do not exist. The candidate roots are *proposals*, not allocated or validated locations.
+
+## Invocation
+
+Run under the owner's existing ordinary Windows context using PowerShell **7 or later**:
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-preflight.ps1
+```
+
+The output is one JSON diagnostic document. A report with `baseline.status="matched"`, `startup="configured-exact"`, and `listeners.production="listener-present"` means *those particular read-only observations* passed; **it is not an approval ticket**. `activationAuthorized`, `provisioned` and `readyForDevActivation` remain `false` regardless of readings. The script does not test under the absent `MTermDev` token and cannot attest current running source, alternate links in a race, OS-enforced isolation, Cloudflare or connector grants.
+
+A mismatch, inaccessible ACL, missing baseline, unexpected startup shortcut or absent production listener is reported as a blocker or unverified observation; the tool does not auto-repair or retry. The private-baseline digest pins only one collected snapshot, not future legitimate changes; any later approved change requires a fresh owner-reviewed baseline and controlled rollout.
+
+## Recorded local qualification (2026-11-20)
+
+- PowerShell AST parse: **zero syntax errors**.
+- Exact positive control: baseline **9/9 matching** ACL SDDL records; production Startup shortcut exactly matches the sign-in launcher; production loopback listener present, DEV listener absent.
+- Reported **seven blockers**: broad mutation ACEs on three H: ancestors; missing DEV principal/profile; absent protected reference installation; unverified hosted source acceptance; and unverified actual DEV token/effective access.
+- Negative control: an absent baseline produces `baseline-not-matched`, keeps all activation flags false.
+- Negative control: a synthetic failing `Get-Acl` produces `acl-unverified:hRoot`, keeps all activation flags false.
+- The local source file remained hash-stable during both tests. A source-only branch is used to preserve work without initiating another billing-blocked GitHub Actions run.
+
+These are owner-host diagnostics, **not GitHub-hosted, cross-account, native pipe/ACL or upstream qualifications**.
+
+## Operational boundary and later acceptance
+
+Do not apply blanket inheritance resets to `H:\` or `H:\MTechLabs`: three unrelated immediate directories coexist with the production MCP directory. Before any independently authorized change:
+
+1. Resolve GitHub Actions billing eligibility and obtain fresh exact-head hosted Windows/Linux acceptance for PR #45, including 18 disposable Windows subgroups, both upstream versions, independent source review, normal expected-head merge and separate actual-main checks.
+2. Choose explicitly between independently protected relocation to verified Program Files/ProgramData roots and a carefully scoped H: parent-namespace ACL design; map rights for production owner, SYSTEM, Administrators and real DEV SID, including directory deletion/rename and alias/race checks. A child-only state ACL is insufficient.
+3. Verify the intended protected root's parent permissions and atomically reserve the candidate names against squatting. Existing `C:\ProgramData` has broad create/write permissions; this script cannot promise safety merely because a candidate folder is absent.
+4. Capture a *fresh, protected operational* ACL/owner/identity restoration manifest, independently qualify backup/rollback and production startup identity, and run effective-access denial controls on disposable canaries, never destructive production files.
+5. Provision real DEV account/profile, protected public trust, independent authority keys, separate state/upstream directories, edge/App/AUD/grants and the launcher **only after separate concrete owner approval**. Keep DEV activation disabled until live positive/negative route tests and explicit activation approval.
+
+See issue #46 for the current-versus-proposed ACL inventory and staged rollback proposal. Neither a green JSON preflight nor a clean local test is merge/release acceptance.
