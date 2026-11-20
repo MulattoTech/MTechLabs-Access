@@ -70,6 +70,18 @@ All seven required path fields declared by PR45's `lib/config.mjs` were present;
 
 The read-only inspection establishes point-in-time path categories and target metadata only. It does **not** establish ancestor symlink/hardlink safety, open-file or loaded process identity, actual DEV-token permissions, secret continuity, credential rotation suitability or whether the candidate PR45 source is runtime-compatible with the existing installed package. The current configuration file itself was not modified.
 
+## Installed upstream package identity and code-root ACL (new read-only evidence)
+
+The existing manager config's `serverPath` and `serverPackageJsonPath` select a **currently installed** `@wonderwhy-er/desktop-commander` **0.3.1** module. A bounded, read-only owner-host check on November 20 at **19:51–19:52 UTC** found that the declared package main/bin matches its configured entry at relative `dist\index.js`, with both files under the same H: `node_modules` package root. The exact selected entry and metadata SHA-256 digests, lengths and ACL findings are recorded in [`sanitized-upstream-package-20261120.json`](sanitized-upstream-package-20261120.json). No package content was executed or written during the check.
+
+| Current installed artifact | Read-only observation | Cutover requirement |
+| --- | --- | --- |
+| `serverPackageJsonPath` | Package `@wonderwhy-er/desktop-commander` version **0.3.1**; metadata file hash **`478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657`** | Verify exact selected package metadata/source and separately qualify a pinned version in the protected code root. |
+| `serverPath` | Metadata-declared entry `dist\index.js`; on-disk hash **`7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b`** | Bind the qualified entry, its dependencies and immutable source to actual process identity; no old H: fallback. |
+| Package root and both selected files | **Inherited active Authenticated Users Modify `0x001301BF`**; no target reparse flag; DACLs not inheritance-protected. Separate BUILTIN Users `0x001200A9` is read/execute, **not write**. | A protected production deployment must eliminate standard-DEV effective modification/replacement/alias rights on every executable root and ancestor, not only on manager code and state. |
+
+**Compatibility distinction:** the installed upstream is the **0.3.1 control** version, while PR #45's hosted qualification additionally targets **0.3.3**. An exact installed 0.3.1 package identity is not a successful 0.3.3 upgrade or the mandatory Windows/Linux upstream qualification. The selected host Node executable has **27 alpha** file metadata while hosted CI uses Node 24; both separately matter before any actual cutover. A digest of one entry and one package file does **not** establish transitive dependency integrity, native process loaded-source attestation or an OS effective-rights result.
+
 ## 3. Deployment-version and executable compatibility gate
 
 The previously verified installed `admin.mjs` and `manage.ps1` match the owner's working checkout bytes (Windows CRLF), and after line-ending normalization match the recorded prior deployment commit `9373fadc00689dd782143ab5e49664536f460b8b`. **Their PR #45 head versions are different source blobs.** A cutover to accepted PR45/main source would therefore be not merely a move: it would combine a new filesystem trust root with a source-version change. Review, stage, qualify and roll back those changes as independently distinguishable operations.
