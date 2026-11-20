@@ -123,7 +123,15 @@ test('protected reference transport qualifies separate disposable Windows identi
   assert.equal(recovery, null, 'native acceptance requires natural cleanup without emergency recovery');
   assert.equal(report.schemaVersion, 1);
   assert.equal(report.failure, null);
+  assert.equal(report.failureDiagnostic, null);
   assert.deepEqual(report.cleanupErrors, []);
+  assert.deepEqual(report.cleanupDiagnostics, []);
+  assert.deepEqual(report.setupProgress, { exclusiveRootCreated: true, rootAclApplied: true,
+    initialJournalSaved: true, sourceFilesCopied: 19, nodeCopied: true, sourceTreeGuarded: true });
+  assert.match(report.modulePathObservation.sha256, /^[a-f0-9]{64}$/);
+  assert.equal(Number.isInteger(report.modulePathObservation.entryCount), true);
+  assert.equal(typeof report.modulePathObservation.includesWindowsPowerShellSystemModules, 'boolean');
+  assert.equal(typeof report.modulePathObservation.includesPowerShellCoreModules, 'boolean');
   assert.equal(report.failedStage, null);
   assert.deepEqual(report.watchdog, evidence.watchdog);
   assert.equal(report.nativeRuntime.platform, 'Win32NT');

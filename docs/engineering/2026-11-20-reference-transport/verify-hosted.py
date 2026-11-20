@@ -97,8 +97,8 @@ TRANSPORT_FROZEN = {
     "test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
     "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
     "test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
-    "test/reference-transport-native.test.mjs": "f9407dae7d2c8d2587256b7a889b7fffa1431dee13cd4347b0ff53e0952a768b",
-    "test/fixtures/reference-transport-native.ps1": "a6231ea511e3d9ed9d5d52e51bea8e01b2064744abca94342d3315531f086172",
+    "test/reference-transport-native.test.mjs": "0728ac95fcfad89050c1f6c84e9c8de62d75e3c1bacbe98160e9fcf8e061f75a",
+    "test/fixtures/reference-transport-native.ps1": "3f41e4cdff9077088e529023f506076c2a6b6e7a4b248848f7192c5417791c76",
     "test/fixtures/reference-transport-child.mjs": "d1c1ced00467a59fc63cb49dfb47797bcb2c624f534d0a05685b1a5d47865fab",
     "test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
 }
@@ -198,12 +198,23 @@ def transport_evidence(log, family, titles, bound):
     source_bindings = {key: bound("transport:" + key, value) for key, value in e["sourceSha256"].items()}
     r = e["report"]
     exact_keys(r, ["schemaVersion", "fixture", "scope", "completedCases", "sourceSha256", "cleanup", "cleanupErrors", "failure", "failedStage",
+                   "failureDiagnostic", "cleanupDiagnostics", "setupProgress", "modulePathObservation",
                    "watchdog", "nativeRuntime", "elapsedMilliseconds", "copiedNodeSha256", "activationAuthorized", "qualified", "upstreamEnabled",
                    "nativeCompilerTemporaryActivityNotExcluded", "ownerHostTouched", "mappedNetworkDriveQualification",
                    "realProductionAccountQualification", "cloudflareOrConnectorGrantQualification"], "batch44_native_controller_report")
     require(type(r["schemaVersion"]) is int and r["schemaVersion"] == 1 and r["fixture"] == e["fixture"] and
             r["scope"] == "disposable hosted separate standard Windows identities", "batch44_controller_identity")
     require(r["failure"] is None and r["failedStage"] is None and r["cleanupErrors"] == [], "batch44_no_native_failure")
+    require(r["failureDiagnostic"] is None and r["cleanupDiagnostics"] == [], "batch44_no_diagnostic_failure")
+    batch44_typed(r["setupProgress"], {"exclusiveRootCreated": True, "rootAclApplied": True, "initialJournalSaved": True,
+        "sourceFilesCopied": 19, "nodeCopied": True, "sourceTreeGuarded": True}, "batch44_setup_complete")
+    module_path = r["modulePathObservation"]
+    exact_keys(module_path, ["sha256", "entryCount", "includesWindowsPowerShellSystemModules", "includesPowerShellCoreModules"],
+               "batch44_module_path_observation")
+    require(isinstance(module_path["sha256"], str) and re.fullmatch(r"[a-f0-9]{64}", module_path["sha256"]) is not None and
+            type(module_path["entryCount"]) is int and 0 <= module_path["entryCount"] <= 32768 and
+            type(module_path["includesWindowsPowerShellSystemModules"]) is bool and
+            type(module_path["includesPowerShellCoreModules"]) is bool, "batch44_module_path_observation_types")
     require(type(r["elapsedMilliseconds"]) is int and 0 < r["elapsedMilliseconds"] <= 420000, "batch44_native_elapsed_bound")
     require(re.fullmatch(r"[a-f0-9]{64}", r["copiedNodeSha256"]) is not None, "batch44_copied_node_hash")
     exact_keys(r["sourceSha256"], TRANSPORT_SOURCES[:19], "batch44_copied_source_set")

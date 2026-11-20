@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "python",
+    "/workspace/scratch/86162842804d/MTechLabs-Access/docs/engineering/2026-11-20-reference-transport/verify-hosted.py",
+    "--manifest",
+    "/workspace/scratch/86162842804d/dev_reference_transport/candidate-first/candidate-verification-input.json"
+  ],
+  "exitCode": 1,
+  "verifierSha256": "50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6",
+  "output": {
+    "file": "candidate-original-verifier-rejection.json",
+    "sha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "bytes": 101
+  },
+  "stderr": {
+    "file": "candidate-original-verifier.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "result": {
+    "schemaVersion": 1,
+    "accepted": false,
+    "pending": false,
+    "error": "Rejected:run_success"
+  },
+  "scope": "Original frozen verifier rejection; native setup failure classification retained separately."
+}

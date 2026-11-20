@@ -108,15 +108,43 @@ startup, Cloudflare, connector, production deployment or activation change on
 the owner's host follows from these source results. The final issue receipt
 will record completion and supersede these preparation-time pending gates.
 
-`verify-hosted.py` and `verifier-freeze.json` preserve the existing five-job,
+The initial `verify-hosted.py` and `verifier-freeze.json` preserved the existing five-job,
 native and upstream requirements and add strict checks for every new portable,
 observer-idle and native group. Both Windows jobs must contain the full native
 report, real positive controls, source bindings and successful cleanup. Its
-SHA-256 is `50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6`.
+initial SHA-256 was `50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6`.
 The candidate and main manifest templates require exact run, attempt, checkout,
 head, tree, full log and raw archive identities. Windows totals of 493 tests,
 490 passes and three explicit platform skips are a frozen derived expectation
 until observed; no native result is inferred from the Linux runs.
+
+## First hosted rejection and diagnostic revision 2
+
+[PR45](https://github.com/MulattoTech/MTechLabs-Access/pull/45) first qualified
+candidate `03867a379228491a63db3dbf5747da7bdd17e5d5`, synthetic checkout
+`e702d8534f5707d2dfa4be6d01d603e694528d09`, in
+[run44731837582](https://github.com/MulattoTech/MTechLabs-Access/actions/runs/44731837582).
+All three Linux jobs passed. Both Windows jobs failed during initial fixture
+setup, before any native case completed; fixture-tree cleanup and emergency
+recovery also failed. This candidate was rejected. The exact cause was not
+established by its original sanitized diagnostic. Independent source review and
+the full hosted-status addendum are retained on
+[issue44](https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039072325),
+with exact readback and lossless review reassembly recorded locally.
+
+Revision 2 adds bounded setup-stage, command, exception-type, numeric-error and
+source-line metadata to the native controller and wrapper. It changes no
+product source, provisioning behavior, ACL rule, success assertion, timeout or
+cleanup requirement. `diagnostic-r2-freeze.json` records the two changed tests;
+the other 29 frozen inputs remain identical. The current verifier is SHA-256
+`1b785e2cdee28a00a414e757d1cc514bbbc53ab41cdce54c43f5d5ee19c1fb9b`, and additionally
+requires complete setup and empty failure diagnostics for acceptance. Original
+fixture and verifier bytes remain immutable in the first candidate's Git tree.
+
+The full local gates passed again for the diagnostic revision with the same
+observed totals and stable inputs. Their complete records are retained under
+`local-diagnostic-r2-*`. A fresh exact-tree Windows run remains required; the
+diagnostic addition itself does not resolve or qualify the startup failure.
 
 ## Ownership
 

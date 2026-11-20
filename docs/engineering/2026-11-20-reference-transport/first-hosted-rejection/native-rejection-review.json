@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "accepted": false,
+  "scope": "Independent classification of first candidate native fixture setup failure",
+  "runId": 44731837582,
+  "attempt": 1,
+  "headSha": "03867a379228491a63db3dbf5747da7bdd17e5d5",
+  "sourceSha": "e702d8534f5707d2dfa4be6d01d603e694528d09",
+  "treeSha": "628bdac86ea4daa3fa24d48336cc03edbc2e4bae",
+  "localSourceCommit": "e8c14e4bdf9758c90135a9fb888fa21b3794fc8e",
+  "observations": [
+    {
+      "jobId": 136273306693,
+      "logSha256": "ac36c3d8aa6f568f4fd321f75720fed728e4db034071896ff76ff118039cb42b",
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "completedCases": 0,
+      "elapsedMilliseconds": 287,
+      "failure": "fixture_operation_failed",
+      "stage": "context",
+      "sourceFilesCopied": 0,
+      "copiedNodeSha256": null,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": false,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "cleanupErrors": [
+        "fixture_tree_cleanup_failed",
+        "fixture_cleanup_incomplete"
+      ],
+      "emergencyCleanup": {
+        "schemaVersion": 1,
+        "emergencyCleanup": true,
+        "failure": "fixture_emergency_cleanup_failed",
+        "exitCode": 1,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "totals": {
+        "tests": 475,
+        "pass": 471,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 3,
+        "todo": 0
+      }
+    },
+    {
+      "jobId": 136273306740,
+      "logSha256": "52b2fd266dc912953ed583d944ceae9177b33d018731d69296219e5e9182ca26",
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "completedCases": 0,
+      "elapsedMilliseconds": 431,
+      "failure": "fixture_operation_failed",
+      "stage": "context",
+      "sourceFilesCopied": 0,
+      "copiedNodeSha256": null,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": false,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "cleanupErrors": [
+        "fixture_tree_cleanup_failed",
+        "fixture_cleanup_incomplete"
+      ],
+      "emergencyCleanup": {
+        "schemaVersion": 1,
+        "emergencyCleanup": true,
+        "failure": "fixture_emergency_cleanup_failed",
+        "exitCode": 1,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "totals": {
+        "tests": 475,
+        "pass": 471,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 3,
+        "todo": 0
+      }
+    }
+  ],
+  "classification": "Both native fixture controllers failed before any native decision group, source copying or Node copy completed. No product behavior established.",
+  "narrowing": "The owned-root cleanup branch ran; the source pins are empty. Failure lies after exclusive root creation and before the first successful source hash, including initial ACL or journal setup. Existing records do not identify the exact failing command.",
+  "hypotheses": [
+    "Inherited PowerShell module resolution is one targeted hypothesis, not an established cause."
+  ],
+  "nextStep": "Add bounded command/type/error-id/HResult/line/stage metadata and fixed setup progress before rerun, retaining every acceptance gate.",
+  "preservedArtifacts": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "file": "candidate-first/frozen-before-diagnostics/reference-transport-native.ps1",
+      "sha256": "a6231ea511e3d9ed9d5d52e51bea8e01b2064744abca94342d3315531f086172"
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "file": "candidate-first/frozen-before-diagnostics/reference-transport-native.test.mjs",
+      "sha256": "f9407dae7d2c8d2587256b7a889b7fffa1431dee13cd4347b0ff53e0952a768b"
+    },
+    "review_hosted.py": {
+      "file": "candidate-first/frozen-before-diagnostics/review_hosted.py",
+      "sha256": "50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6"
+    },
+    "verifier-freeze.json": {
+      "file": "candidate-first/frozen-before-diagnostics/verifier-freeze.json",
+      "sha256": "0a6770796d561f4428ddf202264dc62521f154a1a0b05e7859eef47ee6a1508d"
+    },
+    "native-fixture-freeze.json": {
+      "file": "candidate-first/frozen-before-diagnostics/native-fixture-freeze.json",
+      "sha256": "4128975ce5f1ddad3bf80c24b9b9f2cdda8f384d35739f0d6f0215c65b306e3f"
+    },
+    "frozen-inputs.json": {
+      "file": "candidate-first/frozen-before-diagnostics/frozen-inputs.json",
+      "sha256": "8120fa31ab10aabc5d40b39c3224713f077d75da5cacf754cd410d19b8c8a691"
+    }
+  },
+  "productionSourceChanged": false,
+  "newNativeExecutionOccurred": false
+}

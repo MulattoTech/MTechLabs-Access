@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "revision": 2,
+  "scope": "Diagnostic-only native fixture revision after first hosted setup failure; no speculative startup correction",
+  "observedAt": "2026-11-20T12:08:33.178093+00:00",
+  "parentReviewedLocalCommit": "e8c14e4bdf9758c90135a9fb888fa21b3794fc8e",
+  "originalCandidateHead": "03867a379228491a63db3dbf5747da7bdd17e5d5",
+  "originalRunId": 44731837582,
+  "causeEstablished": false,
+  "causeStatus": "Existing first-candidate reports cannot identify the exact failing startup command. Inherited module resolution is an unconfirmed hypothesis.",
+  "changes": [
+    "Record fixed startup stages and successful setup counters.",
+    "Record bounded exception class chain, HResult, native error number, safe error identifier/hash, command name, category and source line.",
+    "Record only digest/count/classification of inherited PSModulePath; do not alter module resolution.",
+    "Add equally bounded failure diagnostics to emergency cleanup.",
+    "Require complete setup, null primary diagnostics and empty cleanup diagnostics for acceptance."
+  ],
+  "notChanged": [
+    "Product implementation",
+    "ACL or account provisioning operations",
+    "Ownership cleanup rules",
+    "Timeouts and opt-in policy",
+    "Portable22 and drain9 and original49 protocol test bytes",
+    "All18 native cases, assertion bodies, controls and expected totals",
+    "No native behavior established or performed locally"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "a6231ea511e3d9ed9d5d52e51bea8e01b2064744abca94342d3315531f086172",
+      "sha256": "3f41e4cdff9077088e529023f506076c2a6b6e7a4b248848f7192c5417791c76",
+      "bytes": 70065
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "priorSha256": "f9407dae7d2c8d2587256b7a889b7fffa1431dee13cd4347b0ff53e0952a768b",
+      "sha256": "0728ac95fcfad89050c1f6c84e9c8de62d75e3c1bacbe98160e9fcf8e061f75a",
+      "bytes": 10687
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputs": {
+    "file": "diagnostic-r2-frozen-inputs.json",
+    "sha256": "1bf381197dbc3a872c2336e02c9b253515a1c6f3e29385aa520226b162c278c7"
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "1b785e2cdee28a00a414e757d1cc514bbbc53ab41cdce54c43f5d5ee19c1fb9b",
+    "bytes": 67253,
+    "priorSha256": "50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6",
+    "priorPreserved": "candidate-first/frozen-before-diagnostics/review_hosted.py"
+  },
+  "validation": {
+    "nodeWrapperSyntax": true,
+    "pythonVerifierSyntax": true,
+    "exactFrozenTitlesAndHashes": true,
+    "readOnlyPreviousLinuxLogChecks": true,
+    "newProductExecution": false,
+    "newNativeExecution": false
+  },
+  "requiredNextEvidence": "New exact candidate Windows execution with unchanged strict gates; preserve failures and diagnose from bounded metadata.",
+  "priorEvidence": [
+    "candidate-first/native-rejection-review.json",
+    "candidate-first/candidate-original-verifier-receipt.json",
+    "native-fixture-freeze.json",
+    "verifier-freeze.json",
+    "local-first-gates.json"
+  ],
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  }
+}

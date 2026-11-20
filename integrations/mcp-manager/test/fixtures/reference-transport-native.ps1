@@ -16,8 +16,14 @@ $fixtureAccounts = @{}
 $fixtureChildren = [Collections.Generic.List[object]]::new()
 $fixtureCases = [Collections.Generic.List[object]]::new()
 $fixtureFailure = $null
+$fixtureFailureDiagnostic = $null
 $fixtureCleanupErrors = [Collections.Generic.List[string]]::new()
+$fixtureCleanupDiagnostics = [Collections.Generic.List[object]]::new()
 $fixtureStage = 'context'
+$fixtureLastOperation = 'context_guards'
+$fixtureSetup = @{ exclusiveRootCreated = $false; rootAclApplied = $false; initialJournalSaved = $false;
+    sourceFilesCopied = 0; nodeCopied = $false; sourceTreeGuarded = $false }
+$fixtureModulePathObservation = $null
 $fixtureServer = $null
 $fixtureServiceOriginal = $null
 $fixtureServiceStarted = $false
@@ -33,8 +39,9 @@ $fixtureHelpers = @('test/fixtures/reference-transport-child.mjs','test/fixtures
 $fixtureHashes = @{}
 
 function Assert-Fixture([bool]$Condition, [string]$Code) { if (-not $Condition) { throw $Code } }
-function Cleanup-Failure([string]$Code) {
+function Cleanup-Failure([string]$Code, $Record = $null) {
     $fixtureCleanupErrors.Add($Code)
+    if ($null -ne $Record -and $fixtureCleanupDiagnostics.Count -lt 16) { $fixtureCleanupDiagnostics.Add((Error-Diagnostic $Record)) }
     if ($null -eq $script:fixtureFailure) { $script:fixtureFailure = $Code }
 }
 function Field($Object, [string]$Name) {
@@ -49,39 +56,87 @@ function Hash-Text([string]$Text) {
     finally { $sha.Dispose() }
 }
 function Hash-File([string]$Filename) { return (Get-FileHash -LiteralPath $Filename -Algorithm SHA256).Hash.ToLowerInvariant() }
+function Error-Diagnostic($Record) {
+    # Capture identifiers and numeric locations only. Messages, targets,
+    # positions, stack traces, argv and private path strings are never emitted.
+    $chain = [Collections.Generic.List[object]]::new()
+    $exception = $Record.Exception
+    for ($index = 0; $null -ne $exception -and $index -lt 4; $index++) {
+        $type = $exception.GetType().FullName
+        if ($type -notmatch '^(System|Microsoft)\.[A-Za-z0-9_.]{1,150}$') { $type = 'redacted_exception_type' }
+        $nativeCode = if ($exception -is [ComponentModel.Win32Exception]) { [int]$exception.NativeErrorCode } else { $null }
+        $chain.Add(@{ type = $type; hresult = [int]$exception.HResult; nativeErrorCode = $nativeCode })
+        $exception = $exception.InnerException
+    }
+    $errorId = [string]$Record.FullyQualifiedErrorId
+    $errorIdHash = Hash-Text $errorId
+    if ($errorId -notmatch '^[A-Za-z][A-Za-z0-9_.-]{0,127}(?:,(?:System|Microsoft)\.[A-Za-z0-9_.]{1,128})?$' -or
+        $errorId -match 'PRIVATE-FIXTURE|S-1-5-21-|mtr[adu][a-f0-9]{11}') { $errorId = 'redacted_error_identifier' }
+    $command = 'unknown_command'; $line = 0
+    if ($null -ne $Record.InvocationInfo) {
+        $line = [int]$Record.InvocationInfo.ScriptLineNumber
+        if ($null -ne $Record.InvocationInfo.MyCommand) { $command = [string]$Record.InvocationInfo.MyCommand.Name }
+    }
+    if ($command -notmatch '^[A-Za-z][A-Za-z0-9_.-]{0,127}$') { $command = 'unknown_command' }
+    return @{ stage = $fixtureStage; lastRecordedOperation = $fixtureLastOperation;
+        command = $command; line = $line;
+        category = $Record.CategoryInfo.Category.ToString(); errorId = $errorId;
+        errorIdSha256 = $errorIdHash; exceptionChain = @($chain) }
+}
+function Module-Path-Observation {
+    $value = [Environment]::GetEnvironmentVariable('PSModulePath')
+    if ($null -eq $value) { $value = '' }
+    $entries = @($value.Split(';') | Where-Object { $_ -ne '' })
+    return @{ sha256 = (Hash-Text $value); entryCount = $entries.Count;
+        includesWindowsPowerShellSystemModules = @($entries | Where-Object { $_.TrimEnd('\') -ieq 'C:\Windows\System32\WindowsPowerShell\v1.0\Modules' }).Count -gt 0;
+        includesPowerShellCoreModules = @($entries | Where-Object { $_.TrimEnd('\') -match '\\PowerShell\\[67](?:[.0-9-]*)\\Modules$' }).Count -gt 0 }
+}
 function Remaining([int]$Maximum = 40000) {
     $left = 360000 - [int]$fixtureStarted.ElapsedMilliseconds
     Assert-Fixture ($left -gt 0) 'fixture_work_deadline'
     return [Math]::Min($Maximum, $left)
 }
 function Save-Journal {
+    $script:fixtureLastOperation = 'journal_collect_accounts'
     $owned = @($fixtureAccounts.Values | ForEach-Object { @{ name = $_.Name; sid = $_.Sid; role = $_.Role;
         profile = $(if ($fixtureIdentities.ContainsKey($_.Role)) { $fixtureIdentities[$_.Role].profile } else { $null }) } })
     $record = @{ schemaVersion = 1; fixtureId = $FixtureId; users = $owned; serviceOriginal = $fixtureServiceOriginal;
         serviceStarted = $fixtureServiceStarted; children = @($fixtureChildren | ForEach-Object { @{ pid = $_.Process.Id; startTicks = $_.StartTicks } }) }
-    [IO.File]::WriteAllText($fixtureJournalPath, ($record | ConvertTo-Json -Compress -Depth 8), [Text.UTF8Encoding]::new($false))
+    $script:fixtureLastOperation = 'journal_serialize'
+    $serialized = $record | ConvertTo-Json -Compress -Depth 8
+    $script:fixtureLastOperation = 'journal_write'
+    [IO.File]::WriteAllText($fixtureJournalPath, $serialized, [Text.UTF8Encoding]::new($false))
 }
 function Guard-Path([string]$Target, [string[]]$Readers = @(), [string[]]$Writers = @()) {
+    $script:fixtureLastOperation = 'acl_directory_probe'
     $isDirectory = [IO.Directory]::Exists($Target)
+    $script:fixtureLastOperation = 'acl_construct'
     $acl = if ($isDirectory) { [Security.AccessControl.DirectorySecurity]::new() } else { [Security.AccessControl.FileSecurity]::new() }
+    $script:fixtureLastOperation = 'acl_protect'
     $acl.SetAccessRuleProtection($true, $false)
+    $script:fixtureLastOperation = 'acl_owner'
     $acl.SetOwner([Security.Principal.SecurityIdentifier]::new('S-1-5-32-544'))
+    $script:fixtureLastOperation = 'acl_inheritance'
     $inherit = if ($isDirectory) { [Security.AccessControl.InheritanceFlags]'ContainerInherit,ObjectInherit' } else { [Security.AccessControl.InheritanceFlags]::None }
     foreach ($sid in @('S-1-5-18','S-1-5-32-544')) {
+        $script:fixtureLastOperation = 'acl_system_rule'
         $acl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new([Security.Principal.SecurityIdentifier]::new($sid),
             [Security.AccessControl.FileSystemRights]::FullControl, $inherit, [Security.AccessControl.PropagationFlags]::None,
             [Security.AccessControl.AccessControlType]::Allow))
     }
     foreach ($sid in $Readers) {
+        $script:fixtureLastOperation = 'acl_reader_rule'
         $acl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new([Security.Principal.SecurityIdentifier]::new($sid),
             [Security.AccessControl.FileSystemRights]::ReadAndExecute, $inherit, [Security.AccessControl.PropagationFlags]::None,
             [Security.AccessControl.AccessControlType]::Allow))
     }
     foreach ($sid in $Writers) {
+        $script:fixtureLastOperation = 'acl_writer_rule'
         $acl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new([Security.Principal.SecurityIdentifier]::new($sid),
             [Security.AccessControl.FileSystemRights]::Modify, $inherit, [Security.AccessControl.PropagationFlags]::None,
             [Security.AccessControl.AccessControlType]::Allow))
     }
+    $script:fixtureLastOperation = 'acl_apply'
     Set-Acl -LiteralPath $Target -AclObject $acl
 }
 function Guard-Tree([string]$Target, [string[]]$Readers = @(), [string[]]$Writers = @()) {
@@ -292,7 +347,7 @@ function Cleanup-Fixture {
                 try { $record.Process.StandardInput.Close() } catch { }
                 if (-not $record.Process.WaitForExit(500)) { $record.Process.Kill(); $null = $record.Process.WaitForExit(3000); $fixtureCleanup.forcedChildCleanup++ }
             }
-        } catch { Cleanup-Failure 'fixture_owned_process_cleanup_failed' }
+        } catch { Cleanup-Failure 'fixture_owned_process_cleanup_failed' $_ }
     }
     $fixtureCleanup.ownedChildrenExited = @($fixtureChildren | Where-Object { -not $_.Process.HasExited }).Count -eq 0
     foreach ($record in @($fixtureChildren)) { try { $record.Process.Dispose() } catch { } }
@@ -325,7 +380,7 @@ function Cleanup-Fixture {
             }
             if ($null -ne $user) { Remove-LocalUser -SID ([Security.Principal.SecurityIdentifier]::new($account.Sid)) }
             if ($null -ne $account.Password) { $account.Password.Dispose() }
-        } catch { Cleanup-Failure 'fixture_owned_identity_cleanup_failed' }
+        } catch { Cleanup-Failure 'fixture_owned_identity_cleanup_failed' $_ }
     }
     $fixtureCleanup.accountsRemoved = @($fixtureAccounts.Values | Where-Object { $null -ne (Get-LocalUser -Name $_.Name -ErrorAction SilentlyContinue) }).Count -eq 0
     $fixtureCleanup.profilesRemoved = @($fixtureAccounts.Values | Where-Object { @(Get-CimInstance Win32_UserProfile -Filter ("SID='" + $_.Sid + "'")).Count -ne 0 }).Count -eq 0
@@ -337,7 +392,7 @@ function Cleanup-Fixture {
         }
         $fixtureCleanup.serviceRestored = -not $fixtureServiceStarted -and
             ($null -eq $fixtureServiceOriginal -or (Get-Service LanmanServer).Status.ToString() -eq $fixtureServiceOriginal)
-    } catch { Cleanup-Failure 'fixture_service_restore_failed' }
+    } catch { Cleanup-Failure 'fixture_service_restore_failed' $_ }
     try {
         Assert-Fixture ($fixtureCleanup.accountsRemoved -and $fixtureCleanup.profilesRemoved -and
             $fixtureCleanup.profileDirectoriesRemoved -and $fixtureCleanup.ownedChildrenExited -and
@@ -346,7 +401,7 @@ function Cleanup-Fixture {
         Assert-Fixture ($binding.schemaVersion -eq 1 -and $binding.fixtureId -ceq $FixtureId) 'fixture_cleanup_journal_mismatch'
         Remove-Item -LiteralPath $fixtureRoot -Recurse -Force
         $fixtureCleanup.fixtureTreeRemoved = -not (Test-Path -LiteralPath $fixtureRoot)
-    } catch { Cleanup-Failure 'fixture_tree_cleanup_failed' }
+    } catch { Cleanup-Failure 'fixture_tree_cleanup_failed' $_ }
     if (-not $fixtureCleanup.accountsRemoved -or -not $fixtureCleanup.profilesRemoved -or -not $fixtureCleanup.profileDirectoriesRemoved -or
         -not $fixtureCleanup.ownedChildrenExited -or -not $fixtureCleanup.ownedAccountProcessesExited -or
         -not $fixtureCleanup.fixtureTreeRemoved -or -not $fixtureCleanup.serviceRestored) { Cleanup-Failure 'fixture_cleanup_incomplete' }
@@ -354,11 +409,16 @@ function Cleanup-Fixture {
 
 if ($CleanupOnly) {
     try {
+        $fixtureStage = 'emergency_cleanup'; $fixtureLastOperation = 'emergency_context_guards'
         Assert-Fixture ($env:MTERM_DISPOSABLE_REFERENCE_QUALIFICATION -eq '1' -and $env:GITHUB_ACTIONS -eq 'true' -and
             $env:RUNNER_ENVIRONMENT -eq 'github-hosted' -and $env:RUNNER_OS -eq 'Windows') 'fixture_disposable_host_required'
+        $fixtureLastOperation = 'emergency_root_exists'
         Assert-Fixture (Test-Path -LiteralPath $fixtureRoot -PathType Container) 'fixture_cleanup_root_missing'
+        $fixtureLastOperation = 'emergency_root_owner'
         $owner = (Get-Acl -LiteralPath $fixtureRoot).GetOwner([Security.Principal.SecurityIdentifier]).Value
+        $fixtureLastOperation = 'emergency_journal_size'
         Assert-Fixture ($owner -eq 'S-1-5-32-544' -and (Get-Item -LiteralPath $fixtureJournalPath).Length -lt 65536) 'fixture_cleanup_owner_invalid'
+        $fixtureLastOperation = 'emergency_journal_read'
         $journal = [IO.File]::ReadAllText($fixtureJournalPath) | ConvertFrom-Json
         Assert-Fixture ($journal.schemaVersion -eq 1 -and $journal.fixtureId -ceq $FixtureId) 'fixture_cleanup_journal_mismatch'
         foreach ($owned in @($journal.users)) {
@@ -382,37 +442,64 @@ if ($CleanupOnly) {
         [Console]::Out.WriteLine((@{ schemaVersion = 1; emergencyCleanup = $true; cleanup = $fixtureCleanup;
             cleanupErrors = @($fixtureCleanupErrors); failure = $fixtureFailure } | ConvertTo-Json -Compress))
         if ($fixtureFailure) { exit 1 } else { exit 0 }
-    } catch { [Console]::Out.WriteLine('{"schemaVersion":1,"emergencyCleanup":true,"failure":"fixture_emergency_cleanup_failed"}'); exit 1 }
+    } catch {
+        [Console]::Out.WriteLine((@{ schemaVersion = 1; emergencyCleanup = $true;
+            failure = 'fixture_emergency_cleanup_failed'; failureDiagnostic = (Error-Diagnostic $_) } | ConvertTo-Json -Compress -Depth 10))
+        exit 1
+    }
 }
 
 try {
+    $fixtureModulePathObservation = Module-Path-Observation
     Assert-Fixture ($env:MTERM_DISPOSABLE_REFERENCE_QUALIFICATION -eq '1' -and $env:GITHUB_ACTIONS -eq 'true' -and
         $env:RUNNER_ENVIRONMENT -eq 'github-hosted' -and $env:RUNNER_OS -eq 'Windows') 'fixture_disposable_host_required'
     Assert-Fixture ([Environment]::Is64BitProcess) 'fixture_native_bitness_required'
     $principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
     Assert-Fixture ($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) 'fixture_privilege_required'
     Assert-Fixture (-not $env:NODE_OPTIONS -and -not $env:NODE_PATH) 'fixture_preload_rejected'
+    $fixtureStage = 'create_fixture_root'; $fixtureLastOperation = 'root_collision_check'
     Assert-Fixture (-not (Test-Path -LiteralPath $fixtureRoot)) 'fixture_root_collision'
+    $fixtureLastOperation = 'root_create'
     $null = New-Item -ItemType Directory -Path $fixtureRoot
     $fixtureRootOwned = $true
+    $fixtureSetup.exclusiveRootCreated = $true
+    $fixtureStage = 'protect_fixture_root'
     Guard-Path $fixtureRoot @('S-1-5-32-545')
+    $fixtureSetup.rootAclApplied = $true
+    $fixtureStage = 'write_initial_ownership_journal'
     Save-Journal
+    $fixtureSetup.initialJournalSaved = $true
+    $fixtureStage = 'select_fixed_fixture_paths'; $fixtureLastOperation = 'fixed_path_join'
     $fixtureNode = Join-Path $fixtureRoot 'runtime\node.exe'
     $fixtureChild = Join-Path $fixtureRoot 'test\fixtures\reference-transport-child.mjs'
     $fixturePipeScript = Join-Path $fixtureRoot 'test\fixtures\reference-transport-pipe.ps1'
     $fixturePowerShell = 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    $fixtureStage = 'copy_source_files'
     foreach ($relative in @($fixtureSourceFiles + $fixtureHelpers)) {
+        $fixtureLastOperation = 'copy_source_path_join'
         $source = Join-Path $SourceRoot $relative; $target = Join-Path $fixtureRoot $relative
+        $fixtureLastOperation = 'copy_source_directory_create'
         $null = New-Item -ItemType Directory -Path (Split-Path $target) -Force
+        $fixtureLastOperation = 'copy_source_file'
         Copy-Item -LiteralPath $source -Destination $target
+        $fixtureLastOperation = 'hash_source_file'
         $fixtureHashes[$relative] = Hash-File $source
+        $fixtureLastOperation = 'compare_source_copy_hash'
         Assert-Fixture ((Hash-File $target) -eq $fixtureHashes[$relative]) 'fixture_source_copy_mismatch'
+        $fixtureSetup.sourceFilesCopied++
     }
+    $fixtureStage = 'copy_node_binary'; $fixtureLastOperation = 'copy_node_directory_create'
     $null = New-Item -ItemType Directory -Path (Split-Path $fixtureNode) -Force
+    $fixtureLastOperation = 'copy_node_file'
     Copy-Item -LiteralPath $NodeSource -Destination $fixtureNode
+    $fixtureLastOperation = 'hash_node_file'
     $fixtureNodeHash = Hash-File $NodeSource
+    $fixtureLastOperation = 'compare_node_copy_hash'
     Assert-Fixture ((Hash-File $fixtureNode) -eq $fixtureNodeHash) 'fixture_node_copy_mismatch'
+    $fixtureSetup.nodeCopied = $true
+    $fixtureStage = 'protect_source_tree'
     Guard-Tree $fixtureRoot @('S-1-5-32-545')
+    $fixtureSetup.sourceTreeGuarded = $true
     $fixtureStage = 'create_owned_accounts'
     foreach ($role in @('authority','development','unauthorized')) {
         $name = 'mtr' + $role.Substring(0,1) + $FixtureId.Substring(0,11)
@@ -849,13 +936,16 @@ try {
         nodeFilesystemSpyScope = 'fs/promises calls in the restricted consumer; shared Node excluded';
         nativeCompilerTemporaryActivityNotExcluded = $true }
 } catch {
+    $fixtureFailureDiagnostic = Error-Diagnostic $_
     $fixtureFailure = if ($_.Exception.Message -match '^[a-z_]{1,80}$') { $_.Exception.Message } else { 'fixture_operation_failed' }
 } finally {
-    try { Cleanup-Fixture } catch { Cleanup-Failure 'fixture_cleanup_failed' }
+    try { Cleanup-Fixture } catch { Cleanup-Failure 'fixture_cleanup_failed' $_ }
 }
 $fixtureReport = @{ schemaVersion = 1; fixture = 'protected-reference-transport'; scope = 'disposable hosted separate standard Windows identities';
     completedCases = @($fixtureCases); sourceSha256 = $fixtureHashes; cleanup = $fixtureCleanup;
     cleanupErrors = @($fixtureCleanupErrors);
+    failureDiagnostic = $fixtureFailureDiagnostic; cleanupDiagnostics = @($fixtureCleanupDiagnostics);
+    setupProgress = $fixtureSetup; modulePathObservation = $fixtureModulePathObservation;
     failure = $fixtureFailure; failedStage = $(if ($fixtureFailure) { $fixtureStage } else { $null });
     watchdog = @{ workMilliseconds = 360000; cleanupMilliseconds = 60000; outerMilliseconds = 420000 };
     nativeRuntime = @{ platform = [Environment]::OSVersion.Platform.ToString(); powerShellEdition = $PSVersionTable.PSEdition;
