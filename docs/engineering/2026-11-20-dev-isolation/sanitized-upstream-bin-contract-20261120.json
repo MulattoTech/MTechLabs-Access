@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R36",
+  "scope": "read-only npm package bin declaration to shell/CMD/PowerShell launcher targets and observed normalized template families",
+  "observedUtc": "2026-11-20T21:07:45.351261+00:00",
+  "selectedUpstreamPackage": {
+    "name": "@wonderwhy-er/desktop-commander",
+    "version": "0.3.1"
+  },
+  "observed": {
+    "completedOwnerHostReadOnlyPasses": 2,
+    "passResultsIdentical": true,
+    "declaredBinCommands": 22,
+    "eachCommandHasShellCmdAndPs1": true,
+    "totalLauncherShimsMatched": 66,
+    "nodeBasedCommands": 20,
+    "directScriptCommands": 2,
+    "directScriptCommandNames": [
+      "setup",
+      "remove"
+    ],
+    "unqualifiedBinTargetsOrTemplates": 0,
+    "combinedBinContractFingerprintSha256": "53b0682b8d92582d55be3c2decf5fb303f3f9b3c2f1c283be6c52aa7907a598c",
+    "priorR35NamespaceFingerprintSha256": "d688b1465a53fcefdc5a1b036765128d50aeeaedae176e06721946bebb6bc1c7",
+    "normalizedTemplateFamilies": {
+      "": {
+        "node": "2ac5ea5af2ebb84c8556f600de0d95406b02de71c7849387ee37281b58ba46ca",
+        "direct": "87c9119ddffc456987cc0df63c378db0a1eeaa8d045a33e5d5975c5861536f49"
+      },
+      ".cmd": {
+        "node": "a96c4d3e253b0bd26fe363d16a4f971f732834077434f66d016f815d764eef2c",
+        "direct": "281aa465586bc508824209fb4e55d8884371482d007c04f0c6f4e5393213afb4"
+      },
+      ".ps1": {
+        "node": "c40f743cb00b0db0aad560389687aa1a2d9594de21193c40b840d4e0eeb24b65",
+        "direct": "aa4db2abbd30ff80b20c075363a2598b9e530e2089659307e8ea51fddb0cb506"
+      }
+    },
+    "templateBaselinePublisherAttested": false
+  },
+  "tests": {
+    "newR36": {
+      "passed": 20,
+      "failed": 0
+    },
+    "dependencyAndBinSyntheticCombined": {
+      "passed": 144,
+      "failed": 0
+    },
+    "windowsOwnerHostPreflight": {
+      "passed": 49,
+      "failed": 0
+    },
+    "portableAclClassifier": {
+      "passed": 15,
+      "failed": 0
+    },
+    "aclMutationSensitivity": {
+      "mutantsRejected": 7,
+      "totalMutants": 7
+    }
+  },
+  "sourceSha256": {
+    "read-only-upstream-bin-contract.py": "280f07bde1f0e18de13f153fa08f917c28b12515208a6b3c8e5ad35c9503f68b",
+    "read-only-upstream-bin-contract.test.py": "fadd9c98ce5667541de81c4a01280f315fa43fe912347e8deddf7594d47ac53d"
+  },
+  "limitations": [
+    "Six normalized template SHA-256 pins are derived from currently installed H: shims and not an independently trusted npm publisher, signed release, or known-good immutable reference.",
+    "A matching bin field and shim text does not prove runtime command invocation semantics, loaded-process identity, trust in Node/script resolution or actual user execution.",
+    "The audit checks the 22 bin entries enumerated in the declared installed dependency closure and the 66 root .bin wrappers. It does not discover arbitrary global npm, browser-cache, OS package or other system launch targets.",
+    "All current source and lockfiles remain under broadly writable H: ancestors; repeated metadata matches and fingerprints do not qualify the security boundary or establish that original files are untampered.",
+    "A real restricted MTermDev account, protected code/state roots, native cross-account access and rollback are not provisioned/qualified and require specific future owner authorization.",
+    "PR45 mandatory exact-head independently hosted Windows/Linux qualification and post-merge actual-main acceptance remain blocked by the recorded GitHub Actions account admission issue."
+  ],
+  "safety": {
+    "productionFilesOrSettingsChanged": false,
+    "installedPackageCodeOrLaunchersExecuted": false,
+    "npmOrNetworkInvoked": false,
+    "productionManagerRestarted": false,
+    "accountsAclsCredentialsOrRoutesChanged": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
