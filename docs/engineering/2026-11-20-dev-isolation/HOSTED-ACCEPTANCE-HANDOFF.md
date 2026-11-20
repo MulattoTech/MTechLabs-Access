@@ -81,6 +81,8 @@ The source test explicitly asserts `GITHUB_ACTIONS=true`, `RUNNER_ENVIRONMENT=gi
 
 **Separate operational dependency:** [Operational isolation and rollback review plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md) prepares the owner-host source/ACL/startup and reversible protected-root decision. That design cannot be executed merely because the candidate CI eventually passes; it still requires a second, concrete operational approval and actual DEV token/effective-rights qualification.
 
+**After source acceptance, before any operational cutover:** [PRODUCTION-RELOCATION-REFERENCE-AUDIT.md](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) provides the exact-head H: hardcoding/side-effecting utility inventory to review alongside the protected-root [operational change plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md). Neither is an installation authorization; existing production Cloudflare origin and port 19740 must not be retargeted automatically.
+
 ## What is already available, but is not hosted acceptance
 
 The isolated [issue #46 diagnostic directory](https://github.com/MulattoTech/MTechLabs-Access/tree/docs/access46-dev-isolation-preflight-20261120/docs/engineering/2026-11-20-dev-isolation) includes:
