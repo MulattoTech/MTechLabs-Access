@@ -3,10 +3,11 @@
   "issue": 46,
   "scope": "Read-only bounded installed 0.3.1 declared dependency-closure, ACL and native helper metadata; NOT full JS execution graph, effective permissions, or DEV activation",
   "observedUtc": {
-    "declaredManifestTraversal": "2026-11-20T20:03:00Z",
+    "declaredManifestTraversal": "2026-11-20T20:10:51.0107377Z",
     "aclRoots": "2026-11-20T20:05:34.3415352Z",
-    "binaryWalk": "2026-11-20T20:06:00Z",
-    "binaryHashAndAcl": "2026-11-20T20:06:42.0403682Z"
+    "binaryWalk": "2026-11-20T20:10:51.0107377Z",
+    "binaryHashAndAcl": "2026-11-20T20:06:42.0403682Z",
+    "note": "Closure and native metadata fingerprints rechecked at timestamp shown; ACL and file hash observations occurred earlier at their separately recorded timestamps."
   },
   "installed": {
     "name": "@wonderwhy-er/desktop-commander",
