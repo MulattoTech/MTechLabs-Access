@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R53",
+  "source": "historical GitHub Actions R6 ubuntu-latest exact downloaded artifact; read-only static report analysis",
+  "runId": 44740386851,
+  "attempt": 1,
+  "jobId": 136302296697,
+  "artifactId": 14630209019,
+  "artifactName": "upstream-qualification-ubuntu-latest-44740386851-1",
+  "platform": "linux",
+  "node": "v24.22.3",
+  "historicalSourceSha": "b14c7a2f6d76a2079959a9354273cd3c46c655ca",
+  "candidateSha": "9d29623f45a079eb3430466eceb44aac864becd9",
+  "sourceTree": "6596c7eae39e1af8cabe70d05c2e5b807df7a5f8",
+  "reportSourceSha256": {
+    "qualification.json": "0c3ff87fa87e51de42da7906260c3051b97a9567130917458b1bf7f864d32afa",
+    "control-result.json": "fa8ac7f7e95f643bf570b2bf26a321ce57e1a8a10b7f5126c37bc26b62f8dff2",
+    "candidate-result.json": "f15505ddac3dc4fd30dee8ddc8acdc66d74636bd17be50a6e7522a7f313895cd"
+  },
+  "recordedTime": {
+    "testedAt": "2026-11-20T13:00:07.817Z",
+    "completedAt": "2026-11-20T13:01:24.505Z",
+    "qualificationWallMs": 76688,
+    "controlPriorPassedStageCount": 8,
+    "controlPriorPassedStagesMs": 2064,
+    "candidateAllPassedStageCount": 10,
+    "candidateAllPassedStagesMs": 25741,
+    "controlPdfFailureElapsedUpperBoundMs": 48883,
+    "clientWritePdfDeadlineMs": 90000,
+    "caller90SecondTimeoutExhaustionImpossible": true,
+    "controlPdfFailureStageElapsedExact": null,
+    "candidatePdfStageElapsedMs": 23312
+  },
+  "control": {
+    "version": "0.3.1",
+    "pass": false,
+    "failedStage": "pdf_create_and_read_fidelity",
+    "failureCode": "write_pdf_tool_error",
+    "toolErrorObserved": true,
+    "timeoutSignalObserved": true,
+    "toolErrorCodeCount": 0,
+    "errorTextBytes": 90,
+    "errorTextSha256": "507ef8b2a699963ab7ea18f03af845cd35c625ab3ab41d708dd4f46945c422ba",
+    "errorTextUntruncated": true,
+    "installedPackageCount": 612
+  },
+  "candidate": {
+    "version": "0.3.3",
+    "pass": true,
+    "pdfStagePass": true,
+    "pdfStageDurationMs": 23312,
+    "pdfBytes": 13242,
+    "installedPackageCount": 643
+  },
+  "sharedEntrypointSha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+  "sharedEntrypointIdentical": true,
+  "differentPackageManifestSha256": true,
+  "differentNpmLockSha256": true,
+  "frozenQualifierSource": {
+    "path": "integrations/mcp-manager/qualify-upstream.mjs",
+    "gitBlob": "5bd1fa10fad4f55af6e7b01349beb3b1b0793c26",
+    "sequentialLanes": [
+      "control",
+      "candidate"
+    ],
+    "toolsCalled": {
+      "write_pdf": 90000,
+      "read_file_pdf": 90000
+    },
+    "packageInstallNoLifecycleScripts": true
+  },
+  "result": "REJECTED",
+  "causalMechanismIdentified": false,
+  "limitations": [
+    "Historical R6 only, not an exact-current-head hosted rerun.",
+    "Control failed PDF stage was not appended to successful-stage list, so exact PDF failure duration was not recorded.",
+    "Total elapsed minus other recorded sequential stages is an upper bound, not the exact duration.",
+    "The timeout signal was captured from tool-returned text; it is not proof of any particular browser, library, OS, network or subprocess cause.",
+    "Equal dist/index.js SHA-256 does not prove all other code/dependency/runtime behavior was equal.",
+    "Install logs report installed package counts only; they do not prove installation, external downloader or browser status beyond the frozen source's ignore-scripts option.",
+    "No code, package, PDF, Windows token/ACL, GitHub Actions, production service or DEV runtime was executed in this analysis."
+  ],
+  "safety": {
+    "prOpenedOrMerged": false,
+    "ciTriggeredOrRetried": false,
+    "installedUpstreamExecuted": false,
+    "npmInvoked": false,
+    "productionOrAccountsChanged": false,
+    "devActivationAuthorized": false
+  }
+}
