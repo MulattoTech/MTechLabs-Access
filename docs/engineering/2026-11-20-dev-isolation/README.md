@@ -27,6 +27,8 @@ The first invocation is expected to exit **1** for the current failed-billing ru
 
 **Production manager config relocation evidence:** the [redacted installed seven-field mapping](sanitized-production-config-paths-20261120.json) confirms **six** old H: package/state paths and **one** existing C: Node executable. The [source-reference migration audit](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) and [protected-root/rollback plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md) now require coordinated manager-config, launcher and three local client changes. No production config or token values were exported; path reads are **not** actual DEV-token ACL or loaded-source acceptance.
 
+**Installed upstream code-root risk:** [sanitized package and ACL receipt](sanitized-upstream-package-20261120.json) confirms the existing manager selects `@wonderwhy-er/desktop-commander` **0.3.1**, entry `dist\index.js`, while its package root/entry inherit Authenticated Users Modify from H:. File digests are pinned as historical read-only evidence, **not** proof of a loaded process, whole dependency-tree integrity or real DEV token isolation. Any protected-root cutover must qualify these executable dependencies independently.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
