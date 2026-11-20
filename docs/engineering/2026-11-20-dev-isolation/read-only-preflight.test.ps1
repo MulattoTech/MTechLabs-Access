@@ -138,6 +138,36 @@ if ($profileDenied.devProfile -ne 'unverified' -or
     throw 'dev_profile_denial_misclassified_as_absent'
 }
 
+# A missing, relative, or remote LOCALAPPDATA root must neither crash the
+# assessment nor cause it to load a baseline from an unexpected filesystem.
+# These are process-local environment overrides, always restored in finally.
+$originalLocalAppData = $env:LOCALAPPDATA
+foreach ($scenario in @(
+    @{ name = 'empty'; root = '' },
+    @{ name = 'relative'; root = 'relative\not-a-root' },
+    @{ name = 'remote'; root = '\\127.0.0.1\never-connect' }
+)) {
+    try {
+        $env:LOCALAPPDATA = $scenario.root
+        $untrustedRoot = (& $source) | ConvertFrom-Json -AsHashtable
+    } finally {
+        $env:LOCALAPPDATA = $originalLocalAppData
+    }
+    Assert-Inactive $untrustedRoot ('untrusted_appdata_' + $scenario.name)
+    if ($untrustedRoot.baseline.status -ne 'unverified' -or
+        $untrustedRoot.baseline.matchingPaths -ne 0 -or
+        @($untrustedRoot.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 1) {
+        throw ('untrusted_appdata_not_rejected_' + $scenario.name)
+    }
+}
+
+# Public diagnostic output must not include Windows account SIDs or raw paths.
+# This only checks current output, not arbitrary future Windows error objects.
+if ($positiveText.Contains('S-1-5-') -or $positiveText.Contains('H:\') -or
+    $positiveText.Contains('C:\Users\') -or $positiveText.Contains('PRIVATE-FIXTURE')) {
+    throw 'diagnostic_output_includes_private_data'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -145,7 +175,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 8
+    passed = 12
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -156,6 +186,8 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     baselineLookupDenialFailsClosed = $true
     accountQueryDeniedIsUnverified = $true
     devProfileDeniedIsUnverified = $true
+    invalidBaselineRootsFailClosed = $true
+    publicOutputIsSanitized = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
