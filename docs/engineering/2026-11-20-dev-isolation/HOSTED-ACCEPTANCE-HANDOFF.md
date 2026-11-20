@@ -77,6 +77,8 @@ The source test explicitly asserts `GITHUB_ACTIONS=true`, `RUNNER_ENVIRONMENT=gi
 5. **Only after source acceptance**, consider the normal expected-head PR45 merge; then require a **separate actual-main five-job hosted acceptance** and durable issue #44 closing evidence. A candidate run is not the post-merge run.
 6. **Only later and with separate concrete approval**, follow issue #46 to choose protected production and DEV roots, preserve the H: sibling workloads, prove actual owner/runtime/DEV token effective rights, plan and test rollback, and provision the independent DEV identity. **DEV activation remains disabled** pending its own positive and negative operational checks.
 
+**Separate operational dependency:** [Operational isolation and rollback review plan](OPERATIONAL-ISOLATION-CHANGE-PLAN.md) prepares the owner-host source/ACL/startup and reversible protected-root decision. That design cannot be executed merely because the candidate CI eventually passes; it still requires a second, concrete operational approval and actual DEV token/effective-rights qualification.
+
 ## What is already available, but is not hosted acceptance
 
 The isolated [issue #46 diagnostic directory](https://github.com/MulattoTech/MTechLabs-Access/tree/docs/access46-dev-isolation-preflight-20261120/docs/engineering/2026-11-20-dev-isolation) includes:
