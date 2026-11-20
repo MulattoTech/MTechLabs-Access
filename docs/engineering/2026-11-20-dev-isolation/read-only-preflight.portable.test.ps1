@@ -132,7 +132,11 @@ foreach ($case in $fixtures) {
     $record = Probe-Fixture $case $helperCode
     $expectedStatus = if($case.failure){'unverified'}else{'observed'}
     if($record.status -ne $expectedStatus){throw ('case_status_mismatch:' + $case.name)}
-    foreach($property in $case.expect.Keys){
+    # Stable ordinal field order is required for mutation sensitivity:
+    # PowerShell hashtables do not guarantee assertion iteration order.
+    $expectedKeys = [string[]]@($case.expect.Keys)
+    [Array]::Sort($expectedKeys, [StringComparer]::Ordinal)
+    foreach($property in $expectedKeys){
         $actual=$record.$property
         $expected=$case.expect[$property]
         if($actual -ne $expected){
