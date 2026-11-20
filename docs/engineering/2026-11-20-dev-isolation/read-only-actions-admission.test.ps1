@@ -1,5 +1,5 @@
-# Access #46 — offline unit tests for read-only Actions admission classification.
-# Requires PowerShell 7. Uses only fabricated GitHub metadata; no gh/API calls.
+# Access #46 — offline GitHub Actions admission metadata classification tests.
+# Pure synthetic metadata; no gh CLI, network, production, or account changes.
 #requires -Version 7.0
 [CmdletBinding()]
 param()
@@ -7,92 +7,154 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 
 $file=Join-Path $PSScriptRoot 'read-only-actions-admission.ps1'
-$tokens=$null;$parseErrors=$null
-$ast=[Management.Automation.Language.Parser]::ParseFile(
-    $file,[ref]$tokens,[ref]$parseErrors)
-if(@($parseErrors).Count){throw 'admission_source_syntax_invalid'}
-$def=@($ast.FindAll({
+$tokens=$null;$errors=$null
+$ast=[Management.Automation.Language.Parser]::ParseFile($file,[ref]$tokens,[ref]$errors)
+if(@($errors).Count){throw 'admission_source_syntax_invalid'}
+$definitions=@($ast.FindAll({
     param($node)
     $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
         $node.Name -eq 'Get-AdmissionReport'
 },$true))
-if($def.Count -ne 1){throw 'admission_helper_not_unique'}
-$code=$def[0].Extent.Text
+if($definitions.Count -ne 1){throw 'admission_helper_not_unique'}
+$helper=$definitions[0].Extent.Text
 
 & {
- param([string]$definition)
- . ([scriptblock]::Create($definition))
- $id=[long]44742255585
- $sha='f0855c1227aacc49071581bb52ba5566bc07ffce'
- $names=@(
-  'test','managed-mcp','managed-mcp-windows',
-  'Upstream qualification / ubuntu-latest / Node 24',
-  'Upstream qualification / windows-latest / Node 24'
- )
- function Build-Run {
-  $jobs=@($names|ForEach-Object{
-    @{name=$_;status='completed';conclusion='success';
-      steps=@(@{status='completed';conclusion='success'})}
-  })
-  return @{
-    databaseId=[long]44742255585
-    headSha='f0855c1227aacc49071581bb52ba5566bc07ffce'
-    attempt=2
-    status='completed'
-    conclusion='success'
-    jobs=$jobs
-  }
- }
- function Inspect([string]$label,[hashtable]$run,[bool]$admitted,
-      [bool]$passing,[string]$reason,[int]$completed){
-  $r=Get-AdmissionReport -Run $run -Id $id -ExpectedSha $sha
-  if($r.admissionObserved -ne $admitted -or
-    $r.workflowReportedSuccess -ne $passing -or
-    $r.reason -cne $reason -or
-    $r.completedWithSteps -ne $completed -or
-    $r.independentlyVerified -ne $false -or
-    $r.actualMainAccepted -ne $false -or
-    $r.devActivationAuthorized -ne $false){
-      throw ('admission_classification_wrong:' + $label)
-  }
-  return $true
- }
- $passed=0
- $run=Build-Run
- if(Inspect 'all_successful' $run $true $true 'metadata_reports_success_artifacts_not_reviewed' 5){$passed++}
- $run=Build-Run;$run.conclusion='failure';$run.jobs[0].conclusion='failure'
- if(Inspect 'genuine_tests_failed' $run $true $false 'jobs_executed_but_tests_not_all_successful' 5){$passed++}
- $run=Build-Run;foreach($j in $run.jobs){$j.steps=@();$j.conclusion='failure'};$run.conclusion='failure'
- if(Inspect 'prestart_billing_rejection' $run $false $false 'jobs_have_no_executed_steps' 0){$passed++}
- $run=Build-Run;$run.jobs[0].steps=@()
- if(Inspect 'one_job_no_steps' $run $false $false 'jobs_have_no_executed_steps' 4){$passed++}
- $run=Build-Run;$run.jobs[0].steps=@(@{status='skipped';conclusion='skipped'})
- if(Inspect 'only_skipped_step' $run $false $false 'jobs_have_no_executed_steps' 4){$passed++}
- $run=Build-Run;$run.headSha='0000000000000000000000000000000000000000'
- if(Inspect 'wrong_head' $run $false $false 'run_identity_mismatch' 0){$passed++}
- $run=Build-Run;$run.databaseId=[long]12345
- if(Inspect 'wrong_run_id' $run $false $false 'run_identity_mismatch' 0){$passed++}
- $run=Build-Run;$run.jobs[0].name=$run.jobs[1].name
- if(Inspect 'duplicate_job' $run $false $false 'five_job_identity_mismatch' 0){$passed++}
- $run=Build-Run;$run.jobs=@($run.jobs|Select-Object -Skip 1)
- if(Inspect 'missing_job' $run $false $false 'five_job_identity_mismatch' 0){$passed++}
- $run=Build-Run;$run.jobs+=@(@{name='unexpected';status='completed';conclusion='success';steps=@(@{status='completed'})})
- if(Inspect 'extra_job' $run $false $false 'five_job_identity_mismatch' 0){$passed++}
- $run=Build-Run;$run.status='in_progress';$run.conclusion=''
- if(Inspect 'run_incomplete' $run $false $false 'run_not_completed' 5){$passed++}
- $run=Build-Run;$run.jobs[0].steps=$null
- if(Inspect 'missing_steps_data' $run $false $false 'jobs_have_no_executed_steps' 4){$passed++}
- $run=@{}
- if(Inspect 'unparsable_metadata' $run $false $false 'metadata_unverified' 0){$passed++}
- [pscustomobject]@{
-  schemaVersion=1
-  scope='offline-admission-classifier-unit-tests'
-  passed=$passed
-  failed=0
-  fixtureCount=$names.Count
-  githubQueried=$false
-  productionQueried=$false
-  independentlyVerified=$false
-  devActivationAuthorized=$false
- } | ConvertTo-Json -Compress
-} $code
+    param([string]$definition)
+    . ([scriptblock]::Create($definition))
+    $id=[long]44742255585
+    $sha='f0855c1227aacc49071581bb52ba5566bc07ffce'
+    $required=@{
+        'test'=@('Run npm test','Run npm run check','Run npm run build',
+            'Check generated UI matches its sources')
+        'managed-mcp'=@('Run npm test')
+        'managed-mcp-windows'=@('Run npm test')
+        'Upstream qualification / ubuntu-latest / Node 24'=@(
+            'Verify manager and qualification guards on this platform',
+            'Compare real pinned upstream packages in disposable stores')
+        'Upstream qualification / windows-latest / Node 24'=@(
+            'Verify manager and qualification guards on this platform',
+            'Compare real pinned upstream packages in disposable stores')
+    }
+    $names=@('test','managed-mcp','managed-mcp-windows',
+        'Upstream qualification / ubuntu-latest / Node 24',
+        'Upstream qualification / windows-latest / Node 24')
+    function New-Run {
+        $jobs=@(foreach($name in $names){
+            $steps=@(foreach($label in $required[$name]){
+                @{name=$label;status='completed';conclusion='success'}
+            })
+            @{name=$name;status='completed';conclusion='success';steps=$steps}
+        })
+        return @{
+            databaseId=[long]44742255585
+            headSha='f0855c1227aacc49071581bb52ba5566bc07ffce'
+            attempt=2
+            event='pull_request'
+            workflowName='Verify access controls and code monitoring'
+            status='completed'
+            conclusion='success'
+            jobs=$jobs
+        }
+    }
+    function Check(
+        [string]$name,[hashtable]$run,
+        [bool]$admission,[bool]$workflowSuccess,[bool]$requiredObserved,
+        [string]$reason,[int]$jobsWithSteps,[int]$stagesObserved
+    ){
+        $r=Get-AdmissionReport -Run $run -Id $id -ExpectedSha $sha
+        if($r.admissionObserved -ne $admission -or
+           $r.workflowReportedSuccess -ne $workflowSuccess -or
+           $r.requiredTestStagesObserved -ne $requiredObserved -or
+           $r.reason -cne $reason -or
+           $r.completedWithSteps -ne $jobsWithSteps -or
+           $r.observedRequiredStages -ne $stagesObserved -or
+           $r.independentlyVerified -ne $false -or
+           $r.actualMainAccepted -ne $false -or
+           $r.devActivationAuthorized -ne $false) {
+            throw ('admission_case_mismatch:' + $name)
+        }
+        return $true
+    }
+    $passed=0
+    $run=New-Run
+    if(Check 'all_expected_steps_success' $run $true $true $true 'metadata_reports_success_artifacts_not_reviewed' 5 10){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps[0].conclusion='failure'
+    $run.jobs[0].conclusion='failure';$run.conclusion='failure'
+    if(Check 'real_test_step_failed' $run $true $false $true 'required_stages_observed_but_tests_not_all_successful' 5 10){$passed++}
+
+    $run=New-Run;$run.jobs[1].conclusion='failure';$run.conclusion='failure'
+    if(Check 'job_result_failed' $run $true $false $true 'required_stages_observed_but_tests_not_all_successful' 5 10){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps[0].conclusion='failure'
+    if(Check 'run_success_but_test_step_failed' $run $true $false $true 'required_stages_observed_but_tests_not_all_successful' 5 10){$passed++}
+
+    $run=New-Run
+    foreach($job in $run.jobs){$job.steps=@();$job.conclusion='failure'}
+    $run.conclusion='failure'
+    if(Check 'billing_prestart_zero_steps' $run $false $false $false 'jobs_have_no_executed_steps' 0 0){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps=@()
+    if(Check 'one_job_no_steps' $run $false $false $false 'jobs_have_no_executed_steps' 4 6){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps[0].conclusion='skipped'
+    if(Check 'required_step_skipped' $run $true $false $false 'required_test_stages_not_observed' 5 9){$passed++}
+
+    $run=New-Run
+    foreach($job in $run.jobs){
+        $job.steps=@(@{name='Set up job';status='completed';conclusion='success'})
+    }
+    if(Check 'only_runner_setup_steps' $run $true $false $false 'required_test_stages_not_observed' 5 0){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps=@(@{name='Run npm test';status='completed';conclusion='success'})
+    if(Check 'root_test_but_no_check_or_build' $run $true $false $false 'required_test_stages_not_observed' 5 7){$passed++}
+
+    $run=New-Run;$run.jobs[3].steps=@($run.jobs[3].steps|Select-Object -First 1)
+    if(Check 'upstream_manager_tests_but_no_qualify_upstream' $run $true $false $false 'required_test_stages_not_observed' 5 9){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps+=@{name='Run npm test';status='completed';conclusion='success'}
+    if(Check 'duplicate_required_step_ambiguous' $run $true $false $false 'required_test_stages_not_observed' 5 9){$passed++}
+
+    $run=New-Run;$run.event='push'
+    if(Check 'wrong_event' $run $false $false $false 'run_event_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.workflowName='Untrusted workflow'
+    if(Check 'wrong_workflow_name' $run $false $false $false 'workflow_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.headSha='0000000000000000000000000000000000000000'
+    if(Check 'wrong_head_sha' $run $false $false $false 'run_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.databaseId=[long]444
+    if(Check 'wrong_run_id' $run $false $false $false 'run_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.jobs[0].name=$run.jobs[1].name
+    if(Check 'duplicate_jobs' $run $false $false $false 'five_job_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.jobs=@($run.jobs|Select-Object -Skip 1)
+    if(Check 'missing_job' $run $false $false $false 'five_job_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.jobs+=@(@{name='extra';status='completed';conclusion='success';steps=@()})
+    if(Check 'extra_job' $run $false $false $false 'five_job_identity_mismatch' 0 0){$passed++}
+
+    $run=New-Run;$run.status='in_progress';$run.conclusion=''
+    if(Check 'run_not_complete' $run $false $false $false 'run_not_completed' 5 10){$passed++}
+
+    $run=New-Run;$run.jobs[0].steps=$null
+    if(Check 'missing_step_metadata' $run $false $false $false 'jobs_have_no_executed_steps' 4 6){$passed++}
+
+    $run=@{}
+    if(Check 'missing_metadata' $run $false $false $false 'metadata_unverified' 0 0){$passed++}
+
+    [pscustomobject]@{
+        schemaVersion=1
+        suite='offline-actions-admission-and-required-stage-classification'
+        passed=$passed
+        failed=0
+        expectedJobCount=5
+        expectedRequiredStageCount=10
+        githubQueried=$false
+        productionQueried=$false
+        independentlyVerified=$false
+        devActivationAuthorized=$false
+    }|ConvertTo-Json -Compress
+} $helper
