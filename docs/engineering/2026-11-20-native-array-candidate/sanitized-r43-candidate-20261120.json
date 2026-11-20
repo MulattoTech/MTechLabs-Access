@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "issue": 44,
+  "relatedIssue": 46,
+  "checkpoint": "R43",
+  "scope": "exact-PR45-head isolated source-fix candidate; not incorporated into PR45 or production",
+  "createdUtc": "2026-11-20T22:17:20.189905+00:00",
+  "branch": "fix/access44-r43-native-array-candidate-20261120",
+  "base": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "changedRuntimeProbeLines": 1,
+  "previousBufferExpression": "$buffer = New-Object char[] 16385",
+  "candidateBufferExpression": "$buffer = [char[]]::new(16385)",
+  "sameBufferType": "System.Char[]",
+  "sameElementCount": 16385,
+  "fixtureCommandReferencesUpdated": 4,
+  "fixtureSourceAndDerivativeSha256PinsUpdated": 2,
+  "fixtureInstrumentationAnchorsRetained": 32,
+  "candidateNormalizedProbeSha256": "b2acd47df8fa102941e79468d9b5e7d0dd1f285e761f7823ac9811a1e72fea70",
+  "candidateDerivativeSha256": "22079d3b4b5cda805ddd4ea3ca59887990b36479d108b8937f965ce9ef8bee31",
+  "historicalProbeGitBlob": "485b9a76e818d899a6bde9c34b9139652c53ed56",
+  "historicalFixtureGitBlob": "1291e3031c2cb437b04915afaedb516507aed321",
+  "sourceFileEvidence": {
+    "integrations/mcp-manager/windows-runtime-probe.ps1": {
+      "normalizedBytes": 10471,
+      "normalizedSha256": "b2acd47df8fa102941e79468d9b5e7d0dd1f285e761f7823ac9811a1e72fea70",
+      "expectedGitBlob": "22da51f76a33351eced5171dd37b5bd815dd43a5"
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "normalizedBytes": 40692,
+      "normalizedSha256": "c366683c5bab35aa3a0f52c315b167233f757aa9d7e05c53d98e62542800d8da",
+      "expectedGitBlob": "c4a3144e1095a83a6957efcb0f1f86c77577bc92"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/native-array-source-candidate.test.cjs": {
+      "normalizedBytes": 6315,
+      "normalizedSha256": "5277ac8caa057d7e6479cb0d2827a4e1f57a862a6944ad226a3c913a066b696a",
+      "expectedGitBlob": "c86c66cd9efd80d4b8fec560cc5fe7ceb20a36dc"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/verify-native-array-ps5.ps1": {
+      "normalizedBytes": 1677,
+      "normalizedSha256": "5ff70389c82b47c2553252fc8894f8f07d2e797ece378f2bd3c6f3f8cf416e73",
+      "expectedGitBlob": "add059d261aad422c8a056b498da54b02e1850d3"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/README.md": {
+      "normalizedBytes": 5272,
+      "normalizedSha256": "2a3c9b517fe5a4164092f68db459e087451a0475bf428f64e9d92aff5db0e972",
+      "expectedGitBlob": "67afc6b9ea9afc35dfb6b0071c1f1d0bee146aa2"
+    }
+  },
+  "observedLocalTests": {
+    "nodePureSourceAndDerivativeTests": {
+      "passed": 15,
+      "failed": 0,
+      "nodeVersion": "27.0.0-alpha.0.0.0"
+    },
+    "windowsPowerShell51StaticParseAndArray": {
+      "passed": true,
+      "probeExecuted": false
+    },
+    "powerShell7StaticParseAndArray": {
+      "passed": true,
+      "probeExecuted": false
+    },
+    "nodeFixtureSyntaxCheck": {
+      "passed": true
+    }
+  },
+  "historicalFailure": {
+    "r6RunId": 44740386851,
+    "failedWindowsJobs": [
+      136302296741,
+      136302296679
+    ],
+    "failedStage": "real_identity_controls",
+    "nativeCaptureTimeoutApproxMs": 15000,
+    "auxiliaryLastStageMarker": 78,
+    "causalRootCauseProven": false
+  },
+  "currentHostedAcceptance": {
+    "pr45OpenDraftUnmerged": true,
+    "r7RunId": 44742255585,
+    "r7ExecutedJobSteps": 0,
+    "hostedCandidateNativeAcceptance": false,
+    "hostedSourceAcceptance": false
+  },
+  "limitations": [
+    "This is an informed source-level hypothesis based on two rejected R6 Windows fixture traces; the underlying hang mechanism is unproven.",
+    "The exact PR45 production/transport branch was neither edited nor merged. This proposal has not passed hosted Windows native identity/security tests.",
+    "The updated derivative hashes and anchors are source/text-transform consistency checks only, not genuine cross-account IPC or protected-key authorization.",
+    "Owner-user PowerShell 5.1 and 7 AST/array tests cannot replace Windows hosted Node24 native suites; local Node27 alpha is not equivalent to frozen CI.",
+    "CI billing/spending admission remains externally blocked; do not rerun until eligibility verified.",
+    "Both upstream 0.3.1 and 0.3.3 PDF and compatibility gates, complete immutable evidence review, normal PR merge and postmerge main qualification remain required.",
+    "Later Windows owner/DEV protected root, real account effective-access canaries, separate keys/routes and rollback require separate operational approval."
+  ],
+  "safety": {
+    "npmInstalledOrInvoked": false,
+    "upstreamPackageExecuted": false,
+    "windowsNativeUserFixtureExecuted": false,
+    "productionFilesOrServicesChanged": false,
+    "accountAclOrCredentialsChanged": false,
+    "cloudflareOrConnectorChanged": false,
+    "githubActionsRerun": false,
+    "pr45Modified": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}

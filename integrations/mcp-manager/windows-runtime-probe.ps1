@@ -165,7 +165,7 @@ try {
     # Only fixed numeric PID/port and expected path data; no executable command.
     [Console]::InputEncoding = [System.Text.UTF8Encoding]::new($false, $true)
     [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
-    $buffer = New-Object char[] 16385
+    $buffer = [char[]]::new(16385)
     $length = 0
     while ($length -lt $buffer.Length) {
         $read = [Console]::In.Read($buffer, $length, $buffer.Length - $length)

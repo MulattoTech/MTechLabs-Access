@@ -95,9 +95,9 @@ function buildFailureProbe(source) {
     '    Write-FixtureProbeStage 70\n    $fixtureProbeInputEncoding = [System.Text.UTF8Encoding]::new($false, $true)\n    Write-FixtureProbeStage 71\n    Write-FixtureProbeStage 72\n    [Console]::InputEncoding = $fixtureProbeInputEncoding\n    Write-FixtureProbeStage 73');
   splice('output_encoding_initialization', '    [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)',
     '    Write-FixtureProbeStage 74\n    $fixtureProbeOutputEncoding = [System.Text.UTF8Encoding]::new($false)\n    Write-FixtureProbeStage 75\n    Write-FixtureProbeStage 76\n    [Console]::OutputEncoding = $fixtureProbeOutputEncoding\n    Write-FixtureProbeStage 77');
-  splice('buffer_initialization', '    $buffer = New-Object char[] 16385',
-    '    Write-FixtureProbeStage 78\n    $buffer = New-Object char[] 16385\n    Write-FixtureProbeStage 79');
-  splice('utility_bootstrap_control', '    Write-FixtureProbeStage 78\n    $buffer = New-Object char[] 16385',
+  splice('buffer_initialization', '    $buffer = [char[]]::new(16385)',
+    '    Write-FixtureProbeStage 78\n    $buffer = [char[]]::new(16385)\n    Write-FixtureProbeStage 79');
+  splice('utility_bootstrap_control', '    Write-FixtureProbeStage 78\n    $buffer = [char[]]::new(16385)',
     `    Write-FixtureProbeStage 82
     $fixtureProbeTypedBuffer = [char[]]::new(16385)
     if ($fixtureProbeTypedBuffer -isnot [char[]] -or $fixtureProbeTypedBuffer.Length -ne 16385 -or
@@ -110,7 +110,7 @@ function buildFailureProbe(source) {
     Microsoft.PowerShell.Core\\Import-Module -Name 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules\\Microsoft.PowerShell.Utility\\Microsoft.PowerShell.Utility.psd1' -ErrorAction Stop
     Write-FixtureProbeStage 85
     Write-FixtureProbeStage 78
-    $buffer = New-Object char[] 16385`);
+    $buffer = [char[]]::new(16385)`);
   splice('length_initialization', '    $length = 0',
     '    Write-FixtureProbeStage 80\n    $length = 0\n    Write-FixtureProbeStage 81');
   splice('stdin_begin', '    while ($length -lt $buffer.Length) {', '    Write-FixtureProbeStage 2\n    while ($length -lt $buffer.Length) {');
@@ -151,12 +151,12 @@ async function failureProbeDiagnostic(originalExecFile) {
     if (original.length > 1048576) throw new Error('fixture_probe_diagnostic_source_limit');
     const text = new TextDecoder('utf-8', { fatal: true }).decode(original);
     record.originalSourceSha256 = hash(original); record.normalizedSourceSha256 = hash(text.replace(/\r\n/g, '\n'));
-    if (record.normalizedSourceSha256 !== '7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca') {
+    if (record.normalizedSourceSha256 !== 'b2acd47df8fa102941e79468d9b5e7d0dd1f285e761f7823ac9811a1e72fea70') {
       throw new Error('fixture_probe_diagnostic_source_mismatch');
     }
     const derivative = buildFailureProbe(text);
     record.derivativeSourceSha256 = hash(derivative.source); record.anchorCount = derivative.anchors.length; record.anchorsMatched = true;
-    if (record.anchorCount !== 32 || record.derivativeSourceSha256 !== 'f939e35a5e052616e7838c5b2bf7d38fd44b97ee1c8496a8fccee69566d3889b') {
+    if (record.anchorCount !== 32 || record.derivativeSourceSha256 !== '22079d3b4b5cda805ddd4ea3ca59887990b36479d108b8937f965ce9ef8bee31') {
       throw new Error('fixture_probe_diagnostic_derivative_mismatch');
     }
     filename = path.join(process.cwd(), 'reference-probe-diagnostic-' + randomBytes(12).toString('hex') + '.ps1');
