@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R50",
+  "createdUtc": "2026-11-20T23:09:48.637202+00:00",
+  "scope": "strict historical zero-step status and pinned external Actions policy on existing GET-only stacked PR preflight",
+  "reviewedSource": {
+    "docsBranchBeforeCommit": "86b98296337e3ce1865113566d87c1815f82c605",
+    "candidateHead": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "pr45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "pr45Base": "15e851b11984592803d37599b639772e51e5c8c0"
+  },
+  "staticAssessment": {
+    "schemaVersion": 1,
+    "scope": "read-only pre-PR exact source and account metadata (no billing attestation)",
+    "reviewedPR45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "reviewedCandidateHead": "0da3a5f74453cfbed82e2d1d4f61e1bae64efe9b",
+    "expectedStackedBase": "feat/dev-reference-transport-20261120",
+    "expectedStackedHead": "fix/access44-r43-native-array-candidate-20261120",
+    "structuralPreflightMatched": true,
+    "unqualifiedReasons": [],
+    "unqualifiedCount": 0,
+    "repositoryActionsEnabled": true,
+    "repositoryActionsPolicyQualified": true,
+    "historicalJobStepCountZero": true,
+    "accountBillingEligibility": "UNVERIFIED",
+    "hostedRunnerAdmissionVerified": false,
+    "completeNativeAndUpstreamAcceptance": false,
+    "createDraftPRCurrentlyAuthorized": false,
+    "ciRerunAuthorized": false,
+    "sourceMergeAuthorized": false,
+    "productionModified": false,
+    "devActivationAuthorized": false
+  },
+  "verifiedLiveMetadata": {
+    "accountMatchesExpectedOwner": true,
+    "repoActionsEnabled": true,
+    "repoAllowedActions": "all",
+    "historicalJobCount": 5,
+    "historicalAllFiveCompletedFailureZeroSteps": true,
+    "candidateHeadAndRemoteAgree": true,
+    "currentDraftPrHeadAndRemoteAgree": true,
+    "openPrNumbers": [
+      45
+    ]
+  },
+  "regressionTests": {
+    "previousCases": 29,
+    "newNegativeCases": 7,
+    "passed": 36,
+    "failed": 0,
+    "newCases": [
+      "selected Actions policy requires separate source review",
+      "local_only Actions policy rejects external marketplace actions",
+      "missing allowed_actions policy rejects",
+      "unfinished historical job cannot prove completed failure",
+      "boolean stepCount false cannot be accepted as integer zero",
+      "missing historical job status rejects",
+      "other source failure retains honest separate historical zero-step evidence"
+    ],
+    "onlyMockedCommandConstruction": true,
+    "existingActionsAdmissionCasesUnchanged": 29
+  },
+  "changedSourceSha256": {
+    "read-only-stacked-pr-preflight.py": "ead1f181cba6510169196dfb941ccd314086f2f9ccc7f31ca18a46d94cc3d142",
+    "read-only-stacked-pr-preflight.test.py": "4d5a5a22fc44a414b930e48c8ad99fb79bca08ab3d91de5cebe3cd1c34450ec2"
+  },
+  "limits": [
+    "Repository-wide allowed_actions=all is a necessary frozen policy condition, but not proof that GitHub account billing can admit a new hosted runner.",
+    "Historical zero-step metadata remains recorded only for R7, not a claim about a future attempt.",
+    "Passing this read-only source gate cannot authorize creation of a PR, a workflow attempt, protected main merge, actual Windows/IPC acceptance or DEV activation.",
+    "A selected/local-only repository policy requires independent permission review instead of being treated as identical to unrestricted Actions.",
+    "Unreviewed changes to PR/candidate refs or any newer workflow evidence must trigger re-review."
+  ],
+  "safety": {
+    "gitHubReadsOnly": true,
+    "billingStatus": "UNVERIFIED",
+    "prCreated": false,
+    "ciRunTriggeredOrRetried": false,
+    "packagesOrNativeFixturesExecuted": false,
+    "productionAccountAclOrSecretsChanged": false,
+    "devActivated": false
+  }
+}

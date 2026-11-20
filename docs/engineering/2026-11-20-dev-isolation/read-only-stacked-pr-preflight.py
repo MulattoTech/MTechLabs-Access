@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Access #44/#46 R49: READ-ONLY preflight for a *future* stacked draft PR.
+"""Access #44/#46 R49/R50: READ-ONLY preflight for a *future* stacked draft PR.
 
 Checks only exact, fixed GitHub GET endpoints and git metadata in a caller-
 supplied existing candidate checkout. No PR creation, billing mutation,
@@ -142,7 +142,11 @@ def evaluate(v):
     permissions=v.get("permissions")
     if not isinstance(permissions,dict) or permissions.get("enabled") is not True:
         reasons.append("repository_actions_disabled_or_unknown")
-    # An enabled setting does not attest account billing; do not authorize.
+    elif permissions.get("allowed_actions")!="all":
+        # Workflow checks out pinned external GitHub actions. Local-only or
+        # selected policies require independent action-by-action review.
+        reasons.append("repository_actions_policy_unqualified")
+    # Even a fully permitted repository policy is NOT account billing proof.
     history=v.get("latestRuns")
     if not isinstance(history,list) or not history or len(history)>10:
         reasons.append("recent_actions_run_metadata_unavailable")
@@ -153,10 +157,17 @@ def evaluate(v):
           history[0].get("headSha")!=PR_HEAD):
         reasons.append("historical_run_is_not_latest_reaudit_required")
     jobs=v.get("historicalJobs")
-    if (not isinstance(jobs,list) or len(jobs)!=5 or
-        {x.get("name") for x in jobs if isinstance(x,dict)}!=EXPECTED_JOBS or
-        any(not isinstance(x,dict) or x.get("stepCount")!=0 or
-            x.get("conclusion")!="failure" for x in jobs)):
+    # Every job must be a completed failure with a literal integer zero
+    # recorded steps. A boolean False must not count as integer zero.
+    historical_zero_steps=(
+        isinstance(jobs,list) and len(jobs)==5
+        and all(isinstance(j,dict) for j in jobs)
+        and {j.get("name") for j in jobs}==EXPECTED_JOBS
+        and all(j.get("status")=="completed" and
+                type(j.get("stepCount")) is int and j["stepCount"]==0 and
+                j.get("conclusion")=="failure" for j in jobs)
+    )
+    if not historical_zero_steps:
         reasons.append("historical_r7_job_metadata_changed")
     return {
       "schemaVersion":1,
@@ -169,7 +180,10 @@ def evaluate(v):
       "unqualifiedReasons":reasons,
       "unqualifiedCount":len(reasons),
       "repositoryActionsEnabled":isinstance(permissions,dict) and permissions.get("enabled") is True,
-      "historicalJobStepCountZero":not any(x.startswith("historical_r7") for x in reasons),
+      "repositoryActionsPolicyQualified":(
+          isinstance(permissions,dict) and permissions.get("enabled") is True
+          and permissions.get("allowed_actions")=="all"),
+      "historicalJobStepCountZero":historical_zero_steps,
       "accountBillingEligibility":"UNVERIFIED",
       "hostedRunnerAdmissionVerified":False,
       "completeNativeAndUpstreamAcceptance":False,

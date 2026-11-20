@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R49 disposable negative tests for read-only stacked-PR structural gate."""
+"""R49/R50 disposable negative tests for read-only stacked-PR structural gate."""
 import copy
 from importlib.machinery import SourceFileLoader
 import io
@@ -131,6 +131,40 @@ class GateTests(unittest.TestCase):
         reject(lambda x:x["permissions"].__setitem__("enabled",False),
                "repository_actions_disabled_or_unknown")
 
+    def test_actions_selected_policy_requires_review(self):
+        r=reject(lambda x:x["permissions"].__setitem__("allowed_actions","selected"),
+                 "repository_actions_policy_unqualified")
+        self.assertFalse(r["repositoryActionsPolicyQualified"])
+
+    def test_actions_local_only_cannot_claim_pinned_external_actions(self):
+        reject(lambda x:x["permissions"].__setitem__("allowed_actions","local_only"),
+               "repository_actions_policy_unqualified")
+
+    def test_actions_policy_missing_fails_closed(self):
+        reject(lambda x:x["permissions"].pop("allowed_actions"),
+               "repository_actions_policy_unqualified")
+
+    def test_historical_job_must_be_completed(self):
+        r=reject(lambda x:x["historicalJobs"][0].__setitem__("status","in_progress"),
+                 "historical_r7_job_metadata_changed")
+        self.assertFalse(r["historicalJobStepCountZero"])
+
+    def test_boolean_false_is_not_an_integer_step_count(self):
+        r=reject(lambda x:x["historicalJobs"][1].__setitem__("stepCount",False),
+                 "historical_r7_job_metadata_changed")
+        self.assertFalse(r["historicalJobStepCountZero"])
+
+    def test_omitted_job_status_cannot_prove_zero_step_run(self):
+        r=reject(lambda x:x["historicalJobs"][2].pop("status"),
+                 "historical_r7_job_metadata_changed")
+        self.assertFalse(r["historicalJobStepCountZero"])
+
+    def test_unchanged_failure_jobs_boolean_remains_true_despite_other_refusal(self):
+        r=reject(lambda x:x.__setitem__("remotePrHead","f"*40),
+                 "feature_branch_changed")
+        self.assertTrue(r["historicalJobStepCountZero"])
+        self.assertFalse(r["createDraftPRCurrentlyAuthorized"])
+
     def test_newer_run_forces_reaudit(self):
         reject(lambda x:x["latestRuns"].insert(0,{
             "id":99999999,"status":"completed","conclusion":"success","headSha":gate.PR_HEAD
@@ -207,7 +241,7 @@ class GateTests(unittest.TestCase):
 def main():
     suite=unittest.defaultTestLoader.loadTestsFromTestCase(GateTests)
     out=unittest.TextTestRunner(stream=io.StringIO(),verbosity=0).run(suite)
-    print(json.dumps({"schemaVersion":1,"suite":"R49-offline-stacked-pr-admission-fail-closed",
+    print(json.dumps({"schemaVersion":1,"suite":"R49-R50-offline-stacked-pr-admission-fail-closed",
           "passed":out.testsRun-len(out.errors)-len(out.failures),"tests":out.testsRun,
           "failed":len(out.errors)+len(out.failures),"fakeGitHubAndGitOnly":True,
           "productionTouched":False,"prCreationAuthorized":False},separators=(",",":")))
