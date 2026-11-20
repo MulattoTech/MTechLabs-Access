@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "issue": 36,
+  "baseCommit": "e0bdf73ae00ff93c1d264d0f0b954fd8309e2ae1",
+  "baseTree": "07b7efe74d42b1a3c06ef574fec8a3304e2af36c",
+  "scope": "read-only DEV runtime identity and routing declarations; activation refused",
+  "sourceSha256": {
+    "integrations/mcp-manager/DEV.md": "7c042e66498559fe74f4d50312f63d005a44f15e762299b8303779e08bfdede0",
+    "integrations/mcp-manager/DEV-RUNTIME.md": "53d2392971d227780ce308c459b33a8ad8460ab8c9b0354c1af8803411342354",
+    "integrations/mcp-manager/inspect-dev-runtime.mjs": "5c55ed317ec09b7c372c906b5f44472ad6eb0f67d23dbd2d613eda0056c693bc",
+    "integrations/mcp-manager/manage-dev.ps1": "7ed0a5335c4c61cfb4447789e72de7f0742e7f70b4ae2367e3375401a892f54c",
+    "integrations/mcp-manager/windows-runtime-probe.ps1": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "integrations/mcp-manager/lib/dev-instance.mjs": "016b54e62c34a19f7d6f899f20c51e4fc808c9543c000be12dd9fd5ea4d1d47e",
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "713bc11196c9e0f705bf765f8a3d4b4940838dbadc5edcc324ccb22f43c701cf",
+    "integrations/mcp-manager/lib/dev-runtime.mjs": "65d5f425cfc0c73162be724b90300c86b6dba7ea4ba7dd0e6ea25a7fbdc64583",
+    "integrations/mcp-manager/lib/runtime-identity.mjs": "725252a5986050ce80ba7c10605a9ee3c9c86061db5e45360a46c6a6f82755d5",
+    "integrations/mcp-manager/test/dev-runtime-plan.test.mjs": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+    "integrations/mcp-manager/test/dev-runtime-reserved.test.mjs": "57765ec40348c853776571a249b236f62b3ce0f2c7a4c949d67b9e5cdab3b994",
+    "integrations/mcp-manager/test/dev-runtime-identity.test.mjs": "c461334cd1d24713597af39a1091ded48513988b7cb8c1296b9a8e82e216160a",
+    "integrations/mcp-manager/test/dev-runtime.test.mjs": "cb4e0f2faa8028aa0703fedde234f369f16ba6bff94e05a3ee067554da8a2d99",
+    "integrations/mcp-manager/test/fixtures/dev-runtime-identity.ps1": "33b401fa7bf407987d8ef1062360d3c92766b846bd01a3ece89419f3a66587c1",
+    "integrations/mcp-manager/test/fixtures/runtime-inputs.mjs": "28e116999d6dde04c94cffd50088a7ac4b69539e3531d19ac87870b784c99c82",
+    "integrations/mcp-manager/test/fixtures/runtime-listener.mjs": "8d5e4fc267b52ae2d7bad2c95f230e642e3846f9f055e1efbc0ef291cf37e286"
+  },
+  "evidenceSha256": {
+    "manager-tests.txt": "51e8c6d524d4693d02274f63a2aefef7b3a41280d4906996ad11d17778f1f44a",
+    "preliminary-runtime-plan.mjs.txt": "1e9bc9efa6909a46e17e3942477434147e5d01d228c3bd73628ff9690d71e1ae",
+    "pure-plan-green.json": "f7139c17ff97da2917c6d6ed63ab87e2f3d7217c8c27fc604331845a9439a325",
+    "pure-plan-green.tap": "4a9352cb7444a1af73c2cab31320bee76b2d8215852554858c4223a99437cd79",
+    "pure-plan-preliminary-red.json": "db20acefc8bec1d9025852c339b4c6e89e7090128f1b72d5894a94a479a597fe",
+    "pure-plan-preliminary-red.tap": "61f256f637a839bb19b27ecdbeab863cb45f7062f3a30831888b820e33d59a76",
+    "reserved-baseline-red.tap": "4c4830f585383767f4b9205daf2fd855bf632b9f57b5f5d0bb75e852fe6cb204",
+    "root-build.txt": "37c3e3ec50d15837453fb5b68fcb283d1abf95c1bd0b78dfa87a0b4ab6612a67",
+    "root-check.txt": "057dd26cd3b2e78c9db81c42ca894a3590f9835ef02345f59b6686d7479cabca",
+    "root-tests.txt": "49ea4e3db587b6a4b730454329dff19173bbaf1bc5086ebd164275424975f39c"
+  },
+  "gates": {
+    "baselineReservedNameRegression": {
+      "exit": 1,
+      "pass": 0,
+      "fail": 1,
+      "skip": 0
+    },
+    "preliminaryNewFeaturePlan": {
+      "exit": 1,
+      "pass": 125,
+      "fail": 16,
+      "skip": 0,
+      "notBaselineRegression": true
+    },
+    "fixedPurePlan": {
+      "exit": 0,
+      "pass": 141,
+      "fail": 0,
+      "skip": 0
+    },
+    "managerLinux": {
+      "exit": 0,
+      "tests": 292,
+      "pass": 278,
+      "fail": 0,
+      "skip": 14
+    },
+    "root": {
+      "exit": 0,
+      "pass": 128,
+      "fail": 0,
+      "skip": 0
+    },
+    "syntaxBuildGeneratedUI": "pass"
+  },
+  "hostedWindows": "pending",
+  "candidateCI": "pending",
+  "actualMainCI": "pending",
+  "operationalQualification": false,
+  "devActivation": false,
+  "productionChanges": false,
+  "modelCalls": 0
+}
