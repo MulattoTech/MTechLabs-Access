@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R54",
+  "createdUtc": "2026-11-20T23:47:12.513824+00:00",
+  "scope": "source-only published npm archive SHA512 integrity and compiled PDF module diff",
+  "sourcePrHead": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "historicalR6RunId": 44740386851,
+  "control": {
+    "version": "0.3.1",
+    "tarballBytes": 1698882,
+    "tarballIntegrityMatched": true,
+    "tarballMemberCount": 292,
+    "entrypointSha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "compiledPdfMarkdownSha256": "61685462f9abb2517e4691fbc7baebea23260e776d3e216d941480551450e982"
+  },
+  "candidate": {
+    "version": "0.3.3",
+    "tarballBytes": 1766017,
+    "tarballIntegrityMatched": true,
+    "tarballMemberCount": 311,
+    "entrypointSha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "compiledPdfMarkdownSha256": "ece461975a0bb20a80e187431ca6a53281a691206f87711fc6a4700d76c3206b"
+  },
+  "sharedCompiledModuleSha256": {
+    "package/dist/index.js": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "package/dist/tools/filesystem.js": "787d9f63525abf96d24b9a4696ac111c964510bc0899123d0afc9c5ab259dd69",
+    "package/dist/handlers/filesystem-handlers.js": "667771f5439092c0554fa54313fbcb24a7762ffe6c7e4ed29f51dedcd52f417f",
+    "package/dist/tools/pdf/index.js": "9d7de10bb791a158fae0c61ee48d3d27bd3a623b6d7150335d6b97f71ee287ef",
+    "package/dist/tools/pdf/manipulations.js": "28d473e1752fbd67dcb6299df59902d7dc24b74d383b1564fb63d74764ffaa9c"
+  },
+  "markdownCompiledDiffHunks": [
+    {
+      "operation": "insert",
+      "oldLine": 12,
+      "oldCount": 0,
+      "newLine": 12,
+      "newCount": 1
+    },
+    {
+      "operation": "insert",
+      "oldLine": 583,
+      "oldCount": 0,
+      "newLine": 584,
+      "newCount": 1
+    },
+    {
+      "operation": "replace",
+      "oldLine": 596,
+      "oldCount": 2,
+      "newLine": 598,
+      "newCount": 3
+    },
+    {
+      "operation": "replace",
+      "oldLine": 706,
+      "oldCount": 1,
+      "newLine": 709,
+      "newCount": 2
+    }
+  ],
+  "markdownChangedRuntimeBranches": [
+    "cachedChrome lookup gated by isDockerImage",
+    "Chrome launch no-sandbox added only when isDockerImage"
+  ],
+  "dockerVariable": {
+    "name": "MCP_CLIENT_DOCKER",
+    "publishedCandidateCondition": "process.env.MCP_CLIENT_DOCKER === 'true'",
+    "compiledJsOccurrences": [
+      {
+        "version": "0.3.1",
+        "files": [
+          {
+            "path": "package/dist/utils/system-info.js",
+            "occurrences": 1
+          }
+        ]
+      },
+      {
+        "version": "0.3.3",
+        "files": [
+          {
+            "path": "package/dist/utils/system-info.js",
+            "occurrences": 2
+          }
+        ]
+      }
+    ],
+    "frozenQualifierEnvironmentExplicitlyAllowsVariable": false,
+    "frozenQualifierEnvironmentPassesThroughVariable": false,
+    "liveRunnerDockerVariableDirectlyObserved": false
+  },
+  "directPdfAndBrowserDependencyIntegrityMatches": {
+    "md-to-pdf": {
+      "version": "5.2.5",
+      "exactIntegrityMatches": true
+    },
+    "puppeteer": {
+      "version": "25.16.0",
+      "exactIntegrityMatches": true
+    },
+    "puppeteer-core": {
+      "version": "25.16.0",
+      "exactIntegrityMatches": true
+    },
+    "@puppeteer/browsers": {
+      "version": "3.2.6",
+      "exactIntegrityMatches": true
+    },
+    "chromium-bidi": {
+      "version": "157.0.8090-0",
+      "exactIntegrityMatches": true
+    },
+    "pdf-lib": {
+      "version": "1.17.1",
+      "exactIntegrityMatches": true
+    },
+    "unpdf": {
+      "version": "1.8.1",
+      "exactIntegrityMatches": true
+    }
+  },
+  "staticInference": "normal frozen qualification env excludes Docker-only code differences; not a runtime causal proof",
+  "historicalPdfFailure": {
+    "controlPassed": false,
+    "candidatePassed": true,
+    "controlPdfOperationElapsedUpperBoundMs": 48883,
+    "clientTimeoutMs": 90000,
+    "causalMechanismProven": false
+  },
+  "nextEvidence": "only after hosted admission collect bounded phase outcomes and timing from exact control and candidate",
+  "limitations": [
+    "The published tarballs are SHA512-matched to frozen lockfile metadata, not executed in this analysis.",
+    "R6 reports admitted entrypoint hashes, not SHA256 for every loaded PDF module or package dependency.",
+    "The static Docker-variable source path is normally excluded by the frozen qualification environment; actual R6 child env was not separately captured.",
+    "Other package dependencies and environmental startup state may differ; no cause is established.",
+    "The historical R6 control failed and remains rejected; the current PR45 five-job R7 still lacks executed acceptance evidence."
+  ],
+  "safety": {
+    "npmInvoked": false,
+    "upstreamPackageExecuted": false,
+    "tarExtractedOntoFilesystem": false,
+    "prOpenedOrMerged": false,
+    "ciTriggeredOrRetried": false,
+    "productionOrWindowsAccountsModified": false,
+    "devActivated": false
+  }
+}
