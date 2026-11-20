@@ -16,6 +16,24 @@
 
 The GitHub-hosted PR45 run above reports `conclusion=failure`, but **all five jobs have zero executed steps** (read-only run metadata observed on 2026-11-20). Historical GitHub error messages report recent account payment failures or a spending-limit restriction. This is **not** a result of running any of the five test bodies, and it supplies **zero fresh acceptance evidence**. The account owner must resolve GitHub billing eligibility through [GitHub Billing & Licensing](https://github.com/settings/billing). Do not blindly rerun while the admission error persists.
 
+## Read-only admission check (not acceptance)
+
+A small metadata-only script, [`read-only-actions-admission.ps1`](read-only-actions-admission.ps1), checks exactly this repository and the pinned PR head via an authenticated **read-only `gh run view`** query. It does not start/rerun jobs, modify billing or access hosted artifacts. Run from this directory on a Windows host with PowerShell 7+ and GitHub CLI:
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.ps1 -RunId 44742255585 -ExpectedHeadSha f0855c1227aacc49071581bb52ba5566bc07ffce
+```
+
+For the observed blocked R7 run, the script returns `admissionObserved=false`, `completedWithSteps=0`, `reason=jobs_have_no_executed_steps` and **exit code 1**. After billing restoration, provide the new actual run ID (and the exact reviewed head SHA if it changed); an `admissionObserved=true` result means only that **all five named jobs executed at least one completed step**, even if some later failed. `workflowReportedSuccess` is a separate GitHub metadata status. The script **always returns `independentlyVerified=false`, `actualMainAccepted=false` and `devActivationAuthorized=false`**. It neither downloads nor validates logs, artifacts, native subgroups, source identity or job runner provenance. An incomplete run or mismatched job set must not be interpreted as full admission.
+
+[`read-only-actions-admission.test.ps1`](read-only-actions-admission.test.ps1) exercises the pure report classifier against **13 synthetic offline cases** (no GitHub/API call): five executed successes, executed-but-failing tests, all jobs blocked before steps, one missing step, skipped-only step, wrong SHA, wrong run ID, duplicate/missing/extra job, incomplete run, missing steps and malformed metadata. Run:
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.test.ps1
+```
+
+When actual job execution becomes possible, the distinct, immutable-evidence verifier remains [`verify-hosted.py`](https://github.com/MulattoTech/MTechLabs-Access/blob/f0855c1227aacc49071581bb52ba5566bc07ffce/docs/engineering/2026-11-20-reference-transport/verify-hosted.py), not this admission checker. Use the actual filename `verify-hosted.py` when invoking its `--manifest` or `--compare-manifests` CLI. The verifier source's introductory usage prose currently says `review_hosted.py`, which does **not** match its committed filename; that is a documentation-name mismatch, not evidence that a nonexistent alternate verifier ran. Populate the source-controlled candidate/main manifest templates with **real run, source tree, current local checkout path, full logs and artifact IDs** before invoking it. Never treat a placeholder template or this metadata-only checker as evidence acceptance.
+
 ## Five jobs that must genuinely execute
 
 The exact PR45 version of [`.github/workflows/check.yml`](https://github.com/MulattoTech/MTechLabs-Access/blob/f0855c1227aacc49071581bb52ba5566bc07ffce/.github/workflows/check.yml) defines the following matrix after checking out the candidate source. These are **five jobs**, with **two separate native Windows qualification invocations**:
