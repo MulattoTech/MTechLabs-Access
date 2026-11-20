@@ -6,13 +6,31 @@ param()
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Get-PrincipalKind([string]$name) {
-    if ($name -match '(^S-1-5-11$|\\Authenticated Users$)') { return 'authenticated-users' }
-    if ($name -match '(^S-1-1-0$|\\Everyone$)') { return 'everyone' }
-    if ($name -match '(^S-1-5-32-545$|\\Users$)') { return 'builtin-users' }
-    if ($name -match '(^S-1-5-18$|\\SYSTEM$)') { return 'system' }
-    if ($name -match '(^S-1-5-32-544$|\\Administrators$)') { return 'administrators' }
-    return 'other'
+function Get-PrincipalKind($identity) {
+    # Privileged-looking names are not authority. Only the actual SID counts.
+    $sid = $null
+    try {
+        if ($identity -is [Security.Principal.SecurityIdentifier]) {
+            $sid = $identity.Value
+        } elseif ($identity -is [Security.Principal.NTAccount]) {
+            $sid = $identity.Translate([Security.Principal.SecurityIdentifier]).Value
+        } elseif ($identity -is [string]) {
+            $account = if ($identity -match '^S-1-[0-9-]+$') {
+                [Security.Principal.SecurityIdentifier]::new($identity)
+            } else {
+                [Security.Principal.NTAccount]::new($identity)
+            }
+            $sid = $account.Translate([Security.Principal.SecurityIdentifier]).Value
+        }
+    } catch { return 'other' }
+    switch -CaseSensitive ($sid) {
+        'S-1-5-11' { return 'authenticated-users' }
+        'S-1-1-0' { return 'everyone' }
+        'S-1-5-32-545' { return 'builtin-users' }
+        'S-1-5-18' { return 'system' }
+        'S-1-5-32-544' { return 'administrators' }
+        default { return 'other' }
+    }
 }
 function Get-PathSummary([string]$id, [string]$absolutePath) {
     $result = [ordered]@{id=$id;status='absent';daclProtected=$null;reparse=$null;
@@ -31,7 +49,7 @@ function Get-PathSummary([string]$id, [string]$absolutePath) {
         $result.ownerKind = Get-PrincipalKind $acl.Owner
         foreach ($rule in $acl.Access) {
             if ($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow) {continue}
-            $principal = Get-PrincipalKind $rule.IdentityReference.Value
+            $principal = Get-PrincipalKind $rule.IdentityReference
             $bits = [uint32]([int64]$rule.FileSystemRights -band 4294967295L)
             # Dangerous for namespace mutation: DELETE, DELETE_CHILD, WRITE_DATA,
             # APPEND_DATA, WRITE_EA, WRITE_ATTRIBUTES, WRITE_DAC, WRITE_OWNER,
