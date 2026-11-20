@@ -85,6 +85,8 @@ The Windows PowerShell 5.1 executable's observed SHA-256 was **`d8f182560210d43b
 
 **Source-reference migration prerequisite:** [PRODUCTION-RELOCATION-REFERENCE-AUDIT.md](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) distinguishes the hardcoded H: production launcher/shortcut/config and side-effecting client/verification utilities from production port and Cloudflare origin bindings that must remain stable. Every future cutover must reconcile this exact-head dependency inventory before approving any source-path change. Do not run the writer utilities as read-only probes.
 
+**Local-client mapping decision (fresh observation):** a redacted, read-only audit confirmed **all three known installed local clients—Codex, Claude Code and Claude Desktop—still invoke the H: production gateway and manager config**. Each entry will require an individually scoped, separately approved backup/rebind/client-reload and rollback plan as part of any C: production cutover. See [the exact-head source-reference audit](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md), the [sanitized observed client mapping](sanitized-local-client-mappings-20261120.json), and its [stand-alone, tested read-only checker](read-only-local-client-audit.py). Client source/argument matching does not prove a live MCP session or token isolation.
+
 ## 3. Staged execution proposal; every operational stage requires separate approval
 
 | Gate | Deliverable and pass criteria | Stop / rollback boundary |
