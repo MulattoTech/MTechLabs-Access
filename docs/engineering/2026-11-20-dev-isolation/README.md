@@ -21,6 +21,8 @@ pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.test
 
 The first invocation is expected to exit **1** for the current failed-billing run, reporting `currentPrCandidateMatched=true`, `completedWithSteps=0`, `observedRequiredStages=0` and `requiredTestStagesObserved=false`; it should not be retried as a GitHub workflow. The second runs **29 offline synthetic classifier cases**, including checkout-only false assurance, skipped/duplicate mandatory steps, wrong workflow/event, failing real test-stage metadata, and moved/closed/merged/non-draft PRs or changed base commits. The PR guard is a point-in-time metadata check and does not cryptographically freeze the PR during the subsequent run query. Neither command changes GitHub or production. For actual independent hosted artifact verification later, follow [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) and the repository's frozen evidence verifier.
 
+**Production H:→protected-root dependency audit:** [PRODUCTION-RELOCATION-REFERENCE-AUDIT.md](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) identifies which PR45-head startup, manager and client paths must be migrated, which setup/verifier utilities write state, and which port/origin bindings must remain unchanged. It is a **static review, not a cutover or test run**.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
