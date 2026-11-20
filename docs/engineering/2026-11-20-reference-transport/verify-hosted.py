@@ -97,9 +97,9 @@ TRANSPORT_FROZEN = {
     "test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
     "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
     "test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
-    "test/reference-transport-native.test.mjs": "674e3fec0bfa77fce4a2fd78b4801c1ab6019eff050523677bbc5fa92c64d3e7",
-    "test/fixtures/reference-transport-native.ps1": "11bcbd66475bc599ef4fed093a200b28c937db1c55f0a98b74d5926a34f5e123",
-    "test/fixtures/reference-transport-child.mjs": "691f2618b62fe3fd70fabdbbe45ad8c442cc84725fdff76a236e243fdf56ee6b",
+    "test/reference-transport-native.test.mjs": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+    "test/fixtures/reference-transport-native.ps1": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+    "test/fixtures/reference-transport-child.mjs": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
     "test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
 }
 TRANSPORT_SOURCES = [
@@ -268,15 +268,20 @@ def transport_evidence(log, family, titles, bound):
         require((child["mode"] == "node-identity") == (identity is not None), "batch44_child_identity_diagnostic_present")
         if identity is None: continue
         exact_keys(identity, ["phase", "nativeStatus", "pidMatched", "profileMatched", "administratorProbeCompleted", "administrator",
-            "nativeInvocationOverflow", "nativeInvocations"], "batch44_child_identity_diagnostic")
+            "nativeInvocationOverflow", "nativeInvocations", "failureProbeDiagnostic"], "batch44_child_identity_diagnostic")
+        require(identity["failureProbeDiagnostic"] is None, "batch44_failure_only_derivative_never_acceptance")
         require(child["mode"] == "node-identity" and identity["phase"] == "complete" and identity["nativeStatus"] == "observed" and
                 identity["pidMatched"] is True and identity["profileMatched"] is True and identity["administratorProbeCompleted"] is True and
                 type(identity["administrator"]) is bool and identity["nativeInvocationOverflow"] is False and
                 isinstance(identity["nativeInvocations"], list) and len(identity["nativeInvocations"]) == 2,
                 "batch44_child_identity_existing_checks_completed")
         for native, phase in zip(identity["nativeInvocations"], ["native_capture", "administrator_check"]):
-            exact_keys(native, ["phase", "failed", "systemError", "signal", "killed", "elapsedMilliseconds", "stdoutDecodedBytes",
+            exact_keys(native, ["phase", "failed", "systemError", "signal", "killed", "stdin", "elapsedMilliseconds", "stdoutDecodedBytes",
                 "stdoutDecodedSha256", "stderrDecodedBytes", "stderrDecodedSha256"], "batch44_child_existing_native_invocation")
+            exact_keys(native["stdin"], ["finished", "closed", "errored", "systemError"], "batch44_child_existing_native_stdin")
+            require(all(type(native["stdin"][key]) is bool for key in ["finished", "closed", "errored"]),
+                    "batch44_child_existing_native_stdin_types")
+            system_error(native["stdin"]["systemError"])
             require(native["phase"] == phase and native["failed"] is False and native["signal"] is None and native["killed"] is False,
                     "batch44_child_existing_native_success")
             system_error(native["systemError"])

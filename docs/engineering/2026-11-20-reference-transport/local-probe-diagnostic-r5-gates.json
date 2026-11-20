@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "phase": "local-probe-diagnostic-r5",
+  "scope": "Serial local Linux source qualification",
+  "startedAt": "2026-11-20T12:50:00.926564+00:00",
+  "finishedAt": "2026-11-20T12:50:08.839598+00:00",
+  "repository": "/workspace/scratch/86162842804d/MTechLabs-Access",
+  "base": "15e851b11984592803d37599b639772e51e5c8c0",
+  "localHeadAtExecution": "3719483dc24b5d21e0f98b58964fc05629e72a9e",
+  "nodeVersion": "v24.22.3",
+  "execution": "Sequential; no automatic retries.",
+  "frozenInputs": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/probe-diagnostic-r5-frozen-inputs.json",
+    "bytes": 4050,
+    "sha256": "103dfd34af686b319676a63b872d6f8bfd5bc9388d9a034729f057e7a7dcde1c"
+  },
+  "frozenInputBindings": {
+    ".github/workflows/check.yml": "57d513da584bee4d8a074691beb510c0f64f22d06a6c28ace71cdf0649f9235e",
+    "integrations/mcp-manager/inspect-dev-runtime.mjs": "d3002ce176f670d306c30fe284a6edc6802e6adf414fbf3250dc2dbf11016323",
+    "integrations/mcp-manager/lib/config.mjs": "d9e35719907250894720c1b4b58353e4b92a9a411a48e54dd52ca8cbd55d5787",
+    "integrations/mcp-manager/lib/dev-instance.mjs": "016b54e62c34a19f7d6f899f20c51e4fc808c9543c000be12dd9fd5ea4d1d47e",
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": "8aa795a8f7efb63f6021bae9f012764fc4699137956568f38fde24d6ee3e4ab2",
+    "integrations/mcp-manager/lib/production-reference.mjs": "5009b6dd392d97879dbe568ab725b3b9dcf38ab64d2b34fe8b7f0d8492ebd02b",
+    "integrations/mcp-manager/lib/reference-bootstrap.mjs": "8cab84a8e58410972c0a902976e48984312451b953c6a480201c36bb7ed14776",
+    "integrations/mcp-manager/lib/reference-transport.mjs": "cc6c4096ffbba82c9f9ad1a26aacfaa37626ca6563804c6e89a975f98b823b4a",
+    "integrations/mcp-manager/lib/runtime-files.mjs": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+    "integrations/mcp-manager/lib/runtime-identity.mjs": "f7d7e81cddf9e5b6e0ac59ddf2ef498e255bde40cfc1bd7ab4b2f2f96d4b5912",
+    "integrations/mcp-manager/lib/token.mjs": "2faca820b2693af20961b074abf96e965d090af206d19f578f50a320df6b7469",
+    "integrations/mcp-manager/manage-dev.ps1": "c07baf4b8cba189e4d309caca66b26e5d5de933e2f21771297a5127c04ca942c",
+    "integrations/mcp-manager/package.json": "f23baf3e4334cd77e366152c9f6c6315c7eacc0d7409d3fcb3af7ea8f339dc87",
+    "integrations/mcp-manager/reference-server.mjs": "6a3d5ff1e28c3c7c1ce2292738ca95bb6b451067557708d8d6185520a5973338",
+    "integrations/mcp-manager/test/dev-runtime-production-route.test.mjs": "22ba217c175238b11e1352a5fe45771ca83f38c4a9186e95603f74c8f14aced7",
+    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": "57e926908dbd2bed5e40d2ad10b975330f829db37e0a48eae9ef7ad6627c9f3e",
+    "integrations/mcp-manager/test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
+    "integrations/mcp-manager/test/fixtures/dev-runtime-identity.ps1": "33b401fa7bf407987d8ef1062360d3c92766b846bd01a3ece89419f3a66587c1",
+    "integrations/mcp-manager/test/fixtures/launcher-identity.ps1": "76850b30c31921c260e583ab480810dcbacea2ea521314e0f1c10539f4c433bf",
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+    "integrations/mcp-manager/test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
+    "integrations/mcp-manager/test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+    "integrations/mcp-manager/test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+    "integrations/mcp-manager/test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+    "integrations/mcp-manager/windows-reference-native.cs": "4811b21e637017ff324f46ae8201a437ed5cbbe6e174b9a412669f3b21431468",
+    "integrations/mcp-manager/windows-reference.ps1": "690b1499183795ba9414a26cbeecb7c49a8813dd0afb8bb09988160c25dd397c",
+    "integrations/mcp-manager/windows-runtime-probe.ps1": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "tests/mcp-dev-edge.test.js": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee"
+  },
+  "sourceInputCount": 268,
+  "sourceInputsBefore": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-inputs-before.json",
+    "bytes": 45554,
+    "sha256": "47b09d795ce5d27ff2705aef6d1c348e5ccd4fd4b70ce704c18738215ca4a65c"
+  },
+  "sourceInputsAfter": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-inputs-after.json",
+    "bytes": 45554,
+    "sha256": "47b09d795ce5d27ff2705aef6d1c348e5ccd4fd4b70ce704c18738215ca4a65c"
+  },
+  "sourceInputHashes": {
+    ".github/workflows/check.yml": "57d513da584bee4d8a074691beb510c0f64f22d06a6c28ace71cdf0649f9235e",
+    ".gitignore": "370af9a8a15daae13578af48c4cf5dd6c43eb71fa9180a24fade94a60a4f7b71",
+    "deployment.json": "460cdb3d174c16439b19f928880fd9c6ddfd69fd0c997cdeb97c3c829185cfc3",
+    "integrations/hub/app.js": "07b80cf0d02e467896d18fc38bb1b726b916b2c63e4a5db0b66fabdbbde4e4a5",
+    "integrations/hub/compose.yml": "e7da6b0b8ebd558e5029e0fdb9d869429b9e8324537df73369ef2f2144dcfec5",
+    "integrations/hub/index.html": "f648467a9ff5f207539b47aafaa31ce01d3531a80852beafdc963e2c5a4ba4a2",
+    "integrations/hub/monai.html": "d107d138776afcfed4a273a4c212c72f08aa3ed9544584a5e4697996bbddc133",
+    "integrations/hub/navigation.patch": "5dc1ebc19d24d603c61a4f1ee729cd3959246f019469b47d94e5fc204f385136",
+    "integrations/hub/nginx.conf": "ca10d1ef095ebe2ee794fd2b61678196600859688d497c6de2c3b5dcce9f1f6e",
+    "integrations/hub/style.css": "1e5759cc2fc163f49a6b6ba69031a6ebbc90b39a260f7c395ef8c9a2e0349bef",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/after-source.json": "6ebcc208109eb0f547139c2387a98ecd12a907a78602d89be50934a4c03595e9",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/before-source.json": "d6678c0c850b30fb843ab0b516721c55c857175f68dda7745ea9a8ca5219759d",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/evidence-manifest.json": "fb11ba27f21ee616bcf3f090be8189e435bf72ca0e3590f7d0877d5646176c10",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/local-root-tests.log": "d82a383f9a59fb12d38aea6ac61a5144eb5e6f16352030b72274ff90b9693f23",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/peer-release-readback.json": "e3eae13d68ae00f729a3355fee5c8b648a57a9979149fd92859cfb887c503767",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/peer-review.json": "dc7bc60a37054962d5aa1794cb5d4305048a9fc60718a6ab85d930c123d0f825",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/peer-review.md.json": "c36f2a1433a6abf6b17f1e76b3f4f011a9396e4c8f103c00a50a7996805713a5",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/prepublication-validation.json": "838eafb4bd9ac2cee79279e80b01a61fa99c43170172b91465ff708a2cfe7cce",
+    "integrations/m-techlabs-desktop-evidence/2026-11-12/update-result.json": "dc94186cf6e0a4ff1fd3b9ccd3fd8047c363f78ca69f9ebe4d13011cbb9f6451",
+    "integrations/m-techlabs-desktop/.app.json": "101efe717beb4c446ec5b7aa0a095ae61ee03bc51841a8e2d201192e25d63102",
+    "integrations/m-techlabs-desktop/.codex-plugin/plugin.json": "405a88bce39972896204fc248b22f3679f26947fa9a70a1782b7a2cdedd36341",
+    "integrations/m-techlabs-desktop/.mcp.json": "1d35f1c148cbb7005545b4b93585e8254ffc53d6f65eee8d001f9bf2277da95c",
+    "integrations/m-techlabs-desktop/assets/icon.svg": "10740ccea9674b9ea628d2f9e6a09ce9e0eefb7e78dd2daaaadfbae882df681e",
+    "integrations/m-techlabs-desktop/mcp.json": "8a6d7d1c73e2ee73610b35a7427566bb363051d2b85bfe2a7dbb5df11e81b3fe",
+    "integrations/m-techlabs-desktop/plugin.json": "c8da59638c2734c3f6f70484a51ff747de69d4f0490b38dd79ddf78c2b97c077",
+    "integrations/mcp-manager/.gitignore": "3f2c99ff3e5d292b15b5e2599746e8493eac3604ab8eec657660366d1add946a",
+    "integrations/mcp-manager/admin.mjs": "86bfc373de8112e3a40be4e9cfde4602e0fe308f4f6416629fde8176ec09ff26",
+    "integrations/mcp-manager/configure-desktop.mjs": "7b00ba0d63ef016814df317bb9bc064519b9f22b5ab990384b75a38749c8e061",
+    "integrations/mcp-manager/configure-toolkit.mjs": "49d7cd921727e1c73090ff46383b3860a13bdddaae5621fea5778a38a3dcafce",
+    "integrations/mcp-manager/example-config.json": "18e0f5f663d9c29ff5a4be1eb949500cde88042ebbbd9057e3d480e1c26df9f8",
+    "integrations/mcp-manager/gateway.mjs": "78349b861da2d466e2ccf661fec462cd6318d7a3322b0a6f7e67f5534311a083",
+    "integrations/mcp-manager/inspect-dev-runtime.mjs": "d3002ce176f670d306c30fe284a6edc6802e6adf414fbf3250dc2dbf11016323",
+    "integrations/mcp-manager/install-math.ps1": "f6ff02f9d909c5c03fe93bf10bf865877e4b7cc8a1b0bac1c6b1188863f8402e",
+    "integrations/mcp-manager/install-windows-startup.ps1": "e7c9ae5b24921ed036fdf22e0a812f6720b0ae8894b9b8832cb80e10f6550380",
+    "integrations/mcp-manager/inventory-tools.mjs": "605d9fb2bebca5dbabf16641ab10ceba936309c8617ef785a3a383a9b6c93fdd",
+    "integrations/mcp-manager/inventory.example.json": "520d5390a301080aab315c7c2d3d4f6aec8379ce2ce8f41a388648929f55de7f",
+    "integrations/mcp-manager/job-authorization-evidence/access-job-authority-and-metadata.tap": "cbd61aa88aad221b72fd7176968490ebd058c563b8491167d267c481d57f1c92",
+    "integrations/mcp-manager/job-authorization-evidence/access-job-authorization-green.tap": "813706fd6fae0444cde192745277104fc12cf5bcd1848b63d324ec11f58515cf",
+    "integrations/mcp-manager/job-authorization-evidence/access-job-authorization-red.tap": "2afa8f42427bf68e81110921f1eca2102170cf9ef2dddb2900c6018010daa5c1",
+    "integrations/mcp-manager/job-authorization-evidence/access-job-authorization-suite.tap": "b2fa3b8be963f8408e1739a28065ce3156bb6a38d3a3e38020d48d13f7a17f94",
+    "integrations/mcp-manager/job-authorization-evidence/access-job-integrated-green.tap": "0a4216c9f4a7b06df4047f7e60f4116b81462f5894767cff0fe792c1af02e876",
+    "integrations/mcp-manager/job-authorization-evidence/job-reauthorization-source-receipt.json": "924905d442f21229dcc795fde34c782300bb7865abc4967c22e3e1c98330ec07",
+    "integrations/mcp-manager/job-authorization-evidence/job-reauthorization-triage.json": "75c7fbcb1a2525cf6f7976ff85cbdb6b6308dfdc81f413df7cc47b77c3370c2a",
+    "integrations/mcp-manager/job-authorization-evidence/peer-access-main-ef8dce0e-receipt.json": "de943aed3b8dfccd7b2c7e49395f3446b81d5f28dc86155a99c5ebb7a1dd153e",
+    "integrations/mcp-manager/job-authorization-evidence/peer-access-review-4bd2b6bc.json": "10e4743dfd7db727f76e7affc36b21b39299e888746fbc381876c3fd5bfe598a",
+    "integrations/mcp-manager/job-authorization-evidence/peer-access24-4bd2b6bc-receipt.json": "651fecce43711b7d5f5300c11adf6f25fc5e988c7a87f55eaf28b8624b969af7",
+    "integrations/mcp-manager/job-authorization-evidence/peer-access27-0f30a256-receipt.json": "fbbfb9ff2988ad60f2eb8f6583f38063813ffebcdb49fe3c340f92a5a3a1ed53",
+    "integrations/mcp-manager/job-authorization-evidence/peer-job-reauthorization-patch-review.json": "933f3d3ca99a6eba5070a8530e02317ee1994c40fc665f1b9c9de444d7350e10",
+    "integrations/mcp-manager/job-authorization-evidence/snapshot-manifest.json": "83ede8c759b65612d24a9a04bc8c1c62e3802231f03a854dba665c3aed2d1a22",
+    "integrations/mcp-manager/lib/command-runner.mjs": "151de9a523fa10293aa7a8a5a074e1cba739901cd96572ff9f4bbbb392471df6",
+    "integrations/mcp-manager/lib/config.mjs": "d9e35719907250894720c1b4b58353e4b92a9a411a48e54dd52ca8cbd55d5787",
+    "integrations/mcp-manager/lib/coordinator.mjs": "7ada372d57b674d5e0f88c376588e2b44252a39327aeabe843a40dd27609b1a0",
+    "integrations/mcp-manager/lib/dev-instance.mjs": "016b54e62c34a19f7d6f899f20c51e4fc808c9543c000be12dd9fd5ea4d1d47e",
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": "8aa795a8f7efb63f6021bae9f012764fc4699137956568f38fde24d6ee3e4ab2",
+    "integrations/mcp-manager/lib/dev-runtime.mjs": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
+    "integrations/mcp-manager/lib/engineering-descriptions.mjs": "73543c47fc500f38e94d0c804d726fad00e074b70eff59a4d8f0cd692e0ebd1e",
+    "integrations/mcp-manager/lib/engineering-tools.mjs": "aa58362eb3f527b3ad51a44e3ef4e95edb8d633049c554ab34f2f544a59b1b3b",
+    "integrations/mcp-manager/lib/framing.mjs": "e95b7fd2e6ee35ca024bde22e1f3b8e271aec177bd6f9d76ede8154159d08935",
+    "integrations/mcp-manager/lib/http-body.mjs": "f041d76dedf1b535c33551f139f2c6170b3f43093c4f504a22945809c59c526e",
+    "integrations/mcp-manager/lib/jobs.mjs": "bc2c0d521e3a274286111cf36c8a9729fa5a6b52bfc1c6dcb625cc2fd0b93390",
+    "integrations/mcp-manager/lib/managed-transport.mjs": "09aa4843bbed5b24115c38df844dbe820ad8a870ed5133a0d242bdc4f9370581",
+    "integrations/mcp-manager/lib/policy.mjs": "50eb41c9dd066f0f6e1183155f4630596a54a77b1e6f0132f869c4903cd6244e",
+    "integrations/mcp-manager/lib/production-reference.mjs": "5009b6dd392d97879dbe568ab725b3b9dcf38ab64d2b34fe8b7f0d8492ebd02b",
+    "integrations/mcp-manager/lib/reference-bootstrap.mjs": "8cab84a8e58410972c0a902976e48984312451b953c6a480201c36bb7ed14776",
+    "integrations/mcp-manager/lib/reference-transport.mjs": "cc6c4096ffbba82c9f9ad1a26aacfaa37626ca6563804c6e89a975f98b823b4a",
+    "integrations/mcp-manager/lib/runtime-files.mjs": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+    "integrations/mcp-manager/lib/runtime-identity.mjs": "f7d7e81cddf9e5b6e0ac59ddf2ef498e255bde40cfc1bd7ab4b2f2f96d4b5912",
+    "integrations/mcp-manager/lib/status.mjs": "acb3ede72bb13ff06829e8cad52d3b5cd18f013796799d05a1ffacc0cb44a6bc",
+    "integrations/mcp-manager/lib/token.mjs": "2faca820b2693af20961b074abf96e965d090af206d19f578f50a320df6b7469",
+    "integrations/mcp-manager/lib/toolkit-config.mjs": "9a6a7309eb680fa81ce7bc368d72ce96ba41dfe20a7c0c2ebc5067d32f0e88a3",
+    "integrations/mcp-manager/lib/upstream-qualification.mjs": "09742f7104cee024ed5274a094a8ddc756f70707bad4f79a4b0e430e30006e84",
+    "integrations/mcp-manager/lib/verification-inventory.mjs": "fbaa25f6295c37a7dc17c7f1e9f1e702ff8633c30086cebebb6516795c983ed9",
+    "integrations/mcp-manager/lib/verification-results.mjs": "5189b42a9e1e103864d2ee023bcf9e33de09c81c5bca8ca5c584d295bf2d4ace",
+    "integrations/mcp-manager/manage-dev.ps1": "c07baf4b8cba189e4d309caca66b26e5d5de933e2f21771297a5127c04ca942c",
+    "integrations/mcp-manager/manage.ps1": "8a509310401320ad659325a67f705c8eeef21a242682d204e63d3d63d4c729c0",
+    "integrations/mcp-manager/math_worker.py": "e87c33a7ecb7888700cc6a0218656c9aa56d52e68b374aab0196c4c91cdeee5d",
+    "integrations/mcp-manager/metadata-evidence/access-descriptions-barrier-green.tap": "41738158185d99aa40c296a8945f33fd7ba6f6f210855e204f83f26bc0dd61c5",
+    "integrations/mcp-manager/metadata-evidence/access-descriptions-green.tap": "bb6a049247174b07f29459349b50d3a683096e67f7906fa2834cf54e99692758",
+    "integrations/mcp-manager/metadata-evidence/access-descriptions-red.tap": "06834f5e13e92beb5f68eda80ff3b734cbf52222c58dd531ce0d097ebd9a8bc2",
+    "integrations/mcp-manager/metadata-evidence/peer-access25-834bd015-receipt.json": "e3f4642a23aae76d2c1797cf58759bb32ab465b9b3c830e25782605e1136e103",
+    "integrations/mcp-manager/package-lock.json": "3d14598d713b2c3c63cfdee52d2eb59c327ddf58ff9f88c2fe3d99ae329d8625",
+    "integrations/mcp-manager/package.json": "f23baf3e4334cd77e366152c9f6c6315c7eacc0d7409d3fcb3af7ea8f339dc87",
+    "integrations/mcp-manager/policy.example.json": "c2e6349e013db892cfbdd9764d53b7219c8ac97dd27193f8b13ae2ec383b1517",
+    "integrations/mcp-manager/providers/code.mjs": "01d69421e86a9ef19109725875da230a82d81f7ab50ee60ccb8c9b2a64920b40",
+    "integrations/mcp-manager/providers/infrastructure.mjs": "4f4340eef7bb1a46d813cec4b8ba9c06209a2b89273363d20695b1b9d3c71079",
+    "integrations/mcp-manager/providers/math.mjs": "e8c38760937432031377f31d2e5d477bf4def21fb01d256a380d92b382599829",
+    "integrations/mcp-manager/qualification/control-package-lock.json": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "integrations/mcp-manager/qualification/control-package.json": "af4f183d2fa4fe814fdc78f8201ebc7b704a8c89b3c2ef9e981dc6ef8c1d82e5",
+    "integrations/mcp-manager/qualification/evidence/access-blocklist-probe-red.tap": "5ff6608b12fb7591cedaa688072399be68a648a9c1364f5ac5fdc57bb426d208",
+    "integrations/mcp-manager/qualification/evidence/access-diagnostics-integrated-green.tap": "1760009bbdfc18716746d4ed80ba8f109412b28d88a7dd73d7c0a41aad7d3389",
+    "integrations/mcp-manager/qualification/evidence/access-harness-review-current.json": "cecfb9c07647063b0259344b66f770972712c66784363ce9625079ce7df206d0",
+    "integrations/mcp-manager/qualification/evidence/access-harness-revision-final.tap": "c366e5dc7c793860cf0a5fbcf53aca0c6295e2a7318914aaef545d4fc88b6a60",
+    "integrations/mcp-manager/qualification/evidence/access-harness-revision-green.tap": "6f06582505591538f6e50af1b4495297de09d6a23d27a73944ae82124124b6da",
+    "integrations/mcp-manager/qualification/evidence/access-libc-red.tap": "771936b0f7a454ec92de0be3bcaedbc3f8d06e129b005ba145d924ce1005be80",
+    "integrations/mcp-manager/qualification/evidence/access-linux-pdf-diagnosis.json": "eef02f16d5b6849dee900a8fdd8f86328971999302e4d44797b85915f0181223",
+    "integrations/mcp-manager/qualification/evidence/access-linux-pdf-temp-geometry.json": "6b29f8a0e2a9c99bbbd82273be1849033b13f4323ad110d5b9d972633b7600fa",
+    "integrations/mcp-manager/qualification/evidence/access-manager-reviewed.tap": "92db77529626c5c026d65bd724f43f5dece82503ef600f58d1b7e57a908d7d29",
+    "integrations/mcp-manager/qualification/evidence/access-proof-red.tap": "d1a3b6d7fdac90f63a618b5fd11513e92d0bbc2bb2e059481d6b8c35fe6f6468",
+    "integrations/mcp-manager/qualification/evidence/access-public-wire-diagnosis-e7a4e434.json": "38e8432daf8f0982d6141bc4289c697406a8097ff474a218eb6cced4b1a731eb",
+    "integrations/mcp-manager/qualification/evidence/access-public-wire-final.tap": "0bb31aee8f300c31a77d15521d23e3a91a39a40571580ffa6113b4b61391fb06",
+    "integrations/mcp-manager/qualification/evidence/access-public-wire-red.tap": "deed65cdf460601594f3268a583116f8e1fd7e37ffe3bab1e3d5134fc4c41e32",
+    "integrations/mcp-manager/qualification/evidence/access-qualification-red.tap": "8366f8ab2ddf1baa576101e2e5e5ccd4a44550eca00cd71c7aad9a87ed0f824a",
+    "integrations/mcp-manager/qualification/evidence/access-root-candidate.tap": "319710688450aef212947dcea34f1014d6ce9ba2d94502e194b0d6cf416f1714",
+    "integrations/mcp-manager/qualification/evidence/access-temp-geometry-manager-green.tap": "de4f44a743b3b7ea653051e69048bbe4a6273bcdac8a85c94a3e6a25006adcd6",
+    "integrations/mcp-manager/qualification/evidence/access-temp-geometry-red.tap": "97daa6a505e887cd5ebf0d7c870b9d6aa5ac2541690e9fa2c2b6e31c1f34c43d",
+    "integrations/mcp-manager/qualification/evidence/access-tool-diagnostics-focused.tap": "38551bc0cfaa92e1c6962ba7cd0b4808da19506893a253bb41870a1dd3579568",
+    "integrations/mcp-manager/qualification/evidence/access-tool-diagnostics-red.tap": "ba2291863b7d5327107e6ea715c519b90c0ad4060eed24946708e62065d991cf",
+    "integrations/mcp-manager/qualification/evidence/access-wire-review-red.tap": "ed6e65df7951fc46c18c76df7b41fa9bd125749b88352258f3971a9481cf9db3",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/candidate-native-prerequisites.json": "3e5c124fe908ca6c4a9e110cf9ad995ecfe61e87940e4244eb7a664a48b474a4",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/candidate-result.json": "95d3c5e60487f9b42afaa710c3818195f53787ebb4875530d59e29134b640178",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/control-native-prerequisites.json": "97d6807447fff6561317911887c3918560ae4537dcbc51fc5e13b2910ced9e94",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/control-result.json": "946e61aa2ad5cd745032c4ad33c102800586ee338da44b387adc0904a2bbaa6a",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/qualification.json": "a70b93538afe2a65a18f30dc05c513a5a87abb4571e3c78bcb68805951420e18",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/tool-contract-comparison.json": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/native-rg-digest-receipt.json": "10857f11910d3c331620cd7e1a64627b3bb46aebd0edf99ea1c531bcc98d403d",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows-lock-line-ending-reconciliation.json": "b9a1f27bf50f3ae2f9f324d5a7dcdd2e9e840bf360bad24110c1399f28acb35b",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/candidate-native-prerequisites.json": "4e600ddc43a9174367008f30db5564a832c1a639f2c5135c1e79ae573537f07f",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/candidate-result.json": "648fb8a8667422bf249db989241041eb489221f182888ef6a274906b49fa9e3d",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/control-native-prerequisites.json": "7942d9fb2e1cb8c0af3e4fe267ea7f24800842c5660382b1442cbaaefb5f4845",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/control-result.json": "41744ea57407d39d0fac3580f489e5de7427514daccb0868ace4a0dce352f851",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/qualification.json": "36ab85929e8634fba332f8365d232a0024711cb81c9dd72d2060ad0bf39c6c5b",
+    "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/tool-contract-comparison.json": "5df779e0b9200151907247a1e5b5efef83105865c0adce586ac1e44c4293ad11",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/linux/candidate-result.json": "df786ee8b536925220fa943f3f5a089f4a77222906ecd16adb04a28744a860d0",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/linux/control-result.json": "180b4eb0859caa2890a62cf2d4d409f3ccb9d8b38bb0d4667063ec9b7eae707f",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/linux/qualification.json": "0b924c4bd9753d88b2af0edc2300a3c6dc18785b516614860cd7cfc6ac312ca8",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/linux/tool-contract-comparison.json": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/windows/candidate-result.json": "2e0a8038e077c4f0309cf4f91a8fe27b1682663262256af7798ef4de1a4356f6",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/windows/control-result.json": "e4204c49bb5403f1916337eb6c6df227099235733f07e0bb5a62d62530bde102",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/windows/qualification.json": "12885e78d2b6b020abbc272a1c9c99641667766cf37ac549a3f0b29a1f5d673a",
+    "integrations/mcp-manager/qualification/evidence/failed-92f5579b/windows/tool-contract-comparison.json": "5df779e0b9200151907247a1e5b5efef83105865c0adce586ac1e44c4293ad11",
+    "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/candidate-result.json": "4979e36b83256059434869a40a49553176e09cb21119d4eb7338701552c0ad4d",
+    "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/control-result.json": "0861ac4608e6d2b2710db0446b798af81793d82c050930b8d956c3bccf1ed002",
+    "integrations/mcp-manager/qualification/evidence/failed-ad4dc29f/qualification.json": "46c9572298d88e407a67cde3b66a4c1265beee17aa8054c31a2a2f54b4595342",
+    "integrations/mcp-manager/qualification/evidence/failed-e7a4e434/candidate-result.json": "3b806b999606b81a4bd53b4707e64fb3c56182d75ad3d1686419e609ffc82ed0",
+    "integrations/mcp-manager/qualification/evidence/failed-e7a4e434/control-result.json": "fb9819d0ca7710843860c8dca396f3c68ed85380dab3f2f69549ce1da99c93e3",
+    "integrations/mcp-manager/qualification/evidence/failed-e7a4e434/qualification.json": "d5594b68afa8a9549b8e2123bf2a8fe1fbe12c127ab9a5aa28bfa75d17b3d3a6",
+    "integrations/mcp-manager/qualification/evidence/failed-e7a4e434/tool-contract-comparison.json": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2",
+    "integrations/mcp-manager/qualification/evidence/historical-libc-drift-evidence.json": "9de196481868290d8ab68605773ae3f0df2fb3512f32d0e238a5335304d7f541",
+    "integrations/mcp-manager/qualification/evidence/peer-access-descriptions-review-60f188a8.json": "4b8bbd00627f3aa331210a522642b83ef602d740fcbd7a3cf5b61829b46cce53",
+    "integrations/mcp-manager/qualification/evidence/peer-access-main-499255ad-receipt.json": "e341a67a133ac346052796a3d627f826f8d486a7b7005f06055168df35fbfd9d",
+    "integrations/mcp-manager/qualification/evidence/peer-access-review-ad4dc29f.json": "b4c5b4b9cdcf5a23a386029c31acbd636b6b36ac7aa9e50f452cf641ba69b471",
+    "integrations/mcp-manager/qualification/evidence/peer-access-review-e7a4e434.json": "652b3980a655c3fce4b6ccd729ec6d053773d71d0aaa083fe229eec0d5246822",
+    "integrations/mcp-manager/qualification/evidence/peer-access24-1123952b-receipt.json": "ec0b06674b87d68a19adc1c0adecca20dc1bb19b42dc9d6926ab70435cd2c1b7",
+    "integrations/mcp-manager/qualification/evidence/peer-access24-92f5579b-receipt.json": "d9348d4cab9f21799878c5a8bc174749050f8b46fc6bba361bc2f5943066c98a",
+    "integrations/mcp-manager/qualification/evidence/peer-access24-ad4dc29f-receipt.json": "5f930f3734736eac4e7f9c28c8bc2f604c5b79783ec2f806710bf0b54dcd97c5",
+    "integrations/mcp-manager/qualification/evidence/peer-access24-e7a4e434-receipt.json": "13e52a5c6b666b878e681a7b196020bcb0f0ac6b17108b6a05b0cd5062a414c7",
+    "integrations/mcp-manager/qualification/evidence/upstream/0.3.1-attestation-payloads.json": "a5d5d0d2742ca411e8d7fa3b7f7f88ea1084ab86f45e1e53572572cd9b79354a",
+    "integrations/mcp-manager/qualification/evidence/upstream/0.3.3-attestation-payloads.json": "ea4a2ba02bd6a42015bd57f1dcb0d6d4ef505db1791f85bfa0c542d827a9cf34",
+    "integrations/mcp-manager/qualification/evidence/upstream/FILE-SHA256.json": "78e362a22136ee788c4202508b8db15b382b5e1df014c797acffe9df9da04a8b",
+    "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/artifact-SHA256SUMS.txt": "d031cd429f0971909214d49cc9d2d01b1f47f6f6f3b95361d600ab2f38ef4b4c",
+    "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/lock-extension-report.json": "4eb68deaf263314dc70a42b4f43a4d5b6aef9667d9b42ca2ec6ad0b93b06fe44",
+    "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/registry-metadata-evidence.json": "f81bc3ca340a8397659ad7c0e2ce04f849bcd5fc3753c77a84e1e39f557dc1d3",
+    "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/source-manifest-evidence.json": "8075eef419b77b9dd17eed6f326ce1bbbb509e352557c8f15c8b1fc29e85b94c",
+    "integrations/mcp-manager/qualification/evidence/upstream/artifact-review.json": "1ab2e34617df3f1d8f3ba31d012eeacd3b2f022a19f4a3edcbe18b14ace39613",
+    "integrations/mcp-manager/qualification/evidence/upstream/dist_server.js.patch": "75c4139265a31053443db7ca82b572b622d14f0d5f0bb70298ec0a8e9e34b7e4",
+    "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-drift-evidence.json": "9de196481868290d8ab68605773ae3f0df2fb3512f32d0e238a5335304d7f541",
+    "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-repair-receipt.json": "99be6a42409ef175b75ff4657a89689f2ee4d90f7096ab4c5cfaa89cab67497a",
+    "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/mqtt-lock-closure.json": "d9b09fbf97b550f465eff093f84521578e6b8e6a365da89808be01ae8ec9bdb5",
+    "integrations/mcp-manager/qualification/evidence/upstream/notices/desktop-commander-LICENSE.txt": "e77cff545e0506903bf6a4bf29169fa40911eb76d70d239267df10c5c59370dd",
+    "integrations/mcp-manager/qualification/evidence/upstream/release-version-deltas.json": "ff38047de8753a003f43a1a21f784782b49a4b383dac02c5c70fbdfe3968c456",
+    "integrations/mcp-manager/qualification/evidence/upstream/source-and-provenance-summary.json": "64c61722afdf6f858e1859dc3f7c94d404747996faf76114a7c21e752c301a56",
+    "integrations/mcp-manager/qualification/lock-delta.json": "782b408f55857c6d6d978232b53f8bebe64bbdaaba8feefb83d3f2ebfea86a63",
+    "integrations/mcp-manager/qualify-upstream.mjs": "1f4dd1e08a784e98b34b3644b73618a5588130ce7f0bdf17b46df17ed066fab6",
+    "integrations/mcp-manager/recover-admission.mjs": "1f0fc400e73cbd91d27a032054c7eb1eb103a39fc0011c306dbc65d01b73c831",
+    "integrations/mcp-manager/reference-server.mjs": "6a3d5ff1e28c3c7c1ce2292738ca95bb6b451067557708d8d6185520a5973338",
+    "integrations/mcp-manager/remote.mjs": "404c4e8c283a9eaa7bc09ed3b7416a15aa4420e3c017495551641cab58a23e9d",
+    "integrations/mcp-manager/requirements-math.txt": "25f9f1fb1988b230147a1d3092d34e09c069eb7a6c6d6df46b3973b9f2d36efc",
+    "integrations/mcp-manager/test/admin.test.mjs": "117a7a646a33223e741d4d07b99e6b11fc94dbfc6ded460c1bb7b22b1bf09398",
+    "integrations/mcp-manager/test/coordinator.test.mjs": "4a484676d9bf9c8ee17f9d7c761a1b08dcdf876a85b16c3a995cad68be62087b",
+    "integrations/mcp-manager/test/dev-instance.test.mjs": "5d92d34c5fbff6029ca419b0d9ed29a016ed3f83bfe173a5e1712b30ec63404e",
+    "integrations/mcp-manager/test/dev-runtime-identity.test.mjs": "c461334cd1d24713597af39a1091ded48513988b7cb8c1296b9a8e82e216160a",
+    "integrations/mcp-manager/test/dev-runtime-plan.test.mjs": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+    "integrations/mcp-manager/test/dev-runtime-production-route.test.mjs": "22ba217c175238b11e1352a5fe45771ca83f38c4a9186e95603f74c8f14aced7",
+    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": "57e926908dbd2bed5e40d2ad10b975330f829db37e0a48eae9ef7ad6627c9f3e",
+    "integrations/mcp-manager/test/dev-runtime-reserved.test.mjs": "57765ec40348c853776571a249b236f62b3ce0f2c7a4c949d67b9e5cdab3b994",
+    "integrations/mcp-manager/test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
+    "integrations/mcp-manager/test/engineering-descriptions.test.mjs": "b6a2953337e75c31c829c43815dcc97e3a8a5a720b8a6129732a9b97713b1cec",
+    "integrations/mcp-manager/test/engineering.test.mjs": "118760dac1af3133ee6375cfcafb28200e8e2d174262ccb45c6349114db564fd",
+    "integrations/mcp-manager/test/fixtures/configured-client-server.mjs": "e3d960f045f0594940be440b21be4c9f85ec74ba409fb88f5828217bdacb7ed8",
+    "integrations/mcp-manager/test/fixtures/dev-runtime-identity.ps1": "33b401fa7bf407987d8ef1062360d3c92766b846bd01a3ece89419f3a66587c1",
+    "integrations/mcp-manager/test/fixtures/engineering-contract-ba4a55b7.json": "379a705b62fb884f0ba9e0b20d0ed03b9f99e7a787a586fd1a6a47327b3f5577",
+    "integrations/mcp-manager/test/fixtures/fake-server.mjs": "856bc9010585c072f2293ef2b996b43f14ee000f7dfe09f2efd66fbe2efa94ba",
+    "integrations/mcp-manager/test/fixtures/gateway-process.mjs": "0d551dcc8eae34386da6d08a0d07d63e27f1f188279bbb46f5ca4a50e42fac8d",
+    "integrations/mcp-manager/test/fixtures/launcher-identity.ps1": "76850b30c31921c260e583ab480810dcbacea2ea521314e0f1c10539f4c433bf",
+    "integrations/mcp-manager/test/fixtures/protocol-no-resources.mjs": "eef33910d8f183a924b11d0208619ecd98afc2de3ae70656351abcc20f9d8a24",
+    "integrations/mcp-manager/test/fixtures/protocol-server.mjs": "dc92ba5be36dabb19e841f425cdd6e1dc295caabf4ce05369e3c93cfcc431ebc",
+    "integrations/mcp-manager/test/fixtures/protocol-slow-initialize.mjs": "d6b7b258e8fd3943bfceccde74a0e4e438ddce8573201b4b70e2ad004cc93c76",
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+    "integrations/mcp-manager/test/fixtures/reference-transport-pipe.ps1": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973",
+    "integrations/mcp-manager/test/fixtures/runtime-inputs.mjs": "28e116999d6dde04c94cffd50088a7ac4b69539e3531d19ac87870b784c99c82",
+    "integrations/mcp-manager/test/fixtures/runtime-listener.mjs": "8d5e4fc267b52ae2d7bad2c95f230e642e3846f9f055e1efbc0ef291cf37e286",
+    "integrations/mcp-manager/test/gateway.test.mjs": "845c804a34766da3967a5c83ecf3b215cda1f5c984ae1f3a520f94efcecccea2",
+    "integrations/mcp-manager/test/helpers.mjs": "125d4ea773f437870c153c68e26fcd3dd72944a47a9914f03644ca6f270d0a86",
+    "integrations/mcp-manager/test/job-authorization.test.mjs": "40f4678dbf1afab76238dced5aef51247c677acf33db93d27b072c7d2ab0311a",
+    "integrations/mcp-manager/test/launcher-identity.test.mjs": "221f26996d3c03041487efafaf05955c6cbb4a24b134f735951f4c2162ecf1dc",
+    "integrations/mcp-manager/test/policy.test.mjs": "5c6b3e488cfb433aaf2d7a1a521aa4035472ab762f2b13b8f82e1be979145002",
+    "integrations/mcp-manager/test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+    "integrations/mcp-manager/test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+    "integrations/mcp-manager/test/recover-admission.test.mjs": "072199b92cd29d369c7e54577e8038c803b01d57e77f871c7c5c6a7664b0060c",
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+    "integrations/mcp-manager/test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+    "integrations/mcp-manager/test/remote.test.mjs": "1b81c9c1492dacbf0b813ddf1a9056be282998e0222ad282a7f6cd1f53d4171d",
+    "integrations/mcp-manager/test/shared-admission.test.mjs": "53b7b2692aa6c67b387311e5351a8f1b23707baddd27ac86eb8f9533cce4bfc6",
+    "integrations/mcp-manager/test/status-labels.test.mjs": "64b3abb5bfe56624023561c26750071b052fe35950f813de7a9bfe3a27540803",
+    "integrations/mcp-manager/test/upstream-qualification.test.mjs": "885d2637518e8e49bf4cbc00dfd756b42267e814a855f458f56cd643cccb0094",
+    "integrations/mcp-manager/test/verification-inventory.test.mjs": "4043b9502e70127a2629b524be39fe4c64d46405794319566f9dc4a7781d00dd",
+    "integrations/mcp-manager/test/verification-results.test.mjs": "28ccb8fc80210ca9748961a87bc0fec16df62e6b802abd44a32935e3a2ecc75d",
+    "integrations/mcp-manager/test/verify-clients.test.mjs": "98982b2075d09cc823403a5874264ed3b5c21cd91029ad1cc5c4892a55749f79",
+    "integrations/mcp-manager/upstream-package-lock.json": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+    "integrations/mcp-manager/upstream-package.json": "757440e3022b02150b1b0bf8e17e0337de6059ea948977ecda7fc7b1dbe36bc6",
+    "integrations/mcp-manager/verify-clients.mjs": "2417a878c2171b051271efa907e28d9422a987a4be5505be688936e319cfb982",
+    "integrations/mcp-manager/verify-http.mjs": "6d5b7de2d4d43014ea53a24ec530e4cfbf3f3aee631e8417fd9aca0a08e52400",
+    "integrations/mcp-manager/verify-installation.mjs": "74255fdc71549f3c97cb404214d64bd68b97f6a541d992281ac0e2f047ab79c4",
+    "integrations/mcp-manager/verify-remote.mjs": "0828a24123dbd50b05801723a954b9b37d8d5eb1192c7e531a1e95b1b77cd0f2",
+    "integrations/mcp-manager/windows-reference-native.cs": "4811b21e637017ff324f46ae8201a437ed5cbbe6e174b9a412669f3b21431468",
+    "integrations/mcp-manager/windows-reference.ps1": "690b1499183795ba9414a26cbeecb7c49a8813dd0afb8bb09988160c25dd397c",
+    "integrations/mcp-manager/windows-runtime-probe.ps1": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "migrations/0001.sql": "2515f3d5f92eacc1bdc0d6321e293f56ca7655c018a9c34711e001e765f1dc7b",
+    "package.json": "06dad598a510a37e550cae34f88bf9dd5078dce2882e9b84b7c41da112de2b7b",
+    "plugin-releases/current.json": "bedce1651d86046cf806bbc8a8ea73b178b04394ca3a07703d9e9cbb2e894fe0",
+    "plugin-releases/mterm-chatgpt-v0.2.1.tar.gz": "7e16f9c807394a92cc992249bce1479848c8ac3d3a8cf2f8bb305505a6ccfaf6",
+    "plugin-releases/mterm-chatgpt-v0.2.3.tar.gz": "0cdfdda4c1f2b861c2e9e369923efebdca245aa431cc63ca9d71b0344d4322ef",
+    "public/admin.html": "7cb2f0d5d7e63eb3f411607ecbc6cea309e3a7c930c892e0d90af8da131cb5dc",
+    "public/admin.js": "4c95677630d41d9709910828bfc5672146bb7be60cf34585f44afaa1073e798a",
+    "public/app.js": "95d2875be9730de9d79f3c8372371c0393da67e38b0d344b5dd99fab3cea5c1d",
+    "public/index.html": "f3069a63aa6642b7da0230d9df9c5886f3c80b763ff5cb22500c2ca08ef1c495",
+    "public/mcp.css": "9d3b5304b60e7954f2ff7da46ae035d9adf6ab63809b6db1eb306f7c2688c7aa",
+    "public/mcp.html": "57c74c40040eb8c118716bfb5b211c6d75ce6d56249fc9c6f1e7614179fcf77a",
+    "public/mcp.js": "35a65a542b22740bec7fb12d3da6ae73a7aa61a5e1a73ce50025c39617498a0b",
+    "public/style.css": "0f3bfef755ba1b62fb5d9b31dc9ae05c953d650b78e3809a6a799f3edb2bbbbd",
+    "scripts/build.mjs": "777decfa08bf5ee41e18009a2e9d268f144ff2692a8261274d99c832928a9aac",
+    "scripts/deploy.mjs": "b4d68a40369ffc7be6de5c06ee61a1c1c439fdaf619714816de61f413297a75c",
+    "scripts/finish-google.mjs": "76cd5cbc4468eab48233dce896c16c08d41f7b79bd3ca8070180581ea27c95d4",
+    "scripts/generate-plugin-release.mjs": "1d0efa471018e797acc4cf272b41de37cef897345a08926bb4b8a9d0df951e81",
+    "scripts/package-canonical-plugin.mjs": "75b3f306b3653a8a878be51bfdc80206bc1aaf19646a0e100fee7b90046dfb6c",
+    "scripts/rollback-gates.mjs": "606e655d53745ca3bb564bae61b84447f1d6999dce09e8a1c1b058af780ac5ec",
+    "src/admin.js": "696286918c4226ab03f6431779c812c01ebda35e80a023b252226c9565a39c34",
+    "src/auth.js": "52099a58667a7983b1f5da1cba6d8fd7b566d8e2dc308ecc7fcfa5a6f01c14ea",
+    "src/codes.js": "b513551de9a6b46e1c6e49c9adcb9426b119adb704c83ae48dd104df43a2aad0",
+    "src/db.js": "a92fa26b0c97b07f2dd3b4cabc83029de7e7e63f85921bc70855738ccea3b6c2",
+    "src/homepage.js": "8f096d14a371542f9123ff44a8e7a5109459b2e5eb77fb0ebb1478cfaab8a983",
+    "src/hub-catalog.js": "3997891710154a17ede1e4f346be0eb323b2ef0cccf06e8cc5fb52b043b21c2e",
+    "src/index.js": "4837e23c7ab3fa8cf678f3107e8ca06f46a19fc83ac4b02f95861b9f5234af9b",
+    "src/mcp-catalog.js": "3de4481e586957b05e5932e350a37a97832cb41aa35b272d199c802ecddee7d1",
+    "src/mcp-dev-edge.js": "a63b77d9f2306a8ee9b112b431d76dea54c45caf8f11a509b92a8bec55965484",
+    "src/mcp-dev-entry.js": "e1b48326d7ef159263a18de0d13edffe6c633c39907d3442941afe4a6f9eb8dd",
+    "src/mcp-remote.js": "cbca88fff09ab676d5e956a761232e4d1268803b471ffdac44bf9b0f4f7c19ae",
+    "src/mcp.js": "deb9b0a912abc588036a551a08d66d211ead53bf180d4c29e65c9424ac67c66d",
+    "src/plugin-release.generated.js": "3b167033a5ca772eb894b950188fe889fba1690eb279eb7bc8b7f1edeb24070b",
+    "src/security.js": "272c32a3f9bd0284c1ab78c0a4cf285a9a46a7c1d717c9423deebedebff88db5",
+    "src/sources.js": "73bf15816fb7a84a05414a5e4ed819146d0728075010a5ec083ec37623d3adf9",
+    "src/ui.generated.js": "c2a413a381ce450c7336c5e92d65aac02a187e0b4d5f3ea156985dc0c4bd6b86",
+    "tests/authorization.test.js": "37e0e5441c9f217c0cf864a5a2035faedc1d75337bdab95c155b102deb237977",
+    "tests/branding.test.js": "70c8ceca579f42d94b63e8cf283a885101dddade4d930fa53634c410c2ef1768",
+    "tests/codes.test.js": "edc75fd516c45af05370bfca7ddef44e8d794cce27241da0a3d5d87b374803e1",
+    "tests/coordination.test.js": "e8b595211247ebf748cb71e7ba6cad18e46c916220425477e05175e7750a7ae3",
+    "tests/helpers/d1.js": "3ff2145f0a4f2556df9c423d432104373d183c78b579eab446a21cbc377a8054",
+    "tests/homepage.test.js": "9e1441d4e85548f99ff1ae1c04e14a76068da9e52d3644672fc393b37b2e32d7",
+    "tests/mcp-dev-edge.test.js": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee",
+    "tests/mcp-manager.test.js": "b6e4bdb4ac0cd653dadcb00e93783089261e323228f179115d188aab1596f06f",
+    "tests/mcp-remote.test.js": "bf91511f818b412173c5f478001ae8ed2d70a93410067027af6e8a75c840a860",
+    "tests/plugin-release.test.js": "d29a8dcc818a9ddbf7647fe684187a750dd25ef159c82ee037589f12735dc0f7",
+    "tests/report-permissions.test.js": "255dc122fcf13da446c6f3abf1a1d59eeed6b9ec710f201b9a96f68492c0e57d",
+    "tests/security.test.js": "c0228c0f414929ce070d5b8f655cd2637edea9c759765815cb609334767b60ac",
+    "tests/sources.test.js": "f63a09d704643d6db192b83552d56233b71d29e3295608f6d041fe87d3d454b1",
+    "wrangler.jsonc": "880bf79f8738743398a5a67d2c1d1e00e9948efffbc242630dffb69eea2090c3"
+  },
+  "sourceInputsStable": true,
+  "changedInputs": {},
+  "generatedBefore": {
+    "src/ui.generated.js": "c2a413a381ce450c7336c5e92d65aac02a187e0b4d5f3ea156985dc0c4bd6b86",
+    "src/plugin-release.generated.js": "3b167033a5ca772eb894b950188fe889fba1690eb279eb7bc8b7f1edeb24070b"
+  },
+  "generatedAfter": {
+    "src/ui.generated.js": "c2a413a381ce450c7336c5e92d65aac02a187e0b4d5f3ea156985dc0c4bd6b86",
+    "src/plugin-release.generated.js": "3b167033a5ca772eb894b950188fe889fba1690eb279eb7bc8b7f1edeb24070b"
+  },
+  "generatedBytesStable": true,
+  "gates": [
+    {
+      "name": "root-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+      "startedAt": "2026-11-20T12:50:00.989149+00:00",
+      "finishedAt": "2026-11-20T12:50:02.916667+00:00",
+      "durationSeconds": 1.928,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-test.stdout.log",
+        "bytes": 29364,
+        "sha256": "5770d9a8e6a6ce95e0f958b1467ca4b4faf817c4c31dee152aaea8aa0306081b"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-test.stderr.log",
+        "bytes": 4711,
+        "sha256": "ea2415ba8f602b7ff5d8df326973112bb432eaec0ee974960e9b5c28d8447305"
+      },
+      "observedTotals": {
+        "tests": 170,
+        "pass": 170,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "observedSkips": []
+    },
+    {
+      "name": "root-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+      "startedAt": "2026-11-20T12:50:02.916829+00:00",
+      "finishedAt": "2026-11-20T12:50:03.888259+00:00",
+      "durationSeconds": 0.971,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-check.stdout.log",
+        "bytes": 400,
+        "sha256": "c0a59a365df3aefa32e8c449ad4a9c15350b7911b7074990f166e25d60d2ff27"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-check.stderr.log",
+        "bytes": 150,
+        "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829"
+      },
+      "observedTotals": {},
+      "observedSkips": []
+    },
+    {
+      "name": "root-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+      "startedAt": "2026-11-20T12:50:03.888716+00:00",
+      "finishedAt": "2026-11-20T12:50:04.155487+00:00",
+      "durationSeconds": 0.267,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-build.stdout.log",
+        "bytes": 109,
+        "sha256": "6fd616f87fd2e65e74b78bd8f3eef116aa81f92e40b0b0bf6fa12cfaab0b9eff"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-root-build.stderr.log",
+        "bytes": 150,
+        "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829"
+      },
+      "observedTotals": {},
+      "observedSkips": []
+    },
+    {
+      "name": "generated-diff",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "--",
+        "src/ui.generated.js",
+        "src/plugin-release.generated.js"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+      "startedAt": "2026-11-20T12:50:04.155616+00:00",
+      "finishedAt": "2026-11-20T12:50:04.172733+00:00",
+      "durationSeconds": 0.017,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-generated-diff.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-generated-diff.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observedTotals": {},
+      "observedSkips": []
+    },
+    {
+      "name": "manager-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager",
+      "startedAt": "2026-11-20T12:50:04.172861+00:00",
+      "finishedAt": "2026-11-20T12:50:08.824695+00:00",
+      "durationSeconds": 4.652,
+      "exitCode": 0,
+      "timedOut": false,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-manager-test.stdout.log",
+        "bytes": 36392,
+        "sha256": "52cfc9c30cbc3fa20e4cf7ab2d4683c8fba00d2647f776d9b0eed284b67f6b9b"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_reference_transport/local-probe-diagnostic-r5-manager-test.stderr.log",
+        "bytes": 150,
+        "sha256": "9aac3da9a7039a99c345545c32f286aa65c358d571bfce7e00d94625d095c829"
+      },
+      "observedTotals": {
+        "tests": 396,
+        "pass": 369,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 27,
+        "todo": 0
+      },
+      "observedSkips": [
+        [
+          "Windows case aliases of production state are rejected",
+          " SKIP"
+        ],
+        [
+          "Windows DEV rejects alternate streams and trailing-dot or space control aliases",
+          " SKIP"
+        ],
+        [
+          "Windows DEV runtime probe qualifies invocation, listener state, process lifetime and disposal",
+          " Requires hosted native Windows PowerShell 5.1"
+        ],
+        [
+          "native Windows identity inspects only its own Node parent and ignores spoofed profile environment",
+          " Requires hosted native Windows PowerShell 5.1"
+        ],
+        [
+          "native Windows listener observation qualifies the actual provider and Unicode fixture invocation",
+          " Requires hosted native Windows PowerShell 5.1"
+        ],
+        [
+          "registered reference handles privately pin deep copied configs and plan without writer authority",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "restricted reference consumer reads no production paths and requests no production native role",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "registered authority refuses actual DEV control drift across production native observation",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "restricted consumer refuses local retargeting after exchange before following substituted controls",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "registered authority compares actual digest-only credentials and never returns credential values",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "restricted reference errors omit callback secrets and have no direct-read fallback",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "native restricted reference inspects its own caller and owned DEV listener without production observation or writes",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "registered reference binds differing declared and canonical config spellings to the same actual file identity",
+          " Requires native Windows reference filesystem and identity APIs"
+        ],
+        [
+          "runtime input snapshots bind selected DEV and production files without state writes",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "runtime inputs refuse plaintext credentials and unknown, oversized or mismatched plans",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "runtime inputs reject linked plans, profile junctions and shared entry files",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "runtime token path validation refuses UNC before any filesystem network lookup",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "runtime inputs compare all four canonical entry and config identities",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "runtime inspection reports unqualified fixture identities and does not change either store",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "DEV launcher refuses activation and Node preload before executing its supplied command",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "DEV launcher Inspect and Status refuse missing protected reference trust without fallback",
+          " Requires native Windows filesystem and identity APIs"
+        ],
+        [
+          "Windows launcher verifies executable, entry, configuration and listener identity",
+          " Requires native Windows PowerShell and Windows argument parsing"
+        ],
+        [
+          "protected reference transport qualifies separate disposable Windows identities and mandatory cleanup",
+          " Requires a disposable hosted Windows runner and explicit fixture opt-in"
+        ],
+        [
+          "protected bootstrap refuses Node preload before invoking a native helper on Windows",
+          " Requires Windows ordering; Linux refuses the unsupported platform first"
+        ]
+      ]
+    }
+  ],
+  "allCommandsPassed": true,
+  "testTotalsFullyObserved": true,
+  "acceptedLocal": true,
+  "finalGitStatus": " M docs/engineering/2026-11-20-reference-transport/README.md\n M docs/engineering/2026-11-20-reference-transport/verify-hosted.py\n M integrations/mcp-manager/test/fixtures/reference-transport-child.mjs\n M integrations/mcp-manager/test/fixtures/reference-transport-native.ps1\n M integrations/mcp-manager/test/reference-transport-native.test.mjs\n?? docs/engineering/2026-11-20-reference-transport/child-diagnostic-r4-rejection-review.json\n?? docs/engineering/2026-11-20-reference-transport/probe-diagnostic-r5-freeze.json\n?? docs/engineering/2026-11-20-reference-transport/probe-diagnostic-r5-frozen-inputs.json\n?? docs/engineering/2026-11-20-reference-transport/probe-diagnostic-r5-stage-map.json\n?? docs/engineering/2026-11-20-reference-transport/probe-diagnostic-r5-transform.json\n?? docs/engineering/2026-11-20-reference-transport/revision-r3-rejection-durable-readback.json\n?? docs/engineering/2026-11-20-reference-transport/revision-r4-durable-readback.json\n",
+  "limits": [
+    "Native Windows account/pipe/ACL qualification is a distinct mandatory hosted gate.",
+    "No owner-host account, profile, ACL, key, deployment, route or activation changes.",
+    "Local acceptance does not replace independent immutable source or hosted review."
+  ]
+}

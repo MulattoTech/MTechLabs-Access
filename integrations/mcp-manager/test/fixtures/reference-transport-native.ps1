@@ -112,6 +112,65 @@ function Safe-System-Error($Value) {
         errno = $(if ($numberErrno) { $rawErrno } else { $null });
         syscall = $(if ($rawSyscall -cin $allowedSyscalls) { $rawSyscall } else { $null }) }
 }
+function Safe-Stdin-Diagnostic($Value) {
+    if ($null -eq $Value) { return $null }
+    foreach ($key in @('finished','closed','errored')) {
+        Assert-Fixture ((Field $Value $key) -is [bool]) 'fixture_child_diagnostic_invalid'
+    }
+    return @{ finished = $Value.finished; closed = $Value.closed; errored = $Value.errored;
+        systemError = (Safe-System-Error $Value.systemError) }
+}
+function Safe-Failure-Probe-Diagnostic($Value) {
+    if ($null -eq $Value) { return $null }
+    Assert-Fixture ($Value.kind -ceq 'failure-only-instrumented-probe' -and $Value.acceptanceEvidence -eq $false) 'fixture_child_diagnostic_invalid'
+    $failureCode = Field $Value 'failureCode'
+    Assert-Fixture ($null -eq $failureCode -or $failureCode -cmatch '^fixture_[a-z_]{1,70}$') 'fixture_child_diagnostic_invalid'
+    if ($null -eq (Field $Value 'invocations')) {
+        return @{ kind = 'failure-only-instrumented-probe'; acceptanceEvidence = $false; failureCode = $failureCode }
+    }
+    Assert-Fixture ($Value.invocations -is [int] -and $Value.invocations -ge 0 -and $Value.invocations -le 1 -and
+        $Value.deadlineMilliseconds -eq 15000 -and $Value.sourceNormalization -ceq 'CRLF-to-LF') 'fixture_child_diagnostic_invalid'
+    foreach ($key in @('rolesEmpty','sameNodeParent','originalSourceUnchanged','anchorsMatched','malformedTrace','traceOverflow','temporaryFileCreated','temporaryFileRemoved')) {
+        Assert-Fixture ((Field $Value $key) -is [bool]) 'fixture_child_diagnostic_invalid'
+    }
+    foreach ($key in @('originalSourceSha256','normalizedSourceSha256','derivativeSourceSha256','originalSourceAfterSha256')) {
+        $hash = Field $Value $key
+        Assert-Fixture ($null -eq $hash -or $hash -cmatch '^[a-f0-9]{64}$') 'fixture_child_diagnostic_invalid'
+    }
+    Assert-Fixture ($Value.anchorCount -is [int] -and $Value.anchorCount -ge 0 -and $Value.anchorCount -le 64 -and
+        $Value.otherStderrLines -is [int] -and $Value.otherStderrLines -ge 0 -and $Value.otherStderrLines -le 1024) 'fixture_child_diagnostic_invalid'
+    $stages = @($Value.stages); $safeStages = @()
+    Assert-Fixture ($stages.Count -le 128) 'fixture_child_diagnostic_invalid'
+    foreach ($stage in $stages) {
+        Assert-Fixture ($stage.id -is [int] -and $stage.id -in @(1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64) -and
+            ($stage.elapsedMilliseconds -is [int] -or $stage.elapsedMilliseconds -is [long]) -and
+            $stage.elapsedMilliseconds -ge 0 -and $stage.elapsedMilliseconds -le 600000) 'fixture_child_diagnostic_invalid'
+        $safeStages += @{ id = $stage.id; elapsedMilliseconds = $stage.elapsedMilliseconds }
+    }
+    $outcome = $null
+    if ($null -ne $Value.outcome) {
+        $entry = $Value.outcome
+        Assert-Fixture ($entry.failed -is [bool] -and $entry.killed -is [bool] -and
+            ($null -eq $entry.signal -or $entry.signal -cmatch '^SIG[A-Z]{1,12}$')) 'fixture_child_diagnostic_invalid'
+        foreach ($key in @('elapsedMilliseconds','stdoutDecodedBytes','stderrDecodedBytes')) {
+            $number = Field $entry $key
+            Assert-Fixture (($number -is [int] -or $number -is [long]) -and $number -ge 0 -and $number -le 1048576) 'fixture_child_diagnostic_invalid'
+        }
+        Assert-Fixture ($entry.stdoutDecodedSha256 -cmatch '^[a-f0-9]{64}$' -and $entry.stderrDecodedSha256 -cmatch '^[a-f0-9]{64}$') 'fixture_child_diagnostic_invalid'
+        $outcome = @{ failed = $entry.failed; systemError = (Safe-System-Error $entry.systemError); signal = $entry.signal; killed = $entry.killed;
+            elapsedMilliseconds = $entry.elapsedMilliseconds; stdoutDecodedBytes = $entry.stdoutDecodedBytes; stdoutDecodedSha256 = $entry.stdoutDecodedSha256;
+            stderrDecodedBytes = $entry.stderrDecodedBytes; stderrDecodedSha256 = $entry.stderrDecodedSha256 }
+    }
+    return @{ kind = 'failure-only-instrumented-probe'; acceptanceEvidence = $false; invocations = $Value.invocations;
+        deadlineMilliseconds = 15000; rolesEmpty = $Value.rolesEmpty; sameNodeParent = $Value.sameNodeParent;
+        originalSourceSha256 = $Value.originalSourceSha256; normalizedSourceSha256 = $Value.normalizedSourceSha256;
+        derivativeSourceSha256 = $Value.derivativeSourceSha256; sourceNormalization = 'CRLF-to-LF';
+        originalSourceAfterSha256 = $Value.originalSourceAfterSha256; originalSourceUnchanged = $Value.originalSourceUnchanged;
+        anchorCount = $Value.anchorCount; anchorsMatched = $Value.anchorsMatched; stages = $safeStages;
+        malformedTrace = $Value.malformedTrace; traceOverflow = $Value.traceOverflow; otherStderrLines = $Value.otherStderrLines;
+        outcome = $outcome; stdin = (Safe-Stdin-Diagnostic $Value.stdin); temporaryFileCreated = $Value.temporaryFileCreated;
+        temporaryFileRemoved = $Value.temporaryFileRemoved; failureCode = $failureCode }
+}
 function Safe-Identity-Diagnostic($Value) {
     if ($null -eq $Value) { return $null }
     Assert-Fixture ($Value.phase -cin @('load_native_capture','native_capture','administrator_check','compare_identity','complete')) 'fixture_child_diagnostic_invalid'
@@ -132,13 +191,15 @@ function Safe-Identity-Diagnostic($Value) {
         }
         Assert-Fixture ($entry.stdoutDecodedSha256 -cmatch '^[a-f0-9]{64}$' -and $entry.stderrDecodedSha256 -cmatch '^[a-f0-9]{64}$') 'fixture_child_diagnostic_invalid'
         $safe += @{ phase = $entry.phase; failed = $entry.failed; systemError = (Safe-System-Error $entry.systemError);
+            stdin = (Safe-Stdin-Diagnostic $entry.stdin);
             signal = $entry.signal; killed = $entry.killed; elapsedMilliseconds = $entry.elapsedMilliseconds;
             stdoutDecodedBytes = $entry.stdoutDecodedBytes; stdoutDecodedSha256 = $entry.stdoutDecodedSha256;
             stderrDecodedBytes = $entry.stderrDecodedBytes; stderrDecodedSha256 = $entry.stderrDecodedSha256 }
     }
     return @{ phase = $Value.phase; nativeStatus = $Value.nativeStatus; pidMatched = $Value.pidMatched;
         profileMatched = $Value.profileMatched; administratorProbeCompleted = $Value.administratorProbeCompleted;
-        administrator = $Value.administrator; nativeInvocationOverflow = $Value.nativeInvocationOverflow; nativeInvocations = $safe }
+        administrator = $Value.administrator; nativeInvocationOverflow = $Value.nativeInvocationOverflow; nativeInvocations = $safe;
+        failureProbeDiagnostic = (Safe-Failure-Probe-Diagnostic $Value.failureProbeDiagnostic) }
 }
 function Child-Mode([string]$Executable, [string[]]$Arguments) {
     if ($Executable -ieq $fixtureNode -and $Arguments.Count -eq 2 -and $Arguments[1] -cin

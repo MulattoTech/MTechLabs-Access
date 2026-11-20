@@ -38,6 +38,156 @@ const systemError = error => {
   };
 };
 let identityDiagnostic = null;
+const probeTraceMarker = 'MTERM_PROBE_DIAGNOSTIC ';
+// Pure deterministic instrumentation of the fixed copied probe, used only
+// after a primary identity-capture failure. This is never an acceptance probe.
+function buildFailureProbe(source) {
+  let derived = source.replace(/\r\n/g, '\n');
+  const anchors = [];
+  const splice = (name, anchor, replacement) => {
+    if (derived.split(anchor).length !== 2) throw new Error('fixture_probe_diagnostic_anchor_invalid');
+    derived = derived.replace(anchor, replacement); anchors.push(name);
+  };
+  splice('compile_begin', "    Add-Type -TypeDefinition @'", "    Write-FixtureProbeStage 20\n    Add-Type -TypeDefinition @'");
+  splice('native_clock', '  public sealed class ProcessSnapshot : IDisposable {', `  public sealed class ProcessSnapshot : IDisposable {
+    public static long DiagnosticStarted;
+    static void Diagnostic(int stage) {
+      long elapsed = Math.Min(600000L, Math.Max(0L, (System.Diagnostics.Stopwatch.GetTimestamp() - DiagnosticStarted) * 1000L / System.Diagnostics.Stopwatch.Frequency));
+      Console.Error.WriteLine("MTERM_PROBE_DIAGNOSTIC " + stage.ToString(System.Globalization.CultureInfo.InvariantCulture) + " " + elapsed.ToString(System.Globalization.CultureInfo.InvariantCulture));
+    }`);
+  splice('compile_end', "'@ | Out-Null\n}", "'@ | Out-Null\n    [MTechLabs.DevRuntime.ProcessSnapshot]::DiagnosticStarted = $script:fixtureProbeStarted\n    Write-FixtureProbeStage 21\n}");
+  splice('constructor', '    public ProcessSnapshot(int pid) {\n      try {', '    public ProcessSnapshot(int pid) {\n      Diagnostic(30);\n      try {');
+  splice('open_process', '        process = OpenProcess(0x00101000, false, pid);', '        Diagnostic(31);\n        process = OpenProcess(0x00101000, false, pid);\n        Diagnostic(32);');
+  splice('alive', '        if (process == IntPtr.Zero || !Alive) throw new Exception("process_unavailable");',
+    '        Diagnostic(33);\n        if (process == IntPtr.Zero || !Alive) throw new Exception("process_unavailable");\n        Diagnostic(34);');
+  splice('image', '        if (!QueryFullProcessImageNameW(process, 0, image, ref length)) throw new Exception("image_unavailable");',
+    '        Diagnostic(35);\n        if (!QueryFullProcessImageNameW(process, 0, image, ref length)) throw new Exception("image_unavailable");\n        Diagnostic(36);');
+  splice('times', '        if (!GetProcessTimes(process, out created, out exited, out kernel, out user)) throw new Exception("time_unavailable");',
+    '        Diagnostic(37);\n        if (!GetProcessTimes(process, out created, out exited, out kernel, out user)) throw new Exception("time_unavailable");\n        Diagnostic(38);');
+  splice('token', '        if (!OpenProcessToken(process, 8, out token)) throw new Exception("token_unavailable");',
+    '        Diagnostic(39);\n        if (!OpenProcessToken(process, 8, out token)) throw new Exception("token_unavailable");\n        Diagnostic(40);');
+  splice('sid', '        using (var identity = new WindowsIdentity(token)) { Sid = identity.User.Value; }',
+    '        Diagnostic(41);\n        using (var identity = new WindowsIdentity(token)) { Sid = identity.User.Value; }\n        Diagnostic(42);');
+  splice('profile', '        if (!GetUserProfileDirectoryW(token, profile, ref length)) throw new Exception("profile_unavailable");',
+    '        Diagnostic(43);\n        if (!GetUserProfileDirectoryW(token, profile, ref length)) throw new Exception("profile_unavailable");\n        Diagnostic(44);');
+  splice('constructor_end', '        if (!Alive) throw new Exception("process_exited");',
+    '        if (!Alive) throw new Exception("process_exited");\n        Diagnostic(45);');
+  splice('constructor_rejection', '      } catch { Dispose(); throw; }', '      } catch { Diagnostic(48); Dispose(); Diagnostic(49); throw; }');
+  splice('dispose_begin', '    public void Dispose() {', '    public void Dispose() {\n      Diagnostic(46);');
+  splice('dispose_end', '      if (process != IntPtr.Zero) { CloseHandle(process); process = IntPtr.Zero; }',
+    '      if (process != IntPtr.Zero) { CloseHandle(process); process = IntPtr.Zero; }\n      Diagnostic(47);');
+  splice('own_cim', '        $self = Get-RuntimeProcess $PID', '        Write-FixtureProbeStage 10\n        $self = Get-RuntimeProcess $PID\n        Write-FixtureProbeStage 11');
+  splice('parent_cim', '        $parent = Get-RuntimeProcess $ParentId', '        Write-FixtureProbeStage 12\n        $parent = Get-RuntimeProcess $ParentId\n        Write-FixtureProbeStage 13');
+  splice('cim_command', '    $rows = @(Get-CimInstance Win32_Process -Filter "ProcessId = $ProcessId" -ErrorAction Stop)',
+    '    Write-FixtureProbeStage 16\n    $rows = @(Get-CimInstance Win32_Process -Filter "ProcessId = $ProcessId" -ErrorAction Stop)\n    Write-FixtureProbeStage 17');
+  splice('snapshot', '        $snapshot = Get-RuntimeNativeSnapshot $ParentId', '        Write-FixtureProbeStage 14\n        $snapshot = Get-RuntimeNativeSnapshot $ParentId\n        Write-FixtureProbeStage 15\n        Write-FixtureProbeStage 50');
+  splice('validation_end', "        return @{ status = 'observed'; pid = $ParentId; sid = $snapshot.Sid; profileDirectory = $snapshot.Profile;", "        Write-FixtureProbeStage 51\n        return @{ status = 'observed'; pid = $ParentId; sid = $snapshot.Sid; profileDirectory = $snapshot.Profile;");
+  const currentStart = derived.indexOf('function Get-RuntimeCurrentObservation {');
+  const currentEnd = derived.indexOf('\n\ntry {', currentStart);
+  if (currentStart < 0 || currentEnd <= currentStart) throw new Error('fixture_probe_diagnostic_anchor_invalid');
+  const current = derived.slice(currentStart, currentEnd);
+  const catchAnchor = "    } catch { return @{ status = 'unverified' } }";
+  const finallyAnchor = '    finally { if ($null -ne $snapshot) { $snapshot.Dispose() } }';
+  if (current.split(catchAnchor).length !== 2 || current.split(finallyAnchor).length !== 2) throw new Error('fixture_probe_diagnostic_anchor_invalid');
+  splice('current_rejection_and_cleanup', current, current.replace(catchAnchor, "    } catch { Write-FixtureProbeStage 56; return @{ status = 'unverified' } }")
+    .replace(finallyAnchor, '    finally { Write-FixtureProbeStage 57; if ($null -ne $snapshot) { $snapshot.Dispose() }; Write-FixtureProbeStage 58 }'));
+  splice('stdin_begin', '    while ($length -lt $buffer.Length) {', '    Write-FixtureProbeStage 2\n    while ($length -lt $buffer.Length) {');
+  splice('stdin_read', '        $read = [Console]::In.Read($buffer, $length, $buffer.Length - $length)',
+    '        Write-FixtureProbeStage 7\n        $read = [Console]::In.Read($buffer, $length, $buffer.Length - $length)\n        Write-FixtureProbeStage 8');
+  splice('stdin_end', "    if ($length -gt 16384) { throw 'input_too_large' }", "    Write-FixtureProbeStage 3\n    if ($length -gt 16384) { throw 'input_too_large' }");
+  splice('parse', '    $inputData = $raw | ConvertFrom-Json', '    Write-FixtureProbeStage 4\n    $inputData = $raw | ConvertFrom-Json\n    Write-FixtureProbeStage 5');
+  splice('output', '    [Console]::Out.WriteLine(($result | ConvertTo-Json -Depth 5 -Compress))',
+    '    Write-FixtureProbeStage 60\n    $fixtureProbeSerialized = $result | ConvertTo-Json -Depth 5 -Compress\n    Write-FixtureProbeStage 61\n    Write-FixtureProbeStage 62\n    [Console]::Out.WriteLine($fixtureProbeSerialized)\n    Write-FixtureProbeStage 63');
+  splice('outer_error', "    [Console]::Error.WriteLine('runtime_observation_failed')", "    Write-FixtureProbeStage 64\n    [Console]::Error.WriteLine('runtime_observation_failed')");
+  const prefix = `$script:fixtureProbeStarted = [Diagnostics.Stopwatch]::GetTimestamp()
+function Write-FixtureProbeStage([int]$StageId) {
+    $elapsed = [long](([Diagnostics.Stopwatch]::GetTimestamp() - $script:fixtureProbeStarted) * 1000 / [Diagnostics.Stopwatch]::Frequency)
+    $elapsed = [Math]::Min(600000, [Math]::Max(0, $elapsed))
+    [Console]::Error.WriteLine('MTERM_PROBE_DIAGNOSTIC ' + $StageId.ToString([Globalization.CultureInfo]::InvariantCulture) + ' ' + $elapsed.ToString([Globalization.CultureInfo]::InvariantCulture))
+}
+Write-FixtureProbeStage 1
+`;
+  return { source: prefix + derived, anchors };
+}
+function observeStdin(child) {
+  const observation = { finished: false, closed: false, errored: false, systemError: { code: null, errno: null, syscall: null } };
+  child.stdin.once('finish', () => { observation.finished = true; });
+  child.stdin.once('close', () => { observation.closed = true; });
+  child.stdin.once('error', error => { observation.errored = true; observation.systemError = systemError(error); });
+  return observation;
+}
+async function failureProbeDiagnostic(originalExecFile) {
+  const record = { kind: 'failure-only-instrumented-probe', acceptanceEvidence: false, invocations: 0,
+    deadlineMilliseconds: 15000, rolesEmpty: true, sameNodeParent: true,
+    originalSourceSha256: null, normalizedSourceSha256: null, derivativeSourceSha256: null,
+    sourceNormalization: 'CRLF-to-LF', originalSourceAfterSha256: null, originalSourceUnchanged: false,
+    anchorCount: 0, anchorsMatched: false, stages: [], malformedTrace: false, traceOverflow: false,
+    otherStderrLines: 0, outcome: null, stdin: null, temporaryFileCreated: false, temporaryFileRemoved: false, failureCode: null };
+  let filename, created = false;
+  try {
+    const original = await fs.readFile(path.join(root, 'windows-runtime-probe.ps1'));
+    if (original.length > 1048576) throw new Error('fixture_probe_diagnostic_source_limit');
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(original);
+    record.originalSourceSha256 = hash(original); record.normalizedSourceSha256 = hash(text.replace(/\r\n/g, '\n'));
+    if (record.normalizedSourceSha256 !== '7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca') {
+      throw new Error('fixture_probe_diagnostic_source_mismatch');
+    }
+    const derivative = buildFailureProbe(text);
+    record.derivativeSourceSha256 = hash(derivative.source); record.anchorCount = derivative.anchors.length; record.anchorsMatched = true;
+    if (record.anchorCount !== 27 || record.derivativeSourceSha256 !== '4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1') {
+      throw new Error('fixture_probe_diagnostic_derivative_mismatch');
+    }
+    filename = path.join(process.cwd(), 'reference-probe-diagnostic-' + randomBytes(12).toString('hex') + '.ps1');
+    await fs.writeFile(filename, derivative.source, { flag: 'wx' });
+    created = true; record.temporaryFileCreated = true;
+    if (hash(await fs.readFile(filename)) !== record.derivativeSourceSha256) throw new Error('fixture_probe_diagnostic_copy_mismatch');
+    const started = performance.now();
+    await new Promise(resolve => {
+      record.invocations = 1;
+      const child = originalExecFile('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+        ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', filename], {
+          windowsHide: true, encoding: 'utf8', timeout: 15000, maxBuffer: 32768,
+          env: { ...process.env, PSModulePath: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules' },
+        }, (error, stdout, stderr) => {
+          const output = String(stdout ?? '').replace(/\r\n/g, '\n');
+          const diagnostic = String(stderr ?? '').replace(/\r\n/g, '\n');
+          let signal = null, killed = false;
+          try {
+            const observedSignal = Object.getOwnPropertyDescriptor(error, 'signal')?.value;
+            if (typeof observedSignal === 'string' && /^SIG[A-Z]{1,12}$/.test(observedSignal)) signal = observedSignal;
+            killed = Object.getOwnPropertyDescriptor(error, 'killed')?.value === true;
+          } catch { /* No raw error values are exposed. */ }
+          record.outcome = { failed: Boolean(error), systemError: systemError(error), signal, killed,
+            elapsedMilliseconds: Math.min(600000, Math.max(0, Math.floor(performance.now() - started))),
+            stdoutDecodedBytes: Buffer.byteLength(output), stdoutDecodedSha256: hash(output),
+            stderrDecodedBytes: Buffer.byteLength(diagnostic), stderrDecodedSha256: hash(diagnostic) };
+          for (const line of diagnostic.split('\n').filter(Boolean)) {
+            if (!line.startsWith(probeTraceMarker)) { record.otherStderrLines = Math.min(1024, record.otherStderrLines + 1); continue; }
+            const match = /^MTERM_PROBE_DIAGNOSTIC ([0-9]{1,2}) ([0-9]{1,6})$/.exec(line);
+            if (!match || ![1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64].includes(Number(match?.[1])) || Number(match?.[2]) > 600000) {
+              record.malformedTrace = true; continue;
+            }
+            if (record.stages.length >= 128) { record.traceOverflow = true; continue; }
+            record.stages.push({ id: Number(match[1]), elapsedMilliseconds: Number(match[2]) });
+          }
+          resolve();
+        });
+      record.stdin = observeStdin(child);
+      child.stdin.end(JSON.stringify({ currentProcessId: process.pid, currentImage: process.execPath }));
+    });
+  } catch (error) { record.failureCode = code(error); }
+  finally {
+    if (created) {
+      try { await fs.unlink(filename); record.temporaryFileRemoved = true; }
+      catch { record.failureCode ??= 'fixture_probe_diagnostic_cleanup_failed'; }
+    }
+    try {
+      record.originalSourceAfterSha256 = hash(await fs.readFile(path.join(root, 'windows-runtime-probe.ps1')));
+      record.originalSourceUnchanged = record.originalSourceAfterSha256 === record.originalSourceSha256;
+    } catch { record.failureCode ??= 'fixture_probe_diagnostic_source_readback_failed'; }
+  }
+  return record;
+}
 const lines = createInterface({ input: process.stdin, crlfDelay: Infinity });
 const input = lines[Symbol.asyncIterator]();
 const canonical = value => path.win32.resolve(value).toLowerCase();
@@ -74,13 +224,14 @@ async function timeout(promise, ms = 40000) {
 async function identity() {
   identityDiagnostic = { phase: 'load_native_capture', nativeStatus: null, pidMatched: null,
     profileMatched: null, administratorProbeCompleted: false, administrator: null,
-    nativeInvocations: [], nativeInvocationOverflow: false };
+    nativeInvocations: [], nativeInvocationOverflow: false, failureProbeDiagnostic: null };
   const originalExecFile = childProcess.execFile;
   // Observe the callbacks of the existing invocations only. No arguments,
   // environment, limits, result, retry or additional probe is introduced.
   childProcess.execFile = function (filename, args, options, callback) {
     const started = performance.now(), phase = identityDiagnostic.phase;
-    return originalExecFile(filename, args, options, (error, stdout, stderr) => {
+    let stdin;
+    const child = originalExecFile(filename, args, options, (error, stdout, stderr) => {
       if (identityDiagnostic.nativeInvocations.length < 4) {
         const output = String(stdout ?? '').replace(/\r\n/g, '\n');
         const diagnostic = String(stderr ?? '').replace(/\r\n/g, '\n');
@@ -90,13 +241,15 @@ async function identity() {
           if (typeof observedSignal === 'string' && /^SIG[A-Z]{1,12}$/.test(observedSignal)) signal = observedSignal;
           killed = Object.getOwnPropertyDescriptor(error, 'killed')?.value === true;
         } catch { /* Null or hostile throwable metadata stays unobserved. */ }
-        identityDiagnostic.nativeInvocations.push({ phase, failed: Boolean(error), systemError: systemError(error), signal, killed,
+        identityDiagnostic.nativeInvocations.push({ phase, failed: Boolean(error), systemError: systemError(error), signal, killed, stdin,
           elapsedMilliseconds: Math.min(600000, Math.max(0, Math.floor(performance.now() - started))),
           stdoutDecodedBytes: Buffer.byteLength(output), stdoutDecodedSha256: hash(output),
           stderrDecodedBytes: Buffer.byteLength(diagnostic), stderrDecodedSha256: hash(diagnostic) });
       } else identityDiagnostic.nativeInvocationOverflow = true;
       callback(error, stdout, stderr);
     });
+    stdin = observeStdin(child);
+    return child;
   };
   syncBuiltinESMExports();
   try {
@@ -126,6 +279,15 @@ async function identity() {
     identityDiagnostic.phase = 'complete';
     return { sid: report.current.sid, profile: report.current.profileDirectory, pid: process.pid,
       isAdministrator: admin, realCurrentProcessMatched: true, osProfileMatchesNative: true };
+  } catch (error) {
+    // Preserve the primary failure and its original nativeInvocations. The
+    // derivative is a separate, non-acceptance observation at a later time.
+    if (identityDiagnostic.phase === 'native_capture' && identityDiagnostic.nativeInvocations.length === 1) {
+      try { identityDiagnostic.failureProbeDiagnostic = await failureProbeDiagnostic(originalExecFile); }
+      catch { identityDiagnostic.failureProbeDiagnostic = { kind: 'failure-only-instrumented-probe', acceptanceEvidence: false,
+        failureCode: 'fixture_probe_diagnostic_unavailable' }; }
+    }
+    throw error;
   } finally {
     childProcess.execFile = originalExecFile; syncBuiltinESMExports();
   }

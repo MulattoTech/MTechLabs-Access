@@ -152,6 +152,7 @@ test('protected reference transport qualifies separate disposable Windows identi
     assert.match(child.stdoutDecodedSha256, /^[a-f0-9]{64}$/);
     assert.match(child.stderrDecodedSha256, /^[a-f0-9]{64}$/);
     if (child.expectedStderrEmpty) assert.equal(child.stderrDecodedBytes, 0);
+    if (child.identityDiagnostic) assert.equal(child.identityDiagnostic.failureProbeDiagnostic, null);
   }
   assert.equal(report.failedStage, null);
   assert.deepEqual(report.watchdog, evidence.watchdog);

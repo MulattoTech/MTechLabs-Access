@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "scope": "Revision4 immutable independent source review and separate hosted rejection",
+  "source": {
+    "id": 7039747320,
+    "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039747320",
+    "verified": true
+  },
+  "rejection": {
+    "id": 7039752124,
+    "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039752124",
+    "verified": true
+  },
+  "sourceReview": {
+    "bytes": 27328,
+    "sha256": "44a7e258f2c0827977fafb026af27daaba8c0f4f5653dc4c2269a49cf65d59fe"
+  },
+  "rejectionReview": {
+    "bytes": 13866,
+    "sha256": "534a473e86788cf0f23bec71ed7f72b24b36ceb7335ecb22779f32bf0dad4ff9"
+  }
+}
