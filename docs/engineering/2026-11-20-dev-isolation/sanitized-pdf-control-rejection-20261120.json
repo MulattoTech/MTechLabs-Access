@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R41",
+  "scope": "read-only exact PR45 source comparison with frozen historically rejected R6 PDF qualification",
+  "createdUtc": "2026-11-20T21:48:49.564109+00:00",
+  "source": {
+    "pr": 45,
+    "head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "reviewedBase": "15e851b11984592803d37599b639772e51e5c8c0",
+    "currentPrHeadIndependentlyChecked": true,
+    "sourceGithubRef": "https://github.com/MulattoTech/MTechLabs-Access/pull/45",
+    "historicalR6SourceReportGitBlob": "b4473fd7310967d05729c459117b285c9c19c864"
+  },
+  "audit": {
+    "schemaVersion": 1,
+    "scope": "read-only exact-head frozen PDF test and R6 rejection evidence invariants",
+    "sourceHead": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "frozenSourceFilesCompared": 4,
+    "frozenSourceIdentity": {
+      ".github/workflows/check.yml": {
+        "sha256": "57d513da584bee4d8a074691beb510c0f64f22d06a6c28ace71cdf0649f9235e",
+        "bytes": 3191
+      },
+      "integrations/mcp-manager/qualify-upstream.mjs": {
+        "sha256": "1f4dd1e08a784e98b34b3644b73618a5588130ce7f0bdf17b46df17ed066fab6",
+        "bytes": 23557
+      },
+      "integrations/mcp-manager/lib/upstream-qualification.mjs": {
+        "sha256": "09742f7104cee024ed5274a094a8ddc756f70707bad4f79a4b0e430e30006e84",
+        "bytes": 17419
+      },
+      "integrations/mcp-manager/verify-clients.mjs": {
+        "sha256": "2417a878c2171b051271efa907e28d9422a987a4be5505be688936e319cfb982",
+        "bytes": 20371
+      }
+    },
+    "pdfGateInvariantCounts": {
+      "pdf_stage_present": 1,
+      "write_pdf_timeout_90000": 1,
+      "read_pdf_timeout_90000": 1,
+      "pdf_signature_check": 1,
+      "pdf_text_fidelity_check": 1,
+      "capture_pdf_tool_error": 1,
+      "reject_pdf_is_error": 1,
+      "fail_closed_stage_result": 1
+    },
+    "historicalControlVersion": "0.3.1",
+    "historicalControlFailedStage": "pdf_create_and_read_fidelity",
+    "historicalControlFailureSignal": "timeout",
+    "historicalCandidateVersion": "0.3.3",
+    "historicalCandidatePdfStagePassed": true,
+    "historicalRunId": 44740386851,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "sourceAndRejectionEvidenceConsistent": true,
+    "historicalRunStillRejected": true,
+    "pdfRootCauseDetermined": false,
+    "newHostedCIExecuted": false,
+    "controlPdfAccepted": false,
+    "candidatePdfAcceptedAsWholeSource": false,
+    "independentSourceReviewCompleted": false,
+    "productionFilesChanged": false,
+    "devActivationAuthorized": false
+  },
+  "historicalRejection": {
+    "runId": 44740386851,
+    "jobId": 136302296697,
+    "attempt": 1,
+    "controlVersion": "0.3.1",
+    "controlPassingStages": 8,
+    "controlFailedStage": "pdf_create_and_read_fidelity",
+    "controlFailureCode": "write_pdf_tool_error",
+    "pdfSignal": "timeout",
+    "rootCauseDetermined": false,
+    "candidateVersion": "0.3.3",
+    "candidatePassingStages": 10,
+    "candidatePdfStageDurationMs": 23312,
+    "candidatePdfOutputBytes": 13242,
+    "accepted": false
+  },
+  "currentHostedAcceptance": {
+    "runId": 44742255585,
+    "requiredJobs": 5,
+    "jobsWithExecutedSteps": 0,
+    "mandatoryTestStagesObserved": 0,
+    "candidateAccepted": false,
+    "actualMainAccepted": false,
+    "priorBillingAdmissionRestrictionStillObserved": true
+  },
+  "tests": {
+    "newOfflineRejectionSensitivity": {
+      "passed": 26,
+      "failed": 0
+    }
+  },
+  "sourceSha256": {
+    "read-only-pdf-control-gate.py": "661889537e3660aebb0ab0486c3a50167570d254a15746b4b0d6cb4334c12168",
+    "read-only-pdf-control-gate.test.py": "e712b2a94730c2069a35da9fbd34f30a8aa95c47a3d83feb660a78cde52a5958"
+  },
+  "limitations": [
+    "R6 PDF control response contains a timeout signal but cannot pinpoint its operation, browser subprocess, duration or root cause. No speculative causal fix is claimed.",
+    "The full R6 source review, GitHub PR45 head and source hashes establish that the same PDF gate code is present. No PR45 hosted run has yet executed required tests.",
+    "Source-pinned checks detect test weakening or forged historical report metadata, but do not themselves generate PDFs, verify current runtime behavior, qualify Node 24/27 or pass native Windows tests.",
+    "A passing 0.3.3 candidate PDF stage does not imply that failing 0.3.1 control is accepted. Do not increase timeout or skip fidelity checks to manufacture a pass.",
+    "A later exact PR head change must trigger fresh source review and replay before using this source-bound diagnostic; this tool itself reads a fixed Git object, not the remote current PR."
+  ],
+  "safety": {
+    "npmOrInstalledPackageExecuted": false,
+    "pdfGenerated": false,
+    "githubActionsRerun": false,
+    "productionFilesModified": false,
+    "ownerAccountAclOrTokensReadOrChanged": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
