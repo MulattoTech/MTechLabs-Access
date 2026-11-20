@@ -144,8 +144,13 @@ try {
                     throw ('portable_child_output_task_unknown:' + $caseName)
                 }
             }
-            $captured = $stdoutText.ToString() + [Environment]::NewLine + $stderrText.ToString()
-            return [pscustomobject]@{exitCode=$process.ExitCode;output=$captured}
+            # Preserve stream provenance. Fixture failures must come from
+            # PowerShell's stderr error channel, not arbitrary stdout text.
+            return [pscustomobject]@{
+                exitCode=$process.ExitCode
+                stdout=$stdoutText.ToString()
+                stderr=$stderrText.ToString()
+            }
         } finally {
             if(-not $process.HasExited) {
                 try { $process.Kill($true) } catch {}
@@ -156,8 +161,10 @@ try {
     }
 
     $baseline=Invoke-Fixture 'control' $source
-    if($baseline.exitCode -ne 0) {throw 'unmutated_portable_fixture_did_not_pass'}
-    $parsed = $baseline.output | ConvertFrom-Json -AsHashtable
+    if($baseline.exitCode -ne 0 -or -not [string]::IsNullOrWhiteSpace($baseline.stderr)) {
+        throw 'unmutated_portable_fixture_did_not_pass'
+    }
+    $parsed = $baseline.stdout | ConvertFrom-Json -AsHashtable
     if($parsed.passed -ne 15 -or $parsed.failed -ne 0 -or
        $parsed.activationAuthorized -ne $false) {
         throw 'unmutated_portable_fixture_contract_failed'
@@ -177,10 +184,10 @@ try {
 
         # Only the precise, causally expected first fixture assertion counts
         # as a killed mutant. A generic unrelated fixture failure is not proof.
-        $firstFailure=[regex]::Match(
-            $result.output,
-            '(?:fixture_mismatch|case_status_mismatch):[a-zA-Z0-9_-]+(?::[a-zA-Z0-9_-]+)?')
-        if($result.exitCode -eq 0 -or -not $firstFailure.Success -or
+        $failurePattern='(?:fixture_mismatch|case_status_mismatch):[a-zA-Z0-9_-]+(?::[a-zA-Z0-9_-]+)?'
+        $firstFailure=[regex]::Match($result.stderr, $failurePattern)
+        $stdoutClaimsFailure=[regex]::IsMatch($result.stdout,$failurePattern)
+        if($result.exitCode -eq 0 -or $stdoutClaimsFailure -or -not $firstFailure.Success -or
            $firstFailure.Value -cne [string]$mutation.expectedFailure){
             throw ('portable_fixture_unexpected_mutant_failure:' + $mutation.name)
         }
@@ -212,5 +219,6 @@ if (-not $scratchGone -or -not $sourceUnchanged -or -not $testUnchanged) {
     originalSourceModified=(-not ($sourceUnchanged -and $testUnchanged))
     scratchRemoved=$scratchGone
     exactFailureClassification=$true
+    stderrOnlyFailureValidation=$true
     activationAuthorized=$false
 } | ConvertTo-Json -Depth 4 -Compress
