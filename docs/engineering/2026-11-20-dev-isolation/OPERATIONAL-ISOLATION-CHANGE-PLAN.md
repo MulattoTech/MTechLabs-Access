@@ -83,6 +83,8 @@ The Windows PowerShell 5.1 executable's observed SHA-256 was **`d8f182560210d43b
 
 **No exact final ACL is asserted yet.** The authorized production user, SYSTEM, any required service SID/TrustedInstaller or backup authority, effective group membership and deny/allow composition must be determined from **actual** owner/process tokens and filesystem IDs. A simplistic "Deny everyone" or blanket inherited ACE removal can break Windows servicing, owner access, or backups. Avoid a custom inheritable DACL on C: ancestors without understanding unrelated consumers. The proposed C: code directory does not itself prevent a user with parent delete-child/reparse rights from replacing its name; verify the complete parent chain with handle-based and token-based checks.
 
+**Source-reference migration prerequisite:** [PRODUCTION-RELOCATION-REFERENCE-AUDIT.md](PRODUCTION-RELOCATION-REFERENCE-AUDIT.md) distinguishes the hardcoded H: production launcher/shortcut/config and side-effecting client/verification utilities from production port and Cloudflare origin bindings that must remain stable. Every future cutover must reconcile this exact-head dependency inventory before approving any source-path change. Do not run the writer utilities as read-only probes.
+
 ## 3. Staged execution proposal; every operational stage requires separate approval
 
 | Gate | Deliverable and pass criteria | Stop / rollback boundary |
