@@ -48,6 +48,18 @@ The suite has **15 synthetic test cases** covering the ACL helper's known SID gr
 
 This is a **Windows-only unit suite**, designed to be runnable on a disposable GitHub-hosted Windows runner **after billing admission is restored**. It has not been run in GitHub Actions, and it does not qualify native cross-account Windows pipe/ACL security, reference-manager authority, real DEV identity, or either upstream integration. Only invoke this fixture on **reviewed, trusted source**: parsing and executing its two selected function definitions is not an isolation sandbox for malicious code.
 
+### Portable fixture sensitivity checks (source mutations)
+
+[`read-only-preflight.portable.mutation.test.ps1`](read-only-preflight.portable.mutation.test.ps1) verifies that the independent portable ACL suite **fails** for seven deliberately broken classifier implementations, while the unmodified source **passes all 15 cases**. It creates disposable GUID-named directories under the user's temporary directory, writes **copies only**, runs child PowerShell 7 processes, verifies the failures are actual fixture assertions rather than syntax/tool failures, and deletes only its own temporary directory.
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-preflight.portable.mutation.test.ps1
+```
+
+The seven checked defects are ignored mutation bits, incorrect inherit-only propagation, disowned SYSTEM SID, unknown SID granted privileged status, misclassified broad grants, ignored reparse points, and an access-denied path reported as observed. The recorded Windows owner-host run passed the unmodified control and **rejected 7/7 mutants**.
+
+This suite is *test-sensitivity evidence* on **trusted reviewed source**, not seven additional native Windows identity/ACL acceptance tests. It does not execute the production preflight entrypoint or mutate any real ACL, key, service, account, or production file. It creates and removes **temporary copies**; it is not entirely filesystem-read-only. As with the portable helper test, PowerShell helper definitions are code, not an isolation sandbox for untrusted inputs.
+
 ## Recorded local qualification (2026-11-20)
 
 - PowerShell AST parse: **zero syntax errors**.
