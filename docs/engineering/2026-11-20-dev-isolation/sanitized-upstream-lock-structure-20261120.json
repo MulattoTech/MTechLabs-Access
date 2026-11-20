@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "R33 read-only installed package-lock namespace, SRI encoding and HTTPS metadata; no actual package integrity attestation",
+  "observedUtc": "2026-11-20T20:41:49.124275+00:00",
+  "selectedProductionPackage": {
+    "name": "@wonderwhy-er/desktop-commander",
+    "version": "0.3.1"
+  },
+  "hostReadOnlyObservation": {
+    "schemaVersion": 1,
+    "scope": "read-only full npm v3 lock namespace / SRI syntax / HTTPS metadata",
+    "projectLockEntryCount": 651,
+    "installedLockEntryCount": 612,
+    "projectOnlyOptionalEntryCount": 38,
+    "recordsInspectedAcrossBothLockfiles": 1262,
+    "recordsWithValidSRIFormat": 1260,
+    "recordsWithQualifiedHttpsMetadata": 1260,
+    "bundledEntriesWithoutArchiveIntegrity": 2,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "unqualifiedSample": [],
+    "lockStructureQualified": true,
+    "projectLockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+    "installedLockSha256": "4f33fa78027b182572d5e940e0c2d660995548825f7850d23684a6b449f9dadd",
+    "rootManifestSha256": "af4f183d2fa4fe814fdc78f8201ebc7b704a8c89b3c2ef9e981dc6ef8c1d82e5",
+    "priorR32ConsistencyPassed": true,
+    "archiveBytesVerified": false,
+    "registryProvenanceVerified": false,
+    "semverSatisfactionVerified": false,
+    "packageCodeExecuted": false,
+    "actualLoadedModulesVerified": false,
+    "realDevTokenEffectiveAccessVerified": false,
+    "devActivationAuthorized": false
+  },
+  "bundledPackage": {
+    "name": "@desktop-commander/telemetry-contract",
+    "version": "0.1.1",
+    "appearsOncePerLockfile": true,
+    "archiveIntegrityAbsent": true,
+    "reason": "inBundle true; no separate downloaded artifact checksum",
+    "bundledCodeBytesIndependentlyVerified": false
+  },
+  "projectOnlyEntries": {
+    "count": 38,
+    "optionalFlagTrue": 38,
+    "platformSpecificAbsenceCanBeExpected": true
+  },
+  "disposableSyntheticRegressionCases": {
+    "passed": 30,
+    "failed": 0
+  },
+  "newSourceSha256": {
+    "read-only-upstream-lock-structure.py": "bff782bb4e66a8df803977e9fda3e75f3bc71095c77a84ac80e87ab28504562b",
+    "read-only-upstream-lock-structure.test.py": "05e2806b5a55d8ed3faf405a2b40aea61888815f519fd4f5e9ddf1922f603064"
+  },
+  "limits": [
+    "All observed locks and installed packages share writable H: ancestor paths. Consistent/structurally valid metadata is NOT an independent security provenance anchor.",
+    "SRI strings were checked for declared digest algorithm, canonical base64 and digest length. No tarball bytes were fetched, hashed or verified against them.",
+    "All 1260 non-bundled records in these two observed lockfiles used valid HTTPS URL metadata; this is neither domain pinning nor trust in the remote publisher.",
+    "Not every 651 project-lock entry is installed: all 38 project-only entries are marked optional. The installed package and dynamic runtime closure remains unverified.",
+    "The read-only file inspections are point-in-time and not atomic handle-based attestation; actual module loaded bytes, native helpers, browser/PDF downloads, semver compatibility and effective DEV account ACL are unresolved.",
+    "PR45 has not passed five hosted Windows/Linux candidate and actual-main CI jobs; no code merge, live relocation, account creation or DEV activation is authorized."
+  ],
+  "safety": {
+    "npmInstalledOrUpdated": false,
+    "productionPackagesImported": false,
+    "productionPermissionsOrAccountsEdited": false,
+    "configOrSecretsRead": false,
+    "cloudflareOrConnectorChanged": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
