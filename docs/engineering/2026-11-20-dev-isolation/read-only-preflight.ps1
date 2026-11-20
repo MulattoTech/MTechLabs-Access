@@ -231,7 +231,33 @@ if ($baselineStatus -ne 'matched') {$blockers += 'baseline-not-matched'}
 if ($devAccount -ne 'present-not-qualified' -or $devProfile -ne 'present-not-qualified') {$blockers += 'dev-principal-not-provisioned'}
 if ($startup -ne 'configured-exact') {$blockers += 'startup-unverified'}
 if ($listener.production -ne 'listener-present') {$blockers += 'production-listener-unverified'}
-if ($records.protectedReference.status -ne 'observed') {$blockers += 'reference-installation-absent'}
+# This is a pre-provisioning diagnostic. A DEV port being occupied before
+# authorization can mask another process or stale deployment.
+if ($listener.development -eq 'listener-present') {
+    $blockers += 'dev-listener-unexpected'
+} elseif ($listener.development -ne 'listener-absent') {
+    $blockers += 'dev-listener-unverified'
+}
+$reference = $records.protectedReference
+if ($reference.status -eq 'absent') {
+    $blockers += 'reference-installation-absent'
+} elseif ($reference.status -ne 'observed') {
+    $blockers += 'reference-installation-unverified'
+} else {
+    # Present is not proof of a protected bootstrap, proper authority key
+    # access or OS effective rights. That requires a separate identity-qualified
+    # operational acceptance; do not silently remove the reference blocker.
+    $blockers += 'reference-installation-unqualified'
+    if ($reference.reparse) { $blockers += 'reference-root-reparse' }
+    if ($reference.broadMutationAllowCount -gt 0 -or
+        $reference.inheritableBroadMutationCount -gt 0) {
+        $blockers += 'reference-root-broad-mutation'
+    }
+    if ($reference.unclassifiedMutationAllowCount -gt 0 -or
+        $reference.inheritableUnclassifiedMutationCount -gt 0) {
+        $blockers += 'reference-root-unclassified-mutation'
+    }
+}
 $blockers += 'github-hosted-source-acceptance-not-verified'
 $blockers += 'real-dev-token-and-effective-access-not-verified'
 
