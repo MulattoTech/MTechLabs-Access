@@ -8,14 +8,14 @@ This directory contains a narrowly scoped Windows PowerShell 7 preflight for the
 
 ### Read-only GitHub Actions admission report
 
-[`read-only-actions-admission.ps1`](read-only-actions-admission.ps1) uses authenticated `gh run view` **only for metadata**, pinning `MulattoTech/MTechLabs-Access` and the expected PR45 SHA. It reports all five named job status/conclusion/step counts, and distinguishes a blocked-before-start run from jobs whose test commands actually executed. No reruns, billing changes, downloads, artifacts, logs, source merge or DEV activation. A status of `admissionObserved=true` is **not** a release or security acceptance verdict.
+[`read-only-actions-admission.ps1`](read-only-actions-admission.ps1) uses authenticated `gh run view` **only for metadata**, pinning `MulattoTech/MTechLabs-Access` and the expected PR45 SHA. It reports all five named job status/conclusion/step counts, and **separately** classifies (1) whether each job completed at least one runner step and (2) whether all **10 mandatory test/build/upstream step names** are recorded as completed by GitHub. Merely finishing checkout or setup cannot set `requiredTestStagesObserved=true`. These are **step metadata observations, not proof that a command's contents executed successfully**. No reruns, billing changes, downloads, artifacts, logs, source merge or DEV activation. A status of `admissionObserved=true` is **not** a release or security acceptance verdict.
 
 ```powershell
 pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.ps1 -RunId 44742255585
 pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-actions-admission.test.ps1
 ```
 
-The first invocation is expected to exit **1** for the current failed-billing run, reporting `completedWithSteps=0`; it should not be retried as a GitHub workflow. The second runs **13 offline synthetic classifier cases**, without GitHub or production inspection. For actual independent hosted artifact verification later, follow [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) and the repository's frozen evidence verifier.
+The first invocation is expected to exit **1** for the current failed-billing run, reporting `completedWithSteps=0`, `observedRequiredStages=0` and `requiredTestStagesObserved=false`; it should not be retried as a GitHub workflow. The second runs **21 offline synthetic classifier cases**, including checkout-only false assurance, skipped/duplicate mandatory steps, wrong workflow/event and failing real test-stage metadata. Neither command changes GitHub or production. For actual independent hosted artifact verification later, follow [`HOSTED-ACCEPTANCE-HANDOFF.md`](HOSTED-ACCEPTANCE-HANDOFF.md) and the repository's frozen evidence verifier.
 
 ## Source
 
