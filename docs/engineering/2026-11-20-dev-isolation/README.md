@@ -31,6 +31,8 @@ The first invocation is expected to exit **1** for the current failed-billing ru
 
 **Installed package dependency-closure checkpoint:** [the sanitized direct-dependency receipt](sanitized-upstream-direct-dependencies-20261120.json) records **34/34 located direct package dependencies** and **13/13 immediate relative entry imports**, with all inspected targets having active Authenticated Users Modify on H:. This is not complete transitive source integrity or a real DEV-token test. The operational plan explicitly prohibits a launcher-only or entry-only relocation that continues loading modules from the old mutable package tree.
 
+**Expanded upstream closure tooling and evidence:** [`read-only-upstream-closure.py`](read-only-upstream-closure.py), [`read-only-upstream-native.py`](read-only-upstream-native.py), and their [17-case synthetic test suite](read-only-upstream-closure.test.py) are bounded, read-only package-metadata/native file scanners. The [sanitized R30 receipt](sanitized-upstream-closure-20261120.json) records **612/612 package roots with inherited broad Modify**, **1,190 resolved required dependency references**, and four hashed native/helper binaries with the same observed broad ACL issue. This is neither full dynamic module-resolution proof nor effective-access acceptance. Only a separately approved protected-root cutover may change live source, permissions or accounts.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
