@@ -622,6 +622,68 @@ foreach($scenario in @(
     }
 }
 
+# Correct socket geometry alone must not establish manager ownership.
+# These mocks change only the process/query observations returned to this
+# PowerShell execution. No real process, file, socket, service or ACL changes.
+foreach ($scenario in @(
+    @{label='wrong_executable';kind='wrong-exe';expected='invocation-mismatch';blocker='production-invocation-mismatch'},
+    @{label='entry_substring_only';kind='entry-substring';expected='invocation-mismatch';blocker='production-invocation-mismatch'},
+    @{label='incorrect_config_pair';kind='wrong-config';expected='invocation-mismatch';blocker='production-invocation-mismatch'},
+    @{label='duplicate_config_flags';kind='duplicate-config';expected='invocation-mismatch';blocker='production-invocation-mismatch'},
+    @{label='process_query_denied';kind='cim-denied';expected='unverified';blocker='production-invocation-unverified'},
+    @{label='pid_query_mismatch';kind='pid-mismatch';expected='unverified';blocker='production-invocation-unverified'},
+    @{label='invalid_owner_pid';kind='invalid-pid';expected='unverified';blocker='production-invocation-unverified'}
+)) {
+    $output = & {
+        param([string]$kind)
+        function Get-NetTCPConnection {
+            [CmdletBinding()]param([string]$State)
+            $real = @(NetTCPIP\Get-NetTCPConnection -State Listen -ErrorAction Stop)
+            if($kind -eq 'invalid-pid') {
+                $other = @($real|Where-Object{$_.LocalPort -ne 19740})
+                return $other + @([pscustomobject]@{
+                    LocalAddress='127.0.0.1';LocalPort=19740;State='Listen';OwningProcess=0
+                })
+            }
+            return $real
+        }
+        function Get-CimInstance {
+            [CmdletBinding()]
+            param([string]$ClassName, [string]$Filter)
+            if($kind -eq 'cim-denied') {throw 'synthetic_win32_process_query_denied'}
+            $owner = [long](($Filter -split '=')[-1])
+            $exe = 'C:\Program Files\nodejs\node.exe'
+            $entry = 'H:\MTechLabs\MCP\runtime\admin.mjs'
+            $config = 'H:\MTechLabs\MCP\state\manager.json'
+            $valid = '"' + $exe + '" "' + $entry + '" --config "' + $config + '"'
+            $cmdline = switch($kind) {
+                'entry-substring' { '"' + $exe + '" --wrapper=' + $entry + ' --config "' + $config + '"' }
+                'wrong-config' { '"' + $exe + '" "' + $entry + '" --config "H:\Other\manager.json" --other="' + $config + '"' }
+                'duplicate-config' { $valid + ' --config "' + $config + '"' }
+                default { $valid }
+            }
+            if($kind -eq 'wrong-exe') {$exe='C:\Windows\System32\calc.exe'}
+            if($kind -eq 'pid-mismatch') {$owner++}
+            return [pscustomobject]@{ProcessId=$owner;ExecutablePath=$exe;CommandLine=$cmdline}
+        }
+        & $source
+    } $scenario.kind
+    $actual = $output | ConvertFrom-Json -AsHashtable
+    Assert-Inactive $actual $scenario.label
+    $invocationBlockers = @($actual.blockers | Where-Object {
+        $_ -eq 'production-invocation-mismatch' -or $_ -eq 'production-invocation-unverified'
+    })
+    if($actual.listeners.production -ne 'listener-present' -or
+       $actual.listeners.productionInvocation -ne $scenario.expected -or
+       $invocationBlockers.Count -ne 1 -or $invocationBlockers[0] -ne $scenario.blocker) {
+        throw ('production_owner_identity_check_failed_' + $scenario.label)
+    }
+    if($output.Contains('CommandLine') -or $output.Contains('C:\Windows\System32\calc.exe') -or
+       $output.Contains('--config')) {
+        throw ('private_process_details_exposed_' + $scenario.label)
+    }
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -629,7 +691,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 36
+    passed = 43
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -660,6 +722,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     candidateRootUnreadableBlocked = $true
     absentCandidatesRemainUnclaimed = $true
     productionPortExclusiveBindingChecked = $true
+    productionOwnerInvocationChecked = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
