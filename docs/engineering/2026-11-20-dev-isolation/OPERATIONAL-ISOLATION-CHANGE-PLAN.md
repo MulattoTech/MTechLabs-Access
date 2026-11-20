@@ -33,6 +33,19 @@ No choice is authorized by this document. The owner must approve an exact, compl
 
 **Interpretation limits:** the ACL category counts use a conservative write-capable rights mask and observed ACE flags, *not* an actual MTermDev token or an effective access decision. The read-only query did not independently classify every private owner/other SID and did not test file deletion, renaming, hardlinks, alternate streams, junction traversal, or post-check races. An earlier private nine-object SDDL/type/reparse snapshot remains stored **only on the owner host**, SHA-256 07053c2a8075e3003f809898632152cc446d16b9b356919f2dad200308c27d9f; this snapshot is evidence, **not** an operational restoration backup. Never publish raw owner SIDs, private SDDL, credentials or source command lines.
 
+## Source and startup provenance clarification (read-only)
+
+The owner-scoped Startup shortcut is a **Windows PowerShell launcher** invoking the existing H:\MTechLabs\MCP\runtime\manage.ps1 with Action Start. It is not a direct Node shortcut. The shortcut target, exact argument string and working directory were rechecked and match the committed install-windows-startup.ps1 contract. That wrapper in turn launches Node admin.mjs with the production config only after ownership/invocation guards; the actual running process and crash/reboot recovery still require independent qualification.
+
+A raw Git object comparison initially suggested the installed launcher and admin entry differed from the owner's source checkout. That was a **line-ending false alarm**: the installed files and working-checkout files are byte-identical (both Windows CRLF). After normalizing CRLF to LF and recomputing the standard Git blob hash, both match the prior *stored deployment record* commit **9373fadc00689dd782143ab5e49664536f460b8b**:
+
+| File | Normalized Git blob matching recorded deployment revision | Meaning |
+| --- | --- | --- |
+| H:\MTechLabs\MCP\runtime\admin.mjs | 413e773ae7a8978a71f7b49b4d3bce3c458d6076 | Installed bytes match local checkout bytes; LF-normalized content matches the recorded source revision. |
+| H:\MTechLabs\MCP\runtime\manage.ps1 | e2d8865184a10e1f4bb95d99960550df92f6fefd | Same limited source-provenance finding for the sign-in launcher script. |
+
+The GitHub repository's present main-branch file contents are newer/different from this stored deployment revision; a later source version is **not automatically** a deployed version. These file comparisons are not evidence of which machine-code/modules the current process has loaded, or of protected ACLs, token identity, signing keys or trusted path handles. Do not infer tampering from the raw CRLF/LF hash difference, and do not replace the running installed files with latest-main content without accepted source, exact cutover and tested rollback.
+
 ## 2. Proposed protected-root layout (names not allocations)
 
 | Role | Proposed code / data separation | Required protection, not a current fact |
