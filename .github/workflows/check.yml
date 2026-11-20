@@ -39,7 +39,7 @@ jobs:
 
   managed-mcp-windows:
     runs-on: windows-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: integrations/mcp-manager
@@ -50,6 +50,8 @@ jobs:
           node-version: '24'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
+        env:
+          MTERM_DISPOSABLE_REFERENCE_QUALIFICATION: '1'
 
   upstream-qualification:
     name: Upstream qualification / ${{ matrix.os }} / Node 24
@@ -73,6 +75,8 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Verify manager and qualification guards on this platform
         run: npm test
+        env:
+          MTERM_DISPOSABLE_REFERENCE_QUALIFICATION: ${{ runner.os == 'Windows' && '1' || '0' }}
       - name: Compare real pinned upstream packages in disposable stores
         run: npm run qualify:upstream
         env:

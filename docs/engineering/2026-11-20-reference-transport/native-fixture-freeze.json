@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "phase": "pre-execution-native-fixture-freeze",
+  "observedAt": "2026-11-20T11:46:06.757898+00:00",
+  "base": "15e851b11984592803d37599b639772e51e5c8c0",
+  "ownedFiles": {
+    "integrations/mcp-manager/test/reference-transport.test.mjs": {
+      "bytes": 17268,
+      "sha256": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76"
+    },
+    "integrations/mcp-manager/test/production-reference-drain.test.mjs": {
+      "bytes": 8812,
+      "sha256": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b"
+    },
+    "integrations/mcp-manager/test/dev-runtime.test.mjs": {
+      "bytes": 9915,
+      "sha256": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9"
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "bytes": 10046,
+      "sha256": "f9407dae7d2c8d2587256b7a889b7fffa1431dee13cd4347b0ff53e0952a768b"
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "bytes": 64584,
+      "sha256": "a6231ea511e3d9ed9d5d52e51bea8e01b2064744abca94342d3315531f086172"
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "bytes": 20309,
+      "sha256": "d1c1ced00467a59fc63cb49dfb47797bcb2c624f534d0a05685b1a5d47865fab"
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-pipe.ps1": {
+      "bytes": 18024,
+      "sha256": "31b27da9cbed295d28d113b477c927a938a4318778b25d20bace58670f095973"
+    }
+  },
+  "sourceReceipt": {
+    "file": "source-stable-receipt-r2.json",
+    "sha256": "17307749ace68ee5990e36ba0ea278e585572928a8593c2a2f23f6a9153da886"
+  },
+  "portableTitles": [
+    "protected reference bootstrap capability exposes the agreed validator and opaque loader",
+    "authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories",
+    "protected trust declaration is canonically ordered deeply copied and frozen without granting authority",
+    "protected trust requires every field and rejects unknown readiness targets or private material",
+    "protected trust rejects nonrecord array class and inherited-data schemas",
+    "protected trust rejects accessors symbols and hidden fields without invoking getters",
+    "protected trust pins schema version and positive safe integer generation",
+    "protected trust accepts only bounded canonical DEV instance identifiers",
+    "protected trust requires distinct canonical user SID declarations with DWORD components",
+    "protected trust accepts an Ed25519 public SPKI and rejects private or alternate key types",
+    "protected trust refuses alternate or malformed public-key encodings",
+    "protected trust digests require lowercase exact-length hex without whitespace aliases",
+    "protected trust source pins require exactly the complete fixed dependency set",
+    "protected trust source pins reject record inheritance and digest control characters",
+    "protected trust keeps ordinary Windows declarations without pretending to resolve filesystem aliases",
+    "protected trust refuses remote relative device and alternate-stream path declarations",
+    "protected trust declaration validation performs no filesystem process or network operations",
+    "plain validated cloned or caller-claimed bootstrap handles cannot open an exchange",
+    "caller-claimed authority bootstrap cannot start a privileged callback or native helper",
+    "registered authority construction refuses fake bootstrap without opening a key registration or production file",
+    "protected bootstrap refuses Node preload before invoking a native helper on Windows",
+    "unsupported platform refuses protected bootstrap before file or native access"
+  ],
+  "drainTitles": [
+    "production reference idle-drain capability is available without replacing the original protocol",
+    "authority idle wait rejects forged cloned and noncore handles synchronously without invoking them",
+    "idle authority resolves without creating requests or invoking an observer",
+    "active authority shares one pending idle promise and releases every waiter only at actual settlement",
+    "an aborted public authority call cannot release idle while its ignored-abort observer is still running",
+    "observer rejection after caller cancellation still releases idle only when the observer actually rejects",
+    "idle waits for every concurrent observer rather than the first completion",
+    "a new observer cycle obtains a fresh pending drain after an earlier idle wait completed",
+    "malformed or already-aborted requests cannot leave phantom authority work for idle waiters"
+  ],
+  "nativeParent": "protected reference transport qualifies separate disposable Windows identities and mandatory cleanup",
+  "nativeCases": [
+    {
+      "title": "separate reference accounts have actual standard tokens and independently loaded profiles",
+      "positiveControls": 3
+    },
+    {
+      "title": "actual standard DEV receives a registered signed reference without production reads or writer effects",
+      "positiveControls": 1
+    },
+    {
+      "title": "public Inspect and Status use protected bootstrap and the real cross-account reference",
+      "positiveControls": 2
+    },
+    {
+      "title": "unauthorized real requester is rejected before any registered authority invocation",
+      "positiveControls": 1
+    },
+    {
+      "title": "DEV cannot read private signing material or create replacements in protected bootstrap",
+      "positiveControls": 1
+    },
+    {
+      "title": "protected selections and source pins reject overrides before authority or altered entry execution",
+      "positiveControls": 3
+    },
+    {
+      "title": "unsafe public private and ancestor ACLs fail closed with restored signed controls",
+      "positiveControls": 5
+    },
+    {
+      "title": "a fresh DEV logon with Administrators membership is refused then standard access is restored",
+      "positiveControls": 1
+    },
+    {
+      "title": "DEV cannot add a pipe server or impersonate the pinned authority endpoint",
+      "positiveControls": 3
+    },
+    {
+      "title": "actual remote pipe clients are denied beside an authenticated allow-remote control",
+      "positiveControls": 2
+    },
+    {
+      "title": "a substituted public response pin rejects a real signed observation without reader fallback",
+      "positiveControls": 1
+    },
+    {
+      "title": "native runtime probes ignore a hostile module search path after a real neighbor executes it",
+      "positiveControls": 1
+    },
+    {
+      "title": "oversized malformed truncated and coalesced frames are refused before callback dispatch",
+      "positiveControls": 2
+    },
+    {
+      "title": "an observed delayed extra byte cancels one admitted callback and prevents its response",
+      "positiveControls": 1
+    },
+    {
+      "title": "captured cancellation and hostile callback values preserve bounded errors and real settlement",
+      "positiveControls": 1
+    },
+    {
+      "title": "a real transport deadline refuses the response while retaining an ignored-abort callback",
+      "positiveControls": 1
+    },
+    {
+      "title": "eight admitted callbacks retain capacity through cancellation and drain after multi-connection shutdown",
+      "positiveControls": 1
+    },
+    {
+      "title": "qualification leaves manager state unchanged and closes all owned account processes",
+      "positiveControls": 1
+    }
+  ],
+  "nativeMarker": "MTERM_REFERENCE_TRANSPORT_NATIVE_EVIDENCE ",
+  "watchdog": {
+    "workMilliseconds": 360000,
+    "cleanupMilliseconds": 60000,
+    "outerMilliseconds": 420000
+  },
+  "budgetsWereSetBeforeNativeExecution": true,
+  "nativeExecutionOccurred": false,
+  "testExecutionAfterThisFreeze": "pending",
+  "requiresBothHostedWindowsJobs": true,
+  "contextGuards": {
+    "optIn": "MTERM_DISPOSABLE_REFERENCE_QUALIFICATION=1",
+    "GITHUB_ACTIONS": "true",
+    "RUNNER_ENVIRONMENT": "github-hosted",
+    "RUNNER_OS": "Windows"
+  },
+  "missingPrivilegeIsHostedFailureNotSkip": true,
+  "linuxNativeSkip": "Requires a disposable hosted Windows runner and explicit fixture opt-in",
+  "ordinaryWindowsNativeSkip": "Disposable account qualification is not opted in on this Windows machine",
+  "portablePlatformSkips": {
+    "linux": "protected bootstrap refuses Node preload before invoking a native helper on Windows",
+    "windows": "unsupported platform refuses protected bootstrap before file or native access"
+  },
+  "derivedExpectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "totalsAreDerivedNotExecutionResults": true,
+  "preservedFixtures": {
+    "integrations/mcp-manager/test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+    "integrations/mcp-manager/test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+    "integrations/mcp-manager/test/dev-runtime.test.mjs": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
+    "integrations/mcp-manager/test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc"
+  },
+  "priorReceipts": [
+    "portable-fixture-freeze.json",
+    "drain-fixture-freeze.json",
+    "wrapper-contract-freeze.json",
+    "focused-first-receipt.json"
+  ],
+  "preFreezeReviewCorrections": [
+    "Journal successful user creation before group setup",
+    "Never delete a collision tree that this invocation did not exclusively create",
+    "Preserve ownership journal after partial cleanup and allow bounded resumption",
+    "Independent raw token groups/elevation/privilege observation",
+    "Use actual account profile temp before native compilation",
+    "Add production runtime paths to Node filesystem observation scope",
+    "Actual operational Authority positive distinct from callback instrumented server",
+    "Wait for actual extra-byte cancellation before held callback release"
+  ],
+  "limits": [
+    "No owner host or production account mutation.",
+    "Actual native behavior and C# compilation remain pending hosted CI.",
+    "Filtered Administrators coverage is claimed only if the independent raw token report actually observes deny-only membership.",
+    "Mapped drive qualification is not claimed.",
+    "Node I/O counters exclude native/compiler activity and intentionally shared Node.",
+    "Transport callbacks are synthetic for framing/admission/cancellation; registered proof and public operational paths are separately labelled.",
+    "Listener admission closes before callback/core idle drain; no keeper-through-drain claim.",
+    "Operational in-flight observer injection is not claimed; core idle has separate frozen behavioral tests.",
+    "Activation, upstream execution, live route/App/grant and production deployment remain unqualified."
+  ]
+}

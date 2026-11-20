@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "phase": "intentional-public-wrapper-contract-migration-before-execution",
+  "baselineCommit": "15e851b11984592803d37599b639772e51e5c8c0",
+  "path": "integrations/mcp-manager/test/dev-runtime.test.mjs",
+  "previousSha256": "cb4e0f2faa8028aa0703fedde234f369f16ba6bff94e05a3ee067554da8a2d99",
+  "currentSha256": "43870ff02045a026b659dd308ca4ef3afdbc8b9b19de2a17472299da689a13e9",
+  "previousTitle": "DEV launcher Inspect and Status return bounded diagnostics without activation",
+  "currentTitle": "DEV launcher Inspect and Status refuse missing protected reference trust without fallback",
+  "previousMeaning": "Public wrapper used owner-side direct reader and succeeded without protected reference bootstrap.",
+  "newMeaning": "Public wrapper requires protected reference bootstrap and fails closed, with no direct production reader fallback.",
+  "equivalentPositiveRequired": "New real separate-account native harness must positively exercise both Inspect and Status through protected bootstrap and registered authority.",
+  "directLibraryDiagnosticsUnchanged": true,
+  "syntaxChecked": true,
+  "behaviorExecuted": false,
+  "diff": "--- baseline\n+++ restricted-contract\n@@ -126,7 +126,7 @@\n   await assert.rejects(fs.stat(marker), { code: 'ENOENT' });\n });\n \n-test('DEV launcher Inspect and Status return bounded diagnostics without activation', native, async t => {\n+test('DEV launcher Inspect and Status refuse missing protected reference trust without fallback', native, async t => {\n   const f = await runtimeInputs(t);\n   const before = await Promise.all([directorySnapshot(f.prod.directory), directorySnapshot(f.dev.directory)]);\n   for (const action of ['Inspect', 'Status']) {\n@@ -134,9 +134,11 @@\n       '-Action', action, '-NodePath', process.execPath, '-ConfigPath', f.dev.configPath, '-PlanPath', f.planPath], {\n       windowsHide: true, encoding: 'utf8', timeout: 25000, maxBuffer: 8192, env: cleanEnvironment(),\n     });\n-    assert.ifError(child.error); assert.equal(child.status, 0, child.stderr); assert.equal(child.stderr, '');\n-    const report = JSON.parse(child.stdout);\n-    assert.equal(report.mode, 'read-only'); assert.equal(report.qualified, false); assert.equal(report.upstreamEnabled, false);\n+    assert.ifError(child.error); assert.equal(child.status, 1); assert.equal(child.stdout, '');\n+    const report = JSON.parse(child.stderr);\n+    assert.equal(report.error, 'runtime_reference_bootstrap_untrusted');\n+    assert.equal(report.qualified, false); assert.equal(report.upstreamEnabled, false);\n+    assert.equal(child.stderr.includes(f.prod.directory), false); assert.equal(child.stderr.includes(f.dev.directory), false);\n   }\n   assert.deepEqual(await Promise.all([directorySnapshot(f.prod.directory), directorySnapshot(f.dev.directory)]), before);\n });\n",
+  "syntaxCheckCommand": [
+    "node",
+    "--check",
+    "integrations/mcp-manager/test/dev-runtime.test.mjs"
+  ],
+  "syntaxCheckCwd": "/workspace/scratch/86162842804d/MTechLabs-Access",
+  "syntaxCheckExitCode": 0,
+  "syntaxCheckPreparationNote": "An initial syntax command used the workspace parent directory and could not locate the test; the same unchanged file was then successfully checked from the repository root. No product/test behavior executed."
+}

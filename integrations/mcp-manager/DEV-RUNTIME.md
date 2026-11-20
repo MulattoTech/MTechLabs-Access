@@ -10,37 +10,43 @@ Every successful report has `qualified: false` and `upstreamEnabled: false`.
 The existing DEV remote/gateway blocks remain enforced. A successful diagnostic
 exit code means the report was produced, not that activation is authorized.
 
-The distinct [authenticated production-reference API](PRODUCTION-REFERENCE.md)
-supports restricted read-only inspection without direct protected production
-reads. It requires trusted registration/key bootstrap and an explicitly supplied
-exchange callback; no operational transport or CLI trust override is installed.
-The wrapper and direct invocation below retain their original permission needs.
-Reference acceptance never grants manager writer/ownership capabilities.
+The public wrapper and inspector now use the
+[protected local production-reference transport](REFERENCE-TRANSPORT.md).
+They require a protected installation and pinned public trust, authenticate the
+registered local authority, and perform restricted read-only inspection without
+direct production-file reads. Missing/untrusted bootstrap or unavailable
+reference evidence is an error; it never selects the old direct inspector.
+The library's original direct inspection API remains available to its trusted
+callers with its original permissions. Reference acceptance grants no writer or
+ownership capability and does not install the authority service.
 
 ## Inputs and invocation
 
-Use the PowerShell wrapper with explicit absolute paths:
+After separately approved bootstrap/authority installation, use the protected
+PowerShell wrapper under the ordinary registered DEV identity:
 
 ```powershell
-& 'C:\MTermDev\manager\manage-dev.ps1' -Action Inspect `
-  -NodePath 'C:\Program Files\nodejs\node.exe' `
-  -ConfigPath 'C:\MTermDev\state\manager.json' `
-  -PlanPath 'C:\MTermDev\state\dev-runtime-plan.json'
+& 'C:\ProgramData\MTechLabs\ReferenceManager\manage-dev.ps1' -Action Inspect
+& 'C:\ProgramData\MTechLabs\ReferenceManager\manage-dev.ps1' -Action Status
 ```
 
-These are examples, not installed paths. The wrapper rejects `NODE_OPTIONS`
-and `NODE_PATH` before executing the selected Node binary. Direct invocation of
+These are examples, not installed paths. Node, config and plan come from the
+protected bootstrap. Optional explicit path arguments are comparison-only and
+must match those selections; they are not bootstrap or privileged-target
+overrides. The wrapper independently validates the helper before loading it and
+verifies protected Node bytes before executing Node. It rejects `NODE_OPTIONS`
+and `NODE_PATH`. Direct invocation of
 `inspect-dev-runtime.mjs` checks them too, but Node may already have executed a
 preload before JavaScript runs. The wrapper is the supported entry point for
 that boundary. Select an independently trusted Node executable and source tree;
 this inspector cannot make a malicious executable or local operator trustworthy.
 
-The helper uses the fixed supported Windows PowerShell 5.1 executable at
+The helpers use the fixed supported Windows PowerShell 5.1 executable at
 `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`, with no profile
-and no interactive commands. It does not select an executable through PATH,
+and no interactive commands, with system-only module lookup. They do not select an executable through PATH,
 SystemRoot or ComSpec. Another Windows installation layout is unsupported and
 returns unavailable. Input and output use bounded UTF-8 pipes, including paths
-with non-ASCII characters. The helper receives only expected paths, port numbers
+with non-ASCII characters. The existing runtime observation helper receives only expected paths, port numbers
 and the actual calling Node process ID/image; it does not evaluate command text.
 
 The DEV configuration must first satisfy [the manager foundation](DEV.md).
@@ -52,7 +58,8 @@ metadata around bounded reads. This is a point-in-time topology check, not an
 OS sandbox against concurrent local file or mount replacement.
 
 Both token files must contain only `sha256:<64 hex digits>` (surrounding
-whitespace is accepted). The inspector refuses legacy plaintext token files.
+whitespace is accepted). The authority reads and compares production credentials;
+the restricted consumer reads only DEV controls. Legacy plaintext tokens are refused.
 Do not grant a DEV account access to a production plaintext bearer to make an
 inspection pass. Converting a production token file or providing an authoritative
 scoped reference requires separate operational preparation. Nothing here changes

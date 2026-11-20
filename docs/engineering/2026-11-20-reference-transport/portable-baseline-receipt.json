@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "classification": "Explicit new API capability gap only; no causal product-regression claim",
+  "baselineCommit": "15e851b11984592803d37599b639772e51e5c8c0",
+  "testSha256": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/reference-transport.test.mjs"
+  ],
+  "cwd": "/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager",
+  "exitCode": 1,
+  "observedTotals": {
+    "tests": 22,
+    "pass": 0,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 20,
+    "todo": 0
+  },
+  "failedCapabilityTitles": [
+    "protected reference bootstrap capability exposes the agreed validator and opaque loader",
+    "authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories"
+  ],
+  "skippedBehaviorGroups": 20,
+  "nativeAccountOrProfileOperations": 0,
+  "stdout": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/portable-baseline.stdout.log",
+    "sha256": "1a78ea37db0972d0f3fa8de6802f9a29c4d9bc6038103e3346afaf3a8c26e928",
+    "bytes": 13284
+  },
+  "stderr": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/portable-baseline.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  }
+}

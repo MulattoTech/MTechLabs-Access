@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "phase": "first-frozen-portable-and-drain-candidate",
+  "startedAt": "2026-11-20T11:13:24.778933+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/reference-transport.test.mjs",
+    "test/production-reference-drain.test.mjs"
+  ],
+  "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager",
+  "exitCode": 0,
+  "totals": {
+    "tests": 31,
+    "pass": 30,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "inputsBefore": {
+    "lib/reference-bootstrap.mjs": "83dec86b265b7bb457dc409f6c8405f1246c28cc305c17f078f76d2045bafb6e",
+    "lib/reference-transport.mjs": "cc6c4096ffbba82c9f9ad1a26aacfaa37626ca6563804c6e89a975f98b823b4a",
+    "lib/production-reference.mjs": "5009b6dd392d97879dbe568ab725b3b9dcf38ab64d2b34fe8b7f0d8492ebd02b",
+    "test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+    "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+    "test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc"
+  },
+  "inputsAfter": {
+    "lib/reference-bootstrap.mjs": "83dec86b265b7bb457dc409f6c8405f1246c28cc305c17f078f76d2045bafb6e",
+    "lib/reference-transport.mjs": "cc6c4096ffbba82c9f9ad1a26aacfaa37626ca6563804c6e89a975f98b823b4a",
+    "lib/production-reference.mjs": "5009b6dd392d97879dbe568ab725b3b9dcf38ab64d2b34fe8b7f0d8492ebd02b",
+    "test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76",
+    "test/production-reference-drain.test.mjs": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+    "test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc"
+  },
+  "inputsUnchanged": true,
+  "stdout": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/focused-first.stdout.log",
+    "sha256": "f4d850e4e0dad3b1f67674c4970b4af499cc395fc7844174d3f2c67a51875d34",
+    "bytes": 7846
+  },
+  "stderr": {
+    "path": "/workspace/scratch/86162842804d/dev_reference_transport/focused-first.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "limits": [
+    "Portable and authority lifecycle source evidence only; native protected/bootstrap/identity fixture still pending.",
+    "Test author has not independently approved implementation source."
+  ]
+}

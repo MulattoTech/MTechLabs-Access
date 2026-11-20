@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "phase": "authority-idle-fixture-freeze-before-execution",
+  "path": "integrations/mcp-manager/test/production-reference-drain.test.mjs",
+  "bytes": 8812,
+  "sha256": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+  "groups": 9,
+  "titles": [
+    "production reference idle-drain capability is available without replacing the original protocol",
+    "authority idle wait rejects forged cloned and noncore handles synchronously without invoking them",
+    "idle authority resolves without creating requests or invoking an observer",
+    "active authority shares one pending idle promise and releases every waiter only at actual settlement",
+    "an aborted public authority call cannot release idle while its ignored-abort observer is still running",
+    "observer rejection after caller cancellation still releases idle only when the observer actually rejects",
+    "idle waits for every concurrent observer rather than the first completion",
+    "a new observer cycle obtains a fresh pending drain after an earlier idle wait completed",
+    "malformed or already-aborted requests cannot leave phantom authority work for idle waiters"
+  ],
+  "baselineCommit": "15e851b11984592803d37599b639772e51e5c8c0",
+  "syntaxCheckPassed": true,
+  "behaviorExecuted": false,
+  "previousFrozenTestsUnchanged": {
+    "integrations/mcp-manager/test/production-reference.test.mjs": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+    "integrations/mcp-manager/test/reference-transport.test.mjs": "b15b7ff2275c853d80cbec51114055b727c29d36841d566c9bd9ed4b1b089c76"
+  },
+  "contract": "Synchronous runtime_reference_required on forged handles. Resolved when current observers idle; identical shared promise while active; caller abort cannot release until actual underlying observer settles. No promise of blocking future admissions."
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "phase": "main",
+  "runId": null,
+  "attempt": 1,
+  "sourceSha": "REQUIRED_ACTUAL_MAIN_SHA40",
+  "headSha": "REQUIRED_ACTUAL_MAIN_SHA40",
+  "treeSha": "REQUIRED_IMMUTABLE_TREE_SHA40",
+  "localSourceCommit": "REQUIRED_ACTUAL_MAIN_SHA40",
+  "repoPath": "/workspace/scratch/86162842804d/MTechLabs-Access",
+  "repoFullName": "MulattoTech/MTechLabs-Access",
+  "files": {
+    "run": "main-run.json",
+    "jobs": "main-jobs.json",
+    "artifacts": "main-artifacts.json"
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "expectedSkips": {
+    "root": [],
+    "linux": [
+      "Windows case aliases of production state are rejected",
+      "Windows DEV rejects alternate streams and trailing-dot or space control aliases",
+      "Windows DEV runtime probe qualifies invocation, listener state, process lifetime and disposal",
+      "native Windows identity inspects only its own Node parent and ignores spoofed profile environment",
+      "native Windows listener observation qualifies the actual provider and Unicode fixture invocation",
+      "registered reference handles privately pin deep copied configs and plan without writer authority",
+      "restricted reference consumer reads no production paths and requests no production native role",
+      "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+      "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+      "registered authority refuses actual DEV control drift across production native observation",
+      "restricted consumer refuses local retargeting after exchange before following substituted controls",
+      "registered authority compares actual digest-only credentials and never returns credential values",
+      "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+      "restricted reference errors omit callback secrets and have no direct-read fallback",
+      "native restricted reference inspects its own caller and owned DEV listener without production observation or writes",
+      "registered reference binds differing declared and canonical config spellings to the same actual file identity",
+      "runtime input snapshots bind selected DEV and production files without state writes",
+      "runtime inputs refuse plaintext credentials and unknown, oversized or mismatched plans",
+      "runtime inputs reject linked plans, profile junctions and shared entry files",
+      "runtime token path validation refuses UNC before any filesystem network lookup",
+      "runtime inputs compare all four canonical entry and config identities",
+      "runtime inspection reports unqualified fixture identities and does not change either store",
+      "DEV launcher refuses activation and Node preload before executing its supplied command",
+      "DEV launcher Inspect and Status refuse missing protected reference trust without fallback",
+      "Windows launcher verifies executable, entry, configuration and listener identity",
+      "protected reference transport qualifies separate disposable Windows identities and mandatory cleanup",
+      "protected bootstrap refuses Node preload before invoking a native helper on Windows"
+    ],
+    "windows": [
+      "registered reference Windows integration refuses unsupported platforms before any I/O",
+      "runtime inspector explicitly refuses unsupported operating systems",
+      "unsupported platform refuses protected bootstrap before file or native access"
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "scope": "author-owned source and module docs stable before native behavior qualification",
+  "base": "15e851b11984592803d37599b639772e51e5c8c0",
+  "observedAt": "2026-11-20T11:41:56.444512+00:00",
+  "files": {
+    "integrations/mcp-manager/lib/reference-bootstrap.mjs": {
+      "bytes": 15044,
+      "sha256": "8cab84a8e58410972c0a902976e48984312451b953c6a480201c36bb7ed14776"
+    },
+    "integrations/mcp-manager/lib/reference-transport.mjs": {
+      "bytes": 9656,
+      "sha256": "cc6c4096ffbba82c9f9ad1a26aacfaa37626ca6563804c6e89a975f98b823b4a"
+    },
+    "integrations/mcp-manager/windows-reference.ps1": {
+      "bytes": 6640,
+      "sha256": "690b1499183795ba9414a26cbeecb7c49a8813dd0afb8bb09988160c25dd397c"
+    },
+    "integrations/mcp-manager/windows-reference-native.cs": {
+      "bytes": 32484,
+      "sha256": "4811b21e637017ff324f46ae8201a437ed5cbbe6e174b9a412669f3b21431468"
+    },
+    "integrations/mcp-manager/reference-server.mjs": {
+      "bytes": 1792,
+      "sha256": "6a3d5ff1e28c3c7c1ce2292738ca95bb6b451067557708d8d6185520a5973338"
+    },
+    "integrations/mcp-manager/manage-dev.ps1": {
+      "bytes": 6503,
+      "sha256": "c07baf4b8cba189e4d309caca66b26e5d5de933e2f21771297a5127c04ca942c"
+    },
+    "integrations/mcp-manager/inspect-dev-runtime.mjs": {
+      "bytes": 1096,
+      "sha256": "d3002ce176f670d306c30fe284a6edc6802e6adf414fbf3250dc2dbf11016323"
+    },
+    "integrations/mcp-manager/lib/production-reference.mjs": {
+      "bytes": 16467,
+      "sha256": "5009b6dd392d97879dbe568ab725b3b9dcf38ab64d2b34fe8b7f0d8492ebd02b"
+    },
+    "integrations/mcp-manager/lib/runtime-identity.mjs": {
+      "bytes": 1805,
+      "sha256": "f7d7e81cddf9e5b6e0ac59ddf2ef498e255bde40cfc1bd7ab4b2f2f96d4b5912"
+    },
+    "integrations/mcp-manager/REFERENCE-TRANSPORT.md": {
+      "bytes": 15700,
+      "sha256": "d4558b50633febbadcf9107ef9085bee7d04d5dac3cf3eb70e4422bc2ebd460a"
+    },
+    "integrations/mcp-manager/PRODUCTION-REFERENCE.md": {
+      "bytes": 11916,
+      "sha256": "7483ba05d579f9de24ee7a8382b194c405aff681154a0a219c750e40ce842cf8"
+    },
+    "integrations/mcp-manager/DEV-RUNTIME.md": {
+      "bytes": 13486,
+      "sha256": "6e45d46e061280d1a4ba5bf43b3e7ef1ffae3c2881c9c1eb049ebdb57c95929c"
+    }
+  },
+  "behaviorTestsExecutedByAuthor": false,
+  "nativeQualification": "pending",
+  "liveOperationsPerformed": false,
+  "activationAuthorized": false,
+  "revision": 2,
+  "supersedesReceipt": {
+    "filename": "source-stable-receipt.json",
+    "sha256": "63ef135b1d2cf24eeba659802454afda3732c35e785cf7b8416827ef5ce2147d",
+    "preserved": true
+  },
+  "correction": {
+    "file": "integrations/mcp-manager/windows-reference-native.cs",
+    "cause": "Source review found C# CS0136: TokenGroups nested count conflicted with the enclosing privilege-count local.",
+    "change": "Renamed only the TokenGroups local and its uses to groupCount.",
+    "adjacentDeclarationScan": "Read-only scan of adjacent and remaining C# method scopes found no additional instance of this declaration-space collision.",
+    "csharpCompilationExecuted": false
+  },
+  "changedSincePriorReceipt": [
+    "integrations/mcp-manager/windows-reference-native.cs"
+  ]
+}
