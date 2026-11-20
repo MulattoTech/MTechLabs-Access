@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "Read-only installed upstream package identity and declared npm alias cross-check; not runtime closure or acceptance",
+  "observedUtc": "2026-11-20T20:25:49.865088+00:00",
+  "installedPackage": "@wonderwhy-er/desktop-commander",
+  "installedVersion": "0.3.1",
+  "identityAudit": {
+    "schemaVersion": 1,
+    "scope": "read-only dependency package name versus declared name and npm alias",
+    "packageManifestsInspected": 612,
+    "requiredDependencyEdges": 1190,
+    "optionalDependencyEdges": 40,
+    "presentIdentityEdgesMatched": 1194,
+    "npmAliasIdentityEdgesMatched": 3,
+    "missingOptionalEdges": 36,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "unqualifiedSample": [],
+    "identityAuditPassed": true,
+    "packageManifestFingerprintSha256": "c40593ac96b5d8cae756d5515378e95892f617d9e01dfe405923d451cbfd41c3",
+    "installedPackageCodeExecuted": false,
+    "versionRangesValidated": false,
+    "fullNodeRuntimeResolutionVerified": false,
+    "sourceSignatureVerified": false,
+    "effectiveWindowsPermissionsVerified": false,
+    "devActivationAuthorized": false
+  },
+  "declaredAliasMappings": [
+    {
+      "installedAlias": "string-width-cjs",
+      "declaredTarget": "string-width"
+    },
+    {
+      "installedAlias": "strip-ansi-cjs",
+      "declaredTarget": "strip-ansi"
+    },
+    {
+      "installedAlias": "wrap-ansi-cjs",
+      "declaredTarget": "wrap-ansi"
+    }
+  ],
+  "isolatedSyntheticTests": {
+    "run": 15,
+    "passed": 15,
+    "failed": 0
+  },
+  "priorClosureSyntheticTests": {
+    "run": 17,
+    "passed": 17,
+    "failed": 0
+  },
+  "sourceSha256": {
+    "read-only-upstream-identity.py": "2c4350f6afb79b82ac4025646c91cd83be31f33a2e46a6f12b7a558c328a1624",
+    "read-only-upstream-identity.test.py": "b1e60e52bece890fe0ac9ac191a9c2ac2848bef074b6c9eb2c496d89fae12e0b"
+  },
+  "limitations": [
+    "Validates package.json name versus required and present optional dependency declarations; does not authenticate registry provenance or verify version range satisfaction.",
+    "Npm alias declaration syntax is checked, not semver/lockfile integrity or signature.",
+    "Declared metadata graph is not actual dynamic Node resolution, browser/PDF/helper download closure, or loaded-process identity.",
+    "Filesystem metadata is read at separate points in time, not a stable kernel-handle attestation.",
+    "Permission entries and the absent real DEV token still require independently approved effective-access tests.",
+    "PR45 mandatory independently verified Windows/Linux hosted qualification is not completed."
+  ],
+  "safety": {
+    "productionProcessRestarted": false,
+    "productionPackageEdited": false,
+    "accountsOrAclEdited": false,
+    "credentialsOpened": false,
+    "githubActionsRerun": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
