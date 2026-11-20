@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "observedUtc": "2026-11-20T19:41:05.3472740Z",
+  "type": "Redacted owner-local stdio client mapping snapshot, not routed session or effective-access verification",
+  "basis": "Python 3.12 standard-library TOML/JSON targeted-entry classification of the three known verify-clients.mjs client names",
+  "trackedCheckerSource": {
+    "script": "read-only-local-client-audit.py",
+    "scriptBlob": "57945ede64955db827a282eaf3f00d62905e780f",
+    "syntheticTest": "read-only-local-client-audit.test.py",
+    "syntheticTestBlob": "586f950225a100bf6672e414ed8522b76f4f0c9c",
+    "syntheticTestsPassed": 21,
+    "syntheticTestsTotal": 21,
+    "syntheticTestsFailed": 0
+  },
+  "counts": {
+    "knownClientFilesRead": 3,
+    "managedEntriesPresent": 3,
+    "existingHGatewayMatches": 3,
+    "existingHConfigMatches": 3,
+    "knownNodeAndArgsMatches": 3
+  },
+  "clients": [
+    {
+      "client": "codex",
+      "managedEntryPresent": true,
+      "legacyGateway": true,
+      "legacyManagerConfig": true,
+      "knownCommandAndArgumentsMatch": true
+    },
+    {
+      "client": "claude-code",
+      "managedEntryPresent": true,
+      "legacyGateway": true,
+      "legacyManagerConfig": true,
+      "knownCommandAndArgumentsMatch": true
+    },
+    {
+      "client": "claude-desktop",
+      "managedEntryPresent": true,
+      "legacyGateway": true,
+      "legacyManagerConfig": true,
+      "knownCommandAndArgumentsMatch": true
+    }
+  ],
+  "currentProductionRoot": "H:\\MTechLabs\\MCP",
+  "futureTargetRootSelected": false,
+  "requiresClientMappingMigrationBeforeCutover": true,
+  "secretsExported": false,
+  "rawClientConfigExported": false,
+  "clientConfigurationPathsExported": false,
+  "clientSessionsStarted": false,
+  "networkQueried": false,
+  "productionManagerQueried": false,
+  "userConfigModified": false,
+  "devActivationAuthorized": false,
+  "sourceAndRuntimeAttested": false,
+  "plannedDisposition": "After independent hosted source acceptance and separate operational approval, back up each exact client config, stage protected new source/registration, update one owned entry per client, preserve unrelated entries, verify client behavior and rollback before cutover.",
+  "limitations": [
+    "Known client set is limited to Codex, Claude Code and Claude Desktop in the reviewed verify-clients.mjs source; no inference about other client applications.",
+    "The parsed path/command flags are a targeted read-only comparison, not a complete execution of the original client verifier or SDK authentication.",
+    "No client session, process, tool RPC, backend health check, Cloudflare route or OAuth grant was exercised.",
+    "Owner profile identity, race-free file identity, effective ACL rights and linked/redirected configuration parents were not natively attested.",
+    "Source check results are point-in-time only; a later approved migration requires fresh exact files, backups, and restore rehearsal."
+  ]
+}
