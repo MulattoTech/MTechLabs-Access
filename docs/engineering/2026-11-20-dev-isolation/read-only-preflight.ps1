@@ -187,7 +187,7 @@ try {
     }
 } catch { $startup = 'unverified' }
 
-$listener = [ordered]@{production='unverified';development='unverified';productionInvocation='unverified'}
+$listener = [ordered]@{production='unverified';development='unverified';productionInvocation='unverified';productionSocketRecheck='not-run'}
 try {
     $sockets = @(Get-NetTCPConnection -State Listen -ErrorAction Stop)
     # An exclusive loopback binding requires one listener on the entire port.
@@ -228,6 +228,24 @@ try {
                 [regex]::Matches($text, $entryRegex).Count -eq 1 -and
                 [regex]::Matches($text, $configRegex).Count -eq 1 -and
                 [regex]::Matches($text, $flagRegex).Count -eq 1)
+            # Narrow the socket/process TOCTOU window. Re-observe the entire
+            # production port after the CIM lookup. The same PID, sole binding,
+            # and address must still be present; two matching samples are not
+            # an immutable handle or proof against a later owner transition.
+            $afterSocket = @(Get-NetTCPConnection -State Listen -ErrorAction Stop |
+                Where-Object { $_.LocalPort -eq 19740 })
+            $sameOwner = $false
+            if ($afterSocket.Count -eq 1 -and
+                $afterSocket[0].LocalAddress -eq '127.0.0.1') {
+                try {
+                    $sameOwner = ([long]$afterSocket[0].OwningProcess -eq $ownerPid)
+                } catch { $sameOwner = $false }
+            }
+            if (-not $sameOwner) {
+                $listener.productionSocketRecheck = 'changed'
+                throw 'production_socket_binding_or_owner_changed'
+            }
+            $listener.productionSocketRecheck = 'matched'
             $listener.productionInvocation = if ($match) {'invocation-fields-match'} else {'invocation-mismatch'}
         } catch {
             $listener.productionInvocation = 'unverified'
@@ -273,6 +291,9 @@ if ($listener.production -eq 'listener-nonexclusive') {
     $blockers += 'production-listener-nonexclusive'
 } elseif ($listener.production -ne 'listener-present') {
     $blockers += 'production-listener-unverified'
+}
+if ($listener.productionSocketRecheck -eq 'changed') {
+    $blockers += 'production-owner-binding-drift'
 }
 if ($listener.productionInvocation -eq 'invocation-mismatch') {
     $blockers += 'production-invocation-mismatch'
