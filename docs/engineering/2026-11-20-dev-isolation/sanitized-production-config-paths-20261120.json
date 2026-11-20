@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "Sanitized, read-only installed production manager config path inventory",
+  "observedUtc": {
+    "fileAndObjectStatus": "2026-11-20T19:46:17.9610846Z",
+    "parentCategory": "2026-11-20T19:46:45.1777188Z"
+  },
+  "source": "H:\\MTechLabs\\MCP\\state\\manager.json",
+  "fileByteLength": 624,
+  "schemaVersionOne": true,
+  "requiredSourcePathFieldCount": 7,
+  "observedPathFieldCount": 7,
+  "unexpectedTopLevelKeys": 0,
+  "developmentInstanceFieldPresent": false,
+  "pathGroups": {
+    "legacyNodeModules": 2,
+    "legacyState": 4,
+    "expectedSharedNode": 1,
+    "unqualified": 0
+  },
+  "items": [
+    {
+      "field": "nodePath",
+      "category": "existing-shared-Node-executable",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Preserve only after exact-host Node 27 alpha compatibility/source verification; separate production/DEV runtime choice requires approval"
+    },
+    {
+      "field": "serverPath",
+      "category": "legacy-production-node_modules",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Pin actual upstream source/package hash and future protected code+dependency root; no H: fallback"
+    },
+    {
+      "field": "serverPackageJsonPath",
+      "category": "legacy-production-node_modules",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Bind same verified package installation as serverPath and its exact package version"
+    },
+    {
+      "field": "stateDirectory",
+      "category": "legacy-production-state",
+      "objectType": "directory",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Stage in owner-approved protected production state root; test effective ownership/permissions"
+    },
+    {
+      "field": "policyPath",
+      "category": "legacy-production-state",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Protected backup/recovery and updated explicit policy path; preserve behavior without exposing policy contents"
+    },
+    {
+      "field": "tokenPath",
+      "category": "legacy-production-state",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Treat as sensitive: protected non-Git backup, exact access rights, per-environment token separation, approved rotation/rollback plan"
+    },
+    {
+      "field": "inventoryPath",
+      "category": "legacy-production-state",
+      "objectType": "file",
+      "exists": true,
+      "reparsePoint": false,
+      "plannedAction": "Move/rebuild within qualified protected state; prevent inventory-tools.mjs from writing H: after cutover"
+    }
+  ],
+  "combinedWithPriorLocalClientEvidence": {
+    "knownClients": [
+      "codex",
+      "claude-code",
+      "claude-desktop"
+    ],
+    "clientGatewayMappingsStillUnderLegacyH": 3,
+    "clientManagerConfigMappingsStillUnderLegacyH": 3,
+    "note": "These are previous point-in-time observed client mappings. No client files were re-read as part of this specific manager config snapshot."
+  },
+  "requiredMigrationPathDecisions": {
+    "managerLauncherRoot": "candidate, pending protected-root creation and source review",
+    "productionServerPackageRoot": "candidate, pending package source/version proof",
+    "productionStateRoot": "candidate, pending protected owner/DACL and backup",
+    "clientGatewayEntries": "three existing per-client entries need separate backed-up change",
+    "newProductionPort": "unchanged 19740 unless separate approved production route plan",
+    "newProductionOrigin": "unchanged mcp-origin.m-techlabs.com unless separate route approval"
+  },
+  "safety": {
+    "rawConfigJsonExported": false,
+    "rawConfiguredValuePathsExported": false,
+    "tokenContentsRead": false,
+    "credentialValuesExported": false,
+    "configFileChanged": false,
+    "processesStarted": false,
+    "filesMoved": false,
+    "userAccountsCreated": false,
+    "aclModified": false,
+    "devActivationAuthorized": false
+  },
+  "limits": [
+    "Only seven required path fields from installed production manager.json were classified; no file or token contents under the referenced targets were opened.",
+    "Object exists/file/dir/reparse flags are point-in-time metadata, not handle-bound identity or effective ACL proof.",
+    "Source candidate PR45 and the currently installed runtime may not share exact module versions; exact behavior qualification remains required.",
+    "No protected C: candidate directory is presently allocated; proposed target roots are not an executable migration map.",
+    "No owner-approved secret backup, restore rehearsal, production cutover or real DEV token has been performed."
+  ]
+}
