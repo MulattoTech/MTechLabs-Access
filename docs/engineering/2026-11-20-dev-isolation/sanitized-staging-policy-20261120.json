@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R38",
+  "scope": "source-only static validation of proposed script-disabled offline disposable npm ci policy; no operation launched",
+  "createdUtc": "2026-11-20T21:22:06.065972+00:00",
+  "sourceAnchor": {
+    "r37Commit": "67dd019b8f6947748df2d7e9cd9255295d14802b",
+    "lifecycleMetadataSha256": "9bda7986e204a73d41634ddd6c52a1e6cb8212e56555a452af7c882bb5571d79",
+    "observedPostinstallPackages": 2
+  },
+  "staticEvaluation": {
+    "schemaVersion": 1,
+    "scope": "source-only static staging command and mandatory controls design",
+    "planSha256": "10200cc5a8877ec8379997f72386524a440399fb8c39dc732ebb497b872503e1",
+    "staticDesignValidated": true,
+    "unqualifiedCount": 0,
+    "unqualifiedByKind": {},
+    "unqualifiedSample": [],
+    "proposedNpmCommand": [
+      "ci",
+      "--ignore-scripts",
+      "--offline",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "npmInstallOrAnyOtherProcessExecuted": false,
+    "lifecycleHooksExecuted": false,
+    "osEgressActuallyEnforced": false,
+    "packageArchivesIndependentlyAuthenticated": false,
+    "protectedRootsAndRealDevTokenVerified": false,
+    "rollbackExecuted": false,
+    "hostedPR45AcceptanceVerified": false,
+    "outstandingEvidenceGateCount": 9,
+    "outstandingEvidenceGateNames": [
+      "hostedPR45CandidateChecks",
+      "independentlyPinnedSourceArchives",
+      "protectedCodeAndStateRoots",
+      "osEgressDenyOnDisposableRunner",
+      "standaloneOfflineCacheProvenance",
+      "browserRipgrepNativeArtifacts",
+      "effectiveRestrictedDevTokenRights",
+      "rollbackRehearsal",
+      "separateOperationalApproval"
+    ],
+    "stagingOperationAuthorized": false,
+    "productionCutoverAuthorized": false,
+    "devActivationAuthorized": false
+  },
+  "newSyntheticTests": {
+    "passed": 30,
+    "failed": 0
+  },
+  "sourceSha256": {
+    "read-only-staging-policy.py": "783d24788751c03b518fea42329a22096c4f63cc9f58389ee864183d3ee86c0b",
+    "read-only-staging-policy.test.py": "9b88040f73785cd6c38f2c99939ea2d098c7c8c8747821e469667698f9105be7",
+    "proposed-scriptless-staging-policy.json": "10200cc5a8877ec8379997f72386524a440399fb8c39dc732ebb497b872503e1"
+  },
+  "npmDocumentReferences": [
+    "https://docs.npmjs.com/cli/commands/npm-ci/",
+    "https://docs.npmjs.com/cli/using-npm/config/"
+  ],
+  "unresolvedProofs": [
+    "Actual exact-head PR45 hosted Windows and Linux CI acceptance and independently reviewed source",
+    "Independently verified immutable npm archive bytes and provenance",
+    "Disposable isolated staging root and postcreation effective filesystem rights",
+    "Operating-system blocked network egress for installer environment",
+    "Trusted offline dependency cache detached from writable H: source",
+    "Qualified browser, ripgrep and native helper availability after ignoring lifecycle scripts",
+    "Effective negative Windows ACL canary access under a real restricted DEV identity",
+    "Rehearsed protected backup/rollback and maintenance continuity",
+    "Separate exact operational owner approval"
+  ],
+  "limitation": "The static checker accepts a fixed contract, not evidence of OS enforcement. It does not run npm, inspect a live staging environment, create any trusted source root, or mark any operation authorized. npm --ignore-scripts and --offline alone are not equivalent to an OS sandbox.",
+  "safety": {
+    "npmExecuted": false,
+    "livePackagesModified": false,
+    "scriptHooksExecuted": false,
+    "filesystemAccountsAclOrServicesModified": false,
+    "credentialsOrPrivateConfigRead": false,
+    "cloudflareOrConnectorModified": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "prodCutoverAuthorized": false,
+    "devActivationAuthorized": false
+  }
+}

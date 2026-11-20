@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "policyId": "access46-r38-disposable-script-disabled-staging",
+  "status": "DESIGN_ONLY_NO_EXECUTION_AUTHORITY",
+  "observedCheckpoint": {
+    "source": "R37 installed npm lifecycle metadata (read-only, untrusted H: tree)",
+    "sourceCommit": "67dd019b8f6947748df2d7e9cd9255295d14802b",
+    "lifecycleFingerprintSha256": "9bda7986e204a73d41634ddd6c52a1e6cb8212e56555a452af7c882bb5571d79",
+    "installHookPackages": 2,
+    "assetConditions": [
+      "desktop-commander-postinstall-telemetry-and-ripgrep",
+      "puppeteer-postinstall-browser-download"
+    ]
+  },
+  "proposedNpmStep": {
+    "executable": "npm",
+    "argumentVector": [
+      "ci",
+      "--ignore-scripts",
+      "--offline",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "shellInvocation": false,
+    "executeInThisCheckpoint": false
+  },
+  "mandatoryDesignControls": {
+    "disposableWorkspaceOutsideExistingProduction": true,
+    "independentlyTrustedPackageArchivesRequired": true,
+    "existingHNodeModulesReuseForbidden": true,
+    "osNetworkEgressDenialRequired": true,
+    "privateTokensAndUserProfilesNotMounted": true,
+    "nonAdministratorDisposableIdentityRequired": true,
+    "noProductionOrDevListenerStart": true,
+    "noInstallLifecycleExecution": true,
+    "browserRipgrepNativeAssetQualificationRequired": true,
+    "protectedParentAclAndRealTokenCanariesRequired": true,
+    "rollbackAndServiceContinuityReviewRequired": true
+  },
+  "evidenceState": {
+    "hostedPR45CandidateChecks": "blocked",
+    "independentlyPinnedSourceArchives": "unverified",
+    "protectedCodeAndStateRoots": "unverified",
+    "osEgressDenyOnDisposableRunner": "unverified",
+    "standaloneOfflineCacheProvenance": "unverified",
+    "browserRipgrepNativeArtifacts": "unverified",
+    "effectiveRestrictedDevTokenRights": "unverified",
+    "rollbackRehearsal": "not-performed",
+    "separateOperationalApproval": "not-granted"
+  },
+  "disabledOperations": [
+    "npm-ci",
+    "npm-install",
+    "npm-rebuild",
+    "npm-pack",
+    "npm-exec",
+    "product-start",
+    "prod-cutover",
+    "dev-activation"
+  ],
+  "authorship": "source-only policy sketch; no trust/publisher authenticity asserted"
+}
