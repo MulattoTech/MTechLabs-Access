@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R35",
+  "scope": "read-only installed npm package namespace, root bin launcher contents, and npm installed lock identity",
+  "receiptCreatedUtc": "2026-11-20T20:59:23.556659+00:00",
+  "selectedPackage": "@wonderwhy-er/desktop-commander",
+  "selectedVersion": "0.3.1",
+  "hostObservations": {
+    "fullPassCount": 2,
+    "fullPassesSucceeded": true,
+    "namespaceFingerprintsEqual": true,
+    "declaredPackageDirectories": 612,
+    "observedPackageDirectories": 612,
+    "extraOrMissingPackageDirectories": 0,
+    "nodeModulesDirectories": 38,
+    "visitedDirectories": 2643,
+    "allInstalledRootFiles": 24297,
+    "r34PackageFilesHashed": 24230,
+    "additionalRootBinLaunchersHashed": 66,
+    "rootBinLauncherBytesHashed": 42110,
+    "installedTreeLockfilesBound": 1,
+    "unclassifiedFiles": 0,
+    "unexpectedReparseObjects": 0,
+    "scanLimitBreaches": 0,
+    "namespaceFingerprintSha256": "d688b1465a53fcefdc5a1b036765128d50aeeaedae176e06721946bebb6bc1c7",
+    "priorR34PackageFingerprintSha256": "9d5d34557d4b3d58e408f4a811fc0c7b4ccd9035e6c0b4eb4b80761c941595e4"
+  },
+  "testEvidence": {
+    "newR35Synthetic": {
+      "passed": 24,
+      "failed": 0
+    },
+    "dependencyAndNamespaceSyntheticTotal": {
+      "passed": 124,
+      "failed": 0
+    },
+    "WindowsOwnerHostRegression": {
+      "passed": 49,
+      "failed": 0
+    },
+    "portableAclRegression": {
+      "passed": 15,
+      "failed": 0
+    },
+    "aclMutationSensitivity": {
+      "mutantsRejected": 7,
+      "mutantTotal": 7
+    }
+  },
+  "sourceFilesSha256": {
+    "read-only-upstream-namespace.py": "bdcbefe9cf611bd37b2b10a7a16ce1eb16cdc8617251c6a6b26abb1fd3eabfb7",
+    "read-only-upstream-namespace.test.py": "855ac84ea1416b517711a6f303fd3482c813887718154b708ab579ae0ea1d689"
+  },
+  "limits": [
+    "All observed source, launcher and lock bytes remain under broad-write H: ancestors; the combined fingerprint is only change-detection evidence, not trusted publisher or registry attestation.",
+    "Only physical node_modules files inside this installed package root were inventoried. Dynamic imports from elsewhere, globally installed packages, browser/PDF cache/downloads, external helpers and active process modules are not exhaustively qualified.",
+    "Recursive metadata traversal and best-effort lstat/fstat checks are not atomic race-free Windows file-handle or namespace attestation.",
+    "An installed npm command launcher is not itself proof the production manager invokes it; the future protected-root design must qualify command/spawn paths before moving or enabling DEV.",
+    "Source acceptance of draft PR45 requires genuinely executed and independently verified hosted Windows/Linux tests and then actual-main post-merge qualification, currently blocked by GitHub Actions account admission.",
+    "Actual restricted MTermDev account, protected ACL parents, canary access tests, separate DEV credentials/routes, recovery and rollback require separate specific operational owner approval."
+  ],
+  "safety": {
+    "productionCodeOrConfigModified": false,
+    "productionProcessRestarted": false,
+    "npmPackageInstalledOrExecuted": false,
+    "privateCredentialsReadOrExported": false,
+    "windowsAccountsOrAclsChanged": false,
+    "cloudflareOrConnectorModified": false,
+    "ciRerunInitiated": false,
+    "pr45Merged": false,
+    "devActivated": false
+  }
+}
