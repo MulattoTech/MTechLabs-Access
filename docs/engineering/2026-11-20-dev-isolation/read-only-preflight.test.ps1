@@ -249,6 +249,64 @@ if (@($commands | Where-Object {$_ -in @('Get-FileHash','Get-Content')}).Count -
     throw 'baseline_same_bytes_read_contract_missing'
 }
 
+# An unfamiliar SID may be a nested group or localized well-known principal.
+# A mutable allow ACE must be visible even with the same synthetic SDDL.
+$unknownWriterText = & {
+    function Get-Acl {
+        [CmdletBinding()]
+        param([string]$LiteralPath)
+        $real = Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+        if ($LiteralPath -ne 'H:\MTechLabs\MCP') { return $real }
+        $sid = [Security.Principal.SecurityIdentifier]::new('S-1-5-21-1111-2222-3333-4444')
+        $rule = [Security.AccessControl.FileSystemAccessRule]::new($sid,
+            [Security.AccessControl.FileSystemRights]::Modify,
+            [Security.AccessControl.InheritanceFlags]::ContainerInherit,
+            [Security.AccessControl.PropagationFlags]::None,
+            [Security.AccessControl.AccessControlType]::Allow)
+        return [pscustomobject]@{Owner=$real.Owner;Sddl=$real.Sddl;
+            AreAccessRulesProtected=$real.AreAccessRulesProtected;Access=@($real.Access)+@($rule)}
+    }
+    & $source
+}
+$unknownWriter = $unknownWriterText | ConvertFrom-Json -AsHashtable
+Assert-Inactive $unknownWriter 'unfamiliar_writer'
+if ($unknownWriter.paths[2].status -ne 'observed' -or
+    $unknownWriter.paths[2].unclassifiedMutationAllowCount -ne 1 -or
+    $unknownWriter.paths[2].inheritableUnclassifiedMutationCount -ne 1 -or
+    @($unknownWriter.blockers | Where-Object {$_ -eq 'unclassified-ancestor-mutation:hProduction'}).Count -ne 1 -or
+    $unknownWriterText.Contains('S-1-5-21-1111-2222-3333-4444')) {
+    throw 'unfamiliar_mutable_ace_not_reported_or_exposed'
+}
+
+# An inherit-only unfamiliar mutable ACE affects descendants but must not be
+# mistaken for an active right on the current directory itself.
+$unknownInheritedText = & {
+    function Get-Acl {
+        [CmdletBinding()]
+        param([string]$LiteralPath)
+        $real = Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+        if ($LiteralPath -ne 'H:\MTechLabs\MCP') { return $real }
+        $sid = [Security.Principal.SecurityIdentifier]::new('S-1-5-21-1111-2222-3333-5555')
+        $rule = [Security.AccessControl.FileSystemAccessRule]::new($sid,
+            [Security.AccessControl.FileSystemRights]::Modify,
+            [Security.AccessControl.InheritanceFlags]::ContainerInherit,
+            [Security.AccessControl.PropagationFlags]::InheritOnly,
+            [Security.AccessControl.AccessControlType]::Allow)
+        return [pscustomobject]@{Owner=$real.Owner;Sddl=$real.Sddl;
+            AreAccessRulesProtected=$real.AreAccessRulesProtected;Access=@($real.Access)+@($rule)}
+    }
+    & $source
+}
+$unknownInherited = $unknownInheritedText | ConvertFrom-Json -AsHashtable
+Assert-Inactive $unknownInherited 'unfamiliar_inherited_writer'
+if ($unknownInherited.paths[2].status -ne 'observed' -or
+    $unknownInherited.paths[2].unclassifiedMutationAllowCount -ne 0 -or
+    $unknownInherited.paths[2].inheritableUnclassifiedMutationCount -ne 1 -or
+    @($unknownInherited.blockers | Where-Object {$_ -eq 'unclassified-ancestor-mutation:hProduction'}).Count -ne 1 -or
+    $unknownInheritedText.Contains('S-1-5-21-1111-2222-3333-5555')) {
+    throw 'unfamiliar_inherit_only_ace_not_reported_or_exposed'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -256,7 +314,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 17
+    passed = 19
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -274,6 +332,8 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     metadataDenialFailsClosed = $true
     noSeparateBaselineReaderDependencies = $true
     sameBytesBoundAndEncodingGuardsPresent = $true
+    unknownMutablePrincipalFailsClosed = $true
+    unknownInheritOnlyPrincipalFailsClosed = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
