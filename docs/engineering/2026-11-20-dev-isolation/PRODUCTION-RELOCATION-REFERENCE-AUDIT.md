@@ -90,6 +90,27 @@ A separate *static-text-only* check of the selected installed 0.3.1 `dist/index.
 
 The precise sanitized results and 34 declared package names are captured in [`sanitized-upstream-direct-dependencies-20261120.json`](sanitized-upstream-direct-dependencies-20261120.json). This evidence expands the protected-root migration's no-go condition: **do not move only `dist/index.js` while leaving dependencies loadable from the unprotected H: shared modules tree**. Stage a reviewed, immutable, fully qualified executable dependency closure in a protected owner-approved code root and verify exact file/ancestor identities with actual authorized standard DEV-token negative-write tests. Do not reset shared H: `node_modules` permissions; other workloads may depend on them. Any unresolved dynamic/native/browser/helper path remains a blocking unknown, not evidence of absence.
 
+## Declared transitive package closure and native-helper footprint (R30)
+
+A bounded read-only Windows filesystem traversal of the **installed 0.3.1 package** followed `package.json` required/optional dependency declarations, without importing the package. It inspected **612 package manifests** across **1,190 required dependency references**, with **zero unresolved required references**, **40 optional references** (36 absent, many representing other-platform builds), **51 peer references not recursed**, and maximum depth **11**. Scan caps were not reached. The deterministic manifest metadata fingerprint was `25c61402f52d5444ca69ad0471a289a994c894140c1cc780d6a4e7bf925cc7f7`, and the scanner independently rechecked that fingerprint.
+
+An accompanying ACL review inspected **every one of the 612 resolved package roots**: **612/612** had **active, inherited Authenticated Users Modify**, while **0/612** had a protected DACL or observed target reparse flag. This is a permission-entry observation, not a real DEV-account effective-access test.
+
+The native/helper scan traversed **2,587 directories** and examined **24,230 files** within these package roots, skipping nested `node_modules` directories accounted for through separately resolved package roots. It identified **four** candidate binaries, all with inherited Authenticated Users Modify:
+
+| Public installed artifact | Format | SHA-256 of observed file |
+| --- | --- | --- |
+| `@vscode/ripgrep-win32-x64/bin/rg.exe` | EXE | `f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb` |
+| `@img/sharp-win32-x64/lib/libvips-42.dll` | DLL | `06dab07cc386748513337a31672b1d5269fbc770a14ff403080575665bf0813f` |
+| `@img/sharp-win32-x64/lib/libvips-cpp-8.18.7.dll` | DLL | `25001dbd05305a0a29119ab49933622c70b4a20ea12ef1d5d20ca40181db53bf` |
+| `@img/sharp-win32-x64/lib/sharp-win32-x64-0.35.5.node` | Node native addon | `971048779f9c8598df14641dfc03c625885c93f473a788e65ca2deb50d0b083e` |
+
+The sanitized [R30 receipt](sanitized-upstream-closure-20261120.json), [bounded package scanner](read-only-upstream-closure.py), [native file metadata scanner](read-only-upstream-native.py) and [17/17 passing synthetic tests](read-only-upstream-closure.test.py) are preserved on the isolated branch. The tests cover missing required/optional dependencies, invalid/oversized manifests, traversal limits, fingerprint sensitivity and native candidate detection, using only disposable fixture files.
+
+**New cutover condition:** stage and independently qualify **all required runtime modules and native executables**, not just the upstream entry or its 34 directly declared dependencies. The installed H: tree cannot satisfy the proposed standard DEV write-isolation boundary with its observed DACLs. **Do not broadly harden H: in place**: sibling workloads share the parent. A future protected production code root must be source-pinned and tested for actual runtime resolution, native helpers, OS effective rights under a **real** restricted DEV token, and backup/rollback.
+
+**Strict limit:** the declared `package.json` closure is not the complete JavaScript execution graph. Dynamic imports, browser/helper downloads, OS package loading, plugins, peer dependencies and optional platform-specific paths may differ. File hashes are snapshots, not upstream provenance or loaded-process attestation; no installed module was executed.
+
 ## 3. Deployment-version and executable compatibility gate
 
 The previously verified installed `admin.mjs` and `manage.ps1` match the owner's working checkout bytes (Windows CRLF), and after line-ending normalization match the recorded prior deployment commit `9373fadc00689dd782143ab5e49664536f460b8b`. **Their PR #45 head versions are different source blobs.** A cutover to accepted PR45/main source would therefore be not merely a move: it would combine a new filesystem trust root with a source-version change. Review, stage, qualify and roll back those changes as independently distinguishable operations.
