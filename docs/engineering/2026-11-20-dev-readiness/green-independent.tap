@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: production route retains the exact loopback Host declaration
+ok 1 - production route retains the exact loopback Host declaration
+  ---
+  duration_ms: 2.555983
+  type: 'test'
+  ...
+# Subtest: production route accepts the exact hostname of its declared origin
+ok 2 - production route accepts the exact hostname of its declared origin
+  ---
+  duration_ms: 0.416758
+  type: 'test'
+  ...
+# Subtest: production hostname allowance follows the selected origin instead of a fixed hostname
+ok 3 - production hostname allowance follows the selected origin instead of a fixed hostname
+  ---
+  duration_ms: 0.920047
+  type: 'test'
+  ...
+# Subtest: production Host rejects resource, DEV and lookalike hostnames
+ok 4 - production Host rejects resource, DEV and lookalike hostnames
+  ---
+  duration_ms: 0.778314
+  type: 'test'
+  ...
+# Subtest: production Host rejects ports, URL syntax and credential-bearing forms
+ok 5 - production Host rejects ports, URL syntax and credential-bearing forms
+  ---
+  duration_ms: 2.000585
+  type: 'test'
+  ...
+# Subtest: production Host rejects whitespace, header injection and non-string values
+ok 6 - production Host rejects whitespace, header injection and non-string values
+  ---
+  duration_ms: 0.773185
+  type: 'test'
+  ...
+# Subtest: DEV Host remains exactly the loopback address and configured DEV port
+ok 7 - DEV Host remains exactly the loopback address and configured DEV port
+  ---
+  duration_ms: 3.654227
+  type: 'test'
+  ...
+# Subtest: production hostname support preserves the strict origin URL contract
+ok 8 - production hostname support preserves the strict origin URL contract
+  ---
+  duration_ms: 0.474485
+  type: 'test'
+  ...
+# Subtest: accepted production hostname declarations never qualify live routing or activation
+ok 9 - accepted production hostname declarations never qualify live routing or activation
+  ---
+  duration_ms: 1.282704
+  type: 'test'
+  ...
+# Subtest: accepted production loopback declarations retain unqualified private reports
+ok 10 - accepted production loopback declarations retain unqualified private reports
+  ---
+  duration_ms: 4.13331
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 119.240834

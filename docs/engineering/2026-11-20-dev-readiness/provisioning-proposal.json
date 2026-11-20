@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "issue": 38,
+  "kind": "provisioning proposal; not a dev-runtime-plan.json input",
+  "activationAuthorized": false,
+  "qualified": false,
+  "production": {
+    "host": "MULATTOTECHBOX",
+    "principalSid": "S-1-5-21-718057717-4102196015-3829296543-1001",
+    "profileDirectory": "C:\\Users\\Dylan",
+    "manager": {
+      "nodePath": "C:\\Program Files\\nodejs\\node.exe",
+      "entryPath": "H:\\MTechLabs\\MCP\\runtime\\admin.mjs",
+      "configPath": "H:\\MTechLabs\\MCP\\state\\manager.json",
+      "port": 19740
+    },
+    "resource": "https://mcp.m-techlabs.com/mcp",
+    "origin": "https://mcp-origin.m-techlabs.com/mcp",
+    "originHostHeader": "mcp-origin.m-techlabs.com",
+    "worker": "mtechlabs-access-codes",
+    "accessAppId": "1cadb445-7786-4f0c-bc5b-3ba175643ec9",
+    "audience": "612c93cbe84d09d5060064f94b20a19cfdabed8aae39f8a7fbe89bbc831fe569",
+    "connectorAppId": "asdk_app_6af0c8a4c2b08191bf5c00d3b4f18dbb",
+    "backendId": null,
+    "backendIdStatus": "No immutable runtime backend identifier observed; do not infer one from a display name or PID."
+  },
+  "development": {
+    "accountName": "MTermDev",
+    "principalSid": null,
+    "profileDirectory": null,
+    "profileDirectoryProposal": "C:\\Users\\MTermDev",
+    "rootProposal": "H:\\MTechLabs\\MCP-DEV",
+    "rootStatus": "conditional; production and shared ancestor ACL isolation unresolved",
+    "instanceIdProposal": "dev-local",
+    "manager": {
+      "nodePathProposal": "C:\\Program Files\\nodejs\\node.exe",
+      "entryPathProposal": "H:\\MTechLabs\\MCP-DEV\\runtime\\admin.mjs",
+      "configPathProposal": "H:\\MTechLabs\\MCP-DEV\\state\\manager.json",
+      "portProposal": 19741
+    },
+    "upstream": {
+      "nodeModulesRootProposal": "H:\\MTechLabs\\MCP-DEV\\node_modules",
+      "initialControlVersionProposal": "0.3.1",
+      "candidateVersionProposal": "0.3.3",
+      "activationEnabled": false
+    },
+    "resourceProposal": "https://mcp-dev.m-techlabs.com/mcp",
+    "originProposal": "https://mcp-dev-origin.m-techlabs.com/mcp",
+    "tunnelServiceProposal": "http://127.0.0.1:19741",
+    "originHostHeaderProposal": "127.0.0.1:19741",
+    "workerNameProposal": "mtechlabs-mcp-dev",
+    "workerNameReserved": false,
+    "backendId": null,
+    "accessAppId": null,
+    "audience": null,
+    "connectorAppId": null,
+    "connectorGrantIds": null,
+    "backendCredentialProvisioned": false,
+    "accessPolicyId": null,
+    "authorizationStoreId": null,
+    "tunnelId": null,
+    "tunnelNameProposal": "mterm-dev",
+    "tunnelStrategyProposal": "dedicated DEV tunnel and credential; do not edit production tunnel ingress",
+    "tunnelNameReserved": false
+  },
+  "preservedExistingStaging": {
+    "worker": "mterm-gateway-staging",
+    "resource": "https://mcp-staging.m-techlabs.com/mcp",
+    "dashboard": "https://mterm-staging.m-techlabs.com",
+    "accessAppId": "598ab343-fa9c-40d7-8308-b1fa24b55d81",
+    "repurposed": false
+  },
+  "blockers": [
+    "authoritative restricted production observation/reference",
+    "effective production code/control/ancestor ACL isolation",
+    "actual DEV account/token/profile and upstream mutable roots",
+    "closed independent DEV edge descriptor and authorization state",
+    "independent deployed runtime identity and source binding",
+    "Access/App/AUD/backend credentials and per-client grants",
+    "cross-route/token/grant negative qualification",
+    "operational DEV launcher, quiescence, recovery and rollback"
+  ],
+  "unknownValuesAreNotPlaceholdersForExecution": true
+}

@@ -8,16 +8,35 @@ and hosted evidence; one writer owns implementation changes.
 
 ## Current continuation state — 2026-11-20 UTC
 
-- The current approved Access source batch is
-  [issue36](https://github.com/MulattoTech/MTechLabs-Access/issues/36), based on
-  actual main `e0bdf73ae00ff93c1d264d0f0b954fd8309e2ae1`. It adds the
-  [read-only DEV runtime inspector](../../integrations/mcp-manager/DEV-RUNTIME.md):
-  strict plan/reference binding, actual Windows token/profile and exact listener
-  identity observations, declared routing separation and explicit launcher
-  activation refusal. No real DEV user, route or upstream is activated. The
-  [source qualification record](2026-11-20-dev-runtime/README.md) retains bounded
-  local evidence. Candidate/native/actual-main acceptance remains pending at
-  this commit's preparation; issue36 receives the final exact-revision receipt.
+- The current approved continuation is the read-only live DEV readiness inventory
+  and provisioning/routing plan in
+  [issue38](https://github.com/MulattoTech/MTechLabs-Access/issues/38), based on
+  actual main `65f7c2ce59653fe905244fc8c2476f15157ca235`. The
+  [readiness record and concrete proposal](2026-11-20-dev-readiness/README.md)
+  retain sanitized host, plugin and Cloudflare observations. They identify
+  restricted production-reference, runtime/ancestor ACL, separate DEV edge,
+  upstream-root and launcher prerequisites. A narrow plan-validation correction
+  accepts the exact declared production origin Host while DEV keeps its exact
+  loopback declaration. Frozen regression: original7 pass/3 expected failures,
+  corrected10/10; local root128/128 and manager288 pass plus14 Windows skips.
+  Immutable review and candidate/actual-main acceptance are pending at this
+  commit's preparation; issue38 receives the final delivery receipt. No account,
+  ACL, credential, route, grant or production runtime is changed.
+
+- Access [issue36](https://github.com/MulattoTech/MTechLabs-Access/issues/36) /
+  [PR37](https://github.com/MulattoTech/MTechLabs-Access/pull/37) completed normally
+  at `65f7c2ce59653fe905244fc8c2476f15157ca235`, preserving reviewed tree
+  `f2b1d75728a4801831fdc280c16090cdedf56723`. Its
+  [read-only DEV runtime inspector](../../integrations/mcp-manager/DEV-RUNTIME.md)
+  adds strict reference binding, native token/profile and exact listener identity
+  observations, declared routing separation and explicit activation refusal.
+  All five candidate and five distinct actual-main jobs passed: root128/128,
+  Linux278 pass plus14 skips, Windows370 pass plusone skip; both upstream versions
+  passed all ten stages on Linux/Windows with cleanup and zero model calls.
+  Independent exact-evidence acceptance, claim release and explicit closure are
+  recorded in the [final receipt](https://github.com/MulattoTech/MTechLabs-Access/issues/36#issuecomment-7033722593).
+  The [source qualification record](2026-11-20-dev-runtime/README.md) retains the
+  original preparation history. No real DEV user, route or upstream was activated.
 
 - Access [issue34](https://github.com/MulattoTech/MTechLabs-Access/issues/34) /
   [PR35](https://github.com/MulattoTech/MTechLabs-Access/pull/35) completed from
@@ -69,12 +88,14 @@ and hosted evidence; one writer owns implementation changes.
   credentials, policies, the dirty owner CLI checkout and working wrappers remain
   untouched by these source repairs.
 
-**Current action:** qualify and integrate Access36 through the normal
+**Current action:** qualify and integrate Access38 through the normal
 expected-head workflow, then append its actual delivery receipt to the issue
-before claim release and explicit completion. This adds a read-only observation
-and routing-plan contract for the already separate loopback DEV manager. A real
-DEV bridge still needs independently provisioned/qualified OS-user access,
-upstream profile roots, deployed backend/App/grants and operational launcher.
+before claim release and explicit completion. This completes the live inventory,
+explicit provisioning proposal and production Host declaration compatibility fix.
+Next source preparation should replace the inspector's direct protected-production
+file dependency with a narrowly scoped authoritative observation contract; preserve
+the current unqualified/disabled outcome. Separate DEV edge mapping and effective
+OS/ancestor protections remain prerequisites before any operational provisioning.
 No production cutover, wrapper removal or paid model call follows from source CI.
 The original CLI/DCP/WEB acceptance metrics and broader issues remain unchanged.
 
