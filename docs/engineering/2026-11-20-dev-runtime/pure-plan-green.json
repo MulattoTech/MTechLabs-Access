@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent unchanged pure-test GREEN",
+  "sourceSha256": "713bc11196c9e0f705bf765f8a3d4b4940838dbadc5edcc324ccb22f43c701cf",
+  "sourceAfterSha256": "713bc11196c9e0f705bf765f8a3d4b4940838dbadc5edcc324ccb22f43c701cf",
+  "testSha256": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+  "testAfterSha256": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+  "command": "node --test --test-reporter=tap test/dev-runtime-plan.test.mjs",
+  "exitCode": 0,
+  "stderr": "",
+  "totals": {
+    "tests": 141,
+    "pass": 141,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "preliminaryRedSourceSha256": "1e9bc9efa6909a46e17e3942477434147e5d01d228c3bd73628ff9690d71e1ae",
+  "unchangedCaseNames": true,
+  "caseCount": 141,
+  "scope": "Synthetic pure validation/evaluation only. No OS observation, network, filesystem, listener or child-process action from tests. Preliminary RED is a new-feature implementation receipt, not original-baseline reproduction."
+}

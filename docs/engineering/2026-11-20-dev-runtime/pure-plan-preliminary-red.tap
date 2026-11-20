@@ -1,0 +1,1109 @@
+TAP version 13
+# Subtest: runtime plan accepts a distinct synthetic declaration and freezes independent snapshots
+ok 1 - runtime plan accepts a distinct synthetic declaration and freezes independent snapshots
+  ---
+  duration_ms: 4.53847
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unsupported schema
+ok 2 - runtime plan rejects unsupported schema
+  ---
+  duration_ms: 0.827832
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unsupported platform
+ok 3 - runtime plan rejects unsupported platform
+  ---
+  duration_ms: 0.152601
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects implicit delegated grants
+ok 4 - runtime plan rejects implicit delegated grants
+  ---
+  duration_ms: 0.125109
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects missing production reference
+ok 5 - runtime plan rejects missing production reference
+  ---
+  duration_ms: 0.153042
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an array in place of a role
+ok 6 - runtime plan rejects an array in place of a role
+  ---
+  duration_ms: 0.151519
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unknown top-level readiness
+ok 7 - runtime plan rejects unknown top-level readiness
+  ---
+  duration_ms: 0.153271
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unknown top-level isolation
+ok 8 - runtime plan rejects unknown top-level isolation
+  ---
+  duration_ms: 0.253503
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an upstream-enable claim
+ok 9 - runtime plan rejects an upstream-enable claim
+  ---
+  duration_ms: 0.153152
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unknown principal attestation
+ok 10 - runtime plan rejects unknown principal attestation
+  ---
+  duration_ms: 0.356369
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unknown manager launch command
+ok 11 - runtime plan rejects unknown manager launch command
+  ---
+  duration_ms: 2.079908
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unknown live-routing attestation
+ok 12 - runtime plan rejects unknown live-routing attestation
+  ---
+  duration_ms: 0.384341
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a missing nested field
+ok 13 - runtime plan rejects a missing nested field
+  ---
+  duration_ms: 0.24472
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a non-DEV instance label
+ok 14 - runtime plan rejects a non-DEV instance label
+  ---
+  duration_ms: 0.298902
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a noncanonical DEV instance label
+ok 15 - runtime plan rejects a noncanonical DEV instance label
+  ---
+  duration_ms: 0.091349
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an oversized DEV instance label
+ok 16 - runtime plan rejects an oversized DEV instance label
+  ---
+  duration_ms: 0.164919
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-object input null
+ok 17 - runtime plan rejects non-object input null
+  ---
+  duration_ms: 0.100902
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-object input []
+ok 18 - runtime plan rejects non-object input []
+  ---
+  duration_ms: 0.03974
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-object input "plan"
+ok 19 - runtime plan rejects non-object input "plan"
+  ---
+  duration_ms: 0.028643
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-object input 1
+ok 20 - runtime plan rejects non-object input 1
+  ---
+  duration_ms: 0.029144
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-object input true
+ok 21 - runtime plan rejects non-object input true
+  ---
+  duration_ms: 0.054523
+  type: 'test'
+  ...
+# Subtest: runtime plan accepts canonical DWORD SID boundaries without treating a username as identity
+ok 22 - runtime plan accepts canonical DWORD SID boundaries without treating a username as identity
+  ---
+  duration_ms: 0.407415
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a username
+ok 23 - runtime plan rejects a username
+  ---
+  duration_ms: 0.136617
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects lowercase SID prefix
+ok 24 - runtime plan rejects lowercase SID prefix
+  ---
+  duration_ms: 0.075294
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects different SID revision
+ok 25 - runtime plan rejects different SID revision
+  ---
+  duration_ms: 0.129365
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects different SID authority
+ok 26 - runtime plan rejects different SID authority
+  ---
+  duration_ms: 0.219261
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a service SID
+ok 27 - runtime plan rejects a service SID
+  ---
+  duration_ms: 0.096265
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects missing account RID
+ok 28 - runtime plan rejects missing account RID
+  ---
+  duration_ms: 0.066991
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects extra SID subauthority
+ok 29 - runtime plan rejects extra SID subauthority
+  ---
+  duration_ms: 0.061853
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects leading-zero domain subauthority
+ok 30 - runtime plan rejects leading-zero domain subauthority
+  ---
+  duration_ms: 0.057226
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects leading-zero account RID
+ok 31 - runtime plan rejects leading-zero account RID
+  ---
+  duration_ms: 0.05922
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects overflowing domain subauthority
+ok 32 - runtime plan rejects overflowing domain subauthority
+  ---
+  duration_ms: 0.066831
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects overflowing account RID
+ok 33 - runtime plan rejects overflowing account RID
+  ---
+  duration_ms: 0.061142
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects negative account RID
+ok 34 - runtime plan rejects negative account RID
+  ---
+  duration_ms: 0.288065
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects exponential account RID
+ok 35 - runtime plan rejects exponential account RID
+  ---
+  duration_ms: 0.093662
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects fractional account RID
+ok 36 - runtime plan rejects fractional account RID
+  ---
+  duration_ms: 0.064197
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects non-ASCII digits
+ok 37 - runtime plan rejects non-ASCII digits
+  ---
+  duration_ms: 0.149055
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects trailing SID newline
+ok 38 - runtime plan rejects trailing SID newline
+  ---
+  duration_ms: 0.071148
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the same principal with different declared profiles
+ok 39 - runtime plan rejects the same principal with different declared profiles
+  ---
+  duration_ms: 0.103817
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects drive-relative path
+ok 40 - runtime plan rejects drive-relative path
+  ---
+  duration_ms: 0.102605
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects unqualified relative path
+ok 41 - runtime plan rejects unqualified relative path
+  ---
+  duration_ms: 0.061904
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects UNC profile
+ok 42 - runtime plan rejects UNC profile
+  ---
+  duration_ms: 0.078339
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects extended device path
+ok 43 - runtime plan rejects extended device path
+  ---
+  duration_ms: 0.063627
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects device namespace
+ok 44 - runtime plan rejects device namespace
+  ---
+  duration_ms: 0.058098
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects alternate data stream
+ok 45 - runtime plan rejects alternate data stream
+  ---
+  duration_ms: 0.055394
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects trailing-dot component
+ok 46 - runtime plan rejects trailing-dot component
+  ---
+  duration_ms: 0.096837
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects trailing-space component
+ok 47 - runtime plan rejects trailing-space component
+  ---
+  duration_ms: 0.108594
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects wildcard component
+ok 48 - runtime plan rejects wildcard component
+  ---
+  duration_ms: 0.067242
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects NUL control character
+ok 49 - runtime plan rejects NUL control character
+  ---
+  duration_ms: 0.060231
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects DEL control character
+not ok 50 - runtime plan rejects DEL control character
+  ---
+  duration_ms: 1.549723
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved CON component
+not ok 51 - runtime plan rejects a reserved CON component
+  ---
+  duration_ms: 0.274555
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved PRN extension
+not ok 52 - runtime plan rejects a reserved PRN extension
+  ---
+  duration_ms: 0.276779
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved AUX component
+not ok 53 - runtime plan rejects a reserved AUX component
+  ---
+  duration_ms: 0.448117
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved NUL extension
+not ok 54 - runtime plan rejects a reserved NUL extension
+  ---
+  duration_ms: 0.447236
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved COM device
+not ok 55 - runtime plan rejects a reserved COM device
+  ---
+  duration_ms: 0.268315
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects a reserved LPT extension
+not ok 56 - runtime plan rejects a reserved LPT extension
+  ---
+  duration_ms: 0.221274
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Windows path comparison normalizes lexical aliases without equating similarly named siblings
+ok 57 - Windows path comparison normalizes lexical aliases without equating similarly named siblings
+  ---
+  duration_ms: 0.276809
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects case-normalized profile equality
+ok 58 - runtime plan rejects case-normalized profile equality
+  ---
+  duration_ms: 0.17858
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects slash-normalized profile equality
+ok 59 - runtime plan rejects slash-normalized profile equality
+  ---
+  duration_ms: 0.262386
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects dot-segment profile equality
+ok 60 - runtime plan rejects dot-segment profile equality
+  ---
+  duration_ms: 0.230569
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a child of the production profile
+ok 61 - runtime plan rejects a child of the production profile
+  ---
+  duration_ms: 0.587257
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an ancestor of the production profile
+ok 62 - runtime plan rejects an ancestor of the production profile
+  ---
+  duration_ms: 0.286253
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a non-production production port
+ok 63 - runtime plan rejects a non-production production port
+  ---
+  duration_ms: 0.173983
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production port for DEV
+ok 64 - runtime plan rejects the production port for DEV
+  ---
+  duration_ms: 0.482669
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a privileged DEV port
+ok 65 - runtime plan rejects a privileged DEV port
+  ---
+  duration_ms: 0.268806
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an overflowing DEV port
+ok 66 - runtime plan rejects an overflowing DEV port
+  ---
+  duration_ms: 0.136296
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a fractional DEV port
+ok 67 - runtime plan rejects a fractional DEV port
+  ---
+  duration_ms: 0.240654
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a string DEV port
+ok 68 - runtime plan rejects a string DEV port
+  ---
+  duration_ms: 0.21178
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an incorrect Host rewrite port
+ok 69 - runtime plan rejects an incorrect Host rewrite port
+  ---
+  duration_ms: 0.138089
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a public Host rewrite
+ok 70 - runtime plan rejects a public Host rewrite
+  ---
+  duration_ms: 0.134032
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a differently spelled Host rewrite
+ok 71 - runtime plan rejects a differently spelled Host rewrite
+  ---
+  duration_ms: 0.125189
+  type: 'test'
+  ...
+# Subtest: runtime plan accepts unprivileged port boundaries with exact Host rewrites
+ok 72 - runtime plan accepts unprivileged port boundaries with exact Host rewrites
+  ---
+  duration_ms: 0.486696
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the same canonical entry
+ok 73 - runtime plan rejects the same canonical entry
+  ---
+  duration_ms: 0.396299
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the same canonical config
+ok 74 - runtime plan rejects the same canonical config
+  ---
+  duration_ms: 0.190818
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects DEV config aliasing the production entry
+not ok 75 - runtime plan rejects DEV config aliasing the production entry
+  ---
+  duration_ms: 0.427576
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects DEV entry aliasing the production config
+not ok 76 - runtime plan rejects DEV entry aliasing the production config
+  ---
+  duration_ms: 0.281735
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects production config aliasing its entry
+not ok 77 - runtime plan rejects production config aliasing its entry
+  ---
+  duration_ms: 0.195355
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects DEV config aliasing its entry
+not ok 78 - runtime plan rejects DEV config aliasing its entry
+  ---
+  duration_ms: 0.364551
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:57:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception (invalidPlan).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:60:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime plan rejects the production backendId for DEV
+ok 79 - runtime plan rejects the production backendId for DEV
+  ---
+  duration_ms: 0.285522
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production accessAppId for DEV
+ok 80 - runtime plan rejects the production accessAppId for DEV
+  ---
+  duration_ms: 0.192451
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production audience for DEV
+ok 81 - runtime plan rejects the production audience for DEV
+  ---
+  duration_ms: 0.318621
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production connectorAppId for DEV
+ok 82 - runtime plan rejects the production connectorAppId for DEV
+  ---
+  duration_ms: 0.141564
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production public host reused as DEV origin
+ok 83 - runtime plan rejects the production public host reused as DEV origin
+  ---
+  duration_ms: 0.159992
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects the production origin reused as DEV public host
+ok 84 - runtime plan rejects the production origin reused as DEV public host
+  ---
+  duration_ms: 2.032993
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects one public/backend origin within a role
+ok 85 - runtime plan rejects one public/backend origin within a role
+  ---
+  duration_ms: 0.11933
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an HTTP resource
+ok 86 - runtime plan rejects an HTTP resource
+  ---
+  duration_ms: 0.103376
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a credential-bearing resource URL
+ok 87 - runtime plan rejects a credential-bearing resource URL
+  ---
+  duration_ms: 0.102034
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a resource URL with a query
+ok 88 - runtime plan rejects a resource URL with a query
+  ---
+  duration_ms: 0.15894
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a resource URL with a fragment
+ok 89 - runtime plan rejects a resource URL with a fragment
+  ---
+  duration_ms: 0.419133
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a resource URL with another path
+ok 90 - runtime plan rejects a resource URL with another path
+  ---
+  duration_ms: 0.121774
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a resource URL with an explicit port
+ok 91 - runtime plan rejects a resource URL with an explicit port
+  ---
+  duration_ms: 0.095134
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an IP-address resource
+ok 92 - runtime plan rejects an IP-address resource
+  ---
+  duration_ms: 0.091188
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a noncanonical host spelling
+ok 93 - runtime plan rejects a noncanonical host spelling
+  ---
+  duration_ms: 0.149917
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects an unknown OAuth grant blob
+ok 94 - runtime plan rejects an unknown OAuth grant blob
+  ---
+  duration_ms: 0.212861
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a trailing newline in instanceId
+ok 95 - runtime plan rejects a trailing newline in instanceId
+  ---
+  duration_ms: 0.121073
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a trailing newline in backendId
+ok 96 - runtime plan rejects a trailing newline in backendId
+  ---
+  duration_ms: 0.26418
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a trailing newline in accessAppId
+ok 97 - runtime plan rejects a trailing newline in accessAppId
+  ---
+  duration_ms: 0.133482
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a trailing newline in audience
+ok 98 - runtime plan rejects a trailing newline in audience
+  ---
+  duration_ms: 0.078669
+  type: 'test'
+  ...
+# Subtest: runtime plan rejects a trailing newline in connectorAppId
+ok 99 - runtime plan rejects a trailing newline in connectorAppId
+  ---
+  duration_ms: 0.10591
+  type: 'test'
+  ...
+# Subtest: matched synthetic local observations never qualify or activate the runtime
+ok 100 - matched synthetic local observations never qualify or activate the runtime
+  ---
+  duration_ms: 0.910997
+  type: 'test'
+  ...
+# Subtest: absent listeners and unavailable identity are kept distinct without inventing observations
+ok 101 - absent listeners and unavailable identity are kept distinct without inventing observations
+  ---
+  duration_ms: 0.379774
+  type: 'test'
+  ...
+# Subtest: missing observation input remains unverified
+ok 102 - missing observation input remains unverified
+  ---
+  duration_ms: 0.639878
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses missing SID
+ok 103 - runtime observation refuses missing SID
+  ---
+  duration_ms: 0.208875
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses an invalid SID
+ok 104 - runtime observation refuses an invalid SID
+  ---
+  duration_ms: 0.193162
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses a relative profile
+ok 105 - runtime observation refuses a relative profile
+  ---
+  duration_ms: 0.167804
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses missing PID
+ok 106 - runtime observation refuses missing PID
+  ---
+  duration_ms: 0.172581
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses zero PID
+ok 107 - runtime observation refuses zero PID
+  ---
+  duration_ms: 0.119621
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses negative PID
+ok 108 - runtime observation refuses negative PID
+  ---
+  duration_ms: 0.106141
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses fractional PID
+ok 109 - runtime observation refuses fractional PID
+  ---
+  duration_ms: 0.120912
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses string PID
+ok 110 - runtime observation refuses string PID
+  ---
+  duration_ms: 0.134674
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses unsafe PID
+ok 111 - runtime observation refuses unsafe PID
+  ---
+  duration_ms: 0.136796
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses PID beyond DWORD
+not ok 112 - runtime observation refuses PID beyond DWORD
+  ---
+  duration_ms: 0.708771
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:300:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'matched'
+    - 'unverified'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unverified'
+  actual: 'matched'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:307:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime observation refuses missing creation time
+ok 113 - runtime observation refuses missing creation time
+  ---
+  duration_ms: 0.174533
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses numeric creation time
+ok 114 - runtime observation refuses numeric creation time
+  ---
+  duration_ms: 0.219341
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses negative creation time
+ok 115 - runtime observation refuses negative creation time
+  ---
+  duration_ms: 0.333524
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses fractional creation time
+ok 116 - runtime observation refuses fractional creation time
+  ---
+  duration_ms: 0.322427
+  type: 'test'
+  ...
+# Subtest: runtime observation refuses zero creation time
+not ok 117 - runtime observation refuses zero creation time
+  ---
+  duration_ms: 0.668621
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:300:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'matched'
+    - 'unverified'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unverified'
+  actual: 'matched'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:307:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime observation refuses leading-zero creation time
+not ok 118 - runtime observation refuses leading-zero creation time
+  ---
+  duration_ms: 0.752458
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:300:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'matched'
+    - 'unverified'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unverified'
+  actual: 'matched'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:307:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime observation refuses creation time beyond signed FILETIME
+not ok 119 - runtime observation refuses creation time beyond signed FILETIME
+  ---
+  duration_ms: 0.464232
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:300:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'matched'
+    - 'unverified'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unverified'
+  actual: 'matched'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:307:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime observation refuses creation time beyond UINT64
+not ok 120 - runtime observation refuses creation time beyond UINT64
+  ---
+  duration_ms: 0.62186
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:300:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'matched'
+    - 'unverified'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unverified'
+  actual: 'matched'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-plan.test.mjs:307:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: runtime observation refuses creation time with a trailing newline
+ok 121 - runtime observation refuses creation time with a trailing newline
+  ---
+  duration_ms: 0.524222
+  type: 'test'
+  ...
+# Subtest: runtime observation accepts positive canonical PID and FILETIME numeric boundaries
+ok 122 - runtime observation accepts positive canonical PID and FILETIME numeric boundaries
+  ---
+  duration_ms: 0.905599
+  type: 'test'
+  ...
+# Subtest: listener invocation must be literal true, not undefined
+ok 123 - listener invocation must be literal true, not undefined
+  ---
+  duration_ms: 0.716213
+  type: 'test'
+  ...
+# Subtest: listener invocation must be literal true, not false
+ok 124 - listener invocation must be literal true, not false
+  ---
+  duration_ms: 0.589741
+  type: 'test'
+  ...
+# Subtest: listener invocation must be literal true, not true
+ok 125 - listener invocation must be literal true, not true
+  ---
+  duration_ms: 0.406965
+  type: 'test'
+  ...
+# Subtest: listener invocation must be literal true, not 1
+ok 126 - listener invocation must be literal true, not 1
+  ---
+  duration_ms: 0.736003
+  type: 'test'
+  ...
+# Subtest: an invocation match without OS principal and profile evidence is insufficient
+ok 127 - an invocation match without OS principal and profile evidence is insufficient
+  ---
+  duration_ms: 0.427557
+  type: 'test'
+  ...
+# Subtest: correct invocation cannot hide a foreign listener principal or OS profile
+ok 128 - correct invocation cannot hide a foreign listener principal or OS profile
+  ---
+  duration_ms: 0.551543
+  type: 'test'
+  ...
+# Subtest: lexical OS profile aliases compare canonically while environment evidence stays separate
+ok 129 - lexical OS profile aliases compare canonically while environment evidence stays separate
+  ---
+  duration_ms: 0.623873
+  type: 'test'
+  ...
+# Subtest: profile environment refuses HOME redirects to production
+ok 130 - profile environment refuses HOME redirects to production
+  ---
+  duration_ms: 0.763094
+  type: 'test'
+  ...
+# Subtest: profile environment refuses USERPROFILE redirects to production
+ok 131 - profile environment refuses USERPROFILE redirects to production
+  ---
+  duration_ms: 0.409549
+  type: 'test'
+  ...
+# Subtest: profile environment refuses HOME is relative
+ok 132 - profile environment refuses HOME is relative
+  ---
+  duration_ms: 0.606307
+  type: 'test'
+  ...
+# Subtest: profile environment refuses USERPROFILE is empty
+ok 133 - profile environment refuses USERPROFILE is empty
+  ---
+  duration_ms: 0.446615
+  type: 'test'
+  ...
+# Subtest: profile environment refuses APPDATA equals the profile root
+ok 134 - profile environment refuses APPDATA equals the profile root
+  ---
+  duration_ms: 0.414847
+  type: 'test'
+  ...
+# Subtest: profile environment refuses APPDATA escapes to a sibling
+ok 135 - profile environment refuses APPDATA escapes to a sibling
+  ---
+  duration_ms: 1.435419
+  type: 'test'
+  ...
+# Subtest: profile environment refuses APPDATA has only a shared string prefix
+ok 136 - profile environment refuses APPDATA has only a shared string prefix
+  ---
+  duration_ms: 0.126692
+  type: 'test'
+  ...
+# Subtest: profile environment refuses LOCALAPPDATA uses another drive
+ok 137 - profile environment refuses LOCALAPPDATA uses another drive
+  ---
+  duration_ms: 0.199852
+  type: 'test'
+  ...
+# Subtest: profile environment refuses LOCALAPPDATA uses an ADS
+ok 138 - profile environment refuses LOCALAPPDATA uses an ADS
+  ---
+  duration_ms: 0.116416
+  type: 'test'
+  ...
+# Subtest: runtime inspection rejects nonempty NODE_OPTIONS without reflecting its value
+ok 139 - runtime inspection rejects nonempty NODE_OPTIONS without reflecting its value
+  ---
+  duration_ms: 0.183537
+  type: 'test'
+  ...
+# Subtest: runtime inspection rejects nonempty NODE_PATH without reflecting its value
+ok 140 - runtime inspection rejects nonempty NODE_PATH without reflecting its value
+  ---
+  duration_ms: 0.108614
+  type: 'test'
+  ...
+# Subtest: runtime report discloses no raw SID, profile, invocation, token or routing identity
+ok 141 - runtime report discloses no raw SID, profile, invocation, token or routing identity
+  ---
+  duration_ms: 0.633077
+  type: 'test'
+  ...
+1..141
+# tests 141
+# suites 0
+# pass 125
+# fail 16
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 225.300092

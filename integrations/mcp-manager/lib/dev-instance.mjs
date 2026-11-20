@@ -27,7 +27,7 @@ const overlap = (a, b) => within(a, b) || within(b, a);
 
 // Reject links in every ancestor, not just the final component. realpath also
 // resolves ordinary Windows short names; comparisons use native case semantics.
-async function ordinaryPath(filename, directory = false) {
+export async function ordinaryPath(filename, directory = false) {
   if (process.platform === 'win32') {
     const { root } = path.parse(filename);
     // Local drive paths only. Do not let ADS, device/UNC namespaces or Win32
@@ -70,7 +70,7 @@ function reserved(state, filename) {
   const relative = fold(path.relative(state, filename)).split(path.sep);
   return relative.length !== 1 || ['toolkit.json', 'toolkit-jobs.sqlite', 'toolkit-jobs.sqlite-wal',
     'toolkit-jobs.sqlite-shm', 'admission.sqlite', 'admission.sqlite-wal', 'admission.sqlite-shm',
-    'deployment.json', 'instances', OWNER_FILE].includes(relative[0]);
+    'deployment.json', 'instances', 'dev-runtime-plan.json', OWNER_FILE].includes(relative[0]);
 }
 
 // This is a startup topology check against an operator-selected authoritative

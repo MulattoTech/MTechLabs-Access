@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "preliminary new-feature pure-test RED; not an original-baseline regression claim",
+  "sourceSha256": "1e9bc9efa6909a46e17e3942477434147e5d01d228c3bd73628ff9690d71e1ae",
+  "sourceAfterSha256": "1e9bc9efa6909a46e17e3942477434147e5d01d228c3bd73628ff9690d71e1ae",
+  "testSha256": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+  "testAfterSha256": "6f4f0c392397e470227a7de92306ad6a1b91231434031ebf52d9beea02be13bb",
+  "command": "node --test --test-reporter=tap test/dev-runtime-plan.test.mjs",
+  "exitCode": 1,
+  "stderr": "",
+  "totals": {
+    "tests": 141,
+    "pass": 125,
+    "fail": 16,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failures": [
+    "not ok 50 - runtime plan rejects DEL control character",
+    "not ok 51 - runtime plan rejects a reserved CON component",
+    "not ok 52 - runtime plan rejects a reserved PRN extension",
+    "not ok 53 - runtime plan rejects a reserved AUX component",
+    "not ok 54 - runtime plan rejects a reserved NUL extension",
+    "not ok 55 - runtime plan rejects a reserved COM device",
+    "not ok 56 - runtime plan rejects a reserved LPT extension",
+    "not ok 75 - runtime plan rejects DEV config aliasing the production entry",
+    "not ok 76 - runtime plan rejects DEV entry aliasing the production config",
+    "not ok 77 - runtime plan rejects production config aliasing its entry",
+    "not ok 78 - runtime plan rejects DEV config aliasing its entry",
+    "not ok 112 - runtime observation refuses PID beyond DWORD",
+    "not ok 117 - runtime observation refuses zero creation time",
+    "not ok 118 - runtime observation refuses leading-zero creation time",
+    "not ok 119 - runtime observation refuses creation time beyond signed FILETIME",
+    "not ok 120 - runtime observation refuses creation time beyond UINT64"
+  ],
+  "scope": "Synthetic pure validation/evaluation; no OS observation, network, filesystem, listener or child-process action from tests."
+}

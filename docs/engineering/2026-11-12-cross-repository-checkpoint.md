@@ -8,16 +8,31 @@ and hosted evidence; one writer owns implementation changes.
 
 ## Current continuation state — 2026-11-20 UTC
 
-- The next approved Access source batch is tracked in
-  [issue34](https://github.com/MulattoTech/MTechLabs-Access/issues/34), based on
+- The current approved Access source batch is
+  [issue36](https://github.com/MulattoTech/MTechLabs-Access/issues/36), based on
+  actual main `e0bdf73ae00ff93c1d264d0f0b954fd8309e2ae1`. It adds the
+  [read-only DEV runtime inspector](../../integrations/mcp-manager/DEV-RUNTIME.md):
+  strict plan/reference binding, actual Windows token/profile and exact listener
+  identity observations, declared routing separation and explicit launcher
+  activation refusal. No real DEV user, route or upstream is activated. The
+  [source qualification record](2026-11-20-dev-runtime/README.md) retains bounded
+  local evidence. Candidate/native/actual-main acceptance remains pending at
+  this commit's preparation; issue36 receives the final exact-revision receipt.
+
+- Access [issue34](https://github.com/MulattoTech/MTechLabs-Access/issues/34) /
+  [PR35](https://github.com/MulattoTech/MTechLabs-Access/pull/35) completed from
   actual main `83d5c3791a4fc459cb4c2e536f97b1f5f77273d0`. The
   [DEV foundation receipt](2026-11-20-dev-manager/README.md) records strict
   independent manager configuration, loopback routing, credential/state checks,
   exclusive ownership and drained shutdown. Local root 128/128 and manager
   133 pass plus three Windows skips; the focused baseline has 16 expected
   capability failures and fixed suite 18 pass plus two Windows skips. Hosted
-  candidate/main and immutable acceptance are pending at commit preparation;
-  the issue's final receipt is authoritative for subsequent acceptance.
+  candidate and distinct actual-main gates all passed, including native Windows
+  162/162 and both real upstream versions on Linux/Windows. Normal merge
+  `e0bdf73ae00ff93c1d264d0f0b954fd8309e2ae1` preserves reviewed tree
+  `07b7efe74d42b1a3c06ef574fec8a3304e2af36c`. Independent acceptance, claim release
+  and explicit closure are in the
+  [final receipt](https://github.com/MulattoTech/MTechLabs-Access/issues/34#issuecomment-7032885343).
   DEV Desktop Commander execution is blocked pending independent OS-profile
   and backend/App/grant qualification. This source work is not deployment.
 
@@ -54,12 +69,12 @@ and hosted evidence; one writer owns implementation changes.
   credentials, policies, the dirty owner CLI checkout and working wrappers remain
   untouched by these source repairs.
 
-**Current action:** qualify and integrate Access34 / PR35 through the normal
+**Current action:** qualify and integrate Access36 through the normal
 expected-head workflow, then append its actual delivery receipt to the issue
-before claim release and explicit completion. This adds a separately selected
-loopback DEV manager with disjoint state and verifiable listener identity. A real
-DEV bridge additionally needs an isolated upstream user profile and independent
-App/grant routing; different names or state directories alone are insufficient.
+before claim release and explicit completion. This adds a read-only observation
+and routing-plan contract for the already separate loopback DEV manager. A real
+DEV bridge still needs independently provisioned/qualified OS-user access,
+upstream profile roots, deployed backend/App/grants and operational launcher.
 No production cutover, wrapper removal or paid model call follows from source CI.
 The original CLI/DCP/WEB acceptance metrics and broader issues remain unchanged.
 

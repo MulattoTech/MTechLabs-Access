@@ -40,7 +40,7 @@ Before loading a DEV configuration or constructing its admin server:
 - The DEV state directory must already exist. Its config, policy, token and
   inventory must be distinct ordinary files directly inside that directory.
   They cannot use reserved state names (toolkit, jobs/admission databases and
-  sidecars, deployment, instances or manager ownership lock).
+  sidecars, deployment, instances, DEV runtime plan or manager ownership lock).
   Windows paths must use ordinary local drive syntax; UNC/device paths,
   alternate data streams, and components ending in a dot or space are refused.
 - `productionConfigPath` must identify the authoritative existing production
@@ -67,6 +67,10 @@ permissions. No access-control guarantee is made for an omitted DEV descriptor.
 ## Launch and lifecycle
 
 The existing `manage.ps1` and `install-windows-startup.ps1` remain production-only.
+The separate [DEV runtime inspector](DEV-RUNTIME.md) supports only `Inspect` and
+`Status`; activation actions are refused. It verifies local OS/profile and
+invocation observations against a strict routing plan without changing manager
+state, and keeps live routing, grants and upstream activation unqualified.
 The portable source entrypoint is `node admin.mjs --config <absolute-manager.json>`.
 DEV uses its configured port, and direct API callers must use
 `server.listen(instance.port, '127.0.0.1')`. Other ports, public interfaces and
