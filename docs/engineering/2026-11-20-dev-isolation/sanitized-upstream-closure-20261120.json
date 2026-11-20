@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "Read-only bounded installed 0.3.1 declared dependency-closure, ACL and native helper metadata; NOT full JS execution graph, effective permissions, or DEV activation",
+  "observedUtc": {
+    "declaredManifestTraversal": "2026-11-20T20:03:00Z",
+    "aclRoots": "2026-11-20T20:05:34.3415352Z",
+    "binaryWalk": "2026-11-20T20:06:00Z",
+    "binaryHashAndAcl": "2026-11-20T20:06:42.0403682Z"
+  },
+  "installed": {
+    "name": "@wonderwhy-er/desktop-commander",
+    "version": "0.3.1",
+    "nodeModulesRoot": "H:\\MTechLabs\\MCP\\node_modules",
+    "selectedEntry": "@wonderwhy-er/desktop-commander/dist/index.js",
+    "fileContentsOrSecretsExported": false
+  },
+  "declaredDependencyClosure": {
+    "inspectedPackageRootCount": 612,
+    "packageJsonManifestsRead": 612,
+    "requiredDependencyReferences": 1190,
+    "unresolvedRequiredReferences": 0,
+    "optionalDependencyReferences": 40,
+    "unresolvedOptionalReferences": 36,
+    "unresolvedOptionalContext": "Most missing optional packages are other-platform ripgrep/sharp binaries. This count is not by itself an installation failure.",
+    "peerDependencyReferencesObservedButNotRecursed": 51,
+    "maxTraversalDepth": 11,
+    "unfinishedQueue": 0,
+    "traversalCapReached": false,
+    "maxPackagesCap": 2500,
+    "maxEdgesCap": 20000,
+    "maxDepthCap": 32,
+    "maxManifestBytes": 131072,
+    "metadataOnlyFingerprintSha256": "25c61402f52d5444ca69ad0471a289a994c894140c1cc780d6a4e7bf925cc7f7",
+    "limits": "A complete traversal of declared package.json required dependencies is not the same as complete actual Node runtime module resolution or native helper execution."
+  },
+  "packageRootPermissions": {
+    "rootsQueried": 612,
+    "aclQueriesCompleted": 612,
+    "rootsWithActiveAuthenticatedUsersModify": 612,
+    "rootsWithInheritedActiveAuthenticatedUsersModify": 612,
+    "rootsWithInheritanceProtectedDacl": 0,
+    "rootsWithReparseFlag": 0,
+    "unverifiedPackageRoots": 0,
+    "actualMTermDevTokenUsed": false,
+    "note": "These are observed DACL entries, not an effective access check for a DEV account."
+  },
+  "nativeAndHelpers": {
+    "directoriesVisited": 2587,
+    "filesExamined": 24230,
+    "scanLimitsReached": false,
+    "reparseOrUnverifiedPathsSkipped": 0,
+    "identifiedCandidates": 4,
+    "countByType": {
+      ".exe": 1,
+      ".dll": 2,
+      ".node": 1
+    },
+    "candidateMetadataFingerprintSha256": "257e5ac9b6882f9f4d5b0f22b71dab19cb9461354e20729724356e7a08b08dfd",
+    "allFourHaveInheritedActiveAuthenticatedUsersModify": true,
+    "allFourNonReparse": true,
+    "selectedArtifacts": [
+      {
+        "relativePath": "@vscode/ripgrep-win32-x64/bin/rg.exe",
+        "bytes": 5429760,
+        "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+        "extension": ".exe"
+      },
+      {
+        "relativePath": "@img/sharp-win32-x64/lib/libvips-42.dll",
+        "bytes": 19018240,
+        "sha256": "06dab07cc386748513337a31672b1d5269fbc770a14ff403080575665bf0813f",
+        "extension": ".dll"
+      },
+      {
+        "relativePath": "@img/sharp-win32-x64/lib/libvips-cpp-8.18.7.dll",
+        "bytes": 333312,
+        "sha256": "25001dbd05305a0a29119ab49933622c70b4a20ea12ef1d5d20ca40181db53bf",
+        "extension": ".dll"
+      },
+      {
+        "relativePath": "@img/sharp-win32-x64/lib/sharp-win32-x64-0.35.5.node",
+        "bytes": 443904,
+        "sha256": "971048779f9c8598df14641dfc03c625885c93f473a788e65ca2deb50d0b083e",
+        "extension": ".node"
+      }
+    ]
+  },
+  "reproducibility": {
+    "readOnlyScanner": "read-only-upstream-closure.py",
+    "nativeFileScanner": "read-only-upstream-native.py",
+    "offlineTests": "read-only-upstream-closure.test.py",
+    "offlineSyntheticTestsPassed": 17,
+    "offlineSyntheticTestsFailed": 0,
+    "scannerGitBlobs": {
+      "closure": "1e4cab16d177c094bac360a5dfc47ade58f3bda7",
+      "native": "a3c1f0d09ee56e9652dda402e8b278ff16811c90",
+      "tests": "125895ccf5f417e9ffc1c3b8abd0aaf85a4a910e"
+    }
+  },
+  "futureGates": [
+    "Qualify an independently source-pinned, complete deployed production package closure, including native helpers and unobserved dynamic or external browser/helper paths.",
+    "Place reviewed executable roots under owner-approved protected code directories without loading from broadly writable H: ancestors.",
+    "Measure all relevant parent-name mutation/delete-child permissions and native effective access with the actual future restricted DEV token.",
+    "Verify selected Node 27 alpha owner-host behavior separately from PR45 Node24 hosted CI, and retain backup/rollback and actual-main acceptance before changing production.",
+    "Do not infer installed optional-platform variants are required without checking platform-specific semantics."
+  ],
+  "safety": {
+    "packageCodeImportedOrExecuted": false,
+    "nodeOrNpmPackageInstalled": false,
+    "binaryFilesExecuted": false,
+    "installedCodeOrConfigModified": false,
+    "privateAccountsOrSidsOrSddlExported": false,
+    "authTokensOpened": false,
+    "productionRestarted": false,
+    "aclChangesMade": false,
+    "devAccountCreated": false,
+    "gitHubCiRerun": false,
+    "devActivationAuthorized": false
+  },
+  "limits": [
+    "Traversal reads package.json declarations only; it does not resolve every import, dynamic import, nested browser process or native helper side effect.",
+    "Native scan visits each resolved package root while skipping nested node_modules (accounted for in other resolved roots) and linked directories; hidden/missing paths may exist outside these roots.",
+    "Observed 612 DACL entries and four native-file hashes are snapshots, not source signatures, runtime loaded-file attestation or a security exploit demonstration.",
+    "Optional/peer package references may be platform-selective or resolved differently at runtime; the inventory does not claim full operational interoperability.",
+    "No production deployment, account, permission, credential, CI gate or activation state was changed."
+  ]
+}
