@@ -91,22 +91,60 @@ try {
         $process.StartInfo = $start
         try {
             if(-not $process.Start()) { throw 'portable_child_start_failed' }
-            $stdout = $process.StandardOutput.ReadToEndAsync()
-            $stderr = $process.StandardError.ReadToEndAsync()
-            if(-not $process.WaitForExit($ChildTimeoutMs)) {
-                try { $process.Kill($true) } catch {
-                    if(-not $process.HasExited) { throw 'portable_child_tree_termination_failed' }
+            # Stream fixed-size chunks from both redirected pipes. ReadToEndAsync
+            # would buffer unbounded output until the child exits; the cap must
+            # be enforced DURING collection to bound memory on a noisy fixture.
+            $maxChars = 65536
+            $stdoutText = [Text.StringBuilder]::new()
+            $stderrText = [Text.StringBuilder]::new()
+            $stdoutBuffer = [char[]]::new(2048)
+            $stderrBuffer = [char[]]::new(2048)
+            $outDone = $false
+            $errDone = $false
+            $outTask = $process.StandardOutput.ReadAsync($stdoutBuffer,0,$stdoutBuffer.Length)
+            $errTask = $process.StandardError.ReadAsync($stderrBuffer,0,$stderrBuffer.Length)
+            $clock = [Diagnostics.Stopwatch]::StartNew()
+            while($true) {
+                $remaining = $ChildTimeoutMs - [int]$clock.ElapsedMilliseconds
+                if($remaining -le 0) { throw ('portable_fixture_timed_out:' + $caseName) }
+                $pending = @()
+                if(-not $outDone) { $pending += $outTask }
+                if(-not $errDone) { $pending += $errTask }
+                if($pending.Count -eq 0) {
+                    if($process.WaitForExit([Math]::Min(100,$remaining))) { break }
+                    continue
                 }
-                if(-not $process.WaitForExit(5000)) { throw 'portable_child_did_not_exit' }
-                throw ('portable_fixture_timed_out:' + $caseName)
+                $index = [Threading.Tasks.Task]::WaitAny(
+                    [Threading.Tasks.Task[]]$pending,[Math]::Min(100,$remaining))
+                if($index -eq -1) { continue }
+                $completed = $pending[$index]
+                if(-not $outDone -and [object]::ReferenceEquals($completed,$outTask)) {
+                    $count = [int]$outTask.GetAwaiter().GetResult()
+                    if($count -eq 0) {
+                        $outDone = $true
+                    } else {
+                        [void]$stdoutText.Append($stdoutBuffer,0,$count)
+                        if($stdoutText.Length + $stderrText.Length -gt $maxChars) {
+                            throw ('portable_child_output_exceeded_limit:' + $caseName)
+                        }
+                        $outTask = $process.StandardOutput.ReadAsync($stdoutBuffer,0,$stdoutBuffer.Length)
+                    }
+                } elseif(-not $errDone -and [object]::ReferenceEquals($completed,$errTask)) {
+                    $count = [int]$errTask.GetAwaiter().GetResult()
+                    if($count -eq 0) {
+                        $errDone = $true
+                    } else {
+                        [void]$stderrText.Append($stderrBuffer,0,$count)
+                        if($stdoutText.Length + $stderrText.Length -gt $maxChars) {
+                            throw ('portable_child_output_exceeded_limit:' + $caseName)
+                        }
+                        $errTask = $process.StandardError.ReadAsync($stderrBuffer,0,$stderrBuffer.Length)
+                    }
+                } else {
+                    throw ('portable_child_output_task_unknown:' + $caseName)
+                }
             }
-            if(-not $stdout.Wait(5000) -or -not $stderr.Wait(5000)) {
-                throw ('portable_child_output_drain_failed:' + $caseName)
-            }
-            $captured = $stdout.Result + [Environment]::NewLine + $stderr.Result
-            if($captured.Length -gt 65536) {
-                throw ('portable_child_output_exceeded_limit:' + $caseName)
-            }
+            $captured = $stdoutText.ToString() + [Environment]::NewLine + $stderrText.ToString()
             return [pscustomobject]@{exitCode=$process.ExitCode;output=$captured}
         } finally {
             if(-not $process.HasExited) {
