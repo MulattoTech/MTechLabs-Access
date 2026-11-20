@@ -2,7 +2,11 @@
 # This file NEVER executes the preflight's top-level script or accesses owner ACL paths.
 #requires -Version 7.0
 [CmdletBinding()]
-param()
+param(
+    # Used only by the mutation runner to report the *caught exception*.
+    # This is not a security boundary for malicious fixture source.
+    [switch]$MachineFailureReport
+)
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
@@ -123,6 +127,7 @@ $fixtures = @(
     @{name='item-denied';rules=@();failure='item';expect=@{status='unverified';broadMutationAllowCount=0;unclassifiedMutationAllowCount=0}},
     @{name='acl-denied';rules=@();failure='acl';expect=@{status='unverified';broadMutationAllowCount=0;unclassifiedMutationAllowCount=0}}
 )
+try {
 $passed = 0
 foreach ($case in $fixtures) {
     # Explicit defaults avoid StrictMode property-not-found errors; all test
@@ -150,6 +155,20 @@ foreach ($case in $fixtures) {
         throw ('fixture_private_identity_leaked:' + $case.name)
     }
     $passed++
+}
+} catch {
+    if (-not $MachineFailureReport) { throw }
+    # Convert only exceptions actually caught from our fixture assertions to
+    # a designated child exit code and a single machine-readable stderr line.
+    # Arbitrary text printed to stdout/stderr is not enough.
+    $message = [string]$_.Exception.Message
+    $pattern = '^(?:fixture_mismatch|case_status_mismatch):[a-zA-Z0-9_-]+(?::[a-zA-Z0-9_-]+)?$'
+    if ([regex]::IsMatch($message,$pattern)) {
+        [Console]::Error.WriteLine('MTERM_FIXTURE_CAUGHT_EXCEPTION:' + $message)
+        exit 42
+    }
+    [Console]::Error.WriteLine('MTERM_FIXTURE_UNEXPECTED_EXCEPTION')
+    exit 43
 }
 # Only aggregate sanitized counters. Source-helper tests are not OS effective
 # access qualification, Windows account tests, a hosted security gate or DEV readiness.
