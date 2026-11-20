@@ -368,6 +368,103 @@ if ($knownSid.paths[2].unclassifiedMutationAllowCount -ne 0 -or
     throw 'real_well_known_sid_not_recognized'
 }
 
+# A proposed DEV port already occupied before provisioning is a concrete
+# blocker, not just an observation with no consequence.
+$occupiedDev = (& {
+    function Get-NetTCPConnection {
+        [CmdletBinding()]param([string]$State)
+        $actual = @(NetTCPIP\Get-NetTCPConnection -State Listen -ErrorAction Stop)
+        $actual + [pscustomobject]@{LocalAddress='127.0.0.1';LocalPort=19741;State='Listen'}
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $occupiedDev 'dev_listener_occupied'
+if ($occupiedDev.listeners.development -ne 'listener-present' -or
+    @($occupiedDev.blockers | Where-Object {$_ -eq 'dev-listener-unexpected'}).Count -ne 1) {
+    throw 'occupied_dev_listener_not_blocked'
+}
+
+$portsUnverified = (& {
+    function Get-NetTCPConnection { throw 'synthetic_tcp_inventory_denied' }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $portsUnverified 'tcp_inventory_unverified'
+if ($portsUnverified.listeners.development -ne 'unverified' -or
+    @($portsUnverified.blockers | Where-Object {$_ -eq 'dev-listener-unverified'}).Count -ne 1 -or
+    @($portsUnverified.blockers | Where-Object {$_ -eq 'production-listener-unverified'}).Count -ne 1) {
+    throw 'uncertain_tcp_inventory_not_blocked'
+}
+
+# A reference directory with broad writes and a junction flag must never be
+# mistaken for an installed and qualified authority.
+$unsafeReference = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') { return $true }
+        if ($PathType) {Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else {Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    function Get-Item {
+        [CmdletBinding()]param([string]$LiteralPath,[switch]$Force)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') {
+            return [pscustomobject]@{PSIsContainer=$true;Attributes=(
+                [IO.FileAttributes]::Directory -bor [IO.FileAttributes]::ReparsePoint)}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') {
+            return (Microsoft.PowerShell.Security\Get-Acl -LiteralPath 'H:\MTechLabs\MCP')
+        }
+        Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $unsafeReference 'unsafe_reference_directory'
+if ($unsafeReference.paths[10].status -ne 'observed' -or
+    $unsafeReference.paths[10].reparse -ne $true -or
+    $unsafeReference.paths[10].broadMutationAllowCount -lt 1 -or
+    @($unsafeReference.blockers | Where-Object {$_ -eq 'reference-installation-unqualified'}).Count -ne 1 -or
+    @($unsafeReference.blockers | Where-Object {$_ -eq 'reference-root-reparse'}).Count -ne 1 -or
+    @($unsafeReference.blockers | Where-Object {$_ -eq 'reference-root-broad-mutation'}).Count -ne 1) {
+    throw 'unsafe_reference_directory_not_blocked'
+}
+
+# Even a narrow ACL is not proof of signing key ownership, source pins or an
+# operational broker. Presence must remain explicitly unqualified.
+$unqualifiedReference = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') { return $true }
+        if ($PathType) {Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else {Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    function Get-Item {
+        [CmdletBinding()]param([string]$LiteralPath,[switch]$Force)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') {
+            return [pscustomobject]@{PSIsContainer=$true;Attributes=[IO.FileAttributes]::Directory}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        if ($LiteralPath -eq 'C:\ProgramData\MTechLabs\ReferenceManager') {
+            return (Microsoft.PowerShell.Security\Get-Acl -LiteralPath 'H:\MTechLabs\MCP\state')
+        }
+        Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $unqualifiedReference 'unqualified_reference_directory'
+if ($unqualifiedReference.paths[10].status -ne 'observed' -or
+    $unqualifiedReference.paths[10].reparse -ne $false -or
+    $unqualifiedReference.paths[10].broadMutationAllowCount -ne 0 -or
+    @($unqualifiedReference.blockers | Where-Object {$_ -eq 'reference-installation-unqualified'}).Count -ne 1 -or
+    @($unqualifiedReference.blockers | Where-Object {$_ -eq 'reference-root-broad-mutation'}).Count -ne 0) {
+    throw 'mere_reference_presence_promoted_to_qualified'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -375,7 +472,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 22
+    passed = 26
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -397,6 +494,10 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     unknownInheritOnlyPrincipalFailsClosed = $true
     privilegedNameSpoofingFailsClosed = $true
     genuineBuiltinSidRecognized = $true
+    unexpectedDevListenerBlocked = $true
+    unknownListenerStateBlocked = $true
+    unsafeReferenceRootBlocked = $true
+    referencePresenceNotQualified = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
