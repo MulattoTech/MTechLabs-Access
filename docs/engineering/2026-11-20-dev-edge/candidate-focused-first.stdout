@@ -1,0 +1,262 @@
+TAP version 13
+# Subtest: DEV edge descriptor and authorization API capability is available
+ok 1 - DEV edge descriptor and authorization API capability is available
+  ---
+  duration_ms: 95.880669
+  type: 'test'
+  ...
+# Subtest: dedicated DEV entry capability exists without a scheduled production worker
+ok 2 - dedicated DEV entry capability exists without a scheduled production worker
+  ---
+  duration_ms: 0.305248
+  type: 'test'
+  ...
+# Subtest: DEV descriptor is canonically ordered deeply copied and frozen without activation
+ok 3 - DEV descriptor is canonically ordered deeply copied and frozen without activation
+  ---
+  duration_ms: 3.13215
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects missing unknown array null and nonplain records
+ok 4 - DEV descriptor rejects missing unknown array null and nonplain records
+  ---
+  duration_ms: 3.495154
+  type: 'test'
+  ...
+# Subtest: DEV descriptor refuses getters hidden keys and symbols without invoking accessors
+ok 5 - DEV descriptor refuses getters hidden keys and symbols without invoking accessors
+  ---
+  duration_ms: 1.797257
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects authority claims owner aliases and malformed instance identifiers
+ok 6 - DEV descriptor rejects authority claims owner aliases and malformed instance identifiers
+  ---
+  duration_ms: 4.094244
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects every production or development endpoint alias and retarget
+ok 7 - DEV descriptor rejects every production or development endpoint alias and retarget
+  ---
+  duration_ms: 14.564135
+  type: 'test'
+  ...
+# Subtest: DEV descriptor independently separates all routing store and credential identities
+ok 8 - DEV descriptor independently separates all routing store and credential identities
+  ---
+  duration_ms: 3.996527
+  type: 'test'
+  ...
+# Subtest: DEV descriptor fixes credential and authorization bindings without production defaults
+ok 9 - DEV descriptor fixes credential and authorization bindings without production defaults
+  ---
+  duration_ms: 1.394522
+  type: 'test'
+  ...
+# Subtest: DEV descriptor binds exact manager ports and loopback Host declarations
+ok 10 - DEV descriptor binds exact manager ports and loopback Host declarations
+  ---
+  duration_ms: 2.175414
+  type: 'test'
+  ...
+# Subtest: DEV descriptor pins issuer and challenge metadata to canonical dedicated URLs
+ok 11 - DEV descriptor pins issuer and challenge metadata to canonical dedicated URLs
+  ---
+  duration_ms: 1.343626
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher proves declarations only and returns no runtime or activation authority
+ok 12 - DEV runtime matcher proves declarations only and returns no runtime or activation authority
+  ---
+  duration_ms: 0.632049
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher is compatible with the complete existing validated runtime plan schema
+ok 13 - DEV runtime matcher is compatible with the complete existing validated runtime plan schema
+  ---
+  duration_ms: 2.19912
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher rejects every mismatched routing field port and top-level binding
+ok 14 - DEV runtime matcher rejects every mismatched routing field port and top-level binding
+  ---
+  duration_ms: 8.615057
+  type: 'test'
+  ...
+# Subtest: DEV valid owner reaches the disabled terminal with no body backend or production work
+ok 15 - DEV valid owner reaches the disabled terminal with no body backend or production work
+  ---
+  duration_ms: 24.53022
+  type: 'test'
+  ...
+# Subtest: DEV rejects invalid routes before reading configuration keys database or body
+ok 16 - DEV rejects invalid routes before reading configuration keys database or body
+  ---
+  duration_ms: 9.923907
+  type: 'test'
+  ...
+# Subtest: DEV method and explicit Origin refusals precede all configuration and identity work
+ok 17 - DEV method and explicit Origin refusals precede all configuration and identity work
+  ---
+  duration_ms: 9.838194
+  type: 'test'
+  ...
+# Subtest: DEV permits only declared browser origins or absent Origin while staying disabled
+ok 18 - DEV permits only declared browser origins or absent Origin while staying disabled
+  ---
+  duration_ms: 10.865225
+  type: 'test'
+  ...
+# Subtest: DEV metadata remains explicitly unavailable without fabricated OAuth discovery or owner lookup
+ok 19 - DEV metadata remains explicitly unavailable without fabricated OAuth discovery or owner lookup
+  ---
+  duration_ms: 3.926743
+  type: 'test'
+  ...
+# Subtest: DEV config requires exact canonical JSON and rejects duplicate reordered or oversized text before authentication
+ok 20 - DEV config requires exact canonical JSON and rejects duplicate reordered or oversized text before authentication
+  ---
+  duration_ms: 11.667758
+  type: 'test'
+  ...
+# Subtest: DEV captures only data environment bindings and rejects relevant accessors without invoking them
+ok 21 - DEV captures only data environment bindings and rejects relevant accessors without invoking them
+  ---
+  duration_ms: 6.748472
+  type: 'test'
+  ...
+# Subtest: DEV bearer bytes must match their declaration and cannot reuse production credentials
+ok 22 - DEV bearer bytes must match their declaration and cannot reuse production credentials
+  ---
+  duration_ms: 13.338395
+  type: 'test'
+  ...
+# Subtest: DEV authorization store is mandatory distinct by handle and never falls back to production DB
+ok 23 - DEV authorization store is mandatory distinct by handle and never falls back to production DB
+  ---
+  duration_ms: 6.34401
+  type: 'test'
+  ...
+# Subtest: DEV ignores a poison production DB getter and does not read production bearer configuration
+ok 24 - DEV ignores a poison production DB getter and does not read production bearer configuration
+  ---
+  duration_ms: 2.668243
+  type: 'test'
+  ...
+# Subtest: DEV human authentication requires a real assertion rather than cookies bearer or descriptive identity
+ok 25 - DEV human authentication requires a real assertion rather than cookies bearer or descriptive identity
+  ---
+  duration_ms: 3.783197
+  type: 'test'
+  ...
+# Subtest: DEV signed assertions bind exact issuer signature algorithm and application token type
+ok 26 - DEV signed assertions bind exact issuer signature algorithm and application token type
+  ---
+  duration_ms: 11.700277
+  type: 'test'
+  ...
+# Subtest: DEV admits one exact audience and rejects production mixed duplicate or malformed audiences
+ok 27 - DEV admits one exact audience and rejects production mixed duplicate or malformed audiences
+  ---
+  duration_ms: 12.001359
+  type: 'test'
+  ...
+# Subtest: DEV JWT lifetime and human identity shape are checked before owner state access
+ok 28 - DEV JWT lifetime and human identity shape are checked before owner state access
+  ---
+  duration_ms: 9.281598
+  type: 'test'
+  ...
+# Subtest: DEV exact owner subject and normalized email must both match before database access
+ok 29 - DEV exact owner subject and normalized email must both match before database access
+  ---
+  duration_ms: 7.012212
+  type: 'test'
+  ...
+# Subtest: DEV owner row must be currently approved strictly typed and match the pinned owner
+ok 30 - DEV owner row must be currently approved strictly typed and match the pinned owner
+  ---
+  duration_ms: 25.547697
+  type: 'test'
+  ...
+# Subtest: DEV owner revocation is read on every request and equality revokes the prior token
+ok 31 - DEV owner revocation is read on every request and equality revokes the prior token
+  ---
+  duration_ms: 3.130348
+  type: 'test'
+  ...
+# Subtest: DEV authorization storage failure remains private and never consults grants or retries
+ok 32 - DEV authorization storage failure remains private and never consults grants or retries
+  ---
+  duration_ms: 2.608654
+  type: 'test'
+  ...
+# Subtest: DEV descriptor token store and prepare are captured before the first asynchronous digest
+ok 33 - DEV descriptor token store and prepare are captured before the first asynchronous digest
+  ---
+  duration_ms: 2.816066
+  type: 'test'
+  ...
+# Subtest: DEV pending key verification cannot retarget its captured descriptor or authorization store
+ok 34 - DEV pending key verification cannot retarget its captured descriptor or authorization store
+  ---
+  duration_ms: 1.51317
+  type: 'test'
+  ...
+# Subtest: DEV rechecks token expiry after the awaited owner-row lookup
+ok 35 - DEV rechecks token expiry after the awaited owner-row lookup
+  ---
+  duration_ms: 2.655435
+  type: 'test'
+  ...
+# Subtest: DEV request claims headers and body cannot enable activation or leak private traces
+ok 36 - DEV request claims headers and body cannot enable activation or leak private traces
+  ---
+  duration_ms: 2.656717
+  type: 'test'
+  ...
+# Subtest: dedicated DEV entry exposes only the disabled DEV surface and no production fallback
+ok 37 - dedicated DEV entry exposes only the disabled DEV surface and no production fallback
+  ---
+  duration_ms: 3.454484
+  type: 'test'
+  ...
+# Subtest: Worker reserves the canonical DEV resource even when a website grant would allow its hostname
+ok 38 - Worker reserves the canonical DEV resource even when a website grant would allow its hostname
+  ---
+  duration_ms: 8.894267
+  type: 'test'
+  ...
+# Subtest: Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing
+ok 39 - Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing
+  ---
+  duration_ms: 7.200906
+  type: 'test'
+  ...
+# Subtest: Worker reserved DEV routes do not eagerly touch a poison production DB binding
+ok 40 - Worker reserved DEV routes do not eagerly touch a poison production DB binding
+  ---
+  duration_ms: 1.430687
+  type: 'test'
+  ...
+# Subtest: Worker configured DEV route authorizes only its captured DEV owner and remains activation disabled
+ok 41 - Worker configured DEV route authorizes only its captured DEV owner and remains activation disabled
+  ---
+  duration_ms: 5.696629
+  type: 'test'
+  ...
+# Subtest: Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing
+ok 42 - Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing
+  ---
+  duration_ms: 4.110138
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 519.223369
