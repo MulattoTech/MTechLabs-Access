@@ -258,6 +258,29 @@ if ($reference.status -eq 'absent') {
         $blockers += 'reference-root-unclassified-mutation'
     }
 }
+# Candidate roots are proposals, not trusted or reserved installation
+# targets. Presence (even with a narrow-looking DACL) needs fresh protected
+# namespace/owner/effective-access verification before provisioning.
+foreach ($name in @('candidateProtectedCode','candidateProtectedState','proposedDevH')) {
+    $candidate = $records[$name]
+    if ($candidate.status -eq 'absent') { continue }
+    if ($candidate.status -ne 'observed') {
+        $blockers += ('candidate-root-unverified:' + $name)
+        continue
+    }
+    $blockers += ('candidate-root-unqualified:' + $name)
+    if ($candidate.reparse) {
+        $blockers += ('candidate-root-reparse:' + $name)
+    }
+    if ($candidate.broadMutationAllowCount -gt 0 -or
+        $candidate.inheritableBroadMutationCount -gt 0) {
+        $blockers += ('candidate-root-broad-mutation:' + $name)
+    }
+    if ($candidate.unclassifiedMutationAllowCount -gt 0 -or
+        $candidate.inheritableUnclassifiedMutationCount -gt 0) {
+        $blockers += ('candidate-root-unclassified-mutation:' + $name)
+    }
+}
 $blockers += 'github-hosted-source-acceptance-not-verified'
 $blockers += 'real-dev-token-and-effective-access-not-verified'
 
