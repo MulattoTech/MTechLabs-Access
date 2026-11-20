@@ -2,6 +2,8 @@
 
 **STATUS: PROPOSED SOURCE CORRECTION ONLY. NOT REVIEWED FOR MERGE, HOSTED-QUALIFIED, INSTALLED OR AUTHORIZED FOR DEV.**
 
+**R46 independent source review:** An additional [synthetic function-level test](verify-native-snapshot-function-ps5.ps1) now extracts and calls only the exact candidate Get-RuntimeNativeSnapshot function with an in-memory substitute type. Windows PowerShell 5.1 and PowerShell 7 both passed lazy initialization, PID forwarding, disposal, no-autoload operation and invalid PID rejection, without invoking the real runtime probe or querying any native process/account. The [R46 independent review](R46-INDEPENDENT-FUNCTION-REVIEW.md) also confirms the complete R43+R45 candidate differs from PR45 in exactly two executable expressions, four diagnostic buffer references and two frozen hashes, while seven qualification sources are unchanged. **These are source-level/synthetic checks, not hosted Windows native acceptance or a proven stall correction.**
+
 **R45 follow-up:** The original R43 checkpoint changed one character-buffer allocation. A later source review found another `New-Object` invocation for native snapshot construction. The current candidate replaces **both** invocations with typed constructors and updates the source/diagnostic hashes. See [R45 constructor review](R45-NATIVE-CONSTRUCTOR-REVIEW.md) and its synthetic PowerShell tests. The historical R43 details and receipt below describe the earlier commit `b090674b359512dc50749f55f65170e1ac393e2a`, not the full current candidate.
 
 Branch: `fix/access44-r43-native-array-candidate-20261120`

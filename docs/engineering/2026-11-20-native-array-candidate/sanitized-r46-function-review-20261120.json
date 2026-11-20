@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R46",
+  "issue": 44,
+  "relatedIssue": 46,
+  "scope": "independent source-only R45 review and exact native snapshot function with an in-memory synthetic Windows type",
+  "createdUtc": "2026-11-20T22:46:13.781251+00:00",
+  "candidateExactCommit": "b97f1b5a78ebda910e66e41db191a32a09be645f",
+  "sourcePr45ExactParent": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "candidateBranch": "fix/access44-r43-native-array-candidate-20261120",
+  "githubAcceptance": {
+    "pr45OpenDraftUnmerged": true,
+    "recordedR7Run": 44742255585,
+    "recordedRunHasRequiredExecutedSteps": false,
+    "candidateHostedRunsObserved": 0,
+    "sourceReviewedButNotAccepted": true
+  },
+  "sourceAudit": {
+    "changedPathCountAgainstPr45Parent": 9,
+    "executablePowerShellChangesExactlyTwoExpressions": true,
+    "failureDiagnosticFourBufferAnchorsTwoHashPinsOnly": true,
+    "preexistingTypedControlRetained": true,
+    "sevenRequiredWorkflowAndNativeSourcesByteUnchanged": true,
+    "candidateProbeNormalizedSha256": "650e96e36ed0c6cc95139f5422fce1840f66b5308a16a0cf7442cc7da8d26322",
+    "candidateFixtureNormalizedSha256": "b863aa72b0ef754d79a11ba4b93043b4a7f497ffbd4cb71503b66bb12542e494"
+  },
+  "newSyntheticFunctionEvidence": {
+    "windowsPowerShell51": {
+      "sourceMatched": true,
+      "lazyInitialization": true,
+      "integerArgumentForwarded": true,
+      "twoInstancesDisposed": true,
+      "autoloadDisabledTypedCallPassed": true,
+      "invalidPidRejected": true
+    },
+    "powerShell7": {
+      "sourceMatched": true,
+      "lazyInitialization": true,
+      "integerArgumentForwarded": true,
+      "twoInstancesDisposed": true,
+      "autoloadDisabledTypedCallPassed": true,
+      "invalidPidRejected": true
+    },
+    "nativeExecutableProbeRun": false,
+    "realProcessObserved": false,
+    "realTokenOrAclQueried": false,
+    "realCrossAccountIpcExercised": false,
+    "typedConstructorExecutionCausalFixProven": false
+  },
+  "newSourceFilesAndHashes": {
+    "docs/engineering/2026-11-20-native-array-candidate/verify-native-snapshot-function-ps5.ps1": {
+      "normalizedBytes": 4307,
+      "normalizedSha256": "734a7ca33e79064c405bdda54adec2f0f86300cf28200c4fe7df254c93209033",
+      "expectedGitBlob": "de704d1f455b8ca3148870546ec8efd66f519f51"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/R46-INDEPENDENT-FUNCTION-REVIEW.md": {
+      "normalizedBytes": 4574,
+      "normalizedSha256": "b8822d0e17f0df27858be53db32c23135131f8232998f4821f0aa1624b5bcd27",
+      "expectedGitBlob": "87b38864298f230f6cae9cd82d51db2bf0181e9a"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/README.md": {
+      "normalizedBytes": 6718,
+      "normalizedSha256": "df4f4fc41e99b59d41ed2e31962d2fe781381606495eb466b1dbbb5d1e8bacbc",
+      "expectedGitBlob": "da94346c823fc5d572f92b2dea86a15c4a369aad"
+    }
+  },
+  "limits": [
+    "The checked function has been extracted and run only with an in-memory synthetic class and a stubbed initializer; Windows native API and loaded-process semantics were not tested.",
+    "Both PowerShell processes ran with the owner-user's environment, not separate restricted users in a hosted Node24 runner.",
+    "Source bounds and fingerprints are not a substitute for independent native Win32 security acceptance or immutable CI artifact evidence.",
+    "Historical Windows native R6 and 0.3.1 PDF-control failures are not accepted; GitHub Actions billing/admission remains unresolved.",
+    "No merge, installation, production/DEV ACL change, key or route change is permitted from this static review."
+  ],
+  "safety": {
+    "productionFilesModified": false,
+    "sourceRuntimeProbeModified": false,
+    "credentialsSecretsTokensRead": false,
+    "windowsAccountOrAclModified": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
