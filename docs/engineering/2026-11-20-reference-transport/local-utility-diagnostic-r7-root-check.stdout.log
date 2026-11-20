@@ -1,0 +1,4 @@
+
+> mtechlabs-access-codes@1.0.0 check
+> node --check src/index.js && node --check src/homepage.js && node --check src/hub-catalog.js && node --check src/mcp.js && node --check src/mcp-remote.js && node --check src/mcp-dev-edge.js && node --check src/mcp-dev-entry.js && node --check integrations/hub/app.js && node --check public/app.js && node --check public/admin.js && node --check public/mcp.js
+

@@ -142,7 +142,7 @@ function Safe-Failure-Probe-Diagnostic($Value) {
     $stages = @($Value.stages); $safeStages = @()
     Assert-Fixture ($stages.Count -le 128) 'fixture_child_diagnostic_invalid'
     foreach ($stage in $stages) {
-        Assert-Fixture ($stage.id -is [int] -and $stage.id -in @(1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81) -and
+        Assert-Fixture ($stage.id -is [int] -and $stage.id -in @(1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85) -and
             ($stage.elapsedMilliseconds -is [int] -or $stage.elapsedMilliseconds -is [long]) -and
             $stage.elapsedMilliseconds -ge 0 -and $stage.elapsedMilliseconds -le 600000) 'fixture_child_diagnostic_invalid'
         $safeStages += @{ id = $stage.id; elapsedMilliseconds = $stage.elapsedMilliseconds }

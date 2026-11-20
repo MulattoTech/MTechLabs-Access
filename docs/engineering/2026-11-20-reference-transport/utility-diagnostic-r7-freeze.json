@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "revision": 7,
+  "frozenAt": "2026-11-20T13:11:22.067152+00:00",
+  "scope": "One typed-array neighboring control and fixed Utility module import inside the same sole failure-only diagnostic derivative",
+  "parentReviewedLocalCommit": "b6c365b34d62af86d6c027cb2e935a1a2e2cc74c",
+  "priorCandidateHead": "9d29623f45a079eb3430466eceb44aac864becd9",
+  "priorRunId": 44740386851,
+  "observedInterval": "Both R6 derivatives complete both encoding constructors and assignments, then emit stage78 immediately before New-Object char[] 16385 and no stage79 before their unchanged15-second deadline. Original capture failure remains; command discovery, module initialization and allocation internals were not established.",
+  "changes": [
+    "Add one counted splice after the existing buffer-initialization splice. It retains every prior derivative statement and stage.",
+    "Add direct [char[]]::new(16385) control with actual char-array type, exact length and both zero-endpoint checks using only direct operators and .NET calls, then release the fixture-local reference.",
+    "Add exactly one fixed Microsoft.PowerShell.Core\\Import-Module -Name system Microsoft.PowerShell.Utility.psd1 -ErrorAction Stop. No Force, retries or module search-path override.",
+    "Add stage IDs82-85 to both bounded diagnostic filters and pin the exact32-splice derivative hash.",
+    "Update only the two changed fixture hash pins in the hosted verifier."
+  ],
+  "unchanged": [
+    "All17 product source files and all29 other frozen inputs",
+    "Node wrapper and every native case/control/success requirement",
+    "Original New-Object, JSON parse, CIM/native observation, encoding statements and R6 diagnostics",
+    "One failure-only derivative maximum, original error preservation and absence on every passing identity",
+    "All native/message/work/cleanup limits, ACL/account/cleanup rules",
+    "All160 verifier require expressions are byte-for-byte equivalent as AST calls"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "priorSha256": "21c26b4fa12fe0dd2cf170196957fe6b90109f6ae8c3fc3a2c24d3a8b4348483",
+      "sha256": "cfb7b1c569db95498f2f17f05b5679cb366e3141818d3dbf91ea4a5feafdf8e2",
+      "bytes": 40704
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "045d81cf525bf6189bbfdc2b2cff569a165e90b6bd5c06895e39ad21d4565dcb",
+      "sha256": "a31ad1965ff681a022d6bba23f9520b35fc966a05c7bdbd7cfda8a45aa6e8275",
+      "bytes": 85131
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputCount": 31,
+  "frozenInputs": {
+    "file": "utility-diagnostic-r7-frozen-inputs.json",
+    "sha256": "80c9713a5c7d649f4e2ea0388851db2d11536506cfd3110a43e65cdd82c36759",
+    "bytes": 4050
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "fa61be3febb29169f7eea672495f30e4fef7b40fdb2288d9ada96063b28a21c0",
+    "bytes": 74711,
+    "priorSha256": "8b7b4b7803240077c615797ecc6984256d7539c941452d3514f12dc20775bd07",
+    "priorPreserved": "candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/review_hosted.py",
+    "priorRequireCalls": 160,
+    "currentRequireCalls": 160,
+    "removedPriorRequireCalls": 0
+  },
+  "derivative": {
+    "file": "utility-diagnostic-r7-derived.ps1",
+    "sha256": "f939e35a5e052616e7838c5b2bf7d38fd44b97ee1c8496a8fccee69566d3889b",
+    "bytes": 14072,
+    "normalizedOriginalSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "anchorCount": 32,
+    "previous31AnchorsRetained": true,
+    "removingAddedBlockRestoresExactR6Derivative": true,
+    "lfCrLfSameDerivative": true,
+    "transformReceipt": {
+      "file": "utility-diagnostic-r7-transform.json",
+      "sha256": "fc749211e341c14524db93a1aa10d7739f34dada3db82a6efad65fe7dc90ac68"
+    },
+    "stageMap": {
+      "file": "utility-diagnostic-r7-stage-map.json",
+      "sha256": "982862e1a810f80ff8be8c49228fc99e6179d1247a311b140f3301fa2e960957",
+      "bytes": 4688
+    }
+  },
+  "causalLimits": [
+    "Read emission order; IDs can repeat and are not numerically monotonic.",
+    "A missing end marker followed by a rejection/catch marker denotes a failed condition or thrown operation, not necessarily a stall.",
+    "The last observed stage localizes only this later instrumented derivative, not the original invocation.",
+    "Derivative timing, cache state and instrumentation differ from the original.",
+    "Stdin finish records writable completion only; it is not proof of payload consumption or EOF.",
+    "No derivative observation may substitute for the original identity proof.",
+    "The derivative separates each encoding expression into one original constructor assigned to a unique local, then the original property assignment using the same object. No extra constructor or setter call is introduced.",
+    "Assignment markers do not instrument the property setter internal Win32 operations.",
+    "The direct typed-array control is additional diagnostic work, not a replacement for the original New-Object statement.",
+    "The fixed explicit Utility import changes this derivative module initialization state; success cannot establish the original cold-start cause.",
+    "Stage85 proves only that the fixed import returned. The original New-Object, JSON parsing, current-process proof and all original conditions still follow.",
+    "No extra process, native probe, timeout, retry, module-search path change or acceptance fallback is introduced."
+  ],
+  "validation": {
+    "syntaxCommands": [
+      {
+        "command": [
+          "node",
+          "--check",
+          "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs"
+        ],
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      {
+        "command": [
+          "node",
+          "--check",
+          "integrations/mcp-manager/test/reference-transport-native.test.mjs"
+        ],
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      }
+    ],
+    "pythonVerifierSyntax": true,
+    "frozenTitlesAndHashes": true,
+    "readOnlyPriorLinuxTitleChecks": true,
+    "pureDeterministicDerivativeConstruction": true,
+    "newProductExecution": false,
+    "newNativeExecution": false,
+    "nativePowerShellOrCSharpCompilationAvailableLocally": false
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "priorEvidence": [
+    {
+      "file": "candidate-probe-initialization-r6/probe-initialization-r6-rejection-review.json",
+      "sha256": "6f3cdccf20ec403792e38ad08174b01f6cc27d69dd8fbc2fe206ca17a9fcf0f5"
+    },
+    {
+      "file": "candidate-probe-initialization-r6/r6-linux-upstream-rejection-review.json",
+      "sha256": "f0ef9aa65a029f32ab815bf2241a61f773bff1cc1c8e9a1e9f13ae32255058f8"
+    },
+    {
+      "file": "probe-initialization-r6-freeze.json",
+      "sha256": "e4183528e700f69c25bfc77255d496a7ff93daebb2f6df138777616a7ae1b13a"
+    }
+  ],
+  "acceptance": {
+    "nativeRequalificationPending": true,
+    "candidateAccepted": false,
+    "activationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "authorRole": "Test/fixture author and evidence verifier; independent product/source review is separate."
+}

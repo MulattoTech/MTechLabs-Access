@@ -97,6 +97,20 @@ function buildFailureProbe(source) {
     '    Write-FixtureProbeStage 74\n    $fixtureProbeOutputEncoding = [System.Text.UTF8Encoding]::new($false)\n    Write-FixtureProbeStage 75\n    Write-FixtureProbeStage 76\n    [Console]::OutputEncoding = $fixtureProbeOutputEncoding\n    Write-FixtureProbeStage 77');
   splice('buffer_initialization', '    $buffer = New-Object char[] 16385',
     '    Write-FixtureProbeStage 78\n    $buffer = New-Object char[] 16385\n    Write-FixtureProbeStage 79');
+  splice('utility_bootstrap_control', '    Write-FixtureProbeStage 78\n    $buffer = New-Object char[] 16385',
+    `    Write-FixtureProbeStage 82
+    $fixtureProbeTypedBuffer = [char[]]::new(16385)
+    if ($fixtureProbeTypedBuffer -isnot [char[]] -or $fixtureProbeTypedBuffer.Length -ne 16385 -or
+        [int]($fixtureProbeTypedBuffer[0]) -ne 0 -or [int]($fixtureProbeTypedBuffer[16384]) -ne 0) {
+        throw 'fixture_probe_diagnostic_array_control_failed'
+    }
+    $fixtureProbeTypedBuffer = $null
+    Write-FixtureProbeStage 83
+    Write-FixtureProbeStage 84
+    Microsoft.PowerShell.Core\\Import-Module -Name 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules\\Microsoft.PowerShell.Utility\\Microsoft.PowerShell.Utility.psd1' -ErrorAction Stop
+    Write-FixtureProbeStage 85
+    Write-FixtureProbeStage 78
+    $buffer = New-Object char[] 16385`);
   splice('length_initialization', '    $length = 0',
     '    Write-FixtureProbeStage 80\n    $length = 0\n    Write-FixtureProbeStage 81');
   splice('stdin_begin', '    while ($length -lt $buffer.Length) {', '    Write-FixtureProbeStage 2\n    while ($length -lt $buffer.Length) {');
@@ -142,7 +156,7 @@ async function failureProbeDiagnostic(originalExecFile) {
     }
     const derivative = buildFailureProbe(text);
     record.derivativeSourceSha256 = hash(derivative.source); record.anchorCount = derivative.anchors.length; record.anchorsMatched = true;
-    if (record.anchorCount !== 31 || record.derivativeSourceSha256 !== 'cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4') {
+    if (record.anchorCount !== 32 || record.derivativeSourceSha256 !== 'f939e35a5e052616e7838c5b2bf7d38fd44b97ee1c8496a8fccee69566d3889b') {
       throw new Error('fixture_probe_diagnostic_derivative_mismatch');
     }
     filename = path.join(process.cwd(), 'reference-probe-diagnostic-' + randomBytes(12).toString('hex') + '.ps1');
@@ -172,7 +186,7 @@ async function failureProbeDiagnostic(originalExecFile) {
           for (const line of diagnostic.split('\n').filter(Boolean)) {
             if (!line.startsWith(probeTraceMarker)) { record.otherStderrLines = Math.min(1024, record.otherStderrLines + 1); continue; }
             const match = /^MTERM_PROBE_DIAGNOSTIC ([0-9]{1,2}) ([0-9]{1,6})$/.exec(line);
-            if (!match || ![1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81].includes(Number(match?.[1])) || Number(match?.[2]) > 600000) {
+            if (!match || ![1,2,3,4,5,7,8,10,11,12,13,14,15,16,17,20,21,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,56,57,58,60,61,62,63,64,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85].includes(Number(match?.[1])) || Number(match?.[2]) > 600000) {
               record.malformedTrace = true; continue;
             }
             if (record.stages.length >= 128) { record.traceOverflow = true; continue; }
