@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "accepted": false,
+  "pending": false,
+  "scope": "Independent candidate1 log and immutable-source rejection; not full successful artifact qualification",
+  "observedAt": "2026-11-20T09:06:39.118830+00:00",
+  "runId": 44707303036,
+  "headSha": "9e765ec59210897baf509f3331d1022a1f4d6a56",
+  "sourceSha": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+  "treeSha": "2388e4378458b8fd409e43fdb77696ab8d6299c7",
+  "localSourceCommit": "7f2fba881530e25e4550a2c236a35f7d190aa377",
+  "verifierSha256": "ba7a90a65604810cd2989e50cdbcf998a8f9042ee0661eee9642569fdd886422",
+  "jobs": [
+    {
+      "log": "candidate-job-136189980003.log",
+      "jobId": 136189980003,
+      "sha256": "07e27c318bc6dce298b1123e6897ffa21ec7f5cec7901c2806701ba7aeb916a9",
+      "bytes": 92876,
+      "checkout": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+      "totals": {
+        "tests": 441,
+        "pass": 433,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "all49ProtocolAnd10RouteCasesPassedExactlyOnce": true,
+      "failedNativeTitles": [
+        "registered reference handles privately pin deep copied configs and plan without writer authority",
+        "restricted reference consumer reads no production paths and requests no production native role",
+        "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+        "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+        "registered authority refuses actual DEV control drift across production native observation",
+        "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+      ],
+      "incompleteNativeReport": {
+        "schemaVersion": 1,
+        "scope": "disposable hosted Windows source qualification; no deployment or account-isolation claim",
+        "nativeCaseTitles": [
+          "registered reference handles privately pin deep copied configs and plan without writer authority",
+          "restricted reference consumer reads no production paths and requests no production native role",
+          "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+          "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+          "registered authority refuses actual DEV control drift across production native observation",
+          "restricted consumer refuses local retargeting after exchange before following substituted controls",
+          "registered authority compares actual digest-only credentials and never returns credential values",
+          "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+          "restricted reference errors omit callback secrets and have no direct-read fallback",
+          "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+        ],
+        "completedCases": [
+          {
+            "name": "restricted consumer refuses local retargeting after exchange before following substituted controls",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "unregisteredPathReads": 0
+          },
+          {
+            "name": "registered authority compares actual digest-only credentials and never returns credential values",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false
+          },
+          {
+            "name": "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "exchangeCalls": 0
+          },
+          {
+            "name": "restricted reference errors omit callback secrets and have no direct-read fallback",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "consumerProductionReads": 0
+          }
+        ],
+        "sourceSha256": {
+          "lib/dev-runtime-reference.mjs": "e18c1e3df2df12407b10ea1b70235957daf06f902dc0aff5c354ae9e88e4eeda",
+          "lib/runtime-files.mjs": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "lib/dev-runtime.mjs": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "lib/production-reference.mjs": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "lib/runtime-identity.mjs": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "test/dev-runtime-reference.test.mjs": "974baa68a18545a8e94166ce588bba1b71eb368c6934d8188835310391d6dff6",
+          "windows-runtime-probe.ps1": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d"
+        },
+        "writeObservationScope": "Integration fs/promises calls; excludes fixture setup/drift and native compiler temporary activity",
+        "nativeCompilerTemporaryActivityNotExcluded": true,
+        "productionListenerLiveProbes": 0,
+        "activationAuthorized": false,
+        "qualified": false,
+        "upstreamEnabled": false
+      },
+      "allSevenNativeSourcesBound": {
+        "lib/dev-runtime-reference.mjs": {
+          "sha256": "e18c1e3df2df12407b10ea1b70235957daf06f902dc0aff5c354ae9e88e4eeda",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-files.mjs": {
+          "sha256": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "form": "LF-to-CRLF"
+        },
+        "lib/dev-runtime.mjs": {
+          "sha256": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "form": "LF-to-CRLF"
+        },
+        "lib/production-reference.mjs": {
+          "sha256": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-identity.mjs": {
+          "sha256": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "form": "LF-to-CRLF"
+        },
+        "test/dev-runtime-reference.test.mjs": {
+          "sha256": "974baa68a18545a8e94166ce588bba1b71eb368c6934d8188835310391d6dff6",
+          "form": "LF-to-CRLF"
+        },
+        "windows-runtime-probe.ps1": {
+          "sha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+          "form": "LF-to-CRLF"
+        }
+      }
+    },
+    {
+      "log": "candidate-job-136189980297.log",
+      "jobId": 136189980297,
+      "sha256": "7da88c03cb0c9dfa5825596d980472d4ae458f6da808e49f060690821cbc5cbe",
+      "bytes": 95363,
+      "checkout": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+      "totals": {
+        "tests": 441,
+        "pass": 433,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "all49ProtocolAnd10RouteCasesPassedExactlyOnce": true,
+      "failedNativeTitles": [
+        "registered reference handles privately pin deep copied configs and plan without writer authority",
+        "restricted reference consumer reads no production paths and requests no production native role",
+        "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+        "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+        "registered authority refuses actual DEV control drift across production native observation",
+        "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+      ],
+      "incompleteNativeReport": {
+        "schemaVersion": 1,
+        "scope": "disposable hosted Windows source qualification; no deployment or account-isolation claim",
+        "nativeCaseTitles": [
+          "registered reference handles privately pin deep copied configs and plan without writer authority",
+          "restricted reference consumer reads no production paths and requests no production native role",
+          "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+          "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+          "registered authority refuses actual DEV control drift across production native observation",
+          "restricted consumer refuses local retargeting after exchange before following substituted controls",
+          "registered authority compares actual digest-only credentials and never returns credential values",
+          "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+          "restricted reference errors omit callback secrets and have no direct-read fallback",
+          "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+        ],
+        "completedCases": [
+          {
+            "name": "restricted consumer refuses local retargeting after exchange before following substituted controls",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "unregisteredPathReads": 0
+          },
+          {
+            "name": "registered authority compares actual digest-only credentials and never returns credential values",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false
+          },
+          {
+            "name": "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "exchangeCalls": 0
+          },
+          {
+            "name": "restricted reference errors omit callback secrets and have no direct-read fallback",
+            "nodeFilesystemWriteCalls": 0,
+            "requestedNativeRoles": [],
+            "realNative": false,
+            "consumerProductionReads": 0
+          }
+        ],
+        "sourceSha256": {
+          "lib/dev-runtime-reference.mjs": "e18c1e3df2df12407b10ea1b70235957daf06f902dc0aff5c354ae9e88e4eeda",
+          "lib/runtime-files.mjs": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "lib/dev-runtime.mjs": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "lib/production-reference.mjs": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "lib/runtime-identity.mjs": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "test/dev-runtime-reference.test.mjs": "974baa68a18545a8e94166ce588bba1b71eb368c6934d8188835310391d6dff6",
+          "windows-runtime-probe.ps1": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d"
+        },
+        "writeObservationScope": "Integration fs/promises calls; excludes fixture setup/drift and native compiler temporary activity",
+        "nativeCompilerTemporaryActivityNotExcluded": true,
+        "productionListenerLiveProbes": 0,
+        "activationAuthorized": false,
+        "qualified": false,
+        "upstreamEnabled": false
+      },
+      "allSevenNativeSourcesBound": {
+        "lib/dev-runtime-reference.mjs": {
+          "sha256": "e18c1e3df2df12407b10ea1b70235957daf06f902dc0aff5c354ae9e88e4eeda",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-files.mjs": {
+          "sha256": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "form": "LF-to-CRLF"
+        },
+        "lib/dev-runtime.mjs": {
+          "sha256": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "form": "LF-to-CRLF"
+        },
+        "lib/production-reference.mjs": {
+          "sha256": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-identity.mjs": {
+          "sha256": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "form": "LF-to-CRLF"
+        },
+        "test/dev-runtime-reference.test.mjs": {
+          "sha256": "974baa68a18545a8e94166ce588bba1b71eb368c6934d8188835310391d6dff6",
+          "form": "LF-to-CRLF"
+        },
+        "windows-runtime-probe.ps1": {
+          "sha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+          "form": "LF-to-CRLF"
+        }
+      }
+    },
+    {
+      "log": "candidate-job-136189980302.log",
+      "jobId": 136189980302,
+      "sha256": "b177003507f8766ffc630cb21e178c0561ab79f0210e9bd1692fdc8f48747b7d",
+      "bytes": 60701,
+      "checkout": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+      "totals": {
+        "tests": 362,
+        "pass": 338,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 24,
+        "todo": 0
+      },
+      "all49ProtocolAnd10RouteCasesPassedExactlyOnce": true
+    },
+    {
+      "log": "candidate-job-136189980407.log",
+      "jobId": 136189980407,
+      "sha256": "ad3d5adb4f4812400ee477f9f5e21140986e3c75536fd21ccfb9b3939bbb4abc",
+      "bytes": 50506,
+      "checkout": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+      "totals": {
+        "tests": 128,
+        "pass": 128,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "log": "candidate-job-136189980424.log",
+      "jobId": 136189980424,
+      "sha256": "238de2f069951aedf1e994402db9c0cee62de6efa15c00d7061e02559921106f",
+      "bytes": 56479,
+      "checkout": "12f97057aa7fb604d70c2562a94321e8b3994b57",
+      "totals": {
+        "tests": 362,
+        "pass": 338,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 24,
+        "todo": 0
+      },
+      "all49ProtocolAnd10RouteCasesPassedExactlyOnce": true
+    }
+  ],
+  "blockingFindings": [
+    "Both Windows jobs fail the same six new integration cases.",
+    "Only four of ten new native cases complete; all four record no requested native roles. Three completed negatives therefore did not prove their intended later rejection stage; the early topology negative needs a successful unmodified control to disambiguate setup failure.",
+    "No successful Windows upstream archive is available for this failed run."
+  ],
+  "frozenProtocolTestSha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+  "sourceOrTestEditedByThisReview": false,
+  "nextAcceptance": "Revised source and strengthened stage-specific fixtures, full local gates, new immutable candidate and all five new hosted jobs with both artifacts."
+}

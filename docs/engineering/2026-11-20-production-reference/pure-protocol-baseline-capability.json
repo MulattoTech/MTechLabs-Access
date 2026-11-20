@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "phase": "baseline-api-capability-gap",
+  "at": "2026-11-20T08:46:01.970610+00:00",
+  "baseCommit": "60d7f5bae965dab2ea73805d8df411bc8b2b937e",
+  "baseTree": "5a4a46624fe595704b505e8339e883a854c0046f",
+  "testPath": "integrations/mcp-manager/test/production-reference.test.mjs",
+  "testSha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+  "testBytes": 33089,
+  "node": "v24.22.3",
+  "baselineApiPresent": false,
+  "baselineClassification": "New API absence is a capability gap, not a behavioral regression.",
+  "implementationInspectedForTestAuthoring": false,
+  "scope": "Protocol-only owned ephemeral cryptographic keys, synthetic inputs/clocks, and controlled callback fixtures; no host or provider operations.",
+  "exitCode": 1,
+  "totals": {
+    "tests": 49,
+    "suites": 0,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 48,
+    "todo": 0
+  },
+  "stdoutSha256": "11397c217ea79201cedb4ac699ded29d8706f3a825de607d4adda83eabf0ac1a",
+  "stdoutBytes": 14442,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrBytes": 0,
+  "testCopyIdentical": true,
+  "sourceRuntimeExecuted": false,
+  "behavioralRedClaim": false
+}

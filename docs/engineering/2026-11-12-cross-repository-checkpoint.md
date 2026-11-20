@@ -8,20 +8,51 @@ and hosted evidence; one writer owns implementation changes.
 
 ## Current continuation state — 2026-11-20 UTC
 
-- The current approved continuation is the read-only live DEV readiness inventory
-  and provisioning/routing plan in
-  [issue38](https://github.com/MulattoTech/MTechLabs-Access/issues/38), based on
-  actual main `65f7c2ce59653fe905244fc8c2476f15157ca235`. The
+- The current approved source continuation is
+  [issue40](https://github.com/MulattoTech/MTechLabs-Access/issues/40), based on
+  actual main `60d7f5bae965dab2ea73805d8df411bc8b2b937e`. The
+  [authenticated production-reference API](../../integrations/mcp-manager/PRODUCTION-REFERENCE.md)
+  adds a distinct read-only consumer, fixed registered-target authority and
+  Ed25519 request-bound observations. It binds actual DEV controls, rejects
+  stale/replayed/mismatched evidence, retains cancellation/admission bounds,
+  avoids consumer production-file/targeted-process reads and grants no writer
+  or startup authority. The 49 frozen pure protocol groups passed their first
+  candidate run unchanged. New-API absence on original main is recorded as a
+  capability gap, not behavioral regression RED. Local root tests passed 128/128;
+  manager tests passed 339 with 25 Windows skips; check/build/generated UI gates
+  passed with all 217 code/test/configuration inputs unchanged. The
+  [local evidence](2026-11-20-production-reference/README.md) retains the receipts.
+  The first candidate's Windows failure exposed a mixed canonical/declared path
+  comparison. The corrected source compares complete resolved file identities;
+  native rejection tests now prove successful controls and the intended stage.
+  Independent review also required canonical direct-child/reserved-name guards,
+  now covered by five alias rejection/restoration scenarios. A second candidate's
+  synthetic fingerprint/audience collision is corrected with a portable fixture
+  check; privacy assertions remain intact. Both rejected candidates are retained.
+  The final local receipt also retains one unchanged idle-test failure and its
+  successful focused/full follow-ups without asserting its cause; final serial
+  gates passed without retry. Eleven disposable Windows
+  integration cases, immutable whole-source review and exact hosted
+  candidate/actual-main acceptance remain integration gates at preparation of
+  this commit; issue40 receives the final exact-revision receipt. No operational
+  transport, requester authentication, protected bootstrap, account/ACL or
+  activation qualification is claimed.
+
+- Access [issue38](https://github.com/MulattoTech/MTechLabs-Access/issues/38) /
+  [PR39](https://github.com/MulattoTech/MTechLabs-Access/pull/39) completed at
+  actual main `60d7f5bae965dab2ea73805d8df411bc8b2b937e`, preserving reviewed
+  tree `5a4a46624fe595704b505e8339e883a854c0046f`. The
   [readiness record and concrete proposal](2026-11-20-dev-readiness/README.md)
-  retain sanitized host, plugin and Cloudflare observations. They identify
-  restricted production-reference, runtime/ancestor ACL, separate DEV edge,
-  upstream-root and launcher prerequisites. A narrow plan-validation correction
-  accepts the exact declared production origin Host while DEV keeps its exact
-  loopback declaration. Frozen regression: original7 pass/3 expected failures,
-  corrected10/10; local root128/128 and manager288 pass plus14 Windows skips.
-  Immutable review and candidate/actual-main acceptance are pending at this
-  commit's preparation; issue38 receives the final delivery receipt. No account,
-  ACL, credential, route, grant or production runtime is changed.
+  retain sanitized host, plugin and Cloudflare observations and account/ACL,
+  reference, edge, upstream-root and launcher prerequisites. The narrow
+  production Host declaration correction preserves DEV's exact loopback rule.
+  Frozen regression: original 7 pass/3 expected failures, corrected 10/10. All
+  five candidate and five distinct actual-main jobs passed: root 128/128,
+  Linux 288 pass plus 14 skips, Windows 380 pass plus one skip; both real upstream
+  versions passed all 40 platform/version stages with cleanup and zero model
+  calls. Independent source/evidence acceptance, claim release and closure are
+  in the [final receipt](https://github.com/MulattoTech/MTechLabs-Access/issues/38#issuecomment-7034340108).
+  No account, ACL, credential, route, grant or production runtime was changed.
 
 - Access [issue36](https://github.com/MulattoTech/MTechLabs-Access/issues/36) /
   [PR37](https://github.com/MulattoTech/MTechLabs-Access/pull/37) completed normally
@@ -88,14 +119,15 @@ and hosted evidence; one writer owns implementation changes.
   credentials, policies, the dirty owner CLI checkout and working wrappers remain
   untouched by these source repairs.
 
-**Current action:** qualify and integrate Access38 through the normal
+**Current action:** qualify and integrate Access40 through the normal
 expected-head workflow, then append its actual delivery receipt to the issue
-before claim release and explicit completion. This completes the live inventory,
-explicit provisioning proposal and production Host declaration compatibility fix.
-Next source preparation should replace the inspector's direct protected-production
-file dependency with a narrowly scoped authoritative observation contract; preserve
-the current unqualified/disabled outcome. Separate DEV edge mapping and effective
-OS/ancestor protections remain prerequisites before any operational provisioning.
+before claim release and explicit completion. This adds the restricted reference
+source interface; successful diagnostics retain every unqualified/disabled
+outcome. A protected trusted bootstrap/transport, separate DEV edge mapping,
+effective OS/ancestor protections, actual upstream roots and operational launcher
+remain prerequisites before real DEV provisioning and activation. The next
+eligible source slice is the closed independent DEV edge descriptor and owner
+authorization boundary; live allocation and deployment remain separate work.
 No production cutover, wrapper removal or paid model call follows from source CI.
 The original CLI/DCP/WEB acceptance metrics and broader issues remain unchanged.
 

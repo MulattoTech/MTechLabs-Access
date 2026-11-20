@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "author": "/root/runtime_review",
+  "kind": "Windows reference integration implementation and local qualification receipt",
+  "baseCommit": "60d7f5bae965dab2ea73805d8df411bc8b2b937e",
+  "createdAtUtc": "2026-11-20T08:51:09.977927+00:00",
+  "ownedFilesSha256": {
+    "lib/dev-runtime-reference.mjs": "2996fe26674603d3306c2fca185675c677f36e1789cd138515012d5ed66bc179",
+    "lib/runtime-files.mjs": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+    "lib/dev-runtime.mjs": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
+    "test/dev-runtime-reference.test.mjs": "22d0e68b478c9dbbdce96dba416c5686d116fd62465433f26dd8caf42fa9f7e4"
+  },
+  "sourceInputsUnchanged": true,
+  "observedProtocolSourceSha256": "7a2ba4a9699a1e4c95ed95bc10db841c5513daf7a39d8464ee88565e220d4c30",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "lib/dev-runtime-reference.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "lib/runtime-files.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "lib/dev-runtime.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "test/dev-runtime-reference.test.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "test/dev-runtime-reference.test.mjs",
+        "test/dev-runtime.test.mjs",
+        "test/dev-runtime-plan.test.mjs",
+        "test/dev-runtime-production-route.test.mjs"
+      ],
+      "startedAtUtc": "2026-11-20T08:51:09.404926+00:00",
+      "finishedAtUtc": "2026-11-20T08:51:09.974919+00:00",
+      "exitCode": 0,
+      "totals": {
+        "tests": 172,
+        "suites": 0,
+        "pass": 154,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 18,
+        "todo": 0
+      },
+      "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/integration-local-focused.tap",
+      "stdoutSha256": "35710b048d5a19028c87f9f805fa3c584721939838e53b4c9929538e39ec0134",
+      "stdoutBytes": 33331,
+      "stderrPath": "/workspace/scratch/86162842804d/dev_production_reference_40/integration-local-focused.stderr",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0
+    }
+  ],
+  "nativeCaseTitles": [
+    "registered reference handles privately pin deep copied configs and plan without writer authority",
+    "restricted reference consumer reads no production paths and requests no production native role",
+    "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+    "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+    "registered authority refuses actual DEV control drift across production native observation",
+    "restricted consumer refuses local retargeting after exchange before following substituted controls",
+    "registered authority compares actual digest-only credentials and never returns credential values",
+    "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+    "restricted reference errors omit callback secrets and have no direct-read fallback",
+    "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+  ],
+  "nativeDiagnosticMarker": "MTERM_DEV_REFERENCE_NATIVE_EVIDENCE ",
+  "nativeQualification": "Pending disposable hosted Windows CI; ten native cases explicitly skipped locally. No native pass claimed.",
+  "sourceBoundary": {
+    "trustedRegistrationDeepCopiesAndPinsBothConfigsAndFullPlan": true,
+    "authorityUsesOnlyRegisteredPathsAfterConfigComparison": true,
+    "authorityReadsActualDigestOnlyCredentials": true,
+    "consumerProductionFilesystemReads": "Prohibited by implementation and pending native denial-spy tests",
+    "consumerProductionNativeProbe": false,
+    "consumerReturnedOsProfilePathsAreOnlyComparisonData": true,
+    "legacyDirectInspectorAndWriterValidationPreserved": true,
+    "registeredHandleDoesNotGrantWriterOwnership": true,
+    "cliOrHttpOrIpcTransportAdded": false,
+    "liveCalls": 0,
+    "repositoryCommitsCreated": 0,
+    "nodeSourceWritesImplemented": false,
+    "boundedPathSnapshotsAreNotAnOsSandbox": true,
+    "operationalActivationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "testLimitations": [
+    "Real native smoke observes only its own caller and an inert owned disposable DEV listener; it uses synthetic signed production facts.",
+    "Other integration native responses are synthetic to qualify config/credential/topology/read-only boundaries without probing a live production listener.",
+    "Native evidence reports actual checkout hashes, roles, measured Node fs/promises write-call counts and consumer production-read counts; compiler temporary/cache activity is explicitly not excluded.",
+    "Production ACLs, protected trust bootstrap, deployed transport, cross-account isolation and loaded source remain unqualified."
+  ]
+}

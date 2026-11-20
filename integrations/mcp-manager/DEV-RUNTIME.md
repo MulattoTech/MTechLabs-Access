@@ -10,6 +10,13 @@ Every successful report has `qualified: false` and `upstreamEnabled: false`.
 The existing DEV remote/gateway blocks remain enforced. A successful diagnostic
 exit code means the report was produced, not that activation is authorized.
 
+The distinct [authenticated production-reference API](PRODUCTION-REFERENCE.md)
+supports restricted read-only inspection without direct protected production
+reads. It requires trusted registration/key bootstrap and an explicitly supplied
+exchange callback; no operational transport or CLI trust override is installed.
+The wrapper and direct invocation below retain their original permission needs.
+Reference acceptance never grants manager writer/ownership capabilities.
+
 ## Inputs and invocation
 
 Use the PowerShell wrapper with explicit absolute paths:

@@ -1,0 +1,304 @@
+TAP version 13
+# Subtest: production reference protocol capability is available with the agreed public API
+ok 1 - production reference protocol capability is available with the agreed public API
+  ---
+  duration_ms: 3.679352
+  type: 'test'
+  ...
+# Subtest: control commitment binds the exact nonce and private control snapshot with domain separation
+ok 2 - control commitment binds the exact nonce and private control snapshot with domain separation
+  ---
+  duration_ms: 6.177052
+  type: 'test'
+  ...
+# Subtest: authority and client require correctly typed Ed25519 KeyObjects
+ok 3 - authority and client require correctly typed Ed25519 KeyObjects
+  ---
+  duration_ms: 2.965483
+  type: 'test'
+  ...
+# Subtest: trusted factory options reject unknown fields, invalid registrations, instance aliases and accessors
+ok 4 - trusted factory options reject unknown fields, invalid registrations, instance aliases and accessors
+  ---
+  duration_ms: 9.534769
+  type: 'test'
+  ...
+# Subtest: a valid exchange returns opaque, private and independently verifiable production facts
+ok 5 - a valid exchange returns opaque, private and independently verifiable production facts
+  ---
+  duration_ms: 8.179266
+  type: 'test'
+  ...
+# Subtest: default clocks support a real immediate round trip without fixture time overrides
+ok 6 - default clocks support a real immediate round trip without fixture time overrides
+  ---
+  duration_ms: 1.830061
+  type: 'test'
+  ...
+# Subtest: separate requests use fresh nonces and commitments even with identical private snapshots
+ok 7 - separate requests use fresh nonces and commitments even with identical private snapshots
+  ---
+  duration_ms: 2.912382
+  type: 'test'
+  ...
+# Subtest: opaque clients and proofs cannot be forged, cloned or revived by serialization
+ok 8 - opaque clients and proofs cannot be forged, cloned or revived by serialization
+  ---
+  duration_ms: 1.729288
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the matched production listener observation
+ok 9 - reference facts preserve the matched production listener observation
+  ---
+  duration_ms: 2.435826
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the mismatched production listener observation
+ok 10 - reference facts preserve the mismatched production listener observation
+  ---
+  duration_ms: 1.420787
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the absent production listener observation
+ok 11 - reference facts preserve the absent production listener observation
+  ---
+  duration_ms: 1.092576
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the unverified production listener observation
+ok 12 - reference facts preserve the unverified production listener observation
+  ---
+  duration_ms: 1.321175
+  type: 'test'
+  ...
+# Subtest: authority rejects a request object instead of canonical text before observation
+ok 13 - authority rejects a request object instead of canonical text before observation
+  ---
+  duration_ms: 1.64519
+  type: 'test'
+  ...
+# Subtest: authority rejects leading whitespace before observation
+ok 14 - authority rejects leading whitespace before observation
+  ---
+  duration_ms: 4.633697
+  type: 'test'
+  ...
+# Subtest: authority rejects trailing newline before observation
+ok 15 - authority rejects trailing newline before observation
+  ---
+  duration_ms: 0.678635
+  type: 'test'
+  ...
+# Subtest: authority rejects reordered JSON keys before observation
+ok 16 - authority rejects reordered JSON keys before observation
+  ---
+  duration_ms: 0.816916
+  type: 'test'
+  ...
+# Subtest: authority rejects duplicate schema keys before observation
+ok 17 - authority rejects duplicate schema keys before observation
+  ---
+  duration_ms: 0.58373
+  type: 'test'
+  ...
+# Subtest: authority rejects alternate Unicode encoding before observation
+ok 18 - authority rejects alternate Unicode encoding before observation
+  ---
+  duration_ms: 0.621228
+  type: 'test'
+  ...
+# Subtest: authority rejects arbitrary filesystem paths before observation
+ok 19 - authority rejects arbitrary filesystem paths before observation
+  ---
+  duration_ms: 0.932753
+  type: 'test'
+  ...
+# Subtest: authority rejects arbitrary commands before observation
+ok 20 - authority rejects arbitrary commands before observation
+  ---
+  duration_ms: 0.860943
+  type: 'test'
+  ...
+# Subtest: authority rejects caller-selected algorithms before observation
+ok 21 - authority rejects caller-selected algorithms before observation
+  ---
+  duration_ms: 0.833752
+  type: 'test'
+  ...
+# Subtest: authority rejects oversized input before observation
+ok 22 - authority rejects oversized input before observation
+  ---
+  duration_ms: 0.505121
+  type: 'test'
+  ...
+# Subtest: authority rejects malformed request fields and unknown registration bindings before observation
+ok 23 - authority rejects malformed request fields and unknown registration bindings before observation
+  ---
+  duration_ms: 2.465391
+  type: 'test'
+  ...
+# Subtest: authority rejects future, expired and excessive request windows before observation
+ok 24 - authority rejects future, expired and excessive request windows before observation
+  ---
+  duration_ms: 1.277268
+  type: 'test'
+  ...
+# Subtest: request inputs remain exact, private data fields and never admit caller readiness claims
+ok 25 - request inputs remain exact, private data fields and never admit caller readiness claims
+  ---
+  duration_ms: 0.638885
+  type: 'test'
+  ...
+# Subtest: consumer rejects unknown envelope keys
+ok 26 - consumer rejects unknown envelope keys
+  ---
+  duration_ms: 0.767391
+  type: 'test'
+  ...
+# Subtest: consumer rejects a padded payload encoding
+ok 27 - consumer rejects a padded payload encoding
+  ---
+  duration_ms: 0.504439
+  type: 'test'
+  ...
+# Subtest: consumer rejects a padded signature encoding
+ok 28 - consumer rejects a padded signature encoding
+  ---
+  duration_ms: 0.553534
+  type: 'test'
+  ...
+# Subtest: consumer rejects a truncated signature
+ok 29 - consumer rejects a truncated signature
+  ---
+  duration_ms: 0.467363
+  type: 'test'
+  ...
+# Subtest: consumer rejects an unsupported envelope version
+ok 30 - consumer rejects an unsupported envelope version
+  ---
+  duration_ms: 0.486572
+  type: 'test'
+  ...
+# Subtest: consumer refuses noncanonical, duplicated and oversized envelope text
+ok 31 - consumer refuses noncanonical, duplicated and oversized envelope text
+  ---
+  duration_ms: 2.6026
+  type: 'test'
+  ...
+# Subtest: consumer rejects wrong signing keys, modified signed facts and the wrong signature domain
+ok 32 - consumer rejects wrong signing keys, modified signed facts and the wrong signature domain
+  ---
+  duration_ms: 1.805484
+  type: 'test'
+  ...
+# Subtest: a valid signature cannot bypass strict payload and fact schemas
+ok 33 - a valid signature cannot bypass strict payload and fact schemas
+  ---
+  duration_ms: 10.34499
+  type: 'test'
+  ...
+# Subtest: consumer binds trusted signed responses to the exact registration and request bytes
+ok 34 - consumer binds trusted signed responses to the exact registration and request bytes
+  ---
+  duration_ms: 6.821836
+  type: 'test'
+  ...
+# Subtest: consumer refuses authenticated observation windows outside the pending request
+ok 35 - consumer refuses authenticated observation windows outside the pending request
+  ---
+  duration_ms: 2.159504
+  type: 'test'
+  ...
+# Subtest: old responses cannot be reused for a new nonce or a changed control snapshot
+ok 36 - old responses cannot be reused for a new nonce or a changed control snapshot
+  ---
+  duration_ms: 2.160145
+  type: 'test'
+  ...
+# Subtest: exchange failures have no retry and redact private callback errors
+ok 37 - exchange failures have no retry and redact private callback errors
+  ---
+  duration_ms: 1.738481
+  type: 'test'
+  ...
+# Subtest: observer failures and malformed facts are sanitized and consume the reserved nonce
+ok 38 - observer failures and malformed facts are sanitized and consume the reserved nonce
+  ---
+  duration_ms: 1.892637
+  type: 'test'
+  ...
+# Subtest: authority reserves a nonce before awaiting observation and rejects concurrent replay
+ok 39 - authority reserves a nonce before awaiting observation and rejects concurrent replay
+  ---
+  duration_ms: 2.754111
+  type: 'test'
+  ...
+# Subtest: authority rejects already-aborted calls without observing or reserving the nonce
+ok 40 - authority rejects already-aborted calls without observing or reserving the nonce
+  ---
+  duration_ms: 3.440098
+  type: 'test'
+  ...
+# Subtest: authority bounds eight observations and retains aborted work until actual settlement
+ok 41 - authority bounds eight observations and retains aborted work until actual settlement
+  ---
+  duration_ms: 39.367809
+  type: 'test'
+  ...
+# Subtest: authority retains all sixty-four nonce reservations without evicting live or failed entries
+ok 42 - authority retains all sixty-four nonce reservations without evicting live or failed entries
+  ---
+  duration_ms: 42.428557
+  type: 'test'
+  ...
+# Subtest: client bounds eight independent exchanges and releases capacity only after settlement
+ok 43 - client bounds eight independent exchanges and releases capacity only after settlement
+  ---
+  duration_ms: 21.317426
+  type: 'test'
+  ...
+# Subtest: client deadline aborts exchanges without freeing ignored-abort capacity or retrying
+ok 44 - client deadline aborts exchanges without freeing ignored-abort capacity or retrying
+  ---
+  duration_ms: 33.439957
+  type: 'test'
+  ...
+# Subtest: late observer or exchange completion cannot authenticate an expired request
+ok 45 - late observer or exchange completion cannot authenticate an expired request
+  ---
+  duration_ms: 0.692436
+  type: 'test'
+  ...
+# Subtest: proof expiry is enforced at the exact wall deadline and cannot be rolled back
+ok 46 - proof expiry is enforced at the exact wall deadline and cannot be rolled back
+  ---
+  duration_ms: 0.656111
+  type: 'test'
+  ...
+# Subtest: monotonic expiry and backwards clocks independently invalidate proofs permanently
+ok 47 - monotonic expiry and backwards clocks independently invalidate proofs permanently
+  ---
+  duration_ms: 3.731457
+  type: 'test'
+  ...
+# Subtest: invalid or overflowing clocks reject without private callback execution
+ok 48 - invalid or overflowing clocks reject without private callback execution
+  ---
+  duration_ms: 1.109432
+  type: 'test'
+  ...
+# Subtest: clock callback failures are sanitized and invalidate an existing proof
+ok 49 - clock callback failures are sanitized and invalidate an existing proof
+  ---
+  duration_ms: 0.778678
+  type: 'test'
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 579.109465

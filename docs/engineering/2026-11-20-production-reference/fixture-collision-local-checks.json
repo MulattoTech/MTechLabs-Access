@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "kind": "synthetic fixture collision reproduction and corrected local validation",
+  "frozenCurrentTestSha256": "57e926908dbd2bed5e40d2ad10b975330f829db37e0a48eae9ef7ad6627c9f3e",
+  "redScope": "Throwaway copy restores former repeated-a fingerprint values only; repository source/test unchanged during execution. This is a fixture-value reproduction, not an original native CI rerun.",
+  "commands": [
+    {
+      "name": "former-fixture-red",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern",
+        "synthetic reference fingerprints are distinct from the actual private fixture declarations",
+        "/workspace/scratch/86162842804d/dev_production_reference_40/fixture-collision-reproduction/former-fixture-values.test.mjs"
+      ],
+      "exitCode": 1,
+      "totals": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/former-fixture-red.tap",
+      "stdoutSha256": "a82368e1d0e8e2ad13c677a2976752527b6a9051671aaffa50546d53f76cb4ff",
+      "stderrPath": "/workspace/scratch/86162842804d/dev_production_reference_40/former-fixture-red.stderr",
+      "stderrBytes": 0
+    },
+    {
+      "name": "corrected-fixture-green",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-name-pattern",
+        "synthetic reference fingerprints are distinct from the actual private fixture declarations",
+        "test/dev-runtime-reference.test.mjs"
+      ],
+      "exitCode": 0,
+      "totals": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/corrected-fixture-green.tap",
+      "stdoutSha256": "f9e061ad83f291c9984cb45aca849ec5eb518088f420747019b76f14c1c790e4",
+      "stderrPath": "/workspace/scratch/86162842804d/dev_production_reference_40/corrected-fixture-green.stderr",
+      "stderrBytes": 0
+    },
+    {
+      "name": "canonical-placement-local-focused",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "test/dev-runtime-reference.test.mjs",
+        "test/dev-runtime.test.mjs",
+        "test/dev-runtime-plan.test.mjs",
+        "test/dev-runtime-production-route.test.mjs"
+      ],
+      "exitCode": 0,
+      "totals": {
+        "tests": 174,
+        "suites": 0,
+        "pass": 155,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 19,
+        "todo": 0
+      },
+      "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/canonical-placement-local-focused.tap",
+      "stdoutSha256": "ba2ea760098cd14d95e872bbd2eb004a113df21f65e9917aff1f8136c34e13f7",
+      "stderrPath": "/workspace/scratch/86162842804d/dev_production_reference_40/canonical-placement-local-focused.stderr",
+      "stderrBytes": 0
+    }
+  ]
+}

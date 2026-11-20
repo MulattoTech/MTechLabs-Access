@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "author": "/root/runtime_review",
+  "kind": "production-reference Windows alias correction and negative-stage qualification",
+  "createdAtUtc": "2026-11-20T09:13:46.400735+00:00",
+  "failedSourceCommit": "7f2fba881530e25e4550a2c236a35f7d190aa377",
+  "failedSourceTree": "2388e4378458b8fd409e43fdb77696ab8d6299c7",
+  "originalHostedRun": "44707303036",
+  "originalNativeOutcome": {
+    "tests": 441,
+    "pass": 433,
+    "fail": 6,
+    "skip": 2,
+    "fourNegativePassesRejectedAsPremature": true
+  },
+  "sourceCorrection": {
+    "problem": "A bounded snapshot canonical filename was compared directly to the declared config spelling before that declaration was independently canonicalized. Ordinary Windows alias spellings can identify the same file yet fail this mixed-form comparison before native observation.",
+    "replacement": "Compare the complete bounded config identity to the independently canonicalized manager config identity, including filename, device, inode, link count, size, modification time and change time.",
+    "guardsWeakened": false,
+    "privacyLeakingDiagnosticsAdded": false,
+    "sharedRuntimeFileHelpersChanged": false,
+    "scope": "Only lib/dev-runtime-reference.mjs and test/dev-runtime-reference.test.mjs changed by this correction."
+  },
+  "regression": {
+    "nativeCaseTitles": [
+      "registered reference handles privately pin deep copied configs and plan without writer authority",
+      "restricted reference consumer reads no production paths and requests no production native role",
+      "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+      "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+      "registered authority refuses actual DEV control drift across production native observation",
+      "restricted consumer refuses local retargeting after exchange before following substituted controls",
+      "registered authority compares actual digest-only credentials and never returns credential values",
+      "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+      "restricted reference errors omit callback secrets and have no direct-read fallback",
+      "native restricted reference inspects its own caller and owned DEV listener without production observation or writes",
+      "registered reference binds differing declared and canonical config spellings to the same actual file identity"
+    ],
+    "nativeCaseCount": 11,
+    "canonicalAliasFixture": "Controlled filesystem alias backed by real Windows file/handle identities; explicitly not native 8.3 allocation qualification.",
+    "oldGuardContradiction": "The case asserts different declared/canonical spelling after case/dot normalization, equal actual snapshot identities/bytes, and a successful full reference inspection. The old mixed-spelling guard rejects this exact condition.",
+    "allNativeCasesRequireSuccessfulUnmodifiedRoundTrip": true,
+    "unmodifiedControlCounts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      4,
+      1,
+      1,
+      1
+    ],
+    "negativeStageAssertions": [
+      "Wrong-account case passes a matched baseline then measures wrong-profile unverified without production reads.",
+      "Config-retarget, control-drift and post-exchange-retarget cases require one attack exchange and mutationApplied true.",
+      "Credential cases require a valid baseline, one exchange per fault, and actual DEV plus production credential reads for both equal-digest and plaintext faults.",
+      "Topology case passes the original and each restored configuration around three explicit junction/hardlink injections; negative exchange count remains zero.",
+      "Privacy case requires successful baseline, actual throwing callback invocation and no invalid-client callback invocation."
+    ],
+    "protocol49FrozenSha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc"
+  },
+  "localQualification": {
+    "syntaxFiles": [
+      "lib/dev-runtime-reference.mjs",
+      "test/dev-runtime-reference.test.mjs"
+    ],
+    "syntaxPassed": true,
+    "focusedTotals": {
+      "tests": 173,
+      "suites": 0,
+      "pass": 154,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 19,
+      "todo": 0
+    },
+    "stdoutPath": "/workspace/scratch/86162842804d/dev_production_reference_40/alias-fix-local-focused.tap",
+    "stdoutSha256": "83ed7a24251ece85b21aebe1d9f67f7f3e1d7f4d6faef45e6c6b94572dc44988",
+    "stderrBytes": 0,
+    "nativeQualification": "Pending new disposable hosted Windows candidate; no fixed native pass claimed."
+  },
+  "ownedFilesSha256": {
+    "lib/dev-runtime-reference.mjs": "22f885d3b3f2baa65d9b7165c4582d636bad8c165e939a3e8980d9ebc6d3ffee",
+    "lib/runtime-files.mjs": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+    "lib/dev-runtime.mjs": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
+    "test/dev-runtime-reference.test.mjs": "fc7d56653aefa2e72f3c8e870e73ebbe06a26e6e057c57ebac932cde37ec0d27"
+  },
+  "operationalActivationAuthorized": false,
+  "qualified": false,
+  "upstreamEnabled": false,
+  "liveCalls": 0,
+  "commitsCreated": 0
+}

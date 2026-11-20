@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent immutable revised-candidate source rejection",
+  "reviewedAtUtc": "2026-11-20T09:19:42.224297+00:00",
+  "reviewer": "/root/repository_baseline/startup_mutations",
+  "authorship": {
+    "implementationAuthored": false,
+    "testsAuthored": false,
+    "sourceEditsPerformed": false,
+    "productOrTestsExecutedByReviewer": false,
+    "implementationAuthors": [
+      "/root",
+      "/root/runtime_review"
+    ],
+    "frozenProtocolTestAuthor": "/root/repository_baseline"
+  },
+  "localBinding": {
+    "repository": "/workspace/scratch/86162842804d/MTechLabs-Access",
+    "commit": "c311657446a9bda6d34bd6dd62a3fb70b17b0248",
+    "tree": "7774671515c6dd1e499fc2740c9503f58e4a94f3",
+    "parent": "7f2fba881530e25e4550a2c236a35f7d190aa377",
+    "originalBase": "60d7f5bae965dab2ea73805d8df411bc8b2b937e",
+    "fullPatchSha256": "038dc78e43036494850f6317ca33db38a240729cee16444c6f416798bbf799f5",
+    "fullPatchBytes": 227723,
+    "repairDeltaSha256": "36e16fd075185e715ec437f7938a5658dbb663fa17454d0d4c0edfdfcc63bbf2",
+    "repairDeltaBytes": 66459,
+    "fullChangedFileCount": 19,
+    "deltaFiles": [
+      "docs/engineering/2026-11-12-cross-repository-checkpoint.md",
+      "docs/engineering/2026-11-20-production-reference/README.md",
+      "docs/engineering/2026-11-20-production-reference/first-hosted-candidate-rejection.json",
+      "docs/engineering/2026-11-20-production-reference/integration-alias-fix-receipt.json",
+      "docs/engineering/2026-11-20-production-reference/local-gates.json",
+      "integrations/mcp-manager/lib/dev-runtime-reference.mjs",
+      "integrations/mcp-manager/test/dev-runtime-reference.test.mjs"
+    ]
+  },
+  "remoteMapping": {
+    "reportedBy": "/root; no remote lookup by this reviewer",
+    "pullRequest": "https://github.com/MulattoTech/MTechLabs-Access/pull/41",
+    "candidate": "0439847839c5c28de084ac270fbad4c1b29bd6ed",
+    "tree": "7774671515c6dd1e499fc2740c9503f58e4a94f3",
+    "draftAndUnaccepted": true
+  },
+  "priorWholeSourceReview": {
+    "path": "/workspace/scratch/86162842804d/dev_production_reference_40/first-candidate-independent-source-review.json",
+    "sha256": "72948e0b698a92e0412d516aa7c7bdf368fef62db1a4009684a8ceaf8814643f",
+    "commit": "7f2fba881530e25e4550a2c236a35f7d190aa377"
+  },
+  "changedFiles": {
+    "docs/engineering/2026-11-12-cross-repository-checkpoint.md": {
+      "gitBlob": "8474e3f2bc630cc9aec3f64dc9db13d766d433d3",
+      "sha256": "51f4cbaeb5b51bcf33e5de357119fc87d14ff657b0d73fa0caa9a598e1b8c6a6",
+      "bytes": 20248
+    },
+    "docs/engineering/2026-11-20-production-reference/README.md": {
+      "gitBlob": "8d55ca81b49948c77597cdfe92eea1258df8d26a",
+      "sha256": "94aa40802f6437e848da6c6711160039ade216218b34189571237c3a73b38397",
+      "bytes": 5725
+    },
+    "docs/engineering/2026-11-20-production-reference/first-hosted-candidate-rejection.json": {
+      "gitBlob": "7060b7027eb4a19ad5bfaa7313933535e296c460",
+      "sha256": "97fa992c065189b9726c180dc60f06ceecca192534764d766b44da7717c922a1",
+      "bytes": 14935
+    },
+    "docs/engineering/2026-11-20-production-reference/integration-alias-fix-receipt.json": {
+      "gitBlob": "68ddace75a74952455d2849a988cc0107b1bd5c9",
+      "sha256": "53ff4a207bb19e26eb7d7a187b157454e1061cee4b7e74d52b87f68bc38dc0de",
+      "bytes": 5296
+    },
+    "docs/engineering/2026-11-20-production-reference/integration-implementation-receipt.json": {
+      "gitBlob": "83991bcaf19f1a3c5edcd252c84fb97b566699d9",
+      "sha256": "b002e8011b64a9a3398901dfcbf3aaac064f3cc310c2899b06049290160340b0",
+      "bytes": 5461
+    },
+    "docs/engineering/2026-11-20-production-reference/local-gates.json": {
+      "gitBlob": "11de6ac191594e46846522482616a2bdc8620050",
+      "sha256": "d3cb73b9e9963f92f8487d78fa1db2c7e3a585b88d1bc5598c8bb7bb98e3366e",
+      "bytes": 42430
+    },
+    "docs/engineering/2026-11-20-production-reference/pure-protocol-baseline-capability.json": {
+      "gitBlob": "8e1fc87bac7c855fd2679fe598e5134d1afb0cb2",
+      "sha256": "0cbb33b60dbaf2d6adead99e7b990f21c615762fe1ad761de0c6427eaabbd2e5",
+      "bytes": 1232
+    },
+    "docs/engineering/2026-11-20-production-reference/pure-protocol-baseline-capability.tap": {
+      "gitBlob": "a0c96651d7e80ab49c2f51b60068f1ea7503918d",
+      "sha256": "11397c217ea79201cedb4ac699ded29d8706f3a825de607d4adda83eabf0ac1a",
+      "bytes": 14442
+    },
+    "docs/engineering/2026-11-20-production-reference/pure-protocol-first-candidate.json": {
+      "gitBlob": "1207d551c0100d8b3e184ef9978ddc21cd1b9787",
+      "sha256": "de286630eb08c36b848495b830985b733adaacc4de1aab6309006683f70727e3",
+      "bytes": 1196
+    },
+    "docs/engineering/2026-11-20-production-reference/pure-protocol-first-candidate.tap": {
+      "gitBlob": "4417ff00effd304912ad22e231733207f9ef73c6",
+      "sha256": "2092aa658386e0c974af8a1a40d9806f4c08f5506b5e5d83cc51ac7309ef4984",
+      "bytes": 10649
+    },
+    "docs/engineering/2026-11-20-production-reference/pure-protocol-frozen.json": {
+      "gitBlob": "26d74336752efeaaa1bd336b72085435ecdd91d9",
+      "sha256": "bf0765f28d3403225fbfde74e146c3b5d14e9374fa34e7d2012c84fc743342dd",
+      "bytes": 762
+    },
+    "integrations/mcp-manager/DEV-RUNTIME.md": {
+      "gitBlob": "d0f09969cbf25cee0c642281665950fc2b4d5a3c",
+      "sha256": "6ed099fe860513003d5bff7e35dc21a389fa864cfa4b0aa6a367225b4a2128dc",
+      "bytes": 12857
+    },
+    "integrations/mcp-manager/PRODUCTION-REFERENCE.md": {
+      "gitBlob": "dc8fca605bb7cd60b7d4836a0e9a971892793879",
+      "sha256": "5cf7c0ca4718b3c6c089b4ea574f20ddea186e44d127f696283a6d86e2ac89f3",
+      "bytes": 10980
+    },
+    "integrations/mcp-manager/lib/dev-runtime-reference.mjs": {
+      "gitBlob": "6dc4fd5057d8ad516a0e619faab110e39106bffc",
+      "sha256": "22f885d3b3f2baa65d9b7165c4582d636bad8c165e939a3e8980d9ebc6d3ffee",
+      "bytes": 16680
+    },
+    "integrations/mcp-manager/lib/dev-runtime.mjs": {
+      "gitBlob": "629bc2f5d1aa3ad8912ae94cd333e8b495f0a236",
+      "sha256": "78189a257fbd90214c19e77d2185644377e77c74d37b39ec99679b63e5fc18d3",
+      "bytes": 4842
+    },
+    "integrations/mcp-manager/lib/production-reference.mjs": {
+      "gitBlob": "a3592e8bfcd3a1c357e8bb29ee0ba1e6d76c91ec",
+      "sha256": "7a2ba4a9699a1e4c95ed95bc10db841c5513daf7a39d8464ee88565e220d4c30",
+      "bytes": 15650
+    },
+    "integrations/mcp-manager/lib/runtime-files.mjs": {
+      "gitBlob": "3b4be7fbdc632288123863e30d872fac29e177f6",
+      "sha256": "1eb671654481aecfc31bcd285bae83a48a18e4764b9ca19c4e443f3fce0427fc",
+      "bytes": 2505
+    },
+    "integrations/mcp-manager/test/dev-runtime-reference.test.mjs": {
+      "gitBlob": "5b24fa9a7d293d2e25645770388495ecf4e43dec",
+      "sha256": "fc7d56653aefa2e72f3c8e870e73ebbe06a26e6e057c57ebac932cde37ec0d27",
+      "bytes": 28559
+    },
+    "integrations/mcp-manager/test/production-reference.test.mjs": {
+      "gitBlob": "db85273453509fa0e05b9f6efde9768c55bb105b",
+      "sha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+      "bytes": 33089
+    }
+  },
+  "unchangedTrustAndOwnershipDependencies": {
+    "integrations/mcp-manager/lib/dev-instance.mjs": {
+      "sha256": "016b54e62c34a19f7d6f899f20c51e4fc808c9543c000be12dd9fd5ea4d1d47e",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/config.mjs": {
+      "sha256": "d9e35719907250894720c1b4b58353e4b92a9a411a48e54dd52ca8cbd55d5787",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/dev-runtime-plan.mjs": {
+      "sha256": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/runtime-identity.mjs": {
+      "sha256": "725252a5986050ce80ba7c10605a9ee3c9c86061db5e45360a46c6a6f82755d5",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/windows-runtime-probe.ps1": {
+      "sha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/manage-dev.ps1": {
+      "sha256": "7ed0a5335c4c61cfb4447789e72de7f0742e7f70b4ae2367e3375401a892f54c",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/jobs.mjs": {
+      "sha256": "bc2c0d521e3a274286111cf36c8a9729fa5a6b52bfc1c6dcb625cc2fd0b93390",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/token.mjs": {
+      "sha256": "2faca820b2693af20961b074abf96e965d090af206d19f578f50a320df6b7469",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/toolkit-config.mjs": {
+      "sha256": "9a6a7309eb680fa81ce7bc368d72ce96ba41dfe20a7c0c2ebc5067d32f0e88a3",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/lib/status.mjs": {
+      "sha256": "acb3ede72bb13ff06829e8cad52d3b5cd18f013796799d05a1ffacc0cb44a6bc",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/configure-toolkit.mjs": {
+      "sha256": "49d7cd921727e1c73090ff46383b3860a13bdddaae5621fea5778a38a3dcafce",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/recover-admission.mjs": {
+      "sha256": "1f0fc400e73cbd91d27a032054c7eb1eb103a39fc0011c306dbc65d01b73c831",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/admin.mjs": {
+      "sha256": "86bfc373de8112e3a40be4e9cfde4602e0fe308f4f6416629fde8176ec09ff26",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/gateway.mjs": {
+      "sha256": "78349b861da2d466e2ccf661fec462cd6318d7a3322b0a6f7e67f5534311a083",
+      "unchangedFromBase": true
+    },
+    "integrations/mcp-manager/remote.mjs": {
+      "sha256": "404c4e8c283a9eaa7bc09ed3b7416a15aa4420e3c017495551641cab58a23e9d",
+      "unchangedFromBase": true
+    }
+  },
+  "priorFindings": [
+    {
+      "id": "SRC40-001",
+      "sourceStatus": "addressed in c311657; hosted Windows acceptance remains separate",
+      "detail": "DEV manager config is independently canonicalized and its complete file identity compared with the bounded config snapshot."
+    },
+    {
+      "id": "SRC40-002",
+      "sourceStatus": "addressed in c311657; hosted Windows acceptance remains separate",
+      "detail": "Every native case now requires an unmodified successful round trip; targeted negatives assert callback/exchange, mutation or credential-read reachability. Link/junction mutations have restored neighboring controls."
+    }
+  ],
+  "blockingFindings": [
+    {
+      "id": "SRC40-003",
+      "severity": "source acceptance blocker; read-only topology correctness, no startup privilege escalation claimed",
+      "title": "Canonical control placement and reserved names are not revalidated after alias resolution",
+      "sourceLocations": [
+        {
+          "file": "integrations/mcp-manager/lib/dev-runtime-reference.mjs",
+          "lines": "84-99: declared-only placement/RESERVED checks; 118-132: canonical containment and alias identity comparison"
+        },
+        {
+          "file": "integrations/mcp-manager/lib/dev-instance.mjs",
+          "lines": "69-74 and 97-102: unchanged canonical direct-child/reserved policy"
+        }
+      ],
+      "observationBasis": "Independent static control-flow review of exact immutable git bytes; no product or test execution and no native exploit reproduction.",
+      "counterexamples": [
+        {
+          "kind": "reserved canonical name",
+          "setup": "Use a structurally valid pinned manager configuration and plan whose declared config path is an ordinary direct-child alias (e.g. manager.json in the existing controlled-resolver fixture), but whose canonical target is the ordinary single-link file toolkit.json containing the expected manager config. Other controls and runtime paths remain distinct and valid.",
+          "pathThroughCurrentCode": [
+            "localDeclarations accepts the declared nonreserved direct-child name.",
+            "stableFileSnapshot and actual resolve the alias to the same toolkit.json file, so full config identity equality succeeds.",
+            "The canonical controls loop requires only containment in DEV state; stateTopology permits an ordinary toolkit.json.",
+            "Authority registered config, credential and snapshot comparisons can succeed, allowing a signed topologyVerified:true result."
+          ],
+          "whyRejectedByExistingPolicy": "validateDevIsolation applies reserved(state, canonicalFilename) to the canonical own config and control filenames and refuses toolkit.json.",
+          "nativeScope": "Ordinary Windows 8.3 aliases can change the canonical leaf spelling; this review did not allocate or qualify a native 8.3 alias."
+        },
+        {
+          "kind": "nested canonical target",
+          "setup": "Extend the existing controlled-resolver fixture so a declared direct-child config/control alias resolves to an ordinary file under a DEV-state subdirectory.",
+          "pathThroughCurrentCode": [
+            "Declared placement passes localDeclarations.",
+            "within(state, canonicalFilename) accepts any descendant.",
+            "Full identity comparison and stateTopology can still succeed."
+          ],
+          "whyRejectedByExistingPolicy": "The legacy reserved helper also rejects canonical relative paths with multiple components.",
+          "nativeScope": "This is a controlled resolver decision-boundary counterexample, not a claim that an ordinary native 8.3 leaf alias changes parent directories."
+        }
+      ],
+      "requiredBoundedFix": "After canonicalization, require own config, policy, token and inventory to have a nonempty single-component relative name directly under canonical DEV state and reject RESERVED. Preserve ordinary-file, link-count, distinctness, identity and drift checks. Exclude the intentionally reserved plan from this rejection and retain its exact canonical dev-runtime-plan.json location check.",
+      "requiredRegression": "Keep a valid ordinary-alias control; reject aliases whose actual canonical target is reserved or nested, with explicit rejected mutation/zero-exchange facts and restored successful controls. Label controlled resolver scope accurately."
+    }
+  ],
+  "otherReviewedConclusions": [
+    "No additional protocol signature, freshness, replay, capacity, registered-path or writer-capability defect found.",
+    "Pure protocol source, frozen 49-group test, shared runtime reader and direct inspector are byte-identical to the fully reviewed first candidate.",
+    "The retained first hosted rejection and revised local failed-attempt/focused/full follow-ups are explicit; no unsupported timing-cause claim is made."
+  ],
+  "evidenceChecks": {
+    "all217InputHashesMatchImmutableCommit": true,
+    "passingGateStreamHashesAndSizesMatch": true,
+    "recordedLocalRoot": {
+      "tests": 128,
+      "pass": 128,
+      "fail": 0
+    },
+    "recordedLocalManager": {
+      "tests": 363,
+      "pass": 338,
+      "skip": 25,
+      "fail": 0
+    },
+    "earlierUnchangedIdleFailureRetained": true,
+    "earlierFailureCauseEstablished": false,
+    "testResultsAreRetainedEvidenceNotReviewerExecution": true
+  },
+  "limits": [
+    "No host, Cloudflare, credential, account, ACL, provider or deployment operations were performed by this reviewer.",
+    "This is an in-process source API, not a qualified requester-authenticated transport or protected registration/key bootstrap.",
+    "Filesystem snapshots are point-in-time checks, not a handle-relative sandbox against hostile ancestor replacement. Operational ACL and separate-account prerequisites remain unresolved.",
+    "Native helper TCP enumeration can see the table before port filtering; absence of targeted production process/token observation is narrower than invisibility of production TCP rows.",
+    "The new Windows suite includes only one real current/owned DEV listener case and synthetic production facts; no real production observation, loaded-source proof or two-account isolation is established.",
+    "Hosted acceptance is separate and was not repeated by this source reviewer.",
+    "The first revised candidate is not accepted even if its hosted jobs pass; the canonical control restriction must be repaired and reviewed on a new immutable revision."
+  ],
+  "decision": {
+    "value": "reject-revised-candidate-await-canonical-control-fix",
+    "sourceAccepted": false,
+    "mergeAccepted": false,
+    "operationalActivationAccepted": false
+  }
+}
