@@ -130,14 +130,18 @@ export async function acquireDevOwnership(config) {
   catch { await handle.close(); throw new Error('dev_owner_unavailable'); }
   let releasePromise;
   function release() {
-    return releasePromise ??= (async () => {
+    if (releasePromise) return releasePromise;
+    // Revoke the proof synchronously: no new runner may begin while the
+    // identity check/unlink is awaiting filesystem completion.
+    owned.delete(config);
+    return releasePromise = (async () => {
       try {
         const current = await fs.lstat(filename, { bigint: true });
         if (!current.isFile() || current.isSymbolicLink() || current.dev !== identity.dev || current.ino !== identity.ino) {
           throw new Error('dev_owner_changed');
         }
         await fs.unlink(filename);
-      } finally { owned.delete(config); await handle.close(); }
+      } finally { await handle.close(); }
     })();
   }
   try { await handle.writeFile(JSON.stringify({ id: config.instance.id, port: config.instance.port, pid: process.pid })); }

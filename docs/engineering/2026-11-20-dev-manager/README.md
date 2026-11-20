@@ -34,15 +34,15 @@ owner checkout was used.
 | Gate | Observed result |
 | --- | --- |
 | Baseline capability reproduction | 16 expected failures, two native Windows cases skipped, exit 1 |
-| Fixed focused suite | 17 pass, two native Windows cases skipped, zero failures/cancellations |
-| Complete local manager suite | 132 pass, three Windows skips, zero failures/cancellations |
+| Fixed focused suite | 18 pass, two native Windows cases skipped, zero failures/cancellations |
+| Complete local manager suite | 133 pass, three Windows skips, zero failures/cancellations |
 | Root suite | 128/128, no skips |
 | Root syntax/build | pass; generated UI bytes unchanged |
 
-Baseline command: `node --test --test-reporter=tap --test-skip-pattern='DEV cleanup refuses' integrations/mcp-manager/test/dev-instance.test.mjs`.
-The replaced-owner cleanup test requires the new ownership primitive, absent
-from the baseline, and is excluded from the RED claim. It runs and passes in
-the complete GREEN suite. The native Windows cases are case aliases and
+Baseline command: `node --test --test-reporter=tap --test-skip-pattern='DEV cleanup' integrations/mcp-manager/test/dev-instance.test.mjs`.
+The replaced-owner and direct-ownership revocation cleanup tests require the new
+ownership primitive, absent from the baseline, and are excluded from that RED
+claim. Both run and pass in the complete GREEN suite. The native Windows cases are case aliases and
 ADS/trailing-component aliases. The full manager suite also retains the existing
 Windows-only launcher identity test. No skip is treated as native acceptance.
 
@@ -54,6 +54,15 @@ draining, preserved foreign ownership files, no stale takeover, and zero DEV
 SDK/spawn calls. Later independent Windows review narrowed DEV paths to ordinary
 local drive syntax, avoiding unqualified alternate-stream/device namespace
 semantics. Production launchers are unchanged.
+
+Final immutable review found a direct ownership-release race in the initial
+candidate (`830f7c733dc784de9186ccab679d210252ce095d`, published as
+`653dc9c865131a7aaf7f26ea74b5d6c798514c1c`). `review-gap-red.tap` records the
+new immediate release/start-runner regression failing on that exact tree,
+without fixture faults. Release now revokes the proof synchronously, once;
+repeating an old release handle cannot revoke a subsequently reacquired lease.
+The same frozen regression passes with the fix. The earlier candidate is not
+merge-qualified; hosted acceptance must bind the subsequent reviewed revision.
 
 ## Acceptance and continuation
 

@@ -2,7 +2,7 @@ TAP version 13
 # Subtest: DEV descriptor is strict and legacy defaults remain compatible
 not ok 1 - DEV descriptor is strict and legacy defaults remain compatible
   ---
-  duration_ms: 29.152166
+  duration_ms: 39.868258
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:119:1'
   failureType: 'testCodeFailure'
@@ -17,7 +17,7 @@ not ok 1 - DEV descriptor is strict and legacy defaults remain compatible
 # Subtest: two inert managers coexist with independent routing, credentials, policy and job state
 not ok 2 - two inert managers coexist with independent routing, credentials, policy and job state
   ---
-  duration_ms: 24.914808
+  duration_ms: 31.44531
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:135:1'
   failureType: 'testCodeFailure'
@@ -40,7 +40,7 @@ not ok 2 - two inert managers coexist with independent routing, credentials, pol
 # Subtest: DEV rejects equal effective credentials including plaintext versus digest
 not ok 3 - DEV rejects equal effective credentials including plaintext versus digest
   ---
-  duration_ms: 8.281557
+  duration_ms: 7.098844
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:182:1'
   failureType: 'testCodeFailure'
@@ -57,7 +57,7 @@ not ok 3 - DEV rejects equal effective credentials including plaintext versus di
 # Subtest: DEV rejects missing, changed or mismatched configuration references before writes
 not ok 4 - DEV rejects missing, changed or mismatched configuration references before writes
   ---
-  duration_ms: 11.328322
+  duration_ms: 9.26651
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:190:1'
   failureType: 'testCodeFailure'
@@ -74,7 +74,7 @@ not ok 4 - DEV rejects missing, changed or mismatched configuration references b
 # Subtest: DEV rejects equal, nested and normalized production state overlaps before recovery
 not ok 5 - DEV rejects equal, nested and normalized production state overlaps before recovery
   ---
-  duration_ms: 12.811987
+  duration_ms: 11.572975
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:203:1'
   failureType: 'testCodeFailure'
@@ -91,7 +91,7 @@ not ok 5 - DEV rejects equal, nested and normalized production state overlaps be
 # Subtest: DEV rejects policy, token and inventory references outside its own state
 not ok 6 - DEV rejects policy, token and inventory references outside its own state
   ---
-  duration_ms: 8.007594
+  duration_ms: 5.454664
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:216:1'
   failureType: 'testCodeFailure'
@@ -108,7 +108,7 @@ not ok 6 - DEV rejects policy, token and inventory references outside its own st
 # Subtest: DEV rejects linked state and ancestor junctions before touching protected files
 not ok 7 - DEV rejects linked state and ancestor junctions before touching protected files
   ---
-  duration_ms: 5.335806
+  duration_ms: 7.970953
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:225:1'
   failureType: 'testCodeFailure'
@@ -125,7 +125,7 @@ not ok 7 - DEV rejects linked state and ancestor junctions before touching prote
 # Subtest: DEV rejects hardlinked controls, database files and sidecars
 not ok 8 - DEV rejects hardlinked controls, database files and sidecars
   ---
-  duration_ms: 7.901114
+  duration_ms: 6.695137
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:238:1'
   failureType: 'testCodeFailure'
@@ -142,7 +142,7 @@ not ok 8 - DEV rejects hardlinked controls, database files and sidecars
 # Subtest: DEV rejects nested links and control files using reserved state names
 not ok 9 - DEV rejects nested links and control files using reserved state names
   ---
-  duration_ms: 6.2276
+  duration_ms: 4.973641
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:255:1'
   failureType: 'testCodeFailure'
@@ -159,19 +159,19 @@ not ok 9 - DEV rejects nested links and control files using reserved state names
 # Subtest: Windows case aliases of production state are rejected
 ok 10 - Windows case aliases of production state are rejected # SKIP
   ---
-  duration_ms: 0.482197
+  duration_ms: 0.317477
   type: 'test'
   ...
 # Subtest: Windows DEV rejects alternate streams and trailing-dot or space control aliases
 ok 11 - Windows DEV rejects alternate streams and trailing-dot or space control aliases # SKIP
   ---
-  duration_ms: 0.080532
+  duration_ms: 0.051117
   type: 'test'
   ...
 # Subtest: DEV refuses a duplicate owner before it can recover running jobs and drains before release
 not ok 12 - DEV refuses a duplicate owner before it can recover running jobs and drains before release
   ---
-  duration_ms: 6.216553
+  duration_ms: 4.582033
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:287:1'
   failureType: 'testCodeFailure'
@@ -187,7 +187,7 @@ not ok 12 - DEV refuses a duplicate owner before it can recover running jobs and
 # Subtest: DEV listener cannot bind a different port or public interface
 not ok 13 - DEV listener cannot bind a different port or public interface
   ---
-  duration_ms: 5.861789
+  duration_ms: 6.383599
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:301:1'
   failureType: 'testCodeFailure'
@@ -204,7 +204,7 @@ not ok 13 - DEV listener cannot bind a different port or public interface
 # Subtest: DEV close prevents same-turn first listen before its asynchronous close event
 not ok 14 - DEV close prevents same-turn first listen before its asynchronous close event
   ---
-  duration_ms: 3.689643
+  duration_ms: 4.298376
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:310:1'
   failureType: 'testCodeFailure'
@@ -221,7 +221,7 @@ not ok 14 - DEV close prevents same-turn first listen before its asynchronous cl
 # Subtest: DEV keeps ownership until deferred job recovery drains after close
 not ok 15 - DEV keeps ownership until deferred job recovery drains after close
   ---
-  duration_ms: 4.35064
+  duration_ms: 5.187232
   type: 'test'
   location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:321:1'
   failureType: 'testCodeFailure'
@@ -243,25 +243,25 @@ not ok 15 - DEV keeps ownership until deferred job recovery drains after close
 # Subtest: occupied DEV port fails before recovery, releases only its own lock, and never takes over stale locks
 not ok 16 - occupied DEV port fails before recovery, releases only its own lock, and never takes over stale locks
   ---
-  duration_ms: 3.608851
+  duration_ms: 5.442475
   type: 'test'
-  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:361:1'
+  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:382:1'
   failureType: 'testCodeFailure'
   error: 'invalid_config'
   code: 'ERR_TEST_FAILURE'
   stack: |-
     loadConfig (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/lib/config.mjs:43:11)
     async seedRunning (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:110:33)
-    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:363:3)
+    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:384:3)
     async Test.run (node:internal/test_runner/test:1409:7)
     async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
   ...
 # Subtest: direct DEV gateway entry fails before state creation or any upstream spawn
 not ok 17 - direct DEV gateway entry fails before state creation or any upstream spawn
   ---
-  duration_ms: 7.312386
+  duration_ms: 8.742763
   type: 'test'
-  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:384:1'
+  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:405:1'
   failureType: 'testCodeFailure'
   error: |-
     The input did not match the regular expression /dev_upstream_disabled/. Input:
@@ -274,25 +274,25 @@ not ok 17 - direct DEV gateway entry fails before state creation or any upstream
   actual:
   error: 'unexpected_spawn'
   stack: |-
-    spawnImpl (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:388:92)
+    spawnImpl (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:409:92)
     startGateway (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/gateway.mjs:60:13)
     async waitForActual (node:assert:646:5)
     async strict.rejects (node:assert:769:25)
-    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:388:3)
+    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:409:3)
     async Test.run (node:internal/test_runner/test:1409:7)
     async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
   operator: 'rejects'
   stack: |-
-    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:388:3)
+    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:409:3)
     async Test.run (node:internal/test_runner/test:1409:7)
     async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
   ...
 # Subtest: DEV config validation protects existing toolkit CLI and direct state writers
 not ok 18 - DEV config validation protects existing toolkit CLI and direct state writers
   ---
-  duration_ms: 4.933389
+  duration_ms: 9.738298
   type: 'test'
-  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:393:1'
+  location: '/workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:414:1'
   failureType: 'testCodeFailure'
   error: 'Missing expected rejection.'
   code: 'ERR_ASSERTION'
@@ -300,7 +300,7 @@ not ok 18 - DEV config validation protects existing toolkit CLI and direct state
   expected:
   operator: 'rejects'
   stack: |-
-    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:398:3)
+    async TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-red/integrations/mcp-manager/test/dev-instance.test.mjs:419:3)
     async Test.run (node:internal/test_runner/test:1409:7)
     async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
   ...
@@ -312,4 +312,4 @@ not ok 18 - DEV config validation protects existing toolkit CLI and direct state
 # cancelled 0
 # skipped 2
 # todo 0
-# duration_ms 326.358182
+# duration_ms 357.12192

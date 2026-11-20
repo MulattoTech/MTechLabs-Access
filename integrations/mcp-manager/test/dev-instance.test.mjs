@@ -358,6 +358,27 @@ test('DEV cleanup refuses to delete a replaced ownership file', async t => {
   assert.equal(await fs.readFile(lock, 'utf8'), 'replacement-owner');
 });
 
+test('DEV cleanup revokes direct runner ownership before its first asynchronous step', async t => {
+  const f = await pair(t);
+  const config = await loadConfig(f.dev.configPath);
+  const { acquireDevOwnership } = await import('../lib/dev-instance.mjs');
+  const owner = await acquireDevOwnership(config);
+  const releasing = owner.release();
+  let unexpectedRunner;
+  try {
+    assert.throws(() => { unexpectedRunner = startJobRunner(config); }, /dev_ownership_required/);
+    assert.equal(owner.release(), releasing);
+  } finally { await unexpectedRunner?.close(); await releasing; }
+  const replacement = await acquireDevOwnership(config);
+  let runner;
+  try {
+    assert.equal(owner.release(), releasing);
+    runner = startJobRunner(config);
+  } finally { await runner?.close(); await replacement.release(); }
+  const next = await f.construct();
+  await close(next);
+});
+
 test('occupied DEV port fails before recovery, releases only its own lock, and never takes over stale locks', async t => {
   const f = await pair(t);
   await seedRunning(f.dev.config);
