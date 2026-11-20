@@ -16,7 +16,8 @@ function Get-PrincipalKind([string]$name) {
 }
 function Get-PathSummary([string]$id, [string]$absolutePath) {
     $result = [ordered]@{id=$id;status='absent';daclProtected=$null;reparse=$null;
-        broadMutationAllowCount=0;inheritableBroadMutationCount=0;ownerKind=$null}
+        broadMutationAllowCount=0;inheritableBroadMutationCount=0;
+        unclassifiedMutationAllowCount=0;inheritableUnclassifiedMutationCount=0;ownerKind=$null}
     try {
         # An inaccessible Test-Path must not terminate the entire assessment
         # or be silently reported as an absent production ancestor.
@@ -31,17 +32,29 @@ function Get-PathSummary([string]$id, [string]$absolutePath) {
         foreach ($rule in $acl.Access) {
             if ($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow) {continue}
             $principal = Get-PrincipalKind $rule.IdentityReference.Value
-            if ($principal -notin @('authenticated-users','everyone','builtin-users')) {continue}
             $bits = [uint32]([int64]$rule.FileSystemRights -band 4294967295L)
             # Dangerous for namespace mutation: DELETE, DELETE_CHILD, WRITE_DATA,
             # APPEND_DATA, WRITE_EA, WRITE_ATTRIBUTES, WRITE_DAC, WRITE_OWNER,
             # generic WRITE and generic ALL.
             $danger = [uint32]0x500D0156
             if (($bits -band $danger) -eq 0) {continue}
+            # SYSTEM/Administrators are known privileged authorities. Other
+            # identities can be custom groups, localized built-ins, owner
+            # accounts, or unresolved SIDs. Do not presume DEV lacks membership
+            # before a real restricted-token effective-access qualification.
+            if ($principal -in @('system','administrators')) {continue}
             $inheritOnly = [bool]($rule.PropagationFlags -band [Security.AccessControl.PropagationFlags]::InheritOnly)
-            if (-not $inheritOnly) {$result.broadMutationAllowCount++}
-            if ($rule.InheritanceFlags -ne [Security.AccessControl.InheritanceFlags]::None) {
-                $result.inheritableBroadMutationCount++
+            $isBroad = $principal -in @('authenticated-users','everyone','builtin-users')
+            if ($isBroad) {
+                if (-not $inheritOnly) {$result.broadMutationAllowCount++}
+                if ($rule.InheritanceFlags -ne [Security.AccessControl.InheritanceFlags]::None) {
+                    $result.inheritableBroadMutationCount++
+                }
+            } else {
+                if (-not $inheritOnly) {$result.unclassifiedMutationAllowCount++}
+                if ($rule.InheritanceFlags -ne [Security.AccessControl.InheritanceFlags]::None) {
+                    $result.inheritableUnclassifiedMutationCount++
+                }
             }
         }
     } catch {
@@ -51,6 +64,8 @@ function Get-PathSummary([string]$id, [string]$absolutePath) {
         $result.ownerKind = $null
         $result.broadMutationAllowCount = 0
         $result.inheritableBroadMutationCount = 0
+        $result.unclassifiedMutationAllowCount = 0
+        $result.inheritableUnclassifiedMutationCount = 0
     }
     return [pscustomobject]$result
 }
@@ -188,6 +203,9 @@ foreach ($name in @('hRoot','hMTechLabs','hProduction')) {
         if ($v.reparse) { $blockers += ('reparse-ancestor:' + $name) }
         if ($v.broadMutationAllowCount -gt 0 -or $v.inheritableBroadMutationCount -gt 0) {
             $blockers += ('broad-ancestor-mutation:' + $name)
+        }
+        if ($v.unclassifiedMutationAllowCount -gt 0 -or $v.inheritableUnclassifiedMutationCount -gt 0) {
+            $blockers += ('unclassified-ancestor-mutation:' + $name)
         }
     }
 }
