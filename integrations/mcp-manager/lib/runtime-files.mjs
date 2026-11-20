@@ -1,0 +1,50 @@
+import fs from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { ordinaryPath } from './dev-instance.mjs';
+import { windowsPath } from './dev-runtime-plan.mjs';
+
+async function readBoundedSnapshot(filename, maximum) {
+  const expected = await ordinaryPath(filename);
+  const handle = await fs.open(filename, 'r');
+  try {
+    const before = await handle.stat({ bigint: true });
+    if (!before.isFile() || before.nlink !== 1n || before.size > maximum ||
+        before.dev !== expected.stat.dev || before.ino !== expected.stat.ino) throw new Error('runtime_file_unverified');
+    const bytes = Buffer.alloc(maximum + 1);
+    let length = 0;
+    while (length < bytes.length) {
+      const { bytesRead } = await handle.read(bytes, length, bytes.length - length, length);
+      if (!bytesRead) break;
+      length += bytesRead;
+    }
+    const after = await handle.stat({ bigint: true });
+    if (length > maximum || BigInt(length) !== before.size || after.size !== before.size ||
+        after.mtimeNs !== before.mtimeNs || after.ctimeNs !== before.ctimeNs || after.nlink !== 1n) {
+      throw new Error('runtime_file_unverified');
+    }
+    return { bytes: bytes.subarray(0, length), filename: expected.filename, stat: after };
+  } finally { await handle.close(); }
+}
+export async function readBytes(filename, maximum) {
+  return (await readBoundedSnapshot(filename, maximum)).bytes;
+}
+export async function snapshot(filename) {
+  const data = await readBytes(filename, 16384);
+  return { value: JSON.parse(data.toString('utf8').replace(/^\uFEFF/, '')), sha256: createHash('sha256').update(data).digest('hex') };
+}
+
+export function fileIdentity(actual) {
+  const stat = actual.stat;
+  return { filename: windowsPath(actual.filename), dev: String(stat.dev), ino: String(stat.ino),
+    nlink: String(stat.nlink), size: String(stat.size), mtimeNs: String(stat.mtimeNs), ctimeNs: String(stat.ctimeNs) };
+}
+
+// Reference snapshots also recheck the selected pathname after the bounded
+// handle read. These identities are private input bindings, not file contents.
+export async function stableFileSnapshot(filename, maximum) {
+  const value = await readBoundedSnapshot(filename, maximum);
+  const identity = fileIdentity(value);
+  const after = fileIdentity(await ordinaryPath(filename));
+  if (JSON.stringify(identity) !== JSON.stringify(after)) throw new Error('runtime_file_unverified');
+  return { ...value, identity, sha256: createHash('sha256').update(value.bytes).digest('hex') };
+}

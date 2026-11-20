@@ -1,38 +1,11 @@
-import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { createHash } from 'node:crypto';
 import { validateConfig } from './config.mjs';
 import { ordinaryPath, validateDevIsolation } from './dev-instance.mjs';
 import { validateRuntimePlan, evaluateRuntime, windowsPath, profileOverlap } from './dev-runtime-plan.mjs';
 import { captureWindowsRuntime } from './runtime-identity.mjs';
+import { readBytes, snapshot } from './runtime-files.mjs';
 
-async function readBytes(filename, maximum) {
-  const expected = await ordinaryPath(filename);
-  const handle = await fs.open(filename, 'r');
-  try {
-    const before = await handle.stat({ bigint: true });
-    if (!before.isFile() || before.nlink !== 1n || before.size > maximum ||
-        before.dev !== expected.stat.dev || before.ino !== expected.stat.ino) throw new Error('runtime_file_unverified');
-    const bytes = Buffer.alloc(maximum + 1);
-    let length = 0;
-    while (length < bytes.length) {
-      const { bytesRead } = await handle.read(bytes, length, bytes.length - length, length);
-      if (!bytesRead) break;
-      length += bytesRead;
-    }
-    const after = await handle.stat({ bigint: true });
-    if (length > maximum || BigInt(length) !== before.size || after.size !== before.size ||
-        after.mtimeNs !== before.mtimeNs || after.ctimeNs !== before.ctimeNs || after.nlink !== 1n) {
-      throw new Error('runtime_file_unverified');
-    }
-    return bytes.subarray(0, length);
-  } finally { await handle.close(); }
-}
-async function snapshot(filename) {
-  const data = await readBytes(filename, 16384);
-  return { value: JSON.parse(data.toString('utf8').replace(/^\uFEFF/, '')), sha256: createHash('sha256').update(data).digest('hex') };
-}
 async function digestOnly(filename) {
   if (!/^sha256:[a-fA-F0-9]{64}$/.test((await readBytes(filename, 1024)).toString('utf8').trim())) {
     throw new Error('runtime_digest_only_credentials_required');

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "phase": "first-new-protocol-candidate",
+  "startedAt": "2026-11-20T08:47:06.433039+00:00",
+  "testSha256": "b0aed1a93aa5bb1df243d1467ebe5d7dbfe40e89862caab3a7f89a3e2b4651bc",
+  "sourceSha256": "40897f822bf8e8171349925f4d1cd87ae2cd419f9bcfac77bd558158f6a0d041",
+  "testBytes": 33089,
+  "sourceBytes": 15492,
+  "node": "v24.22.3",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/production-reference.test.mjs"
+  ],
+  "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager",
+  "classification": "First new-feature behavioral run; original main lacked API, so no original bug-regression RED claim.",
+  "finishedAt": "2026-11-20T08:47:07.389141+00:00",
+  "exitCode": 0,
+  "timedOut": false,
+  "totals": {
+    "tests": 49,
+    "suites": 0,
+    "pass": 49,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failedNames": [],
+  "stdoutSha256": "2092aa658386e0c974af8a1a40d9806f4c08f5506b5e5d83cc51ac7309ef4984",
+  "stdoutBytes": 10649,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrBytes": 0,
+  "testUnchanged": true,
+  "sourceUnchanged": true
+}
