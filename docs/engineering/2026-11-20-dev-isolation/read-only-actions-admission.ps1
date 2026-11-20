@@ -5,15 +5,20 @@
 param(
     [ValidateRange(1, [long]::MaxValue)]
     [long]$RunId = 44742255585,
+    [ValidateRange(1, 999999)]
+    [int]$PullRequestNumber = 45,
     [ValidatePattern('^[a-f0-9]{40}$')]
-    [string]$ExpectedHeadSha = 'f0855c1227aacc49071581bb52ba5566bc07ffce'
+    [string]$ExpectedHeadSha = 'f0855c1227aacc49071581bb52ba5566bc07ffce',
+    [ValidatePattern('^[a-f0-9]{40}$')]
+    [string]$ExpectedBaseSha = '15e851b11984592803d37599b639772e51e5c8c0'
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 function Get-AdmissionReport {
     [CmdletBinding()]
-    param([hashtable]$Run, [long]$Id, [string]$ExpectedSha)
+    param([hashtable]$Run, [hashtable]$Pr, [long]$Id,
+          [int]$PrNumber, [string]$ExpectedSha, [string]$ExpectedBase)
     $expectedNames = @(
         'test',
         'managed-mcp',
@@ -41,6 +46,12 @@ function Get-AdmissionReport {
         scope='GitHub Actions metadata admission only — no hosted acceptance'
         runId=$Id
         expectedHeadSha=$ExpectedSha
+        expectedBaseSha=$ExpectedBase
+        prNumber=$PrNumber
+        prState='unverified'
+        prHeadSha='unverified'
+        prBaseSha='unverified'
+        currentPrCandidateMatched=$false
         runEvent='unverified'
         workflowName='unverified'
         runAttempt=$null
@@ -61,8 +72,31 @@ function Get-AdmissionReport {
         devActivationAuthorized=$false
         reason='metadata_unverified'
     }
-    if($null -eq $Run) { return [pscustomobject]$report }
+    if($null -eq $Pr) { return [pscustomobject]$report }
     try {
+        $report.prState=[string]$Pr.state
+        $report.prHeadSha=[string]$Pr.headRefOid
+        $report.prBaseSha=[string]$Pr.baseRefOid
+        if([int]$Pr.number -ne $PrNumber -or
+           $report.prState -cne 'OPEN' -or
+           [bool]$Pr.isDraft -ne $true -or
+           $null -ne $Pr.mergedAt) {
+            $report.reason='current_pr_state_unqualified'
+            return [pscustomobject]$report
+        }
+        if($report.prHeadSha -cne $ExpectedSha) {
+            $report.reason='current_pr_head_mismatch'
+            return [pscustomobject]$report
+        }
+        if($report.prBaseSha -cne $ExpectedBase) {
+            $report.reason='current_pr_base_mismatch'
+            return [pscustomobject]$report
+        }
+        $report.currentPrCandidateMatched=$true
+        if($null -eq $Run) {
+            $report.reason='run_metadata_unverified'
+            return [pscustomobject]$report
+        }
         $report.runStatus=[string]$Run.status
         $report.runConclusion=[string]$Run.conclusion
         $report.runAttempt=[int]$Run.attempt
@@ -154,21 +188,30 @@ function Get-AdmissionReport {
         # A partially parsable or redacted API response is not admission proof.
         $report.admissionObserved=$false
         $report.workflowReportedSuccess=$false
+        # Preserve the independently checked current-PR status even if the
+        # subsequent historical run metadata is unavailable.
         $report.reason='metadata_unverified'
     }
     return [pscustomobject]$report
 }
 
 try {
+    # Re-read current PR identity before classifying a historical run. Neither
+    # caller input nor run metadata establishes the still-current PR head.
+    $prJson=& gh pr view $PullRequestNumber --repo MulattoTech/MTechLabs-Access --json number,headRefOid,baseRefOid,state,isDraft,mergedAt 2>$null
+    if($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace(($prJson -join ''))) {
+        throw 'github_pr_metadata_unavailable'
+    }
+    $pr=($prJson -join [Environment]::NewLine) | ConvertFrom-Json -AsHashtable
     $json=& gh run view $RunId --repo MulattoTech/MTechLabs-Access --json databaseId,attempt,event,workflowName,status,conclusion,headSha,jobs 2>$null
     if($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace(($json -join ''))){
         throw 'github_run_metadata_unavailable'
     }
     $run=($json -join [Environment]::NewLine) | ConvertFrom-Json -AsHashtable
-    $result=Get-AdmissionReport -Run $run -Id $RunId -ExpectedSha $ExpectedHeadSha
+    $result=Get-AdmissionReport -Run $run -Pr $pr -Id $RunId -PrNumber $PullRequestNumber -ExpectedSha $ExpectedHeadSha -ExpectedBase $ExpectedBaseSha
 } catch {
-    $result=Get-AdmissionReport -Run @{} -Id $RunId -ExpectedSha $ExpectedHeadSha
-    $result.reason='github_run_metadata_unavailable'
+    $result=Get-AdmissionReport -Run @{} -Pr @{} -Id $RunId -PrNumber $PullRequestNumber -ExpectedSha $ExpectedHeadSha -ExpectedBase $ExpectedBaseSha
+    $result.reason='github_read_metadata_unavailable'
 }
 $result | ConvertTo-Json -Depth 6 -Compress
 if(-not $result.admissionObserved) { exit 1 }
