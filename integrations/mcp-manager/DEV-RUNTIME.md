@@ -80,7 +80,7 @@ shape and do not establish real accounts, provider resources or grants:
       "accessAppId": "11111111-1111-4111-8111-111111111111",
       "audience": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "connectorAppId": "asdk_app_11111111111111111111111111111111",
-      "originHostHeader": "127.0.0.1:19740"
+      "originHostHeader": "mcp-origin.example.test"
     }
   },
   "development": {
@@ -116,8 +116,12 @@ they are separate from the existing configuration's upstream `nodePath`.
 Each resource/origin is a canonical HTTPS DNS URL ending exactly in `/mcp`,
 without credentials, an explicit port, query or fragment. All four URL origins
 must differ. Backend IDs, Access application UUIDs, Access audiences and connector
-App IDs must differ between production and DEV. `originHostHeader` is exactly
-`127.0.0.1:<manager-port>` because the DEV manager's Host allowlist is strict.
+App IDs must differ between production and DEV. DEV `originHostHeader` is exactly
+`127.0.0.1:<manager-port>` because its Host allowlist is strict. Production may
+declare either `127.0.0.1:19740` or the exact hostname of its declared origin URL,
+without a port, path, trailing dot or case variation. This represents a working
+production origin Host rewrite without requiring a production routing change.
+It does not change either manager's Host allowlist or verify the live route.
 Changing a display name or a registry key does not satisfy these requirements.
 The contract does not require separate Cloudflare accounts, teams or tunnel
 processes; those choices must still preserve independently verified routing.

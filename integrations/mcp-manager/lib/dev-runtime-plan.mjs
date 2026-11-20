@@ -32,7 +32,7 @@ function endpoint(value) {
       /^\d+(?:\.\d+){3}$/.test(url.hostname) || url.href !== value) fail();
   return url.href;
 }
-function role(value) {
+function role(value, isProduction = false) {
   exact(value, ['principalSid', 'profileDirectory', 'manager', 'routing']);
   if (!sid(value.principalSid)) fail();
   windowsPath(value.profileDirectory);
@@ -42,10 +42,13 @@ function role(value) {
   exact(value.routing, ['resource', 'origin', 'backendId', 'accessAppId', 'audience', 'connectorAppId', 'originHostHeader']);
   const routing = value.routing;
   endpoint(routing.resource); endpoint(routing.origin);
+  // Describe the existing production origin without changing its working Host
+  // rewrite. DEV remains restricted to its exact loopback Host declaration.
+  const productionOriginHost = isProduction && routing.originHostHeader === new URL(routing.origin).hostname;
   if (routing.resource === routing.origin || !text(routing.backendId, /^[a-z][a-z0-9-]{0,63}$/) ||
       !text(routing.accessAppId, /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/) ||
       !text(routing.audience, /^[a-f0-9]{64}$/) || !text(routing.connectorAppId, /^asdk_app_[a-f0-9]{32}$/) ||
-      routing.originHostHeader !== '127.0.0.1:' + value.manager.port) fail();
+      (routing.originHostHeader !== '127.0.0.1:' + value.manager.port && !productionOriginHost)) fail();
   return Object.freeze({ ...value, manager: Object.freeze({ ...value.manager }), routing: Object.freeze({ ...routing }) });
 }
 
@@ -53,7 +56,7 @@ export function validateRuntimePlan(input) {
   exact(input, ['schemaVersion', 'platform', 'instanceId', 'authorizationMode', 'production', 'development']);
   if (input.schemaVersion !== 1 || input.platform !== 'win32' || input.authorizationMode !== 'owner-only' ||
       !text(input.instanceId, /^dev(?:-[a-z0-9]+)*$/) || input.instanceId.length > 48) fail();
-  const production = role(input.production), development = role(input.development);
+  const production = role(input.production, true), development = role(input.development);
   if (production.principalSid === development.principalSid ||
       profileOverlap(production.profileDirectory, development.profileDirectory) ||
       production.manager.port !== 19740 || development.manager.port === 19740) fail();
