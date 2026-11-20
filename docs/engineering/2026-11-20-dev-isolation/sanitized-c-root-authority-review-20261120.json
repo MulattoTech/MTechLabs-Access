@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "scope": "Read-only Windows C: parent ACL / executable metadata review; no effective-access qualification or operational authorization",
+  "observedUtc": {
+    "acl": "2026-11-20T19:19:55.2523334Z",
+    "executables": "2026-11-20T19:21:09.7927367Z"
+  },
+  "privateIdentitiesExported": false,
+  "rawSidExported": false,
+  "rawSddlExported": false,
+  "directoriesCreated": false,
+  "aclsModified": false,
+  "executablesModified": false,
+  "processesRestarted": false,
+  "devActivationAuthorized": false,
+  "resolvedEarlierClassifierCategory": {
+    "earlierReference": "sanitized-namespace-baseline-20261120.json",
+    "originalReport": "Three C:\\Program Files ACL grants described as 'other' by the five-well-known-SID-only classifier (one active, two inherit-only)",
+    "refinedResult": "Those three grants resolve to TrustedInstaller (active FullControl and one inherit-only GenericAll), and CREATOR OWNER (one inherit-only GenericAll)",
+    "unknownUserOrGroupIdentified": false,
+    "notes": "The earlier 'other' label was an intentionally broad classification, not evidence of a foreign or malicious account; protect newly created descendants and review actual owner/creator rights."
+  },
+  "pathObservations": [
+    {
+      "id": "cRoot",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": false,
+      "reparse": false,
+      "activeBroadWritable": true,
+      "broadAcl": "Authenticated Users CreateDirectories 0x00000004 (current, not inherited)",
+      "inheritOnlyBroadAcl": "Authenticated Users 0xE0010000 inheritable",
+      "activePrivilegedWritable": [
+        "SYSTEM",
+        "Administrators"
+      ],
+      "implication": "A directory created immediately beneath C: must not be presumed exclusive merely from its pathname."
+    },
+    {
+      "id": "programFiles",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM Modify 0x001301BF",
+        "Administrators Modify 0x001301BF",
+        "TrustedInstaller FullControl 0x001F01FF"
+      ],
+      "inheritOnlyWriteCategories": [
+        "CREATOR OWNER GenericAll 0x10000000",
+        "SYSTEM GenericAll 0x10000000",
+        "Administrators GenericAll 0x10000000",
+        "TrustedInstaller GenericAll 0x10000000"
+      ],
+      "implication": "A plausible protected code ancestor, but creation/ownership and inherited CREATOR OWNER rights of a future MTechLabs child require exact post-creation review."
+    },
+    {
+      "id": "nodeJsParent",
+      "status": "present",
+      "ownerCategory": "SYSTEM",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM FullControl 0x001F01FF",
+        "Administrators FullControl 0x001F01FF"
+      ],
+      "implication": "Shared runtime location has narrower observed write grants than H: production source ancestors, but real token/effective rights and runtime integrity remain unqualified."
+    },
+    {
+      "id": "nodeExe",
+      "status": "present",
+      "ownerCategory": "SYSTEM",
+      "daclProtected": false,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM inherited FullControl 0x001F01FF",
+        "Administrators inherited FullControl 0x001F01FF"
+      ],
+      "artifact": {
+        "fileVersion": "27.0.0-alpha.0.0.0",
+        "byteLength": 102683976,
+        "sha256": "88769901875e13e26ee712839fdf316c3182711f27ce9e328dd02fd56d8500bc",
+        "authenticodeStatus": "Valid"
+      },
+      "implication": "Source workflow pins Node 24 but currently selected local binary file metadata is Node 27 alpha; future actual-host compatibility and exact executable-source binding must be checked. Do not infer runtime source identity from file hash alone."
+    },
+    {
+      "id": "programData",
+      "status": "present",
+      "ownerCategory": "SYSTEM",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": true,
+      "broadAcl": "BUILTIN Users Write 0x00000116 (active, ContainerInherit)",
+      "inheritOnlyWriteCategories": [
+        "CREATOR OWNER GenericAll 0x10000000"
+      ],
+      "activePrivilegedWritable": [
+        "SYSTEM FullControl 0x001F01FF",
+        "Administrators FullControl 0x001F01FF"
+      ],
+      "implication": "A future protected state/signing/registration directory cannot inherit broad Users Write; explicit owner/DACL and actual-token cross-account denials required."
+    },
+    {
+      "id": "windows",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM",
+        "Administrators",
+        "TrustedInstaller"
+      ],
+      "implication": "Windows executable ancestor; do not modify Windows system ACLs."
+    },
+    {
+      "id": "system32",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM",
+        "Administrators",
+        "TrustedInstaller"
+      ],
+      "implication": "System DLL and PowerShell ancestor; do not modify."
+    },
+    {
+      "id": "windowsPowerShell",
+      "status": "present",
+      "ownerCategory": "SYSTEM",
+      "daclProtected": false,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM inherited",
+        "Administrators inherited",
+        "TrustedInstaller inherited"
+      ],
+      "implication": "The existing production shortcut uses a PowerShell 5.1 executable in this subtree."
+    },
+    {
+      "id": "powershell51Root",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "SYSTEM",
+        "Administrators",
+        "TrustedInstaller"
+      ],
+      "implication": "PowerShell executable directory; not a DEV write root."
+    },
+    {
+      "id": "powershell51Exe",
+      "status": "present",
+      "ownerCategory": "TrustedInstaller",
+      "daclProtected": true,
+      "reparse": false,
+      "activeBroadWritable": false,
+      "activePrivilegedWritable": [
+        "TrustedInstaller FullControl 0x001F01FF"
+      ],
+      "artifact": {
+        "fileVersion": "10.0.26100.9818 (WinBuild.160101.0800)",
+        "byteLength": 495616,
+        "sha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d",
+        "authenticodeStatus": "Valid"
+      },
+      "implication": "Signature status and SHA-256 are observed file properties, not verification of process memory or policy enforcement."
+    }
+  ],
+  "candidateRootsCurrentlyAbsent": [
+    "C:\\Program Files\\MTechLabs",
+    "C:\\ProgramData\\MTechLabs",
+    "C:\\ProgramData\\MTechLabs\\ReferenceManager"
+  ],
+  "expectedSourceHostedNodeMajor": 24,
+  "actualHostNodeFileMetadataMajor": 27,
+  "mismatchIsAutomaticSecurityFailure": false,
+  "futureRequiredEvidence": [
+    "After approved creation, inspect actual owner, DACL, CREATOR OWNER expansion and ancestors; current parent ACLs do not predict effective new child ACLs.",
+    "Qualify effective negative/positive access with the actual future standard MTermDev account and disposable canaries; do not attempt destructive tests against production.",
+    "Bind exact deployed production manager source, protected reference authority, Node/PowerShell executable bytes, owning process and known startup/rollback configuration.",
+    "Independently test or review the Node 24 hosted-versus-Node 27 alpha owner-host behavior before a runtime cutover. Do not upgrade/downgrade Node during read-only review.",
+    "Restore GitHub Actions admission and pass exact PR45 hosted windows/linux evidence and separate postmerge actual-main gates before an operational decision.",
+    "Provide separate owner approval for exact directory, ACL, account, backup and cutover mutations."
+  ],
+  "notVerified": [
+    "No live DEV token exists; this is a grant-category inventory, not an OS access-check result.",
+    "No handle-bound file identity, parent delete-child access, hardlink or reparse-target replacement tests were conducted.",
+    "A valid Authenticode signature status does not prove that the running Node/PowerShell process loaded these file bytes.",
+    "No new directory, account, process, ACL, trust source, key, route or credential was created or modified."
+  ]
+}
