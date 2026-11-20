@@ -8,6 +8,19 @@ and hosted evidence; one writer owns implementation changes.
 
 ## Current continuation state — 2026-11-20 UTC
 
+- The next approved Access source batch is tracked in
+  [issue34](https://github.com/MulattoTech/MTechLabs-Access/issues/34), based on
+  actual main `83d5c3791a4fc459cb4c2e536f97b1f5f77273d0`. The
+  [DEV foundation receipt](2026-11-20-dev-manager/README.md) records strict
+  independent manager configuration, loopback routing, credential/state checks,
+  exclusive ownership and drained shutdown. Local root 128/128 and manager
+  133 pass plus three Windows skips; the focused baseline has 16 expected
+  capability failures and fixed suite 18 pass plus two Windows skips. Hosted
+  candidate/main and immutable acceptance are pending at commit preparation;
+  the issue's final receipt is authoritative for subsequent acceptance.
+  DEV Desktop Commander execution is blocked pending independent OS-profile
+  and backend/App/grant qualification. This source work is not deployment.
+
 - CLI [PR265](https://github.com/MulattoTech/MTerm-CLI/pull/265) merged normally
   at `6f7b8e89e340e72e1ed26e627c165eb3d03f4382`, preserving reviewed tree
   `4094cd36501a84fe011526d1f46fc3ad0e5534f3`. All six candidate and six distinct
@@ -17,15 +30,18 @@ and hosted evidence; one writer owns implementation changes.
   12 source and 12 installed cases with verified cleanup. Independent review is
   clear. Bounded issue243 acceptance, original claim release and explicit closure
   are recorded in its [final checkpoint](https://github.com/MulattoTech/MTerm-CLI/issues/243#issuecomment-7032004304).
-- Active Access [issue32](https://github.com/MulattoTech/MTechLabs-Access/issues/32)
-  repairs the Windows launcher's substring-based process ownership decision.
+- Completed Access [issue32](https://github.com/MulattoTech/MTechLabs-Access/issues/32)
+  repaired the Windows launcher's substring-based process ownership decision.
   Branch `fix/launcher-process-identity-20261120` starts at exact main
   `8322c04bdc722a9cd333a347448ae56eaa3b8b1d`. Native Windows PowerShell 5.1
   observed 13 original false accepts; the unchanged 26-case fixture passes after
   the narrow source correction. Independent source/evidence review is clear.
   See [the retained qualification record](2026-11-20-launcher-identity/README.md).
-  Immutable publication, ordinary Windows wrapper execution, all five candidate
-  jobs and five actual-main jobs remain pending at this preparation checkpoint.
+  PR33 merged normally at `83d5c3791a4fc459cb4c2e536f97b1f5f77273d0`, tree
+  `ba7c4546258f0d7c7403b688ab20e473f0658002`. All five candidate and five distinct
+  actual-main jobs passed, including native Windows 142/142 and real upstream
+  qualification. Acceptance, claim release and explicit closure are recorded in
+  [the final receipt](https://github.com/MulattoTech/MTechLabs-Access/issues/32#issuecomment-7032290805).
 - The current Access checkout was materialized through authenticated GitHub API
   reads because local Git lacks a credential. All 279 unique blobs, 283 paths,
   tree `822e8c8b945e6cd75da010e5877701ae967a7e1b` and the exact signed base
@@ -38,9 +54,9 @@ and hosted evidence; one writer owns implementation changes.
   credentials, policies, the dirty owner CLI checkout and working wrappers remain
   untouched by these source repairs.
 
-**Current action:** qualify and integrate Access32 through the normal expected-head
-workflow, then append its actual delivery receipt to the same issue before claim
-release and explicit completion. The next structural work is a separately selected
+**Current action:** qualify and integrate Access34 / PR35 through the normal
+expected-head workflow, then append its actual delivery receipt to the issue
+before claim release and explicit completion. This adds a separately selected
 loopback DEV manager with disjoint state and verifiable listener identity. A real
 DEV bridge additionally needs an isolated upstream user profile and independent
 App/grant routing; different names or state directories alone are insufficient.
@@ -82,7 +98,7 @@ verified outcomes supersede them without discarding their failed or pending hist
   remain intact. Website archive, manager runtime and production Worker did not
   change. Canonical-only authorization and actual UI rendering remain unverified.
 
-**Current action:** finish immutable publication and hosted qualification of this
+**Historical action at that checkpoint:** finish immutable publication and hosted qualification of this
 plugin source reconciliation, while independently completing CLI258's candidate
 and actual-main gates. Continue truthful device-readiness work under CLI58/62
 after reviewing the existing agent/registry boundary. No production service

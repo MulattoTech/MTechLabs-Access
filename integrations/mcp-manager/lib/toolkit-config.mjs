@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { atomicWriteJson } from './policy.mjs';
+import { requireValidatedDevConfig } from './dev-instance.mjs';
 
 const CAPABILITY_NAMES = Object.freeze([
   'math', 'systemRead', 'vmRead', 'codeRead',
@@ -63,6 +64,7 @@ export async function readToolkit(config) {
 }
 
 export async function writeToolkit(config, input) {
+  requireValidatedDevConfig(config);
   const data = validateToolkit(input);
   await atomicWriteJson(toolkitPath(config), data);
   return data;

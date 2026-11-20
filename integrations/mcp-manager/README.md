@@ -1,5 +1,9 @@
 # MTerm-CLI managed Desktop Commander bridge
 
+The optional [DEV manager foundation](DEV.md) provides a separate authenticated
+loopback management instance with guarded state ownership. DEV upstream
+execution remains disabled pending OS-profile and backend/App isolation.
+
 ## Implementation brief
 
 Provide a small cross-project local service for Dylan's existing AI clients,

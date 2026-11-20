@@ -6,7 +6,7 @@ import os from 'node:os';
 import { randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
-import { loadConfig, parseArguments } from './lib/config.mjs';
+import { loadConfig, parseArguments, managerInstance } from './lib/config.mjs';
 import { atomicWriteJson, checkToolPolicy, RESOURCE_GATED_TOOLS, QUEUE_CAPACITY, MAX_PENDING_REQUESTS } from './lib/policy.mjs';
 import { createCoordinator, coordinationError, isCoordinationBusy } from './lib/coordinator.mjs';
 import { createLineFramer, errorResponse, requestKey } from './lib/framing.mjs';
@@ -27,6 +27,8 @@ export async function startGateway({
   requestTimeoutMs = 120000,
   queueTimeoutMs = 30000,
 }) {
+  // Must precede mkdir/coordinator setup, including direct API callers.
+  if (managerInstance(config)) throw new Error('dev_upstream_disabled');
   if (!/^[a-zA-Z0-9_.-]{1,64}$/.test(client)) throw new Error('invalid_client');
   const id = randomUUID();
   const startedAt = new Date().toISOString();

@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { loadConfig, parseArguments } from './lib/config.mjs';
 import { readPolicySync } from './lib/policy.mjs';
 import { canonicalPolicyPath } from './lib/coordinator.mjs';
+import { requireValidatedDevConfig } from './lib/dev-instance.mjs';
 
 function processIsAlive(pid) {
   if (!Number.isSafeInteger(pid) || pid <= 0) throw new Error('invalid_recorded_pid');
@@ -13,6 +14,7 @@ function processIsAlive(pid) {
 }
 
 async function openDatabase(config, readOnly) {
+  requireValidatedDevConfig(config);
   const { stateDirectory } = config;
   const directory = await fs.lstat(stateDirectory);
   if (!directory.isDirectory() || directory.isSymbolicLink()) throw new Error('invalid_state_directory');

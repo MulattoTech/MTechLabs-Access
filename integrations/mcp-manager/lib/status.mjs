@@ -6,6 +6,7 @@ import { readPolicy, QUEUE_CAPACITY } from './policy.mjs';
 import { readCoordinatorStatus, GLOBAL_QUEUE_CAPACITY } from './coordinator.mjs';
 import { readToolkit, projectToolkit } from './toolkit-config.mjs';
 import { jobSummary } from './jobs.mjs';
+import { requireValidatedDevConfig } from './dev-instance.mjs';
 
 export const MANAGER_VERSION = '0.4.0';
 const ID = /^[a-zA-Z0-9_.-]{1,64}$/;
@@ -91,6 +92,7 @@ async function readInstances(stateDirectory) {
 }
 
 export async function collectStatus(config, startedAt = Date.now()) {
+  requireValidatedDevConfig(config);
   let policy = null;
   const warnings = [];
   try { policy = await readPolicy(config.policyPath); } catch { warnings.push('Policy is unavailable or invalid; managed tool execution fails closed.'); }
@@ -133,10 +135,11 @@ export async function collectStatus(config, startedAt = Date.now()) {
   return {
     schemaVersion: 1,
     service: {
-      name: 'MTerm-CLI Manager',
+      name: config.instance ? 'MTerm-CLI Manager DEV' : 'MTerm-CLI Manager',
       version: MANAGER_VERSION,
       state: 'running',
       uptimeSeconds: Math.max(0, Math.floor((Date.now() - startedAt) / 1000)),
+      ...(config.instance ? { instance: { kind: 'dev', id: config.instance.id, port: config.instance.port, upstreamEnabled: false } } : {}),
     },
     policy,
     policyValid: policy !== null,
@@ -151,7 +154,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
       lowDiskFloorBytes,
       managerResidentBytes: processMemory.rss,
       managerHeapUsedBytes: processMemory.heapUsed,
-      admissionOpen: policy !== null && policy.enabled && !policy.readOnly && freeMemoryBytes >= lowMemoryFloorBytes && disk !== null && disk.freeBytes >= lowDiskFloorBytes && coordinator.available && coordinator.uncertain < policy.maxInflight,
+      admissionOpen: !config.instance && policy !== null && policy.enabled && !policy.readOnly && freeMemoryBytes >= lowMemoryFloorBytes && disk !== null && disk.freeBytes >= lowDiskFloorBytes && coordinator.available && coordinator.uncertain < policy.maxInflight,
       disk,
     },
     limits: {

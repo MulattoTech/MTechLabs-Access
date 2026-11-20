@@ -5,7 +5,20 @@ const REQUIRED_PATHS = [
   'nodePath', 'serverPath', 'serverPackageJsonPath', 'stateDirectory',
   'policyPath', 'tokenPath', 'inventoryPath',
 ];
-const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB', 'minimumFreeDiskMiB']);
+const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB', 'minimumFreeDiskMiB', 'instance']);
+
+export function managerInstance(config) {
+  if (!Object.hasOwn(config, 'instance')) return null;
+  const value = config.instance;
+  if (!value || typeof value !== 'object' || Array.isArray(value) ||
+      Object.keys(value).sort().join(',') !== 'id,kind,port,productionConfigPath' ||
+      value.kind !== 'dev' || typeof value.id !== 'string' ||
+      !/^dev(?:-[a-z0-9]+)*$/.test(value.id) || value.id.length > 48 ||
+      !Number.isInteger(value.port) || value.port < 1024 || value.port > 65535 || value.port === 19740 ||
+      typeof value.productionConfigPath !== 'string' || !path.isAbsolute(value.productionConfigPath) ||
+      value.productionConfigPath.includes('\0')) throw new Error('invalid_instance');
+  return Object.freeze({ ...value });
+}
 
 export function parseArguments(argv, allowed = ['config', 'client']) {
   const result = {};
@@ -38,6 +51,17 @@ export async function readBoundedJson(filePath, maximumBytes = 64 * 1024) {
 
 export async function loadConfig(configPath) {
   const input = await readBoundedJson(configPath, 16 * 1024);
+  const config = validateConfig(input);
+  // Existing CLI writers also consume this loader. A new DEV descriptor must
+  // never make an otherwise-rejected production alias writable through them.
+  if (config.instance) {
+    const { validateDevIsolation } = await import('./dev-instance.mjs');
+    return validateDevIsolation(config, configPath);
+  }
+  return config;
+}
+
+export function validateConfig(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input) ||
       input.schemaVersion !== 1 || Object.keys(input).some(key => !ALLOWED_KEYS.has(key))) {
     throw new Error('invalid_config');
@@ -56,5 +80,6 @@ export async function loadConfig(configPath) {
   if (new Set(REQUIRED_PATHS.map(key => path.resolve(input[key]))).size !== REQUIRED_PATHS.length) {
     throw new Error('overlapping_config_paths');
   }
-  return Object.freeze({ ...input, minimumFreeMemoryMiB, minimumFreeDiskMiB });
+  const instance = managerInstance(input);
+  return Object.freeze({ ...input, minimumFreeMemoryMiB, minimumFreeDiskMiB, ...(instance ? { instance } : {}) });
 }

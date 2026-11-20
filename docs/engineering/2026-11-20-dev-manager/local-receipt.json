@@ -1,0 +1,80 @@
+{
+  "issue": 34,
+  "baseCommit": "83d5c3791a4fc459cb4c2e536f97b1f5f77273d0",
+  "baseTree": "ba7c4546258f0d7c7403b688ab20e473f0658002",
+  "runtime": "v24.22.3",
+  "red": {
+    "total": 18,
+    "expectedFailures": 16,
+    "skippedWindowsCases": 2,
+    "cancelled": 0,
+    "exitCode": 1,
+    "excludedCases": [
+      "Replaced-owner cleanup",
+      "Direct ownership release/reacquire cleanup"
+    ]
+  },
+  "focusedGreen": {
+    "total": 20,
+    "passed": 18,
+    "skippedWindowsCases": 2,
+    "cancelled": 0,
+    "exitCode": 0
+  },
+  "manager": {
+    "total": 136,
+    "passed": 133,
+    "skipped": 3,
+    "exitCode": 0,
+    "skipReasons": [
+      "Windows launcher identity parent",
+      "Windows case alias",
+      "Windows ADS/trailing component aliases"
+    ]
+  },
+  "root": {
+    "total": 128,
+    "passed": 128,
+    "skipped": 0,
+    "exitCode": 0,
+    "syntax": "pass",
+    "build": "pass",
+    "generatedUiDiff": "unchanged"
+  },
+  "sourceSha256": {
+    "integrations/mcp-manager/admin.mjs": "86bfc373de8112e3a40be4e9cfde4602e0fe308f4f6416629fde8176ec09ff26",
+    "integrations/mcp-manager/gateway.mjs": "78349b861da2d466e2ccf661fec462cd6318d7a3322b0a6f7e67f5534311a083",
+    "integrations/mcp-manager/remote.mjs": "404c4e8c283a9eaa7bc09ed3b7416a15aa4420e3c017495551641cab58a23e9d",
+    "integrations/mcp-manager/recover-admission.mjs": "1f0fc400e73cbd91d27a032054c7eb1eb103a39fc0011c306dbc65d01b73c831",
+    "integrations/mcp-manager/lib/config.mjs": "d9e35719907250894720c1b4b58353e4b92a9a411a48e54dd52ca8cbd55d5787",
+    "integrations/mcp-manager/lib/dev-instance.mjs": "468898b462ffe89cf4dd8b0bbe6b78a4344b16800c0871ea536b368f23bccb09",
+    "integrations/mcp-manager/lib/token.mjs": "2faca820b2693af20961b074abf96e965d090af206d19f578f50a320df6b7469",
+    "integrations/mcp-manager/lib/jobs.mjs": "bc2c0d521e3a274286111cf36c8a9729fa5a6b52bfc1c6dcb625cc2fd0b93390",
+    "integrations/mcp-manager/lib/status.mjs": "acb3ede72bb13ff06829e8cad52d3b5cd18f013796799d05a1ffacc0cb44a6bc",
+    "integrations/mcp-manager/lib/toolkit-config.mjs": "9a6a7309eb680fa81ce7bc368d72ce96ba41dfe20a7c0c2ebc5067d32f0e88a3",
+    "integrations/mcp-manager/test/dev-instance.test.mjs": "5d92d34c5fbff6029ca419b0d9ed29a016ed3f83bfe173a5e1712b30ec63404e"
+  },
+  "evidenceSha256": {
+    "focused-red-final.tap": "74dec3103d8247df25e9d06ffdd793630f91622a93dceb7c8eb56bc17a3c53f9",
+    "root-tests.txt": "be6be751fe111c282511669fcd5569d2d236b4bc877f9b75ae7c07e245b1225e",
+    "manager-tests-final.txt": "344b74326882a193c8c27cc75b159d978a7df3ca744b37c1edada8f43b864f79",
+    "focused-green-final.tap": "abbc0b701789d78a1f3436538018fba19387d3caefea59226d5a224462396345",
+    "review-gap-red.tap": "6cc2a9f7d054158a1299bb9a1c230f08f1337676f62f964a74873ca7a9a2a6bd",
+    "root-check.txt": "057dd26cd3b2e78c9db81c42ca894a3590f9835ef02345f59b6686d7479cabca",
+    "root-build.txt": "37c3e3ec50d15837453fb5b68fcb283d1abf95c1bd0b78dfa87a0b4ab6612a67"
+  },
+  "deployment": false,
+  "paidModelCalls": 0,
+  "candidateCI": "pending",
+  "actualMainCI": "pending",
+  "claim": "root sole writer; independent source reviewers repository_baseline and environment_baseline",
+  "reviewGapRed": {
+    "baseCommit": "830f7c733dc784de9186ccab679d210252ce095d",
+    "remoteEquivalent": "653dc9c865131a7aaf7f26ea74b5d6c798514c1c",
+    "tree": "ac14cac75edfd03ae8019a1e48e456ef287facc5",
+    "total": 1,
+    "expectedFailures": 1,
+    "skipped": 0,
+    "exitCode": 1
+  }
+}

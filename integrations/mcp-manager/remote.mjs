@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { readJsonBody } from './lib/http-body.mjs';
 import { ManagedStdioTransport } from './lib/managed-transport.mjs';
 import { MANAGER_VERSION } from './lib/status.mjs';
+import { managerInstance } from './lib/config.mjs';
 
 const MAX_HTTP_REQUESTS = 64;
 const MAX_BODY_BYTES = 1024 * 1024;
@@ -53,7 +54,10 @@ export function createRemoteMcp(config, {
   sdkLoader = loadSdk,
 } = {}) {
   if (!Number.isInteger(maxHttpRequests) || maxHttpRequests < 1 || maxHttpRequests > MAX_HTTP_REQUESTS) throw new Error('invalid_http_concurrency');
-  const configured = typeof configPath === 'string' && path.isAbsolute(configPath);
+  // DEV management is source-qualified independently; real upstream execution
+  // requires a separately qualified OS-user profile and backend/App routing.
+  const instance = managerInstance(config);
+  const configured = !instance && typeof configPath === 'string' && path.isAbsolute(configPath);
   const gatewayPath = fileURLToPath(new URL('./gateway.mjs', import.meta.url));
   let sdk;
   let sdkPromise;
@@ -75,6 +79,7 @@ export function createRemoteMcp(config, {
   function status() {
     return {
       transport: 'streamable-http', endpoint: '/mcp', state, sdkLoaded: Boolean(sdk),
+      ...(instance ? { unavailableReason: 'dev_upstream_disabled' } : {}),
       sharedBackend: true, activeHttpRequests, activeUpstreamRequests,
       maxHttpRequests, idleTimeoutSeconds: idleTimeoutMs / 1000,
       idleTeardownDeferred: mayHaveDetachedJobs,

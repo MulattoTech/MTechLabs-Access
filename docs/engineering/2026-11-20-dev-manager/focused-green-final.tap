@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: DEV descriptor is strict and legacy defaults remain compatible
+ok 1 - DEV descriptor is strict and legacy defaults remain compatible
+  ---
+  duration_ms: 62.160104
+  type: 'test'
+  ...
+# Subtest: two inert managers coexist with independent routing, credentials, policy and job state
+ok 2 - two inert managers coexist with independent routing, credentials, policy and job state
+  ---
+  duration_ms: 73.23534
+  type: 'test'
+  ...
+# Subtest: DEV rejects equal effective credentials including plaintext versus digest
+ok 3 - DEV rejects equal effective credentials including plaintext versus digest
+  ---
+  duration_ms: 23.523225
+  type: 'test'
+  ...
+# Subtest: DEV rejects missing, changed or mismatched configuration references before writes
+ok 4 - DEV rejects missing, changed or mismatched configuration references before writes
+  ---
+  duration_ms: 9.5128
+  type: 'test'
+  ...
+# Subtest: DEV rejects equal, nested and normalized production state overlaps before recovery
+ok 5 - DEV rejects equal, nested and normalized production state overlaps before recovery
+  ---
+  duration_ms: 19.171379
+  type: 'test'
+  ...
+# Subtest: DEV rejects policy, token and inventory references outside its own state
+ok 6 - DEV rejects policy, token and inventory references outside its own state
+  ---
+  duration_ms: 13.17489
+  type: 'test'
+  ...
+# Subtest: DEV rejects linked state and ancestor junctions before touching protected files
+ok 7 - DEV rejects linked state and ancestor junctions before touching protected files
+  ---
+  duration_ms: 10.527754
+  type: 'test'
+  ...
+# Subtest: DEV rejects hardlinked controls, database files and sidecars
+ok 8 - DEV rejects hardlinked controls, database files and sidecars
+  ---
+  duration_ms: 64.844015
+  type: 'test'
+  ...
+# Subtest: DEV rejects nested links and control files using reserved state names
+ok 9 - DEV rejects nested links and control files using reserved state names
+  ---
+  duration_ms: 19.902476
+  type: 'test'
+  ...
+# Subtest: Windows case aliases of production state are rejected
+ok 10 - Windows case aliases of production state are rejected # SKIP
+  ---
+  duration_ms: 0.201513
+  type: 'test'
+  ...
+# Subtest: Windows DEV rejects alternate streams and trailing-dot or space control aliases
+ok 11 - Windows DEV rejects alternate streams and trailing-dot or space control aliases # SKIP
+  ---
+  duration_ms: 0.043336
+  type: 'test'
+  ...
+# Subtest: DEV refuses a duplicate owner before it can recover running jobs and drains before release
+ok 12 - DEV refuses a duplicate owner before it can recover running jobs and drains before release
+  ---
+  duration_ms: 45.248055
+  type: 'test'
+  ...
+# Subtest: DEV listener cannot bind a different port or public interface
+ok 13 - DEV listener cannot bind a different port or public interface
+  ---
+  duration_ms: 8.339707
+  type: 'test'
+  ...
+# Subtest: DEV close prevents same-turn first listen before its asynchronous close event
+ok 14 - DEV close prevents same-turn first listen before its asynchronous close event
+  ---
+  duration_ms: 17.630994
+  type: 'test'
+  ...
+# Subtest: DEV keeps ownership until deferred job recovery drains after close
+ok 15 - DEV keeps ownership until deferred job recovery drains after close
+  ---
+  duration_ms: 21.550322
+  type: 'test'
+  ...
+# Subtest: DEV cleanup refuses to delete a replaced ownership file
+ok 16 - DEV cleanup refuses to delete a replaced ownership file
+  ---
+  duration_ms: 14.576326
+  type: 'test'
+  ...
+# Subtest: DEV cleanup revokes direct runner ownership before its first asynchronous step
+ok 17 - DEV cleanup revokes direct runner ownership before its first asynchronous step
+  ---
+  duration_ms: 16.505944
+  type: 'test'
+  ...
+# Subtest: occupied DEV port fails before recovery, releases only its own lock, and never takes over stale locks
+ok 18 - occupied DEV port fails before recovery, releases only its own lock, and never takes over stale locks
+  ---
+  duration_ms: 34.561236
+  type: 'test'
+  ...
+# Subtest: direct DEV gateway entry fails before state creation or any upstream spawn
+ok 19 - direct DEV gateway entry fails before state creation or any upstream spawn
+  ---
+  duration_ms: 8.116563
+  type: 'test'
+  ...
+# Subtest: DEV config validation protects existing toolkit CLI and direct state writers
+ok 20 - DEV config validation protects existing toolkit CLI and direct state writers
+  ---
+  duration_ms: 13.710465
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 633.971505
