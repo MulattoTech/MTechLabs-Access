@@ -151,12 +151,12 @@ async function failureProbeDiagnostic(originalExecFile) {
     if (original.length > 1048576) throw new Error('fixture_probe_diagnostic_source_limit');
     const text = new TextDecoder('utf-8', { fatal: true }).decode(original);
     record.originalSourceSha256 = hash(original); record.normalizedSourceSha256 = hash(text.replace(/\r\n/g, '\n'));
-    if (record.normalizedSourceSha256 !== 'b2acd47df8fa102941e79468d9b5e7d0dd1f285e761f7823ac9811a1e72fea70') {
+    if (record.normalizedSourceSha256 !== '650e96e36ed0c6cc95139f5422fce1840f66b5308a16a0cf7442cc7da8d26322') {
       throw new Error('fixture_probe_diagnostic_source_mismatch');
     }
     const derivative = buildFailureProbe(text);
     record.derivativeSourceSha256 = hash(derivative.source); record.anchorCount = derivative.anchors.length; record.anchorsMatched = true;
-    if (record.anchorCount !== 32 || record.derivativeSourceSha256 !== '22079d3b4b5cda805ddd4ea3ca59887990b36479d108b8937f965ce9ef8bee31') {
+    if (record.anchorCount !== 32 || record.derivativeSourceSha256 !== '19960fe28dbb8ab9c6138cd4de3662e6a1ba48e955766608d6e7f020b760affe') {
       throw new Error('fixture_probe_diagnostic_derivative_mismatch');
     }
     filename = path.join(process.cwd(), 'reference-probe-diagnostic-' + randomBytes(12).toString('hex') + '.ps1');

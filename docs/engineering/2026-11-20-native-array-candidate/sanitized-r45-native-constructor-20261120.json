@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R45",
+  "issue": 44,
+  "relatedIssue": 46,
+  "scope": "isolated followup to R43, removing second New-Object command dependency in proposed Windows native probe",
+  "createdUtc": "2026-11-20T22:38:51.969381+00:00",
+  "branch": "fix/access44-r43-native-array-candidate-20261120",
+  "priorSourceCommit": "b090674b359512dc50749f55f65170e1ac393e2a",
+  "originalDraftPr45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "newOneLineChange": {
+    "path": "integrations/mcp-manager/windows-runtime-probe.ps1",
+    "old": "return New-Object -TypeName MTechLabs.DevRuntime.ProcessSnapshot -ArgumentList $ProcessId",
+    "new": "return [MTechLabs.DevRuntime.ProcessSnapshot]::new($ProcessId)",
+    "singleIntPidConstructorPreserved": true,
+    "nativeProcessTokenProfileAndCleanupSourceRetained": true,
+    "noOtherNewObjectCallsRemainInExecutableProbe": true
+  },
+  "existingR43BufferChangeRetained": true,
+  "diagnosticSourceSha256Pin": "650e96e36ed0c6cc95139f5422fce1840f66b5308a16a0cf7442cc7da8d26322",
+  "diagnosticDerivativeSha256Pin": "19960fe28dbb8ab9c6138cd4de3662e6a1ba48e955766608d6e7f020b760affe",
+  "failureOnlyInstrumentationAnchorCount": 32,
+  "fixtureChangesFromPriorR43": "only two updated source/derivative SHA-256 constant values",
+  "sourceFileEvidence": {
+    "integrations/mcp-manager/windows-runtime-probe.ps1": {
+      "normalizedBytes": 10444,
+      "normalizedSha256": "650e96e36ed0c6cc95139f5422fce1840f66b5308a16a0cf7442cc7da8d26322",
+      "expectedGitBlobSha": "1b429f4cbcb3d888dd739ab5330ebf040faeb2f3"
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "normalizedBytes": 40692,
+      "normalizedSha256": "b863aa72b0ef754d79a11ba4b93043b4a7f497ffbd4cb71503b66bb12542e494",
+      "expectedGitBlobSha": "03caeac1ac20d0b96affe1b5ae665be7f9f99d79"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/native-array-source-candidate.test.cjs": {
+      "normalizedBytes": 6907,
+      "normalizedSha256": "2eff7347f30c8a09c63154e8cf77fba8ed4a915a7f32bb15861a7315da2f41bf",
+      "expectedGitBlobSha": "4c197af2613071df9fe45718500a5bdb55c27afd"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/verify-native-array-ps5.ps1": {
+      "normalizedBytes": 1677,
+      "normalizedSha256": "5ff70389c82b47c2553252fc8894f8f07d2e797ece378f2bd3c6f3f8cf416e73",
+      "expectedGitBlobSha": "add059d261aad422c8a056b498da54b02e1850d3"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/verify-native-constructor-ps5.ps1": {
+      "normalizedBytes": 2791,
+      "normalizedSha256": "1b7317362d45f6253fed05d403493c142c1cb01b22487694d8ed89bf2dfbe7a5",
+      "expectedGitBlobSha": "4376be739de536ce80104b8e21e6d94c0577fd3b"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/README.md": {
+      "normalizedBytes": 5864,
+      "normalizedSha256": "93029ac1ecda9412edee29660bc75c5609cae83bdebcf1f0c8ea79011246cd6f",
+      "expectedGitBlobSha": "6413d8f23e851b8318331dddc55ec22a8021a15d"
+    },
+    "docs/engineering/2026-11-20-native-array-candidate/R45-NATIVE-CONSTRUCTOR-REVIEW.md": {
+      "normalizedBytes": 4938,
+      "normalizedSha256": "0ee8b3d0dcd227cf49aae670901073ff1201177a294c1d57b142788a3a61bbe1",
+      "expectedGitBlobSha": "0830ec2a322f2e14da3d6babb84f303fc7280923"
+    }
+  },
+  "observedLocalTests": {
+    "nodePureSourceAndDiagnosticTests": {
+      "passed": 16,
+      "failed": 0,
+      "nodeVersion": "27.0.0-alpha.0.0.0"
+    },
+    "windowsPowerShell51BufferAndConstructor": {
+      "pass": true,
+      "syntheticOnly": true
+    },
+    "powerShell7BufferAndConstructor": {
+      "pass": true,
+      "syntheticOnly": true
+    },
+    "typedCtorWithAutoLoadingDisabled": {
+      "pass": true
+    },
+    "fixtureSourceSyntax": {
+      "pass": true
+    }
+  },
+  "limits": [
+    "Both changes are an informed hypothesis to avoid PowerShell New-Object command resolution; R6 showed a stall before the first call only, and did not prove its cause.",
+    "No real Windows primary-token/native process identity or separate DEV account/IPC fixture was invoked; only in-memory synthetic IDisposable constructor parity was checked.",
+    "Source and built-in command checks used owner-user Windows PowerShell 5.1/7 and Node27 alpha, not GitHub-hosted Windows Node24.",
+    "This isolated branch is not merged into PR45 and does not establish hosted Windows, Linux/upstream, PDF or complete security acceptance.",
+    "GitHub Actions eligibility and the historical 0.3.1 control PDF failure remain outstanding.",
+    "Production H: source, user/DEV OS accounts, permissions, credentials, routes and DEV port remain unmodified."
+  ],
+  "status": {
+    "githubHostedNativeTestsPassed": false,
+    "githubHostedUpstreamPdfPassed": false,
+    "causalFixProven": false,
+    "pr45Modified": false,
+    "pr45Merged": false,
+    "ownerProductionModified": false,
+    "osAccountsAclTokensChanged": false,
+    "devActivationAuthorized": false
+  }
+}

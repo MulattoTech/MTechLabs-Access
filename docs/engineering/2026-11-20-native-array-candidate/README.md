@@ -1,13 +1,15 @@
-# Access #44 — R43 isolated Windows native-array source-fix candidate
+# Access #44 — R43/R45 isolated Windows source-fix candidate
 
 **STATUS: PROPOSED SOURCE CORRECTION ONLY. NOT REVIEWED FOR MERGE, HOSTED-QUALIFIED, INSTALLED OR AUTHORIZED FOR DEV.**
+
+**R45 follow-up:** The original R43 checkpoint changed one character-buffer allocation. A later source review found another `New-Object` invocation for native snapshot construction. The current candidate replaces **both** invocations with typed constructors and updates the source/diagnostic hashes. See [R45 constructor review](R45-NATIVE-CONSTRUCTOR-REVIEW.md) and its synthetic PowerShell tests. The historical R43 details and receipt below describe the earlier commit `b090674b359512dc50749f55f65170e1ac393e2a`, not the full current candidate.
 
 Branch: `fix/access44-r43-native-array-candidate-20261120`
 
 Exact starting commit: `f0855c1227aacc49071581bb52ba5566bc07ffce` (PR #45 draft head at branch creation).
 Primary references: [Access issue #44](https://github.com/MulattoTech/MTechLabs-Access/issues/44), [isolation issue #46](https://github.com/MulattoTech/MTechLabs-Access/issues/46), [prior R42 source-bound investigation](https://github.com/MulattoTech/MTechLabs-Access/commit/91effa38ed146721fa71c4ee3f5df3a9260a3971).
 
-## Candidate and rationale
+## Original R43 candidate and rationale (historical)
 
 In integrations/mcp-manager/windows-runtime-probe.ps1, replace exactly one command:
 
@@ -23,7 +25,7 @@ The failed R6 Windows logs independently showed native-capture child-process ter
 
 The second modified production-repository file, test/fixtures/reference-transport-child.mjs, updates the original PowerShell command's **four** diagnostic string anchors and refreshes the **two** frozen source/derivative SHA-256 constants. All **32** diagnostic anchor names remain. The diagnostic remains *failure-only* and explicitly non-acceptance evidence; no native-process/transport assertion, security policy, identity validation or deadline was relaxed.
 
-## Local isolated checks and results
+## Original R43 local isolated checks and results (historical)
 
 - 15/15 Node built-in-only tests in [native-array-source-candidate.test.cjs](native-array-source-candidate.test.cjs) passed. They verify single-line patch reversibility against the immutable PR45 probe SHA, exact six-edit diagnostic reconstruction against its original Git blob, unchanged caller/identity/transport controls, 32-anchored pure derivative transformation, correct new pinned SHA-256 values and unchanged 15-second native-capture timeout.
 - Windows PowerShell 5.1 and PowerShell 7 both parsed the candidate probe without errors and created the same type and length of zeroed buffer using the new expression. [verify-native-array-ps5.ps1](verify-native-array-ps5.ps1) is source/AST-only and **does not invoke the runtime probe**.

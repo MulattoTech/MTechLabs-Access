@@ -81,7 +81,7 @@ function Test-RuntimeInvocation {
 function Get-RuntimeNativeSnapshot {
     param([int]$ProcessId)
     Initialize-RuntimeNative
-    return New-Object -TypeName MTechLabs.DevRuntime.ProcessSnapshot -ArgumentList $ProcessId
+    return [MTechLabs.DevRuntime.ProcessSnapshot]::new($ProcessId)
 }
 
 function Get-RuntimeListeners {

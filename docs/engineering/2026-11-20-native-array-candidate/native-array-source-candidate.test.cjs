@@ -1,6 +1,6 @@
 "use strict";
 /**
- * R43 source-only, offline candidate checks. No package imports, npm, fixture
+ * R43/R45 source-only, offline candidate checks. No package imports, npm, fixture
  * accounts, PowerShell launch, production process, network or OS mutation.
  * Run explicitly: node --test docs/engineering/2026-11-20-native-array-candidate/native-array-source-candidate.test.cjs
  */
@@ -26,14 +26,16 @@ const blob = data => {
     .update(Buffer.concat([Buffer.from("blob " + bytes.length + "\0"), bytes]))
     .digest("hex");
 };
-const expectedSourceHash = "b2acd47df8fa102941e79468d9b5e7d0dd1f285e761f7823ac9811a1e72fea70";
-const expectedDerivedHash = "22079d3b4b5cda805ddd4ea3ca59887990b36479d108b8937f965ce9ef8bee31";
+const expectedSourceHash = "650e96e36ed0c6cc95139f5422fce1840f66b5308a16a0cf7442cc7da8d26322";
+const expectedDerivedHash = "19960fe28dbb8ab9c6138cd4de3662e6a1ba48e955766608d6e7f020b760affe";
 const originalProbeSha = "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca";
 const originalFixtureBlob = "1291e3031c2cb437b04915afaedb516507aed321";
 const oldSourceHash = "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca";
 const oldDerivedHash = "f939e35a5e052616e7838c5b2bf7d38fd44b97ee1c8496a8fccee69566d3889b";
 const commandOld = "$buffer = New-Object char[] 16385";
 const commandNew = "$buffer = [char[]]::new(16385)";
+const constructorOld = "return New-Object -TypeName MTechLabs.DevRuntime.ProcessSnapshot -ArgumentList $ProcessId";
+const constructorNew = "return [MTechLabs.DevRuntime.ProcessSnapshot]::new($ProcessId)";
 const occurrences = (source, value) => source.split(value).length - 1;
 
 function derivativeSource() {
@@ -50,9 +52,15 @@ test("candidate uses exactly one typed array buffer constructor", () => {
   assert.equal(occurrences(probe, commandNew), 1);
   assert.equal(occurrences(probe, commandOld), 0);
 });
-test("candidate changes only one byte-exact line of the frozen executable probe", () => {
-  const original = probe.replace(commandNew, commandOld);
+test("candidate changes only two byte-exact lines of the frozen executable probe", () => {
+  const original = probe.replace(commandNew, commandOld).replace(constructorNew, constructorOld);
   assert.equal(sha(original), originalProbeSha);
+});
+test("candidate has no remaining New-Object calls and one exact native type constructor", () => {
+  assert.equal(occurrences(probe, "New-Object"), 0);
+  assert.equal(occurrences(probe, constructorNew), 1);
+  assert.ok(probe.includes("public ProcessSnapshot(int pid)"));
+  assert.ok(probe.includes("Get-RuntimeNativeSnapshot $ParentId"));
 });
 test("candidate probe's normalized SHA-256 is exactly pinned", () => {
   assert.equal(sha(probe), expectedSourceHash);
