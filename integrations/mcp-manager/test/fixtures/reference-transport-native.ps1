@@ -5,6 +5,12 @@ param(
     [switch]$CleanupOnly
 )
 $ErrorActionPreference = 'Stop'
+# The fixed Desktop controller must not autoload Core modules inherited from
+# the hosted runner's pwsh parent. Preserve only bounded inherited-path metadata
+# below; the same early pin also covers the separate emergency cleanup process.
+$fixtureInheritedModulePath = [Environment]::GetEnvironmentVariable('PSModulePath')
+$fixtureSystemModulePath = 'C:\Windows\System32\WindowsPowerShell\v1.0\Modules'
+$env:PSModulePath = $fixtureSystemModulePath
 Set-StrictMode -Version Latest
 [Console]::InputEncoding = [Text.UTF8Encoding]::new($false, $true)
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
@@ -24,6 +30,7 @@ $fixtureLastOperation = 'context_guards'
 $fixtureSetup = @{ exclusiveRootCreated = $false; rootAclApplied = $false; initialJournalSaved = $false;
     sourceFilesCopied = 0; nodeCopied = $false; sourceTreeGuarded = $false }
 $fixtureModulePathObservation = $null
+$fixtureEffectiveModulePathObservation = $null
 $fixtureServer = $null
 $fixtureServiceOriginal = $null
 $fixtureServiceStarted = $false
@@ -83,8 +90,7 @@ function Error-Diagnostic($Record) {
         category = $Record.CategoryInfo.Category.ToString(); errorId = $errorId;
         errorIdSha256 = $errorIdHash; exceptionChain = @($chain) }
 }
-function Module-Path-Observation {
-    $value = [Environment]::GetEnvironmentVariable('PSModulePath')
+function Module-Path-Observation([string]$value) {
     if ($null -eq $value) { $value = '' }
     $entries = @($value.Split(';') | Where-Object { $_ -ne '' })
     return @{ sha256 = (Hash-Text $value); entryCount = $entries.Count;
@@ -166,6 +172,7 @@ function Start-Child([string]$Role, [string]$Executable, [string[]]$Arguments, $
         if ($null -ne [Environment]::GetEnvironmentVariable($key)) { $start.EnvironmentVariables[$key] = [Environment]::GetEnvironmentVariable($key) }
     }
     $start.EnvironmentVariables['PATH'] = 'C:\Windows\System32;C:\Windows;C:\Windows\System32\WindowsPowerShell\v1.0'
+    $start.EnvironmentVariables['PSModulePath'] = $fixtureSystemModulePath
     $start.EnvironmentVariables['MTERM_DISPOSABLE_REFERENCE_QUALIFICATION'] = '1'
     $start.EnvironmentVariables['TEMP'] = Join-Path $fixtureRoot ($Role + '-temp')
     $start.EnvironmentVariables['TMP'] = $start.EnvironmentVariables['TEMP']
@@ -450,7 +457,8 @@ if ($CleanupOnly) {
 }
 
 try {
-    $fixtureModulePathObservation = Module-Path-Observation
+    $fixtureModulePathObservation = Module-Path-Observation $fixtureInheritedModulePath
+    $fixtureEffectiveModulePathObservation = Module-Path-Observation ([Environment]::GetEnvironmentVariable('PSModulePath'))
     Assert-Fixture ($env:MTERM_DISPOSABLE_REFERENCE_QUALIFICATION -eq '1' -and $env:GITHUB_ACTIONS -eq 'true' -and
         $env:RUNNER_ENVIRONMENT -eq 'github-hosted' -and $env:RUNNER_OS -eq 'Windows') 'fixture_disposable_host_required'
     Assert-Fixture ([Environment]::Is64BitProcess) 'fixture_native_bitness_required'
@@ -946,6 +954,7 @@ $fixtureReport = @{ schemaVersion = 1; fixture = 'protected-reference-transport'
     cleanupErrors = @($fixtureCleanupErrors);
     failureDiagnostic = $fixtureFailureDiagnostic; cleanupDiagnostics = @($fixtureCleanupDiagnostics);
     setupProgress = $fixtureSetup; modulePathObservation = $fixtureModulePathObservation;
+    effectiveModulePathObservation = $fixtureEffectiveModulePathObservation;
     failure = $fixtureFailure; failedStage = $(if ($fixtureFailure) { $fixtureStage } else { $null });
     watchdog = @{ workMilliseconds = 360000; cleanupMilliseconds = 60000; outerMilliseconds = 420000 };
     nativeRuntime = @{ platform = [Environment]::OSVersion.Platform.ToString(); powerShellEdition = $PSVersionTable.PSEdition;

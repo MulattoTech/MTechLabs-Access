@@ -136,7 +136,7 @@ Revision 2 adds bounded setup-stage, command, exception-type, numeric-error and
 source-line metadata to the native controller and wrapper. It changes no
 product source, provisioning behavior, ACL rule, success assertion, timeout or
 cleanup requirement. `diagnostic-r2-freeze.json` records the two changed tests;
-the other 29 frozen inputs remain identical. The current verifier is SHA-256
+the other 29 frozen inputs remain identical. The revision 2 verifier is SHA-256
 `1b785e2cdee28a00a414e757d1cc514bbbc53ab41cdce54c43f5d5ee19c1fb9b`, and additionally
 requires complete setup and empty failure diagnostics for acceptance. Original
 fixture and verifier bytes remain immutable in the first candidate's Git tree.
@@ -145,6 +145,32 @@ The full local gates passed again for the diagnostic revision with the same
 observed totals and stable inputs. Their complete records are retained under
 `local-diagnostic-r2-*`. A fresh exact-tree Windows run remains required; the
 diagnostic addition itself does not resolve or qualify the startup failure.
+
+## Module-path correction, revision 3
+
+The diagnostic candidate `a1b7c01c28d947a6be92ad98266e0b18bdf19420`, synthetic
+checkout `5c8d0e7a200c1149b801a517aced1a4f8b7ad837`, was rejected in
+[run44733564597](https://github.com/MulattoTech/MTechLabs-Access/actions/runs/44733564597).
+Both Windows reports identify `CouldNotAutoloadMatchingModule` at `Set-Acl`
+during the initial root ACL operation; emergency cleanup repeated that error at
+`Get-Acl`. Their inherited search paths included PowerShell Core modules. No
+native case or account provisioning completed. The bounded diagnostic does not
+expose the internal module-load exception or claim a deeper cause.
+
+Revision 3 captures the inherited search-path metadata, then pins the fixture
+controller and cleanup to Windows PowerShell's system module directory before
+setup. Child processes receive that default, while the deliberate hostile-path
+override remains available to its existing adversarial case. The wrapper and
+verifier additionally require the effective module-path digest to match the
+fixed value. Product files, ACL and cleanup functions, native case assertions,
+timeouts and all prior verifier requirements remain unchanged.
+
+`module-path-r3-freeze.json` and `module-path-r3-frozen-inputs.json` bind this
+correction. The current verifier SHA-256 is
+`5040504d6b98b272522ff56bb349c015c90a8a745230ea5f308fda931911f6f0`.
+Full local gates passed again with the same observed totals and stable inputs;
+the complete records are under `local-module-path-r3-*`. A new exact Windows
+candidate is required to establish the correction and remaining native behavior.
 
 ## Ownership
 

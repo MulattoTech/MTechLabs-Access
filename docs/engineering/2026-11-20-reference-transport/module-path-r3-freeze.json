@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "revision": 3,
+  "scope": "Narrow fixture module-resolution correction after exact r2 ACL autoload failure",
+  "frozenAt": "2026-11-20T12:15:44.695071+00:00",
+  "parentReviewedLocalCommit": "7471f441ca45cf181deca26667b67b200855ed44",
+  "priorCandidateHead": "a1b7c01c28d947a6be92ad98266e0b18bdf19420",
+  "priorRunId": 44733564597,
+  "observedCause": "Both hosted Desktop controllers fail matching-module autoload at Set-Acl before source copy/accounts; emergency Get-Acl repeats it. The inherited PSModulePath includes PowerShell Core entries. Exact failed module internal details remain unobserved.",
+  "correction": [
+    "Preserve inherited PSModulePath as digest/count/classification metadata before replacing it.",
+    "Pin controller and its separately invoked emergency cleanup to the fixed Desktop system module directory before initial setup.",
+    "Pin Start-Child default PSModulePath after clearing inherited environment; retain the existing explicit hostile-module fixture override.",
+    "Require the reported effective path digest to equal the exact system-only Desktop module directory with one entry and no Core entry."
+  ],
+  "unchanged": [
+    "All 17 pinned product source files",
+    "All 18 native case bodies and control counts",
+    "ACL/account provisioning operations and private-tree rules",
+    "Mandatory cleanup, ownership checks and watchdog budgets",
+    "Portable22/drain9/original49 and all previous frozen regression bytes",
+    "All 143 prior verifier require expressions"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "3f41e4cdff9077088e529023f506076c2a6b6e7a4b248848f7192c5417791c76",
+      "sha256": "c2fce8f0346904d9e76ade462e68a293449dcf515b4cca5b8deddad53d445d26",
+      "bytes": 70813
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "priorSha256": "0728ac95fcfad89050c1f6c84e9c8de62d75e3c1bacbe98160e9fcf8e061f75a",
+      "sha256": "dfe43ec2ecd5cef110f7c63928d088dea745846aa35c1a7ca262638853920ce2",
+      "bytes": 10935
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputCount": 31,
+  "frozenInputs": {
+    "file": "module-path-r3-frozen-inputs.json",
+    "sha256": "5b3cb79f25795dfa59c6da9aba97c082f0e825921f95cb454e926d1b489c2a6f"
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "5040504d6b98b272522ff56bb349c015c90a8a745230ea5f308fda931911f6f0",
+    "bytes": 67598,
+    "priorSha256": "1b785e2cdee28a00a414e757d1cc514bbbc53ab41cdce54c43f5d5ee19c1fb9b",
+    "priorPreserved": "candidate-diagnostic-r2/frozen-before-module-path-fix/review_hosted.py",
+    "priorRequireCalls": 143,
+    "currentRequireCalls": 143,
+    "removedPriorRequireCalls": 0,
+    "newRequirement": "strict effective Desktop system-only module-path report"
+  },
+  "validation": {
+    "nodeWrapperSyntax": true,
+    "pythonVerifierSyntax": true,
+    "gitDiffCheck": true,
+    "frozenTitlesAndHashes": true,
+    "nativeCaseBodiesUnchanged": true,
+    "aclFunctionsUnchanged": true,
+    "cleanupFunctionsUnchanged": true,
+    "readOnlyPriorLinuxLogChecks": [
+      {
+        "jobId": 136279162546,
+        "sha256": "7be30a857c7eeae524e7810e45d0fe5e1bb00364cd79094c5152d683f49a2a5f",
+        "interpretation": "read-only compatibility check of prior Linux titles/skips only; no new hosted acceptance"
+      },
+      {
+        "jobId": 136279162441,
+        "sha256": "38aa31f29da4613adb8e7845f87afaf1e2ae3e53ff43ee428208fe2ebe0de318",
+        "interpretation": "read-only compatibility check of prior Linux titles/skips only; no new hosted acceptance"
+      }
+    ],
+    "newProductExecution": false,
+    "newNativeExecution": false
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "priorEvidence": [
+    {
+      "file": "candidate-diagnostic-r2/diagnostic-r2-rejection-review.json",
+      "sha256": "0b73dc6550f248c0e8da51bba75ea171a7594d8a8a20816ec281deb9f6244f3f"
+    },
+    {
+      "file": "diagnostic-r2-freeze.json",
+      "sha256": "b7c2848eb0bf26527d18c53ca5ec7574695ca3cc6c70fb5e851a342f80d15bde"
+    }
+  ],
+  "acceptance": {
+    "nativeRequalificationPending": true,
+    "candidateAccepted": false,
+    "activationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "authorRole": "Test/fixture author and evidence verifier; product implementation review is separately assigned to the independent source reviewer."
+}

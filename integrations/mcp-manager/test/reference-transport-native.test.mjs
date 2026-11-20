@@ -132,6 +132,10 @@ test('protected reference transport qualifies separate disposable Windows identi
   assert.equal(Number.isInteger(report.modulePathObservation.entryCount), true);
   assert.equal(typeof report.modulePathObservation.includesWindowsPowerShellSystemModules, 'boolean');
   assert.equal(typeof report.modulePathObservation.includesPowerShellCoreModules, 'boolean');
+  assert.deepEqual(report.effectiveModulePathObservation, {
+    sha256: sha256('C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules'), entryCount: 1,
+    includesWindowsPowerShellSystemModules: true, includesPowerShellCoreModules: false,
+  });
   assert.equal(report.failedStage, null);
   assert.deepEqual(report.watchdog, evidence.watchdog);
   assert.equal(report.nativeRuntime.platform, 'Win32NT');
