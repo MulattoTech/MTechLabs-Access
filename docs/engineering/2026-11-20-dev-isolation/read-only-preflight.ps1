@@ -72,8 +72,16 @@ foreach ($name in $paths.Keys) { $records[$name] = Get-PathSummary $name $paths[
 
 $baselineStatus = 'unavailable'
 $baselineMatchCount = 0
-$baselineName = Join-Path $env:LOCALAPPDATA 'MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json'
 try {
+    # Environment-dependent profile paths may be unavailable, relative, remote,
+    # or redirected. Never throw an unsanitized error before the JSON report
+    # and never read a baseline from a remote/non-fixed drive.
+    $baselineRoot = $env:LOCALAPPDATA
+    if ([string]::IsNullOrWhiteSpace($baselineRoot) -or $baselineRoot -notmatch '^[A-Za-z]:[\\/]' -or
+        [IO.DriveInfo]::new([IO.Path]::GetPathRoot($baselineRoot)).DriveType -ne [IO.DriveType]::Fixed) {
+        throw 'baseline_root_unavailable'
+    }
+    $baselineName = Join-Path $baselineRoot 'MTechLabs\MTermEngineering\Issue46\acl-baseline-20261120.json'
     if (Test-Path -LiteralPath $baselineName -PathType Leaf -ErrorAction Stop) {
         $hash = (Get-FileHash -LiteralPath $baselineName -Algorithm SHA256).Hash.ToLowerInvariant()
         if ($hash -ne '07053c2a8075e3003f809898632152cc446d16b9b356919f2dad200308c27d9f') {
@@ -89,7 +97,10 @@ try {
             $baselineStatus = if ($baselineMatchCount -eq 9) {'matched'} else {'drift'}
         }
     }
-} catch { $baselineStatus='unverified' }
+ } catch {
+    $baselineStatus='unverified'
+    $baselineMatchCount = 0
+}
 
 $startup = 'unverified'
 try {
