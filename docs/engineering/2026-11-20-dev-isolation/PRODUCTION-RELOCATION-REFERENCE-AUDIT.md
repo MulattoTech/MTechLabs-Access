@@ -50,6 +50,26 @@ python3 -B .\read-only-local-client-audit.py
 
 The offline test creates and cleans only GUID-like disposable Python temporary fixtures. The live audit reads the three named client configs without modifying them. Executing from a different profile could enumerate a different set of files; the script does **not** attest the Windows user token, configuration inode, or permissions on ancestor paths. Do not treat a successful mapping match as approval to mutate any client.
 
+## Observed production manager configuration — seven exact path fields
+
+The installed production `state\manager.json` was inspected once in memory under the owner context on **November 20, 2026 at 19:46 UTC**, using a bounded (maximum 16 KiB), strictly decoded read. No raw JSON values or full configured paths were exported, and the sensitive token file referenced by `tokenPath` was **not opened**. The sanitized observed receipt is [`sanitized-production-config-paths-20261120.json`](sanitized-production-config-paths-20261120.json).
+
+All seven required path fields declared by PR45's `lib/config.mjs` were present; the observed configuration had schema version 1, no unexpected top-level keys and **no DEV `instance` field**. The targets all existed, had the expected file/directory types and reported no reparse flag at the target itself.
+
+| Installed field | Observed path category (value redacted) | Required future cutover treatment |
+| --- | --- | --- |
+| `nodePath` | Existing shared Node executable on C: | Preserve only after actual-host Node 27 alpha compatibility/identity qualification; do not implicitly change shared Node. |
+| `serverPath` | Legacy production H: `node_modules` file | Pin installed upstream package/entry bytes and exact new protected package root. |
+| `serverPackageJsonPath` | Legacy production H: `node_modules` file | Pin the associated package metadata, version and its source/entry pairing. |
+| `stateDirectory` | Legacy production H: state directory | Qualify the explicit protected production state parent, ownership, DACL and backup/restore. |
+| `policyPath` | Legacy production H: state file | Relocate only with approved policy-state preservation/rollback and write-policy checks. |
+| `tokenPath` | Legacy production H: state file | Handle as sensitive: protected backup and permissions, **no token export to GitHub**, exact per-environment credential boundary. |
+| `inventoryPath` | Legacy production H: state file | Bind inventory output to protected state and retire/rebind any writer utility using the old H: path. |
+
+**Decision impact:** in addition to the Startup launcher and **three** observed configured Codex/Claude-client stdio entries, the production manager has **six currently existing H:-bound internal config dependencies** (two package + four state). A future cutover cannot consist only of a source directory move and a new shortcut. These seven configuration keys must be revalidated *as one canonical, disjoint, protected deployment* under the exact approved source, with the public production port/origin kept unchanged. New code roots, token location, package metadata and state permissions are **proposals**, not allocated destinations.
+
+The read-only inspection establishes point-in-time path categories and target metadata only. It does **not** establish ancestor symlink/hardlink safety, open-file or loaded process identity, actual DEV-token permissions, secret continuity, credential rotation suitability or whether the candidate PR45 source is runtime-compatible with the existing installed package. The current configuration file itself was not modified.
+
 ## 3. Deployment-version and executable compatibility gate
 
 The previously verified installed `admin.mjs` and `manage.ps1` match the owner's working checkout bytes (Windows CRLF), and after line-ending normalization match the recorded prior deployment commit `9373fadc00689dd782143ab5e49664536f460b8b`. **Their PR #45 head versions are different source blobs.** A cutover to accepted PR45/main source would therefore be not merely a move: it would combine a new filesystem trust root with a source-version change. Review, stage, qualify and roll back those changes as independently distinguishable operations.
