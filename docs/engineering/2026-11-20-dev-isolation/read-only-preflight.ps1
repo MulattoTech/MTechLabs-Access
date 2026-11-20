@@ -91,8 +91,17 @@ try {
             $expected = @($data.paths)
             if ($expected.Count -ne 9) { throw 'baseline_shape_invalid' }
             foreach ($p in $expected) {
-                $fresh = (Get-Acl -LiteralPath $p.path).Sddl
-                if ($fresh -ceq $p.sddl) {$baselineMatchCount++}
+                # ACL equality is necessary but insufficient. A junction or
+                # file/directory replacement may retain identical SDDL while
+                # redirecting an approved production namespace.
+                $freshItem = Get-Item -LiteralPath $p.path -Force -ErrorAction Stop
+                $freshType = if ($freshItem.PSIsContainer) {'directory'} else {'file'}
+                $freshReparse = [bool]($freshItem.Attributes -band [IO.FileAttributes]::ReparsePoint)
+                $freshSddl = (Get-Acl -LiteralPath $p.path -ErrorAction Stop).Sddl
+                if ($freshSddl -ceq $p.sddl -and $freshType -ceq $p.itemType -and
+                    $freshReparse -eq [bool]$p.reparse) {
+                    $baselineMatchCount++
+                }
             }
             $baselineStatus = if ($baselineMatchCount -eq 9) {'matched'} else {'drift'}
         }
@@ -146,9 +155,13 @@ try {
 $blockers = @()
 foreach ($name in @('hRoot','hMTechLabs','hProduction')) {
     $v = $records[$name]
-    if ($v.status -ne 'observed') { $blockers += ('acl-unverified:' + $name) }
-    elseif ($v.broadMutationAllowCount -gt 0 -or $v.inheritableBroadMutationCount -gt 0) {
-        $blockers += ('broad-ancestor-mutation:' + $name)
+    if ($v.status -ne 'observed') {
+        $blockers += ('acl-unverified:' + $name)
+    } else {
+        if ($v.reparse) { $blockers += ('reparse-ancestor:' + $name) }
+        if ($v.broadMutationAllowCount -gt 0 -or $v.inheritableBroadMutationCount -gt 0) {
+            $blockers += ('broad-ancestor-mutation:' + $name)
+        }
     }
 }
 if ($baselineStatus -ne 'matched') {$blockers += 'baseline-not-matched'}
