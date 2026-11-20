@@ -187,7 +187,7 @@ try {
     }
 } catch { $startup = 'unverified' }
 
-$listener = [ordered]@{production='unverified';development='unverified'}
+$listener = [ordered]@{production='unverified';development='unverified';productionInvocation='unverified'}
 try {
     $sockets = @(Get-NetTCPConnection -State Listen -ErrorAction Stop)
     # An exclusive loopback binding requires one listener on the entire port.
@@ -203,6 +203,36 @@ try {
         'listener-nonexclusive'
     }
     $listener.development = if ($dev.Count -eq 0) {'listener-absent'} else {'listener-present'}
+    if ($listener.production -eq 'listener-present') {
+        try {
+            # The address/port alone cannot prove which executable owns the
+            # endpoint. Read but never return the process command line.
+            $ownerPid = [long]$prodPort[0].OwningProcess
+            if ($ownerPid -lt 1 -or $ownerPid -gt [int]::MaxValue) {
+                throw 'production_owner_pid_invalid'
+            }
+            $process = Get-CimInstance -ClassName Win32_Process -Filter ('ProcessId=' + $ownerPid) -ErrorAction Stop
+            if ($null -eq $process -or [long]$process.ProcessId -ne $ownerPid) {
+                throw 'production_owner_lookup_unverified'
+            }
+            $exe = 'C:\Program Files\nodejs\node.exe'
+            $entry = 'H:\MTechLabs\MCP\runtime\admin.mjs'
+            $config = 'H:\MTechLabs\MCP\state\manager.json'
+            $text = [string]$process.CommandLine
+            $exeRegex = '(?i)^\s*(?:"' + [regex]::Escape($exe) + '"|' + [regex]::Escape($exe) + ')(?=\s|$)'
+            $entryRegex = '(?i)(?<!\S)(?:"' + [regex]::Escape($entry) + '"|' + [regex]::Escape($entry) + ')(?!\S)'
+            $configRegex = '(?i)(?<!\S)--config\s+(?:"' + [regex]::Escape($config) + '"|' + [regex]::Escape($config) + ')(?!\S)'
+            $flagRegex = '(?i)(?<!\S)--config(?=\s|$)'
+            $match = ($process.ExecutablePath -ieq $exe -and
+                [regex]::IsMatch($text, $exeRegex) -and
+                [regex]::Matches($text, $entryRegex).Count -eq 1 -and
+                [regex]::Matches($text, $configRegex).Count -eq 1 -and
+                [regex]::Matches($text, $flagRegex).Count -eq 1)
+            $listener.productionInvocation = if ($match) {'invocation-fields-match'} else {'invocation-mismatch'}
+        } catch {
+            $listener.productionInvocation = 'unverified'
+        }
+    }
 } catch {}
 
 $devAccount = 'unverified'
@@ -243,6 +273,11 @@ if ($listener.production -eq 'listener-nonexclusive') {
     $blockers += 'production-listener-nonexclusive'
 } elseif ($listener.production -ne 'listener-present') {
     $blockers += 'production-listener-unverified'
+}
+if ($listener.productionInvocation -eq 'invocation-mismatch') {
+    $blockers += 'production-invocation-mismatch'
+} elseif ($listener.productionInvocation -ne 'invocation-fields-match') {
+    $blockers += 'production-invocation-unverified'
 }
 # This is a pre-provisioning diagnostic. A DEV port being occupied before
 # authorization can mask another process or stale deployment.
