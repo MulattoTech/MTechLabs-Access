@@ -465,6 +465,111 @@ if ($unqualifiedReference.paths[10].status -ne 'observed' -or
     throw 'mere_reference_presence_promoted_to_qualified'
 }
 
+# Proposed installation roots must not become trusted merely by existing.
+# Unsafe candidate code root: mocked junction and inherited broad writes.
+$unsafeCandidate = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if($LiteralPath -eq 'C:\Program Files\MTechLabs'){return $true}
+        if($PathType){Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else{Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    function Get-Item {
+        [CmdletBinding()]param([string]$LiteralPath,[switch]$Force)
+        if($LiteralPath -eq 'C:\Program Files\MTechLabs'){
+            return [pscustomobject]@{PSIsContainer=$true;Attributes=(
+                [IO.FileAttributes]::Directory -bor [IO.FileAttributes]::ReparsePoint)}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        if($LiteralPath -eq 'C:\Program Files\MTechLabs'){
+            return Microsoft.PowerShell.Security\Get-Acl -LiteralPath 'H:\MTechLabs\MCP'
+        }
+        Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $unsafeCandidate 'unsafe_candidate_root'
+if($unsafeCandidate.paths[7].status -ne 'observed' -or
+   $unsafeCandidate.paths[7].reparse -ne $true -or
+   $unsafeCandidate.paths[7].broadMutationAllowCount -lt 1 -or
+   @($unsafeCandidate.blockers|Where-Object{$_ -eq 'candidate-root-unqualified:candidateProtectedCode'}).Count -ne 1 -or
+   @($unsafeCandidate.blockers|Where-Object{$_ -eq 'candidate-root-reparse:candidateProtectedCode'}).Count -ne 1 -or
+   @($unsafeCandidate.blockers|Where-Object{$_ -eq 'candidate-root-broad-mutation:candidateProtectedCode'}).Count -ne 1){
+    throw 'unsafe_candidate_root_not_blocked'
+}
+
+# A narrow-looking state root still lacks operational ownership validation.
+$narrowCandidate = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if($LiteralPath -eq 'C:\ProgramData\MTechLabs'){return $true}
+        if($PathType){Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else{Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    function Get-Item {
+        [CmdletBinding()]param([string]$LiteralPath,[switch]$Force)
+        if($LiteralPath -eq 'C:\ProgramData\MTechLabs'){
+            return [pscustomobject]@{PSIsContainer=$true;Attributes=[IO.FileAttributes]::Directory}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        if($LiteralPath -eq 'C:\ProgramData\MTechLabs'){
+            return Microsoft.PowerShell.Security\Get-Acl -LiteralPath 'H:\MTechLabs\MCP\state'
+        }
+        Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $narrowCandidate 'narrow_candidate_root'
+if($narrowCandidate.paths[8].status -ne 'observed' -or
+   @($narrowCandidate.blockers|Where-Object{$_ -eq 'candidate-root-unqualified:candidateProtectedState'}).Count -ne 1 -or
+   @($narrowCandidate.blockers|Where-Object{$_ -eq 'candidate-root-broad-mutation:candidateProtectedState'}).Count -ne 0) {
+    throw 'mere_candidate_root_presence_promoted'
+}
+
+# An unreadable proposed DEV-on-H: root must not be reported as absent/qualified.
+$deniedCandidate = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if($LiteralPath -eq 'H:\MTechLabs\MCP-DEV'){return $true}
+        if($PathType){Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else{Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    function Get-Acl {
+        [CmdletBinding()]param([string]$LiteralPath)
+        if($LiteralPath -eq 'H:\MTechLabs\MCP-DEV'){throw 'synthetic_acl_read_denied'}
+        Microsoft.PowerShell.Security\Get-Acl -LiteralPath $LiteralPath
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $deniedCandidate 'unverified_candidate_root'
+if($deniedCandidate.paths[9].status -ne 'unverified' -or
+   @($deniedCandidate.blockers|Where-Object{$_ -eq 'candidate-root-unverified:proposedDevH'}).Count -ne 1) {
+    throw 'unverified_candidate_root_not_blocked'
+}
+
+# Intentionally absent candidate paths are expected before provisioning, not
+# an evidence claim about identity, effective rights or future names.
+$absentCandidates = (& {
+    function Test-Path {
+        [CmdletBinding()]param([string]$LiteralPath,[string]$PathType)
+        if($LiteralPath -in @('C:\Program Files\MTechLabs','C:\ProgramData\MTechLabs','H:\MTechLabs\MCP-DEV')){return $false}
+        if($PathType){Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath -PathType $PathType}
+        else{Microsoft.PowerShell.Management\Test-Path -LiteralPath $LiteralPath}
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $absentCandidates 'absent_candidate_roots'
+if(@($absentCandidates.paths|Where-Object{$_.id -in @('candidateProtectedCode','candidateProtectedState','proposedDevH') -and $_.status -ne 'absent'}).Count -ne 0 -or
+   @($absentCandidates.blockers|Where-Object{$_ -like 'candidate-root-*'}).Count -ne 0){
+    throw 'absent_candidate_roots_misreported'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -472,7 +577,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 26
+    passed = 30
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -498,6 +603,10 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     unknownListenerStateBlocked = $true
     unsafeReferenceRootBlocked = $true
     referencePresenceNotQualified = $true
+    unsafeCandidateRootBlocked = $true
+    candidateRootPresenceUnqualified = $true
+    candidateRootUnreadableBlocked = $true
+    absentCandidatesRemainUnclaimed = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
