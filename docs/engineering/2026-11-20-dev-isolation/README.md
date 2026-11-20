@@ -24,6 +24,16 @@ The output is one JSON diagnostic document. A report with `baseline.status="matc
 
 A mismatch, inaccessible ACL, missing baseline, unexpected startup shortcut or absent production listener is reported as a blocker or unverified observation; the tool does not auto-repair or retry. The private-baseline digest pins only one collected snapshot, not future legitimate changes; any later approved change requires a fresh owner-reviewed baseline and controlled rollout.
 
+## Repeatable non-destructive checks
+
+[read-only-preflight.test.ps1](read-only-preflight.test.ps1) exercises the diagnostic through four bounded checks without installing software or altering system configuration:
+
+```powershell
+pwsh -NoLogo -NoProfile -NonInteractive -File .\read-only-preflight.test.ps1
+```
+
+It verifies successful parsing, a static deny-list of mutating/network command invocations, an ordinary read-only assessment with all activation flags false, fail-closed behavior when the local baseline is absent, and fail-closed behavior when `Get-Acl` is synthetically denied. It also checks the diagnostic's source hash is unchanged after execution. The test's output is a sanitized JSON receipt with `passed: 4` or a nonzero exit on failure. This is **not** an OS security proof or test under a DEV identity.
+
 ## Recorded local qualification (2026-11-20)
 
 - PowerShell AST parse: **zero syntax errors**.
