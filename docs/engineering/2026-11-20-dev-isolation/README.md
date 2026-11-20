@@ -29,6 +29,8 @@ The first invocation is expected to exit **1** for the current failed-billing ru
 
 **Installed upstream code-root risk:** [sanitized package and ACL receipt](sanitized-upstream-package-20261120.json) confirms the existing manager selects `@wonderwhy-er/desktop-commander` **0.3.1**, entry `dist\index.js`, while its package root/entry inherit Authenticated Users Modify from H:. File digests are pinned as historical read-only evidence, **not** proof of a loaded process, whole dependency-tree integrity or real DEV token isolation. Any protected-root cutover must qualify these executable dependencies independently.
 
+**Installed package dependency-closure checkpoint:** [the sanitized direct-dependency receipt](sanitized-upstream-direct-dependencies-20261120.json) records **34/34 located direct package dependencies** and **13/13 immediate relative entry imports**, with all inspected targets having active Authenticated Users Modify on H:. This is not complete transitive source integrity or a real DEV-token test. The operational plan explicitly prohibits a launcher-only or entry-only relocation that continues loading modules from the old mutable package tree.
+
 ## Source
 
 [read-only-preflight.ps1](read-only-preflight.ps1) is intentionally pinned to the documented owner-host paths and the existing, private nine-object ACL baseline. The baseline's *SHA-256 digest* is in source, **not the baseline's raw SDDL or account identifiers**. The private baseline is retained locally under:
