@@ -168,6 +168,62 @@ if ($positiveText.Contains('S-1-5-') -or $positiveText.Contains('H:\') -or
     throw 'diagnostic_output_includes_private_data'
 }
 
+# Synthetic namespace changes: an unchanged ACL is not sufficient when
+# the filesystem object changes type or acquires a reparse point.
+$reparsed = (& {
+    function Get-Item {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [switch]$Force)
+        if ($LiteralPath -eq 'H:\MTechLabs\MCP') {
+            return [pscustomobject]@{PSIsContainer=$true;Attributes=(
+                [IO.FileAttributes]::Directory -bor [IO.FileAttributes]::ReparsePoint)}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $reparsed 'reparse_substitution'
+if ($reparsed.paths[2].reparse -ne $true -or
+    $reparsed.baseline.status -ne 'drift' -or
+    @($reparsed.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 1 -or
+    @($reparsed.blockers | Where-Object {$_ -eq 'reparse-ancestor:hProduction'}).Count -ne 1) {
+    throw 'reparse_substitution_not_rejected'
+}
+
+$typeChanged = (& {
+    function Get-Item {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [switch]$Force)
+        if ($LiteralPath -eq 'H:\MTechLabs\MCP') {
+            return [pscustomobject]@{PSIsContainer=$false;Attributes=[IO.FileAttributes]::Normal}
+        }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $typeChanged 'type_substitution'
+if ($typeChanged.baseline.status -ne 'drift' -or
+    @($typeChanged.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 1) {
+    throw 'filesystem_type_substitution_not_rejected'
+}
+
+$metadataDenied = (& {
+    function Get-Item {
+        [CmdletBinding()]
+        param([string]$LiteralPath, [switch]$Force)
+        if ($LiteralPath -eq 'H:\MTechLabs\MCP') { throw 'synthetic_metadata_access_denied' }
+        Microsoft.PowerShell.Management\Get-Item -LiteralPath $LiteralPath -Force:$Force
+    }
+    & $source
+}) | ConvertFrom-Json -AsHashtable
+Assert-Inactive $metadataDenied 'item_metadata_denied'
+if ($metadataDenied.paths[2].status -ne 'unverified' -or
+    $metadataDenied.baseline.status -ne 'unverified' -or
+    @($metadataDenied.blockers | Where-Object {$_ -eq 'acl-unverified:hProduction'}).Count -ne 1 -or
+    @($metadataDenied.blockers | Where-Object {$_ -eq 'baseline-not-matched'}).Count -ne 1) {
+    throw 'item_metadata_denial_not_rejected'
+}
+
 $after = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 
@@ -175,7 +231,7 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
 [pscustomobject]@{
     schemaVersion = 1
     scope = 'read-only-preflight-negative-controls'
-    passed = 12
+    passed = 15
     failed = 0
     parseValid = $true
     staticReadOnlyCommands = $true
@@ -188,6 +244,9 @@ if ($before -cne $after) { throw 'preflight_source_mutated_during_test' }
     devProfileDeniedIsUnverified = $true
     invalidBaselineRootsFailClosed = $true
     publicOutputIsSanitized = $true
+    reparseSubstitutionFailsClosed = $true
+    typeSubstitutionFailsClosed = $true
+    metadataDenialFailsClosed = $true
     sourceHashStable = $true
     activationAuthorized = $false
 } | ConvertTo-Json -Compress
