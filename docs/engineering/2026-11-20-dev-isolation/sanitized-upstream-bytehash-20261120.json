@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "issue": 46,
+  "checkpoint": "R34",
+  "scope": "bounded two-pass read-only SHA-256 byte fingerprint of declared installed 0.3.1 dependency closure",
+  "receiptCreatedUtc": "2026-11-20T20:50:14.786878+00:00",
+  "selectedPackage": "@wonderwhy-er/desktop-commander",
+  "selectedPackageVersion": "0.3.1",
+  "passCount": 2,
+  "eachPassSucceeded": true,
+  "bothPassFingerprintsMatched": true,
+  "packageRoots": 612,
+  "directoriesVisited": 2587,
+  "filesDiscovered": 24230,
+  "regularFilesHashed": 24230,
+  "hashedBytes": 174981718,
+  "maxFileBytesConfigured": 33554432,
+  "maxTotalBytesConfigured": 536870912,
+  "maxFileCountConfigured": 100000,
+  "maxDirectoryCountConfigured": 12000,
+  "unqualifiedFileCount": 0,
+  "scanCapHit": false,
+  "byteInventorySha256": "9d5d34557d4b3d58e408f4a811fc0c7b4ccd9035e6c0b4eb4b80761c941595e4",
+  "byteFingerprintComposition": "SHA-256 of newline-separated, sorted canonical JSON arrays of [relative pathname, file byte length, file SHA-256]; no file content or private path emitted",
+  "sourceFileSha256": {
+    "read-only-upstream-bytehash.py": "b0cb52ce18431c40f7f4951a0def6472ab4b55cbc2d4aaa62bc899dd6874ec6f",
+    "read-only-upstream-bytehash.test.py": "081b841aa80f9921257b214e8134703e2d3184b5c9d56d9c6142422b59b3e017"
+  },
+  "syntheticRegressionTests": {
+    "run": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "windowsStatClarification": "On observed Windows host os.lstat and os.fstat exposed inconsistent creation/change timestamps for same file; checker compares shared dev/ino/size/mtime between path and open handle and compares ctime within each method before/after, reporting changes as unqualified.",
+  "limitations": [
+    "The installed dependency tree is under historically broad-write H: ancestor ACLs; matching fingerprints are not trusted upstream package provenance or a clean-machine attestation.",
+    "The scan covers each package root enumerated through declared dependency graph and accepted npm lock metadata; it does not prove Node dynamic imports, spawned commands, browser/PDF helper downloads, or undeclared package roots.",
+    "Path and handle metadata were sampled before/after but do not provide race-free, cryptographically anchored Windows file-handle or loaded-process identity.",
+    "Whole-tree SHA-256 is a change-detection observation only. It cannot assert that the first observed bytes were safe, authenticated, or immutable.",
+    "Only bounded installed dependency package files were hashed; no production manager config, state, token content, account secrets, or user client configuration was targeted for read or publication.",
+    "Real standard DEV token effective-access checks, protected code/state namespace and roll-back proof require later separate operational approval.",
+    "GitHub-hosted five-job PR45 Windows/Linux source acceptance and independent review remain outstanding following prior billing/spending admission failure."
+  ],
+  "safety": {
+    "installedPackageSourceChanged": false,
+    "installedPackageCodeExecuted": false,
+    "npmOrNetworkInvoked": false,
+    "productionServiceStoppedOrRestarted": false,
+    "aclOrAccountsChanged": false,
+    "secretsExported": false,
+    "cloudflareOrConnectorChanged": false,
+    "githubActionsRetried": false,
+    "pr45Merged": false,
+    "devActivationAuthorized": false
+  }
+}
