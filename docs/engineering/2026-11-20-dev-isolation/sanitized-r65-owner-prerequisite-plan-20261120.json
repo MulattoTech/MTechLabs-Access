@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R65",
+  "status": "NOT_APPLIED_REVIEW_ONLY",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "scope": "owner-side-billing-and-branch-protection-readiness",
+  "observed": {
+    "privateRepo": true,
+    "ownerType": "User",
+    "defaultBranch": "main",
+    "mainSha": "15e851b11984592803d37599b639772e51e5c8c0",
+    "mainProtected": false,
+    "rulesetCount": 0,
+    "authenticatedAdmin": true,
+    "collaboratorCount": 1,
+    "nonOwnerCollaborators": 0,
+    "nonOwnerWriteReviewers": 0,
+    "githubPlanName": "UNAVAILABLE_FROM_API",
+    "privateProtectionEntitlement": "UNVERIFIED",
+    "githubActionsAppId": 15368,
+    "requiredJobCount": 5,
+    "requiredJobNames": [
+      "test",
+      "managed-mcp",
+      "managed-mcp-windows",
+      "Upstream qualification / ubuntu-latest / Node 24",
+      "Upstream qualification / windows-latest / Node 24"
+    ],
+    "requiredJobsHistoricalMainConclusion": "success",
+    "latestRunId": 44841780509,
+    "latestRunConclusion": "failure",
+    "protectedPR45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "protectedPR45Draft": true,
+    "protectedPR45Merged": false,
+    "triagePR47Head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+    "triagePR47Merged": false
+  },
+  "stagedDraft": {
+    "phaseA": {
+      "purpose": "If private branch protection is available, enable check enforcement while no reviewer exists; NOT sufficient for protected IPC source acceptance",
+      "apiBodyCandidate": {
+        "required_status_checks": {
+          "strict": true,
+          "contexts": [],
+          "checks": [
+            {
+              "context": "test",
+              "app_id": 15368
+            },
+            {
+              "context": "managed-mcp",
+              "app_id": 15368
+            },
+            {
+              "context": "managed-mcp-windows",
+              "app_id": 15368
+            },
+            {
+              "context": "Upstream qualification / ubuntu-latest / Node 24",
+              "app_id": 15368
+            },
+            {
+              "context": "Upstream qualification / windows-latest / Node 24",
+              "app_id": 15368
+            }
+          ]
+        },
+        "enforce_admins": true,
+        "restrictions": null,
+        "required_conversation_resolution": true,
+        "allow_force_pushes": false,
+        "allow_deletions": false,
+        "required_pull_request_reviews": null
+      }
+    },
+    "phaseB": {
+      "purpose": "AFTER independent reviewer with write access exists, require one independent stale-aware review; NOT applicable now",
+      "apiBodyCandidate": {
+        "required_status_checks": {
+          "strict": true,
+          "contexts": [],
+          "checks": [
+            {
+              "context": "test",
+              "app_id": 15368
+            },
+            {
+              "context": "managed-mcp",
+              "app_id": 15368
+            },
+            {
+              "context": "managed-mcp-windows",
+              "app_id": 15368
+            },
+            {
+              "context": "Upstream qualification / ubuntu-latest / Node 24",
+              "app_id": 15368
+            },
+            {
+              "context": "Upstream qualification / windows-latest / Node 24",
+              "app_id": 15368
+            }
+          ]
+        },
+        "enforce_admins": true,
+        "restrictions": null,
+        "required_conversation_resolution": true,
+        "allow_force_pushes": false,
+        "allow_deletions": false,
+        "required_pull_request_reviews": {
+          "required_approving_review_count": 1,
+          "dismiss_stale_reviews": true,
+          "require_code_owner_reviews": false,
+          "require_last_push_approval": false
+        }
+      }
+    }
+  },
+  "actionProhibited": [
+    "DO NOT SEND PUT/PATCH/POST to protected branch, rulesets, collaborators, billing or PRs",
+    "DO NOT merge PR45 or PR47",
+    "DO NOT dispatch GitHub Actions while billing admission blocked",
+    "DO NOT activate DEV or edit production"
+  ],
+  "evidenceLimits": [
+    "Historical green checks only; not PR45 acceptance",
+    "GitHub branch protection accepts some neutral/skipped check statuses; require independent actual step/artifact review",
+    "No GitHub plan entitlement established from API response",
+    "A lone owner cannot approve their own PR; no other eligible collaborators observed"
+  ]
+}
