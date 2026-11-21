@@ -17,6 +17,26 @@ P = "/repos/" + REPO
 NOW = dt.datetime.now(dt.timezone.utc)
 KINDS = ("ready", "running", "failed", "behind", "conflict", "stale", "draft", "review")
 MANAGED = {"agent-triage:" + kind for kind in KINDS}
+# Secure access/IPC workflows must pass all named jobs, not an arbitrary
+# successful check. The main branch must independently enforce these checks.
+REQUIRED_JOBS = frozenset({
+    "test",
+    "managed-mcp",
+    "managed-mcp-windows",
+    "Upstream qualification / ubuntu-latest / Node 24",
+    "Upstream qualification / windows-latest / Node 24",
+})
+# No generic auto-merge or automatic source-branch update for the protected
+# reference transport or access, production, deployment, auth or IPC sources.
+PROTECTED_PR_NUMBERS = frozenset({45})
+PROTECTED_PREFIXES = (
+    ".github/", "integrations/", "src/", "scripts/", "tools/", "tests/",
+    "migrations/", "plugin-releases/", "public/", "docs/engineering/",
+)
+PROTECTED_ROOT_FILES = frozenset({
+    "deployment.json", "wrangler.jsonc", "package.json", "package-lock.json",
+    "DEV-EDGE.md",
+})
 
 
 def api(method, path, payload=None, *, graphql=False):
@@ -66,16 +86,87 @@ def code_age_days(pr):
 
 
 def checks(sha):
-    runs = get("/commits/" + sha + "/check-runs?per_page=100").get("check_runs", [])
-    statuses = get("/commits/" + sha + "/status").get("statuses", [])
-    if not runs and not statuses:
+    """Fail closed on missing, truncated, duplicate or non-GitHub Actions jobs."""
+    try:
+        payload = get("/commits/" + sha + "/check-runs?per_page=100")
+        combined = get("/commits/" + sha + "/status")
+        runs, statuses = payload.get("check_runs"), combined.get("statuses")
+        if (not isinstance(runs, list) or not isinstance(statuses, list) or
+                type(payload.get("total_count")) is not int or
+                payload["total_count"] != len(runs) or len(runs) >= 100 or
+                len(statuses) >= 100):
+            return False, False
+        failed = any(r.get("status") == "completed" and r.get("conclusion") not in
+                     ("success", "neutral", "skipped") for r in runs)
+        failed |= any(s.get("state") in ("failure", "error") for s in statuses)
+        pending = any(r.get("status") != "completed" for r in runs)
+        pending |= any(s.get("state") not in ("success", "failure", "error") for s in statuses)
+        by_name = {name: [r for r in runs if r.get("name") == name] for name in REQUIRED_JOBS}
+        required_ok = all(
+            len(matching) == 1 and matching[0].get("status") == "completed" and
+            matching[0].get("conclusion") == "success" and
+            matching[0].get("head_sha") == sha and
+            matching[0].get("app", {}).get("slug") == "github-actions"
+            for matching in by_name.values()
+        )
+        return required_ok and not failed and not pending, failed
+    except (RuntimeError, KeyError, ValueError, TypeError, AttributeError):
         return False, False
-    failed = any(r.get("status") == "completed" and r.get("conclusion") not in
-                 ("success", "neutral", "skipped") for r in runs)
-    failed |= any(s.get("state") in ("failure", "error") for s in statuses)
-    pending = any(r.get("status") != "completed" for r in runs)
-    pending |= any(s.get("state") == "pending" for s in statuses)
-    return not failed and not pending, failed
+
+
+def protected_merge_policy(repo):
+    """Require actual main branch protection; labels do not grant trust."""
+    if repo.get("default_branch") != "main":
+        return False
+    try:
+        branch = get("/branches/main")
+        if branch.get("protected") is not True:
+            return False
+        protection = get("/branches/main/protection")
+        reviews = protection.get("required_pull_request_reviews") or {}
+        checks_required = protection.get("required_status_checks") or {}
+        contexts = checks_required.get("contexts") or []
+        named_checks = checks_required.get("checks") or []
+        required = set(contexts) | {x.get("context") for x in named_checks}
+        return (REQUIRED_JOBS.issubset(required) and
+                checks_required.get("strict") is True and
+                type(reviews.get("required_approving_review_count")) is int and
+                reviews["required_approving_review_count"] >= 1 and
+                reviews.get("dismiss_stale_reviews") is True and
+                (protection.get("enforce_admins") or {}).get("enabled") is True)
+    except (RuntimeError, KeyError, ValueError, TypeError, AttributeError):
+        return False
+
+
+def protected_or_unverified_pr(pr):
+    """Refuse auto-merge/refresh for access-code changes or unknown file lists."""
+    if pr.get("number") in PROTECTED_PR_NUMBERS:
+        return True
+    count = pr.get("changed_files")
+    if type(count) is not int or count < 1 or count >= 100:
+        return True
+    try:
+        files = get("/pulls/" + str(pr["number"]) + "/files?per_page=100")
+        if not isinstance(files, list) or len(files) != count:
+            return True
+        for item in files:
+            name = item.get("filename")
+            if (not isinstance(name, str) or not name or name.startswith("/") or
+                    ".." in name.split("/")):
+                return True
+            lowered = name.lower()
+            if (lowered in {x.lower() for x in PROTECTED_ROOT_FILES} or
+                any(lowered.startswith(prefix) for prefix in PROTECTED_PREFIXES)):
+                return True
+        # Reduce file-list/head time-of-check races before enrollment. GitHub
+        # branch protection remains the mandatory final integration authority.
+        current = get("/pulls/" + str(pr["number"]))
+        return (current.get("head", {}).get("sha") != pr.get("head", {}).get("sha") or
+                current.get("base", {}).get("ref") != pr.get("base", {}).get("ref") or
+                current.get("changed_files") != count)
+
+    except (RuntimeError, KeyError, ValueError, TypeError, AttributeError):
+        return True
 
 
 def classify(pr):
@@ -133,6 +224,9 @@ def main():
     repo = get("")
     if repo.get("archived") or repo.get("disabled"):
         return
+    # If main has no independently enforced security policy, classification
+    # and labeling may continue but integration actions remain prohibited.
+    policy_qualified = protected_merge_policy(repo)
     if os.environ.get("GITHUB_EVENT_NAME") == "pull_request_target":
         with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as f:
             event = json.load(f)
@@ -166,10 +260,13 @@ def main():
         trusted = (pr["user"]["login"].lower() == OWNER and pr["head"].get("repo") and
                    pr["head"]["repo"]["full_name"].lower() == REPO.lower())
         if (not trusted or pr["draft"] or "agent:hold" in current or age >= 30 or
-                pr["base"]["ref"] != repo["default_branch"]):
+                pr["base"]["ref"] != repo["default_branch"] or not policy_qualified or
+                protected_or_unverified_pr(pr)):
             continue
         opt_in = "agent:automerge" in current
         if opt_in and kind == "behind" and updates == 0:
+            if not protected_merge_policy(repo):
+                continue
             try:
                 api("PUT", P + "/pulls/" + str(pr["number"]) + "/update-branch",
                     {"expected_head_sha": pr["head"]["sha"]})
@@ -181,6 +278,8 @@ def main():
         if (kind != "ready" or not good or pr.get("auto_merge") or
                 not repo.get("allow_auto_merge") or busy or arms or
                 not (opt_in or docs_only(pr))):
+            continue
+        if not protected_merge_policy(repo):
             continue
         try:
             result = api("POST", "/graphql", {

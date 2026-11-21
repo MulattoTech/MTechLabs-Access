@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R61",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "basePr47Head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+  "originalScriptBlob": "43a57dc74204623d522164f5039a7d14c7d15c86",
+  "protectedPr45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "branch": "fix/access44-r61-protected-auto-merge-guard-20261120",
+  "livePolicy": {
+    "mainProtected": false,
+    "rulesetCount": 0
+  },
+  "requiredJobs": 5,
+  "tests": {
+    "count": 22,
+    "passed": 22,
+    "failed": 0,
+    "realGithubRequests": 0,
+    "mutationsMocked": true
+  },
+  "behavior": {
+    "missingJobRejects": true,
+    "unprotectedBranchRejects": true,
+    "protectedPR45Rejects": true,
+    "protectedPathsReject": true,
+    "benignDocsMockedPositive": true
+  },
+  "effects": {
+    "pr47Updated": false,
+    "pr45Updated": false,
+    "workflowTriggered": false,
+    "mergePerformed": false,
+    "repositoryPolicyChanged": false,
+    "productionChanged": false,
+    "devActivated": false
+  }
+}
