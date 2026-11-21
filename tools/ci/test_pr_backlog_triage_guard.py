@@ -13,7 +13,21 @@ spec = importlib.util.spec_from_file_location("r61_triage", source)
 triage = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(triage)
 SHA = "a" * 40
+TREE_SHA = "b" * 40
+FILE_SHA = "c" * 40
 REQ = sorted(triage.REQUIRED_JOBS)
+
+
+def synthetic_doc_git_metadata(path):
+    if path == "/git/commits/" + SHA:
+        return {"sha": SHA, "tree": {"sha": TREE_SHA}}
+    if path == "/git/trees/" + TREE_SHA + "?recursive=1":
+        return {
+            "sha": TREE_SHA, "truncated": False,
+            "tree": [{"path": "docs/guide.md", "type": "blob",
+                      "mode": "100644", "sha": FILE_SHA}],
+        }
+    raise AssertionError("Unknown synthetic Git endpoint " + path)
 
 def job(name, **overrides):
     result = {
@@ -140,10 +154,10 @@ class GuardTests(unittest.TestCase):
         pr = pr_fixture()
         def fetch(path):
             if path.endswith("/files?per_page=100"):
-                return [{"filename": "docs/guide.md", "status": "modified"}]
+                return [{"filename": "docs/guide.md", "status": "modified", "sha": FILE_SHA}]
             if path == "/pulls/101":
                 return pr
-            raise AssertionError(path)
+            return synthetic_doc_git_metadata(path)
         with mock.patch.object(triage, "get", side_effect=fetch):
             self.assertFalse(triage.protected_or_unverified_pr(pr))
 
@@ -202,7 +216,8 @@ class GuardTests(unittest.TestCase):
             if path == "/branches/main/protection": return protected_branch()
             if path.startswith("/pulls?"): return [pr]
             if path == "/pulls/101": return pr
-            if path == "/pulls/101/files?per_page=100": return [{"filename": "docs/guide.md", "status": "modified"}]
+            if path == "/pulls/101/files?per_page=100": return [{"filename": "docs/guide.md", "status": "modified", "sha": FILE_SHA}]
+            if path.startswith("/git/"): return synthetic_doc_git_metadata(path)
             if path.startswith("/commits/") and path.endswith("/check-runs?per_page=100"):
                 return {"check_runs": [job(n) for n in REQ], "total_count": len(REQ)}
             if path.startswith("/commits/") and path.endswith("/status"):
@@ -273,15 +288,95 @@ class GuardTests(unittest.TestCase):
     def test_safe_documentation_modified_and_added_are_eligible(self):
         pr = pr_fixture()
         for status in ("added", "modified"):
-            file = {"filename": "docs/guide.md", "status": status}
+            file = {"filename": "docs/guide.md", "status": status, "sha": FILE_SHA}
             def fetch(path):
                 if path.endswith("/files?per_page=100"):
                     return [file]
                 if path == "/pulls/101":
                     return pr
-                raise AssertionError(path)
+                return synthetic_doc_git_metadata(path)
             with mock.patch.object(triage, "get", side_effect=fetch):
                 self.assertFalse(triage.protected_or_unverified_pr(pr), status)
+
+
+    def test_git_tree_type_and_blob_integrity_guards(self):
+        """A docs/*.md PR path may still be a symlink or executable blob."""
+        pr = pr_fixture()
+        pr["head"]["sha"] = SHA
+        commit_tree = "b" * 40
+        file_blob = "c" * 40
+
+        def fixture(mode="100644", kind="blob", truncated=False,
+                    root_matches=True, blob_matches=True, commit_matches=True,
+                    duplicate_path=False, missing_path=False, no_file_sha=False,
+                    too_many_entries=False, tree_error=False):
+            files = [{"filename": "docs/guide.md", "status": "modified", "sha": file_blob}]
+            if no_file_sha:
+                del files[0]["sha"]
+            entries = [{"path": "docs/not-guide.md" if missing_path else "docs/guide.md",
+                        "type": kind, "mode": mode,
+                        "sha": file_blob if blob_matches else "d" * 40}]
+            if duplicate_path:
+                entries.append(dict(entries[0]))
+            if too_many_entries:
+                entries.extend({"path": "unrelated/" + str(i), "type": "blob",
+                                "mode": "100644", "sha": file_blob}
+                               for i in range(10001))
+            def fetch(path):
+                if path == "/pulls/101/files?per_page=100": return files
+                if path == "/pulls/101": return pr
+                if path == "/git/commits/" + SHA:
+                    return {"sha": SHA if commit_matches else "e" * 40,
+                            "tree": {"sha": commit_tree}}
+                if path == "/git/trees/" + commit_tree + "?recursive=1":
+                    if tree_error:
+                        raise RuntimeError("synthetic_git_api_failure")
+                    return {"sha": commit_tree if root_matches else "e" * 40,
+                            "truncated": truncated, "tree": entries}
+                raise AssertionError("Unexpected fixture endpoint " + path)
+            return fetch
+
+        for case, args in {
+            "symlink": {"mode": "120000"},
+            "executable": {"mode": "100755"},
+            "submodule": {"mode": "160000", "kind": "commit"},
+            "tree_truncated": {"truncated": True},
+            "wrong_root": {"root_matches": False},
+            "wrong_blob": {"blob_matches": False},
+            "wrong_commit": {"commit_matches": False},
+            "duplicate_path": {"duplicate_path": True},
+            "missing_path": {"missing_path": True},
+            "no_file_sha": {"no_file_sha": True},
+            "too_many_entries": {"too_many_entries": True},
+            "tree_api_failure": {"tree_error": True},
+        }.items():
+            with self.subTest(case=case), mock.patch.object(
+                triage, "get", side_effect=fixture(**args)
+            ):
+                self.assertTrue(triage.protected_or_unverified_pr(pr), case)
+
+        with mock.patch.object(triage, "get", side_effect=fixture()):
+            self.assertFalse(triage.protected_or_unverified_pr(pr),
+                             "ordinary 100644 markdown must remain eligible")
+
+    def test_pr_head_changes_during_tree_lookup_are_rejected(self):
+        pr = pr_fixture()
+        seen = 0
+        def fetch(path):
+            nonlocal seen
+            if path == "/pulls/101/files?per_page=100":
+                return [{"filename": "docs/guide.md", "status": "modified", "sha": FILE_SHA}]
+            if path == "/pulls/101":
+                seen += 1
+                if seen == 1:
+                    return pr
+                moved = copy.deepcopy(pr)
+                moved["head"]["sha"] = "d" * 40
+                return moved
+            return synthetic_doc_git_metadata(path)
+        with mock.patch.object(triage, "get", side_effect=fetch):
+            self.assertTrue(triage.protected_or_unverified_pr(pr))
+        self.assertEqual(seen, 2)
 
 
 if __name__ == "__main__":

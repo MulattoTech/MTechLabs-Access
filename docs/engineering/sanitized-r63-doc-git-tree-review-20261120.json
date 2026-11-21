@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R63",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "scope": "source-only-reviewed-triage-guard",
+  "priorIsolatedR62Head": "08403003b933abd11c10279e3cf0fea93f79f45f",
+  "originalAutomationPr47Head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+  "protectedPr45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "branch": "fix/access44-r63-doc-tree-type-20261120",
+  "baseline": {
+    "tests": 27,
+    "failedSubcases": 7,
+    "gap": "PR file metadata not bound to exact Git object type/mode/tree"
+  },
+  "final": {
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "synthetic": true,
+    "checks": [
+      "exact commit tree SHA",
+      "nontruncated recursive Git tree",
+      "regular blob 100644",
+      "matching blob hash",
+      "duplicate path rejection",
+      "missing path rejection",
+      "tree response consistency",
+      "stale PR head recheck"
+    ],
+    "realGitHubMutations": 0
+  },
+  "observedReadOnlyGitApi": {
+    "commit": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+    "tree": "ba0b165b91d9ac1b64826bb5630d82ee0580e8fe",
+    "truncated": false,
+    "treeEntryCount": 452
+  },
+  "release": {
+    "pr45Merged": false,
+    "pr47Merged": false,
+    "runnerEligibleConfirmed": false,
+    "branchProtectionEnabled": false,
+    "hostedAcceptance": false,
+    "productionModified": false,
+    "devActivated": false
+  }
+}

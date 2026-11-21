@@ -5,6 +5,7 @@ No PR code is checked out/executed. Never closes a PR or bypasses protections.
 import datetime as dt
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -152,6 +153,44 @@ def protected_merge_policy(repo):
         return False
 
 
+def regular_doc_blobs_at_head(pr, files):
+    """Verify PR-file identities and modes against the immutable Git tree."""
+    sha = pr.get("head", {}).get("sha")
+    if not isinstance(sha, str) or re.fullmatch(r"[0-9a-f]{40}", sha) is None:
+        return False
+    commit = get("/git/commits/" + sha)
+    tree_sha = commit.get("tree", {}).get("sha")
+    if (commit.get("sha") != sha or not isinstance(tree_sha, str) or
+            re.fullmatch(r"[0-9a-f]{40}", tree_sha) is None):
+        return False
+    tree = get("/git/trees/" + tree_sha + "?recursive=1")
+    entries = tree.get("tree")
+    if (tree.get("sha") != tree_sha or tree.get("truncated") is not False or
+            not isinstance(entries, list) or len(entries) > 10000):
+        return False
+    expected = {}
+    for item in files:
+        source = item.get("sha")
+        name = item.get("filename")
+        if (not isinstance(source, str) or
+                re.fullmatch(r"[0-9a-f]{40}", source) is None or
+                name in expected):
+            return False
+        expected[name] = source
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            return False
+        name = entry.get("path")
+        if name in expected:
+            if (name in seen or entry.get("type") != "blob" or
+                    entry.get("mode") != "100644" or
+                    entry.get("sha") != expected[name]):
+                return False
+            seen.add(name)
+    return seen == set(expected)
+
+
 def protected_or_unverified_pr(pr):
     """Refuse auto-merge/refresh for access-code changes or unknown file lists."""
     if pr.get("number") in PROTECTED_PR_NUMBERS:
@@ -165,12 +204,20 @@ def protected_or_unverified_pr(pr):
             return True
         if not all(safe_documentation_file(item) for item in files):
             return True
-        # Reduce file-list/head time-of-check races before enrollment. GitHub
-        # branch protection remains the mandatory final integration authority.
+        # Re-read the PR after listing files, then verify *actual Git object
+        # modes and blob identities*, not only filename/status metadata.
         current = get("/pulls/" + str(pr["number"]))
-        return (current.get("head", {}).get("sha") != pr.get("head", {}).get("sha") or
+        if (current.get("head", {}).get("sha") != pr.get("head", {}).get("sha") or
                 current.get("base", {}).get("ref") != pr.get("base", {}).get("ref") or
-                current.get("changed_files") != count)
+                current.get("changed_files") != count):
+            return True
+        if not regular_doc_blobs_at_head(pr, files):
+            return True
+        # Pin the accepted tree to the current PR head after both Git lookups.
+        latest = get("/pulls/" + str(pr["number"]))
+        return (latest.get("head", {}).get("sha") != pr.get("head", {}).get("sha") or
+                latest.get("base", {}).get("ref") != pr.get("base", {}).get("ref") or
+                latest.get("changed_files") != count)
 
     except (RuntimeError, KeyError, ValueError, TypeError, AttributeError):
         return True
