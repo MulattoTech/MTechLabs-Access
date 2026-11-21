@@ -14,6 +14,7 @@ import { ConfiguredStdioTransport } from './verify-clients.mjs';
 import { inspectToolInventory, EXPECTED_MANAGED_TOOLS } from './lib/verification-inventory.mjs';
 import { readCoordinatorStatus } from './lib/coordinator.mjs';
 import { atomicWriteJson } from './lib/policy.mjs';
+import { recordPdfPhase } from './lib/pdf-phase-trace.mjs';
 import {
   validateQualificationHost, createQualificationWorkspace, assertOwnedWorkspace,
   qualificationEnvironment, admitInstalledUpstream, compareToolContracts, sha256, isBlockedProbe,
@@ -220,9 +221,18 @@ async function qualifyLane(workspace, lane, env, prepared, expected) {
     });
     await stageRun('pdf_create_and_read_fidelity', async () => {
       const pdf = path.join(fixtureRoot, 'qualification.pdf');
-      await call('write_pdf', { path: pdf, content: '# MTERM PDF FIXTURE\n\nDisposable qualification document.\n' }, 90000);
-      const bytes = await fs.readFile(pdf); assert.equal(bytes.subarray(0, 5).toString(), '%PDF-'); assert.ok(bytes.length > 1000);
-      assert.match(resultText(await call('read_file', { path: pdf }, 90000)), /MTERM PDF FIXTURE/);
+      await recordPdfPhase(report, 'write_pdf_rpc', async () => {
+        await call('write_pdf', { path: pdf, content: '# MTERM PDF FIXTURE\n\nDisposable qualification document.\n' }, 90000);
+      });
+      let bytes;
+      await recordPdfPhase(report, 'pdf_magic_and_size', async () => {
+        bytes = await fs.readFile(pdf);
+        assert.equal(bytes.subarray(0, 5).toString(), '%PDF-');
+        assert.ok(bytes.length > 1000);
+      });
+      await recordPdfPhase(report, 'read_pdf_fidelity', async () => {
+        assert.match(resultText(await call('read_file', { path: pdf }, 90000)), /MTERM PDF FIXTURE/);
+      });
       report.pdfSha256 = sha256(bytes); report.pdfBytes = bytes.length;
     });
     await stageRun('admission_released', async () => {
