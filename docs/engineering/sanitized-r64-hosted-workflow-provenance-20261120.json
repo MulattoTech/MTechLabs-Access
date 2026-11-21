@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R64",
+  "repository": "MulattoTech/MTechLabs-Access",
+  "branch": "fix/access44-r64-verified-actions-provenance-20261120",
+  "parentR63": "10e45c8ec9456206e118d7b45b2e1c5b787e0108",
+  "pr45": {
+    "head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "draft": true,
+    "merged": false
+  },
+  "pr47": {
+    "head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+    "merged": false
+  },
+  "gap": {
+    "baselineSyntheticTests": 29,
+    "baselineFailures": 1,
+    "acceptedFiveNamesWithoutVerifiedRun": true
+  },
+  "mitigation": {
+    "workflowId": 402397153,
+    "workflowPath": ".github/workflows/check.yml",
+    "requiredJobs": 5,
+    "allSameRun": true,
+    "matchedJobIds": true,
+    "matchedHead": true,
+    "nonemptyExecutedStages": true,
+    "failClosed": true
+  },
+  "tests": {
+    "total": 31,
+    "passed": 31,
+    "failed": 0,
+    "offlineSynthetic": true,
+    "realGithubMutations": 0
+  },
+  "historicalReadOnly": {
+    "runId": 44717749608,
+    "sourceCommit": "274d6cda6831748dd80a8fe90ed951761a3783a0",
+    "workflowId": 402397153,
+    "verifiedHostedProvenance": true,
+    "checksReturn": [
+      true,
+      false
+    ],
+    "githubRequestMode": "GET only"
+  },
+  "release": {
+    "mainProtected": false,
+    "runnerEligible": false,
+    "pr47Updated": false,
+    "pr45Updated": false,
+    "ciTriggered": false,
+    "productionModified": false,
+    "devActivated": false
+  },
+  "limitation": "Historic successful source is not PR45 acceptance; metadata checks are not independent security certification."
+}

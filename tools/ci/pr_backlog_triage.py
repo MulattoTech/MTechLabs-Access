@@ -100,8 +100,85 @@ def code_age_days(pr):
         return 365  # Fail closed: never auto-merge a commit with unknown age.
 
 
+HOSTED_WORKFLOW_ID = 402397153  # Verified .github/workflows/check.yml
+HOSTED_WORKFLOW_PATH = ".github/workflows/check.yml"
+HOSTED_REQUIRED_STAGES = {
+    "test": frozenset({"Run npm test", "Run npm run check", "Run npm run build",
+                       "Check generated UI matches its sources"}),
+    "managed-mcp": frozenset({"Run npm test"}),
+    "managed-mcp-windows": frozenset({"Run npm test"}),
+    "Upstream qualification / ubuntu-latest / Node 24":
+        frozenset({"Compare real pinned upstream packages in disposable stores",
+                   "Preserve exact qualification and contract evidence"}),
+    "Upstream qualification / windows-latest / Node 24":
+        frozenset({"Compare real pinned upstream packages in disposable stores",
+                   "Preserve exact qualification and contract evidence"}),
+}
+
+
+def hosted_job_evidence(sha, matching_checks):
+    """Exact hosted workflow/run/job/step metadata for five required checks."""
+    run_ids = set()
+    job_ids = set()
+    pinned_url = re.compile(
+        r"https://github\.com/" + re.escape(REPO) +
+        r"/actions/runs/([1-9][0-9]*)/job/([1-9][0-9]*)"
+    )
+    for item in matching_checks:
+        if not isinstance(item, dict):
+            return False
+        url = item.get("details_url")
+        matched = pinned_url.fullmatch(url) if isinstance(url, str) else None
+        if (matched is None or type(item.get("id")) is not int or
+                item["id"] != int(matched.group(2))):
+            return False
+        run_ids.add(int(matched.group(1)))
+        job_ids.add(item["id"])
+    if len(run_ids) != 1 or len(job_ids) != len(REQUIRED_JOBS):
+        return False
+    run_id = next(iter(run_ids))
+    run = get("/actions/runs/" + str(run_id))
+    if (not isinstance(run, dict) or type(run.get("id")) is not int or
+            run["id"] != run_id or run.get("workflow_id") != HOSTED_WORKFLOW_ID or
+            run.get("path") != HOSTED_WORKFLOW_PATH or
+            run.get("head_sha") != sha or run.get("event") != "pull_request" or
+            run.get("status") != "completed" or run.get("conclusion") != "success" or
+            type(run.get("run_attempt")) is not int or run["run_attempt"] < 1):
+        return False
+    result = get("/actions/runs/" + str(run_id) + "/jobs?per_page=100")
+    if not isinstance(result, dict):
+        return False
+    jobs = result.get("jobs")
+    if (not isinstance(jobs, list) or type(result.get("total_count")) is not int or
+            result["total_count"] != len(REQUIRED_JOBS) or
+            len(jobs) != len(REQUIRED_JOBS)):
+        return False
+    seen = set()
+    for job in jobs:
+        if not isinstance(job, dict):
+            return False
+        name = job.get("name")
+        if (name not in REQUIRED_JOBS or name in seen or
+                type(job.get("id")) is not int or job["id"] not in job_ids or
+                job.get("run_id") != run_id or job.get("head_sha") != sha or
+                job.get("status") != "completed" or job.get("conclusion") != "success"):
+            return False
+        steps = job.get("steps")
+        if (not isinstance(steps, list) or not steps or
+                not all(isinstance(step, dict) for step in steps)):
+            return False
+        executed = {step["name"] for step in steps
+                    if isinstance(step.get("name"), str) and
+                    step.get("status") == "completed" and
+                    step.get("conclusion") == "success"}
+        if not HOSTED_REQUIRED_STAGES[name].issubset(executed):
+            return False
+        seen.add(name)
+    return seen == REQUIRED_JOBS
+
+
 def checks(sha):
-    """Fail closed on missing, truncated, duplicate or non-GitHub Actions jobs."""
+    """Fail closed on missing, truncated or unverifiable hosted job evidence."""
     try:
         payload = get("/commits/" + sha + "/check-runs?per_page=100")
         combined = get("/commits/" + sha + "/status")
@@ -124,6 +201,9 @@ def checks(sha):
             matching[0].get("app", {}).get("slug") == "github-actions"
             for matching in by_name.values()
         )
+        if required_ok and not failed and not pending:
+            selected = [by_name[name][0] for name in sorted(REQUIRED_JOBS)]
+            required_ok = hosted_job_evidence(sha, selected)
         return required_ok and not failed and not pending, failed
     except (RuntimeError, KeyError, ValueError, TypeError, AttributeError):
         return False, False

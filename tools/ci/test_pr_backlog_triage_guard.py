@@ -16,6 +16,44 @@ SHA = "a" * 40
 TREE_SHA = "b" * 40
 FILE_SHA = "c" * 40
 REQ = sorted(triage.REQUIRED_JOBS)
+RUN_ID = 999000123  # Synthetic, never a real GitHub request.
+RUN_JOBS = {name: 990100 + index for index, name in enumerate(REQ)}
+
+
+def hosted_run_checks():
+    return [job(name, id=RUN_JOBS[name],
+                details_url="https://github.com/MulattoTech/MTechLabs-Access/actions/runs/" +
+                str(RUN_ID) + "/job/" + str(RUN_JOBS[name])) for name in REQ]
+
+
+def hosted_metadata(path, *, workflow_id=None, workflow_path=None,
+                    event="pull_request", run_conclusion="success",
+                    job_step_overrides=None, split_run=False):
+    if path == "/actions/runs/" + str(RUN_ID):
+        return {
+            "id": RUN_ID,
+            "head_sha": SHA,
+            "workflow_id": workflow_id if workflow_id is not None else triage.HOSTED_WORKFLOW_ID,
+            "path": workflow_path if workflow_path is not None else triage.HOSTED_WORKFLOW_PATH,
+            "event": event, "status": "completed", "conclusion": run_conclusion,
+            "run_attempt": 1,
+        }
+    if path == "/actions/runs/" + str(RUN_ID) + "/jobs?per_page=100":
+        jobs = []
+        for name in REQ:
+            stages = triage.HOSTED_REQUIRED_STAGES[name]
+            steps = [{"name": stage, "status": "completed", "conclusion": "success"}
+                     for stage in sorted(stages)]
+            if job_step_overrides and name in job_step_overrides:
+                steps = job_step_overrides[name]
+            jobs.append({
+                "id": RUN_JOBS[name], "name": name,
+                "run_id": RUN_ID + (1 if split_run and name == REQ[-1] else 0),
+                "head_sha": SHA, "status": "completed", "conclusion": "success",
+                "steps": steps,
+            })
+        return {"total_count": len(jobs), "jobs": jobs}
+    raise AssertionError("Unexpected synthetic hosted evidence endpoint " + path)
 
 
 def synthetic_doc_git_metadata(path):
@@ -38,13 +76,15 @@ def job(name, **overrides):
     return result
 
 def check_snapshot(runs=None, **extra):
-    runs = [job(n) for n in REQ] if runs is None else runs
+    runs = hosted_run_checks() if runs is None else runs
     payload = {"check_runs": runs, "total_count": len(runs), **extra}
-    return lambda path: (
-        payload if path.endswith("/check-runs?per_page=100")
-        else {"statuses": []} if path.endswith("/status")
-        else (_ for _ in ()).throw(AssertionError("Unexpected mock endpoint " + path))
-    )
+    def fetch(path):
+        if path.endswith("/check-runs?per_page=100"):
+            return payload
+        if path.endswith("/status"):
+            return {"statuses": []}
+        return hosted_metadata(path)
+    return fetch
 
 def protected_branch(valid=True):
     return {
@@ -84,6 +124,55 @@ class GuardTests(unittest.TestCase):
 
     def test_all_five_named_trusted_checks_pass(self):
         self.assertEqual(self.check(), (True, False))
+
+    def test_five_green_checks_without_original_workflow_evidence_rejected(self):
+        # These names and app slugs alone are insufficient; no pinned
+        # workflow run or executed job steps have been verified.
+        self.assertEqual(self.check([job(n) for n in REQ]), (False, False))
+
+    def test_hosted_workflow_provenance_rejects_wrong_run_or_steps(self):
+        for case, adjustments in {
+            "wrong_workflow_id": {"workflow_id": 123},
+            "different_workflow_path": {"workflow_path": ".github/workflows/other.yml"},
+            "wrong_event": {"event": "workflow_dispatch"},
+            "failed_run": {"run_conclusion": "failure"},
+            "job_from_other_run": {"split_run": True},
+            "missing_required_test_step": {"job_step_overrides": {
+                "test": [{"name": "Set up job", "status": "completed",
+                          "conclusion": "success"}]}},
+            "skipped_required_test_step": {"job_step_overrides": {
+                "managed-mcp": [{"name": "Run npm test", "status": "completed",
+                                 "conclusion": "skipped"}]}},
+            "zero_executed_steps": {"job_step_overrides": {
+                "managed-mcp-windows": []}},
+        }.items():
+            with self.subTest(case=case):
+                def fetch(path):
+                    if path.endswith("/check-runs?per_page=100"):
+                        return {"check_runs": hosted_run_checks(), "total_count": len(REQ)}
+                    if path.endswith("/status"):
+                        return {"statuses": []}
+                    return hosted_metadata(path, **adjustments)
+                with mock.patch.object(triage, "get", side_effect=fetch):
+                    self.assertEqual(triage.checks(SHA), (False, False))
+
+    def test_hosted_workflow_provenance_rejects_wrong_job_urls_and_ids(self):
+        for case, mutation in {
+            "wrong_host": lambda x: x[0].update({"details_url":
+                x[0]["details_url"].replace("github.com", "github.evil.invalid")}),
+            "wrong_job_id": lambda x: x[0].update({"id": x[0]["id"] + 22}),
+            "wrong_repository": lambda x: x[0].update({"details_url":
+                x[0]["details_url"].replace("MulattoTech/MTechLabs-Access",
+                                            "someoneelse/MTechLabs-Access")}),
+            "different_run": lambda x: x[-1].update({"details_url":
+                x[-1]["details_url"].replace(str(RUN_ID), str(RUN_ID + 1))}),
+        }.items():
+            checks = hosted_run_checks()
+            mutation(checks)
+            with self.subTest(case=case), mock.patch.object(
+                triage, "get", side_effect=check_snapshot(checks)
+            ):
+                self.assertEqual(triage.checks(SHA), (False, False))
 
     def test_unrelated_green_check_does_not_count(self):
         self.assertEqual(self.check([job("unrelated-lint")]), (False, False))
@@ -219,11 +308,13 @@ class GuardTests(unittest.TestCase):
             if path == "/pulls/101/files?per_page=100": return [{"filename": "docs/guide.md", "status": "modified", "sha": FILE_SHA}]
             if path.startswith("/git/"): return synthetic_doc_git_metadata(path)
             if path.startswith("/commits/") and path.endswith("/check-runs?per_page=100"):
-                return {"check_runs": [job(n) for n in REQ], "total_count": len(REQ)}
+                return {"check_runs": hosted_run_checks(), "total_count": len(REQ)}
             if path.startswith("/commits/") and path.endswith("/status"):
                 return {"statuses": []}
             if path.startswith("/commits/"):
                 return {"commit": {"committer": {"date": triage.NOW.isoformat()}}}
+            if path.startswith("/actions/runs/"):
+                return hosted_metadata(path)
             raise AssertionError(path)
         def fake_api(method, path, payload=None, **kwargs):
             called.append((method, path))
