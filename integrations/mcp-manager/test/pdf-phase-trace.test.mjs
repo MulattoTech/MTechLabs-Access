@@ -68,3 +68,78 @@ test('invalid report/record inputs fail before invoking operations', async () =>
   await assert.rejects(recordPdfPhase({}, 'write_pdf_rpc', null), /qualification_pdf_phase_contract/);
   assert.equal(invoked, false);
 });
+
+test('simultaneous duplicate phase calls fail closed without executing a second action', async () => {
+  const report = {};
+  let unblock;
+  let entered;
+  const blocked = new Promise(resolve => { unblock = resolve; });
+  const started = new Promise(resolve => { entered = resolve; });
+  let calls = 0;
+  const first = recordPdfPhase(report, 'write_pdf_rpc', async () => {
+    calls++;
+    entered();
+    await blocked;
+  });
+  await started;
+  try {
+    await assert.rejects(recordPdfPhase(report, 'write_pdf_rpc', async () => {
+      calls++;
+      return 'unexpected-side-effect';
+    }), /qualification_pdf_phase_contract/);
+  } finally {
+    unblock();
+    await first;
+  }
+  assert.equal(calls, 1);
+  assert.deepEqual(report.pdfPhases.map(({ phase, pass }) => [phase, pass]), [['write_pdf_rpc', true]]);
+});
+
+test('simultaneous later phase remains forbidden until the current phase completes', async () => {
+  const report = {};
+  let unblock;
+  let entered;
+  const blocked = new Promise(resolve => { unblock = resolve; });
+  const started = new Promise(resolve => { entered = resolve; });
+  let called = false;
+  const first = recordPdfPhase(report, 'write_pdf_rpc', async () => {
+    entered();
+    await blocked;
+  });
+  await started;
+  try {
+    await assert.rejects(recordPdfPhase(report, 'pdf_magic_and_size', async () => {
+      called = true;
+    }), /qualification_pdf_phase_contract/);
+  } finally {
+    unblock();
+    await first;
+  }
+  assert.equal(called, false);
+  await recordPdfPhase(report, 'pdf_magic_and_size', async () => {});
+  assert.deepEqual(report.pdfPhases.map(x => x.phase), ['write_pdf_rpc', 'pdf_magic_and_size']);
+});
+
+test('distinct reports can record independently while another report is in flight', async () => {
+  const firstReport = {}, secondReport = {};
+  let releaseFirst;
+  let startedFirst;
+  const release = new Promise(resolve => { releaseFirst = resolve; });
+  const started = new Promise(resolve => { startedFirst = resolve; });
+  const first = recordPdfPhase(firstReport, 'write_pdf_rpc', async () => {
+    startedFirst();
+    await release;
+  });
+  await started;
+  try {
+    await recordPdfPhase(secondReport, 'write_pdf_rpc', async () => {});
+    assert.equal(secondReport.pdfPhases.length, 1);
+    assert.equal(secondReport.pdfPhases[0].pass, true);
+    assert.equal(firstReport.pdfPhases.length, 0);
+  } finally {
+    releaseFirst();
+    await first;
+  }
+  assert.equal(firstReport.pdfPhases.length, 1);
+  assert.equal(firstReport.pdfPhases[0].pass, true);
+});
