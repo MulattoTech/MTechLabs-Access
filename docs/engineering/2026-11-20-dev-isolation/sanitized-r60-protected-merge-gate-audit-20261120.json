@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R60",
+  "scope": "read-only-branch-merge-protection-and-PR47-triage-audit",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "observedBranch": "main",
+  "observedBranchProtected": false,
+  "observedRulesetCount": 0,
+  "branchProtectionEndpoint": "HTTP 404 Branch not protected",
+  "protectedPR": {
+    "number": 45,
+    "head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+    "state": "open",
+    "draft": true,
+    "autoMergeRequest": null,
+    "labels": []
+  },
+  "triagePR": {
+    "number": 47,
+    "head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+    "state": "open",
+    "merged": false
+  },
+  "reviewedTriageScriptBlob": "43a57dc74204623d522164f5039a7d14c7d15c86",
+  "syntheticTest": {
+    "inputCheckRuns": [
+      {
+        "name": "unrelated-lint",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "inputStatuses": [],
+    "expectedProtectedJobsPresent": false,
+    "observedClassify": "ready",
+    "observedGood": true,
+    "realGithubCalls": 0,
+    "testExit": 0
+  },
+  "requiredProtectedChecks": [
+    "test",
+    "managed-mcp",
+    "managed-mcp-windows",
+    "Upstream qualification / ubuntu-latest / Node 24",
+    "Upstream qualification / windows-latest / Node 24"
+  ],
+  "risk": "Proposed triage classifier does not verify required protected job set; unprotected main does not enforce requested CI/review gates",
+  "automaticMergeOccurred": false,
+  "protectedPRSourceModified": false,
+  "repoSettingsModified": false,
+  "releaseAcceptanceEstablished": false,
+  "devActivationAuthorized": false
+}
