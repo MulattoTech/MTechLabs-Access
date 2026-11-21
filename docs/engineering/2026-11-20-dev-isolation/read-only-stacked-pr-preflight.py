@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Access #44/#46 R49/R50: READ-ONLY preflight for a *future* stacked draft PR.
+"""Access #44/#46 R49/R50/R55: READ-ONLY preflight for a *future* stacked draft PR.
 
 Checks only exact, fixed GitHub GET endpoints and git metadata in a caller-
 supplied existing candidate checkout. No PR creation, billing mutation,
@@ -84,6 +84,8 @@ def load_live(repo):
                    "{enabled:.enabled,allowed_actions:.allowed_actions}")
     latest=gh("/repos/"+REPO+"/actions/runs?per_page=10",
               "[.workflow_runs[] | {id:.id,status:.status,conclusion:.conclusion,headSha:.head_sha}]")
+    historical=gh("/repos/"+REPO+"/actions/runs/44742255585",
+                  "{id:.id,status:.status,conclusion:.conclusion,headSha:.head_sha}")
     jobs=gh("/repos/"+REPO+"/actions/runs/44742255585/jobs?per_page=100",
             "[.jobs[] | {name:.name,status:.status,conclusion:.conclusion,stepCount:(.steps|length)}]")
     return {
@@ -93,7 +95,8 @@ def load_live(repo):
       "ancestorMatched":exitcode==0,
       "gitBlob":controls,
       "account":account,"pr":pr,"openPRs":prs,
-      "permissions":permissions,"latestRuns":latest,"historicalJobs":jobs
+      "permissions":permissions,"latestRuns":latest,
+      "historicalRun":historical,"historicalJobs":jobs
     }
 
 def evaluate(v):
@@ -133,11 +136,32 @@ def evaluate(v):
     )):
         reasons.append("pr45_reviewed_ref_or_state_changed")
     opened=v.get("openPRs")
-    if (not isinstance(opened,list) or len(opened)>99 or
-        len(opened)!=1 or not isinstance(opened[0],dict) or
-        opened[0].get("number")!=45 or
-        opened[0].get("headRef")!=PR_BRANCH or
-        opened[0].get("baseRef")!="main"):
+    # Unrelated PRs are allowed. A duplicate PR45, candidate/feature branch
+    # alias, or any stacked PR against the feature branch is NOT allowed.
+    open_valid=isinstance(opened,list) and 0<len(opened)<100
+    seen_numbers=set()
+    seen_pr45=False
+    if open_valid:
+        for item in opened:
+            if not isinstance(item,dict):
+                open_valid=False
+                break
+            number=item.get("number")
+            head=item.get("headRef")
+            base=item.get("baseRef")
+            if (type(number) is not int or number<=0 or
+                not isinstance(head,str) or not head or
+                not isinstance(base,str) or not base or number in seen_numbers):
+                open_valid=False
+                break
+            seen_numbers.add(number)
+            if number==PR_NUMBER:
+                seen_pr45=head==PR_BRANCH and base=="main"
+                if not seen_pr45: open_valid=False
+            elif head in (PR_BRANCH,CAND_BRANCH) or base==PR_BRANCH:
+                open_valid=False
+            if not open_valid: break
+    if not open_valid or not seen_pr45:
         reasons.append("open_pr_conflict_or_pagination_unverified")
     permissions=v.get("permissions")
     if not isinstance(permissions,dict) or permissions.get("enabled") is not True:
@@ -147,15 +171,36 @@ def evaluate(v):
         # selected policies require independent action-by-action review.
         reasons.append("repository_actions_policy_unqualified")
     # Even a fully permitted repository policy is NOT account billing proof.
+    historical=v.get("historicalRun")
+    if (not isinstance(historical,dict) or
+        type(historical.get("id")) is not int or historical["id"]!=OLD_RUN or
+        historical.get("status")!="completed" or
+        historical.get("conclusion")!="failure" or
+        historical.get("headSha")!=PR_HEAD):
+        reasons.append("historical_r7_run_metadata_changed")
     history=v.get("latestRuns")
-    if not isinstance(history,list) or not history or len(history)>10:
+    valid_recent=isinstance(history,list) and 0<len(history)<=10
+    if valid_recent:
+        ids=set()
+        for item in history:
+            if (not isinstance(item,dict) or
+                type(item.get("id")) is not int or item["id"]<=0 or
+                item["id"] in ids or
+                not isinstance(item.get("status"),str) or not item["status"] or
+                (item.get("conclusion") is not None and
+                 not isinstance(item["conclusion"],str)) or
+                not isinstance(item.get("headSha"),str) or
+                re.fullmatch(r"[0-9a-f]{40}",item["headSha"]) is None):
+                valid_recent=False
+                break
+            ids.add(item["id"])
+    if not valid_recent:
         reasons.append("recent_actions_run_metadata_unavailable")
-    elif (not isinstance(history[0],dict) or
-          history[0].get("id")!=OLD_RUN or
-          history[0].get("status")!="completed" or
-          history[0].get("conclusion")!="failure" or
-          history[0].get("headSha")!=PR_HEAD):
-        reasons.append("historical_run_is_not_latest_reaudit_required")
+    elif any(item["id"]!=OLD_RUN and
+             item["headSha"] in (PR_HEAD,CAND_SHA) for item in history):
+        # A new protected-head run needs independent test-evidence review,
+        # even when it reports success. Never infer acceptance here.
+        reasons.append("new_protected_head_run_requires_review")
     jobs=v.get("historicalJobs")
     # Every job must be a completed failure with a literal integer zero
     # recorded steps. A boolean False must not count as integer zero.

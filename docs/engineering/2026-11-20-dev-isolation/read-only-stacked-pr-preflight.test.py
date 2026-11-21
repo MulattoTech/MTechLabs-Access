@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""R49/R50 disposable negative tests for read-only stacked-PR structural gate."""
+"""R49/R50/R55 disposable negative tests for read-only stacked-PR gate."""
 import copy
 from importlib.machinery import SourceFileLoader
 import io
@@ -35,6 +35,8 @@ def snapshot():
         "permissions":{"enabled":True,"allowed_actions":"all"},
         "latestRuns":[{"id":gate.OLD_RUN,"status":"completed","conclusion":"failure",
                        "headSha":gate.PR_HEAD}],
+        "historicalRun":{"id":gate.OLD_RUN,"status":"completed",
+                         "conclusion":"failure","headSha":gate.PR_HEAD},
         "historicalJobs":[{"name":n,"status":"completed","conclusion":"failure",
                            "stepCount":0} for n in sorted(gate.EXPECTED_JOBS)]
     }
@@ -123,6 +125,40 @@ class GateTests(unittest.TestCase):
             "number":46,"headRef":gate.CAND_BRANCH,"baseRef":gate.PR_BRANCH
         }),"open_pr_conflict_or_pagination_unverified")
 
+    def test_unrelated_pr_and_newer_run_do_not_block_source_structure(self):
+        evidence=snapshot()
+        evidence["openPRs"].insert(0,{
+            "number":47,"headRef":"feat/agentic-pr-triage-20261120","baseRef":"main"
+        })
+        evidence["latestRuns"].insert(0,{
+            "id":44841780509,"status":"completed","conclusion":"failure",
+            "headSha":"b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89"
+        })
+        report=gate.evaluate(evidence)
+        self.assertTrue(report["structuralPreflightMatched"])
+        self.assertEqual(report["unqualifiedReasons"],[])
+        self.assertFalse(report["createDraftPRCurrentlyAuthorized"])
+        self.assertFalse(report["hostedRunnerAdmissionVerified"])
+
+    def test_unrelated_pr_with_candidate_head_rejected(self):
+        reject(lambda x:x["openPRs"].append({
+            "number":47,"headRef":gate.CAND_BRANCH,"baseRef":"main"
+        }),"open_pr_conflict_or_pagination_unverified")
+
+    def test_duplicate_pr45_number_rejected(self):
+        reject(lambda x:x["openPRs"].append(dict(x["openPRs"][0])),
+               "open_pr_conflict_or_pagination_unverified")
+
+    def test_second_pr_with_feature_head_rejected(self):
+        reject(lambda x:x["openPRs"].append({
+            "number":47,"headRef":gate.PR_BRANCH,"baseRef":"main"
+        }),"open_pr_conflict_or_pagination_unverified")
+
+    def test_stacked_pr_other_head_already_exists(self):
+        reject(lambda x:x["openPRs"].append({
+            "number":47,"headRef":"feature/other","baseRef":gate.PR_BRANCH
+        }),"open_pr_conflict_or_pagination_unverified")
+
     def test_pr_pagination_unqualified(self):
         reject(lambda x:x.__setitem__("openPRs",snapshot()["openPRs"]*100),
                "open_pr_conflict_or_pagination_unverified")
@@ -165,10 +201,41 @@ class GateTests(unittest.TestCase):
         self.assertTrue(r["historicalJobStepCountZero"])
         self.assertFalse(r["createDraftPRCurrentlyAuthorized"])
 
-    def test_newer_run_forces_reaudit(self):
+    def test_newer_protected_head_run_forces_review(self):
         reject(lambda x:x["latestRuns"].insert(0,{
             "id":99999999,"status":"completed","conclusion":"success","headSha":gate.PR_HEAD
-        }),"historical_run_is_not_latest_reaudit_required")
+        }),"new_protected_head_run_requires_review")
+
+    def test_newer_candidate_head_run_forces_review(self):
+        reject(lambda x:x["latestRuns"].insert(0,{
+            "id":99999999,"status":"completed","conclusion":"failure","headSha":gate.CAND_SHA
+        }),"new_protected_head_run_requires_review")
+
+    def test_historical_run_changed_rejected(self):
+        reject(lambda x:x["historicalRun"].__setitem__("headSha","f"*40),
+               "historical_r7_run_metadata_changed")
+
+    def test_historical_run_missing_rejected(self):
+        reject(lambda x:x.__setitem__("historicalRun",None),
+               "historical_r7_run_metadata_changed")
+
+    def test_malformed_recent_run_rejected(self):
+        reject(lambda x:x["latestRuns"].insert(0,{
+            "id":777,"status":"completed","conclusion":"failure","headSha":"not-a-sha"
+        }),"recent_actions_run_metadata_unavailable")
+
+    def test_duplicate_recent_run_ids_rejected(self):
+        reject(lambda x:x["latestRuns"].append(dict(x["latestRuns"][0])),
+               "recent_actions_run_metadata_unavailable")
+
+    def test_historical_run_older_than_latest_page_still_allowed(self):
+        evidence=snapshot()
+        evidence["latestRuns"]=[{
+            "id":88000000+i,"status":"completed","conclusion":"failure",
+            "headSha":"a"*40
+        } for i in range(10)]
+        self.assertTrue(gate.evaluate(evidence)["structuralPreflightMatched"])
+        self.assertFalse(gate.evaluate(evidence)["createDraftPRCurrentlyAuthorized"])
 
     def test_latest_run_missing(self):
         reject(lambda x:x.__setitem__("latestRuns",[]),
@@ -196,6 +263,7 @@ class GateTests(unittest.TestCase):
             "/repos/"+gate.REPO+"/pulls?state=open&per_page=100":snapshot()["openPRs"],
             "/repos/"+gate.REPO+"/actions/permissions":snapshot()["permissions"],
             "/repos/"+gate.REPO+"/actions/runs?per_page=10":snapshot()["latestRuns"],
+            "/repos/"+gate.REPO+"/actions/runs/44742255585":snapshot()["historicalRun"],
             "/repos/"+gate.REPO+"/actions/runs/44742255585/jobs?per_page=100":snapshot()["historicalJobs"]
         }
         commands=[]
@@ -241,7 +309,7 @@ class GateTests(unittest.TestCase):
 def main():
     suite=unittest.defaultTestLoader.loadTestsFromTestCase(GateTests)
     out=unittest.TextTestRunner(stream=io.StringIO(),verbosity=0).run(suite)
-    print(json.dumps({"schemaVersion":1,"suite":"R49-R50-offline-stacked-pr-admission-fail-closed",
+    print(json.dumps({"schemaVersion":1,"suite":"R49-R55-offline-stacked-pr-admission-fail-closed",
           "passed":out.testsRun-len(out.errors)-len(out.failures),"tests":out.testsRun,
           "failed":len(out.errors)+len(out.failures),"fakeGitHubAndGitOnly":True,
           "productionTouched":False,"prCreationAuthorized":False},separators=(",",":")))
