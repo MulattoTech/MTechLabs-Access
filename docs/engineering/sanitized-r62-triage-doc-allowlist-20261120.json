@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R62",
+  "scope": "offline-triage-source-review-only",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "upstreamPr47Head": "b25c6a916cc1cdef783eeacc6b08c6bd51f3ac89",
+  "priorIsolatedR61Head": "ecd93f7b57d80819d78fdbff210bd23df6a0659f",
+  "protectedPr45Head": "f0855c1227aacc49071581bb52ba5566bc07ffce",
+  "branch": "fix/access44-r61-protected-auto-merge-guard-20261120",
+  "baseline": {
+    "executedSyntheticTests": 26,
+    "failed": 3,
+    "observedSourceRenameAsDocsProtected": false,
+    "observedSourceRenameAsDocsOnly": true,
+    "observedDotGitignoreProtected": false,
+    "observedPrivateCredentialDocProtected": false
+  },
+  "corrected": {
+    "executedSyntheticTests": 26,
+    "passed": 26,
+    "failed": 0,
+    "allowedStatuses": [
+      "added",
+      "modified"
+    ],
+    "onlySimpleMarkdownUnderDocs": true,
+    "rejectPreviousFilename": true,
+    "rejectNonDocsEvenWithAutoMergeOptIn": true,
+    "ordinaryDocsPositivePreserved": true
+  },
+  "host": {
+    "githubHostedAcceptance": false,
+    "runnerBillingEligibilityConfirmed": false,
+    "policyProtected": false,
+    "pr45Merged": false,
+    "pr47Merged": false,
+    "productionChanged": false,
+    "devActivated": false
+  }
+}

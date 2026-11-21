@@ -26,17 +26,31 @@ REQUIRED_JOBS = frozenset({
     "Upstream qualification / ubuntu-latest / Node 24",
     "Upstream qualification / windows-latest / Node 24",
 })
-# No generic auto-merge or automatic source-branch update for the protected
-# reference transport or access, production, deployment, auth or IPC sources.
+# Access is a security-sensitive repository. Automatic enrollment, including
+# explicit opt-in, is limited to simple non-sensitive documentation edits.
 PROTECTED_PR_NUMBERS = frozenset({45})
-PROTECTED_PREFIXES = (
-    ".github/", "integrations/", "src/", "scripts/", "tools/", "tests/",
-    "migrations/", "plugin-releases/", "public/", "docs/engineering/",
+SENSITIVE_DOC_FRAGMENTS = (
+    "/security", "/spec", "/runbooks", "/private", "/policy", "/maintainer",
+    "/agents", "auth", "secret", "credential", "token", "/keys",
 )
-PROTECTED_ROOT_FILES = frozenset({
-    "deployment.json", "wrangler.jsonc", "package.json", "package-lock.json",
-    "DEV-EDGE.md",
-})
+
+
+def safe_documentation_file(item):
+    """Require a simple Markdown addition/edit, never a rename or unknown type."""
+    if not isinstance(item, dict) or item.get("status") not in ("added", "modified"):
+        return False
+    # GitHub's changed-file filename is the new path of a rename; ignoring
+    # previous_filename would allow src/auth.js -> docs/guide.md.
+    if "previous_filename" in item:
+        return False
+    name = item.get("filename")
+    if not isinstance(name, str) or not name.startswith("docs/") or not name.endswith(".md"):
+        return False
+    if (name != name.strip() or "\\" in name or "%" in name or
+            any(part in ("", ".", "..") for part in name.split("/")) or
+            any(ord(char) < 32 or ord(char) == 127 for char in name)):
+        return False
+    return not any(fragment in name.lower() for fragment in SENSITIVE_DOC_FRAGMENTS)
 
 
 def api(method, path, payload=None, *, graphql=False):
@@ -149,15 +163,8 @@ def protected_or_unverified_pr(pr):
         files = get("/pulls/" + str(pr["number"]) + "/files?per_page=100")
         if not isinstance(files, list) or len(files) != count:
             return True
-        for item in files:
-            name = item.get("filename")
-            if (not isinstance(name, str) or not name or name.startswith("/") or
-                    ".." in name.split("/")):
-                return True
-            lowered = name.lower()
-            if (lowered in {x.lower() for x in PROTECTED_ROOT_FILES} or
-                any(lowered.startswith(prefix) for prefix in PROTECTED_PREFIXES)):
-                return True
+        if not all(safe_documentation_file(item) for item in files):
+            return True
         # Reduce file-list/head time-of-check races before enrollment. GitHub
         # branch protection remains the mandatory final integration authority.
         current = get("/pulls/" + str(pr["number"]))
@@ -190,22 +197,18 @@ def classify(pr):
 
 def docs_only(pr):
     if (pr["user"]["login"].lower() != OWNER or
-            pr.get("changed_files", 9999) > 8 or
+            type(pr.get("changed_files")) is not int or
+            not (1 <= pr["changed_files"] <= 8) or
             pr.get("additions", 9999) > 250 or
             pr.get("deletions", 9999) > 100):
         return False
-    files = get("/pulls/" + str(pr["number"]) + "/files?per_page=100")
-    if not files:
+    try:
+        files = get("/pulls/" + str(pr["number"]) + "/files?per_page=100")
+        return (isinstance(files, list) and
+                len(files) == pr["changed_files"] and
+                all(safe_documentation_file(item) for item in files))
+    except (RuntimeError, KeyError, TypeError, ValueError, AttributeError):
         return False
-    for obj in files:
-        name = obj["filename"].lower()
-        if not (name.startswith("docs/") and name.endswith(".md")):
-            return False
-        if any(x in name for x in (
-            "/security/", "/spec/", "/runbooks/", "/private/", "/policy",
-            "/maintainer", "auth", "secret", "credential", "/agents/")):
-            return False
-    return True
 
 
 def set_label(pr, kind):

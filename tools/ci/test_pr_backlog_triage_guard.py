@@ -140,7 +140,7 @@ class GuardTests(unittest.TestCase):
         pr = pr_fixture()
         def fetch(path):
             if path.endswith("/files?per_page=100"):
-                return [{"filename": "docs/guide.md"}]
+                return [{"filename": "docs/guide.md", "status": "modified"}]
             if path == "/pulls/101":
                 return pr
             raise AssertionError(path)
@@ -152,7 +152,7 @@ class GuardTests(unittest.TestCase):
         changed = copy.deepcopy(pr)
         changed["head"]["sha"] = "b" * 40
         def fetch(path):
-            return [{"filename": "docs/guide.md"}] if path.endswith("/files?per_page=100") else changed
+            return [{"filename": "docs/guide.md", "status": "modified"}] if path.endswith("/files?per_page=100") else changed
         with mock.patch.object(triage, "get", side_effect=fetch):
             self.assertTrue(triage.protected_or_unverified_pr(pr))
 
@@ -202,7 +202,7 @@ class GuardTests(unittest.TestCase):
             if path == "/branches/main/protection": return protected_branch()
             if path.startswith("/pulls?"): return [pr]
             if path == "/pulls/101": return pr
-            if path == "/pulls/101/files?per_page=100": return [{"filename": "docs/guide.md"}]
+            if path == "/pulls/101/files?per_page=100": return [{"filename": "docs/guide.md", "status": "modified"}]
             if path.startswith("/commits/") and path.endswith("/check-runs?per_page=100"):
                 return {"check_runs": [job(n) for n in REQ], "total_count": len(REQ)}
             if path.startswith("/commits/") and path.endswith("/status"):
@@ -224,6 +224,64 @@ class GuardTests(unittest.TestCase):
         pr = pr_fixture(number=101, labels=["agent:automerge"], path="src/auth.js")
         with mock.patch.object(triage, "get", return_value=[{"filename": "src/auth.js"}]):
             self.assertTrue(triage.protected_or_unverified_pr(pr))
+
+
+    def test_renamed_sensitive_source_into_docs_is_not_autoeligible(self):
+        pr = pr_fixture()
+        pr["additions"], pr["deletions"] = 10, 10
+        file = {"filename": "docs/guide.md", "status": "renamed",
+                "previous_filename": "src/auth.js"}
+        def fetch(path):
+            if path.endswith("/files?per_page=100"):
+                return [file]
+            if path == "/pulls/101":
+                return pr
+            raise AssertionError(path)
+        with mock.patch.object(triage, "get", side_effect=fetch):
+            self.assertTrue(triage.protected_or_unverified_pr(pr))
+            self.assertFalse(triage.docs_only(pr))
+
+    def test_root_dotfile_and_sensitive_docs_are_ineligible_even_with_opt_in(self):
+        pr = pr_fixture(labels=["agent:automerge"])
+        for name in [".gitignore", ".gitmodules", ".npmrc",
+                     "docs/private/credential.md", "docs/security/policy.md"]:
+            file = {"filename": name, "status": "modified"}
+            def fetch(path):
+                if path.endswith("/files?per_page=100"):
+                    return [file]
+                if path == "/pulls/101":
+                    return pr
+                raise AssertionError(path)
+            with mock.patch.object(triage, "get", side_effect=fetch):
+                self.assertTrue(triage.protected_or_unverified_pr(pr), name)
+
+    def test_unknown_file_status_is_not_autoeligible(self):
+        pr = pr_fixture()
+        for status in [None, "removed", "renamed", "copied", "unchanged", "weird"]:
+            file = {"filename": "docs/guide.md"}
+            if status is not None:
+                file["status"] = status
+            def fetch(path):
+                if path.endswith("/files?per_page=100"):
+                    return [file]
+                if path == "/pulls/101":
+                    return pr
+                raise AssertionError(path)
+            with mock.patch.object(triage, "get", side_effect=fetch):
+                self.assertTrue(triage.protected_or_unverified_pr(pr), status)
+
+    def test_safe_documentation_modified_and_added_are_eligible(self):
+        pr = pr_fixture()
+        for status in ("added", "modified"):
+            file = {"filename": "docs/guide.md", "status": status}
+            def fetch(path):
+                if path.endswith("/files?per_page=100"):
+                    return [file]
+                if path == "/pulls/101":
+                    return pr
+                raise AssertionError(path)
+            with mock.patch.object(triage, "get", side_effect=fetch):
+                self.assertFalse(triage.protected_or_unverified_pr(pr), status)
 
 
 if __name__ == "__main__":
