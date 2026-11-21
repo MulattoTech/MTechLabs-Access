@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "R59",
+  "scope": "local-offline-Node24-focused-PDF-tests-only",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "testedSourceCommit": "15af99687b4f69b09518c237e1704e23fa14bd27",
+  "testedSourceBranch": "fix/access44-r58-pdf-source-binding-20261120",
+  "containerImage": "node:24-bookworm-slim",
+  "observedImageId": "sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "observedImageDigest": "node@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "observedContainerNode": "v24.21.0",
+  "observedContainerOs": "linux",
+  "observedContainerArch": "amd64",
+  "controls": {
+    "pull": "never",
+    "network": "none",
+    "containerRootReadOnly": true,
+    "sourceBindReadOnly": true,
+    "capabilitiesDropped": "ALL",
+    "noNewPrivileges": true,
+    "pidLimit": 64,
+    "memoryLimit": "512m",
+    "cpuLimit": 2,
+    "containerRemove": true
+  },
+  "command": [
+    "node",
+    "--test",
+    "test/pdf-phase-source-binding.test.mjs",
+    "test/pdf-phase-trace.test.mjs"
+  ],
+  "outcome": {
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "dependenciesInstalled": false,
+  "pdfBrowserExecuted": false,
+  "protectedWindowsIdentityUsed": false,
+  "githubHostedRunnerUsed": false,
+  "releaseAcceptanceEstablished": false,
+  "devActivationAuthorized": false
+}
