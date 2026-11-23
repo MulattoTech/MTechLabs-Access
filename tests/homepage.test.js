@@ -47,6 +47,15 @@ test('catalog contains distinct stable cards and current user-facing app endpoin
     assert.ok(hrefs.some(x=>x.includes(host)),host+' must appear in the owner directory');
   }
   assert.ok(HUB_CARDS.find(x=>x.id==='mbody').audience==='owner');
+  const fleet=HUB_CARDS.find(x=>x.id==='fleet');
+  assert.equal(fleet.name,'Fleet Tracker');
+  assert.equal(fleet.appId,'fleet');
+  assert.equal(fleet.audience,'grant');
+  assert.deepEqual(fleet.actions.slice(0,2),[
+    ['Open Fleet Tracker','/mission-control/analytics/',true],
+    ['Fleet Controls','https://fleet.m-techlabs.com/',true]
+  ]);
+  assert.ok(!fleet.actions.some(action=>['/mission-control/','/mission-control/grafana/'].includes(action[1])));
   assert.ok(!HUB_CARDS.some(x=>x.id==='codexpro-oaksight'),'stale OakSight route must not be advertised as an owner homepage service');
   assert.ok(!hrefs.some(href=>href.includes('codexpro-oaksight.m-techlabs.com')),'stale OakSight hostname must not be linked from the owner homepage');
   assert.ok(!hrefs.some(href=>href.includes('/api/integrations/home-assistant/ingest')),'write-only ingestion must never be linked');
