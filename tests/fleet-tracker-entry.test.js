@@ -52,3 +52,15 @@ test('sanitized project export proxy is read-only, Docker-DNS resolved, and reta
   assert.match(nginx,/location \/ \{ try_files \$uri \$uri\/ =404; \}/,'missing exports remain 404');
   assert.doesNotMatch(nginx,/sync_requested/,'nginx never fabricates a sync acknowledgement');
 });
+
+test('repository goal estimates use the protected read-only sidecar without credentials or fake static fallback',()=>{
+  const nginx=readFileSync(new URL('../integrations/hub/nginx.conf',import.meta.url),'utf8');
+  const body=nginx.match(/location = \/mission-control\/analytics\/api\/repository-progress \{([\s\S]*?)\n    \}/)?.[1];
+  assert.ok(body);
+  assert.match(body,/limit_except GET HEAD \{ deny all; \}/);
+  assert.match(body,/proxy_pass_request_headers off;/);
+  assert.match(body,/proxy_pass_request_body off;/);
+  assert.match(body,/proxy_pass \$fleet_tracker_sync_origin\$request_uri;/);
+  assert.match(body,/proxy_read_timeout 15s;/);
+  assert.doesNotMatch(body,/add_header|error_page|try_files/);
+});

@@ -1,5 +1,20 @@
 # Hub deployment and route recovery — 2026-11-06
 
+## Fleet Hub repository goals continuation — November 24, 2026 UTC
+
+The repository-progress route forwards only GET/HEAD requests to the internal
+Fleet Control reader. Browser credentials and request bodies are stripped. It
+does not share the static-project fallback: a failed dynamic repository read
+must remain unavailable. Its reader accepts only public github.com repository
+identities and fixed revision-pinned progress paths.
+
+This local continuation is based on Access PR48 at
+`69153ab3521e2c2d87d7f31022bd7439ec6262c8`. Protected deployment remains blocked by
+the failed private CI gate (all five jobs stopped before executing steps).
+Do not bypass the checks, increase spending, or install this ingress before
+the paired Fleet Hub release is qualified. Existing installed routes and
+runtime data remain unchanged.
+
 ## Deployed source and boundaries
 
 The hub is the existing nginx container `mtechlabs-hub`, with its read-only web
