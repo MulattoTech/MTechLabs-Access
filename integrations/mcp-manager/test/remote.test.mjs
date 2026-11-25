@@ -247,3 +247,76 @@ test('authenticated MCP ping checks bridge liveness without starting the worksta
   const client = await f.client();
   assert.ok((await client.listTools()).tools.length > 0);
 });
+
+
+// Paired, synthetic lifecycle qualification. No real OAuth, settings UI,
+// credentials, production interruptions, or write tools are used.
+test('liveness qualification: cold, warm, idle and interrupted read', async t => {
+  const round = async (label, f, { ping = false } = {}) => {
+    const started = performance.now();
+    const elapsed = () => Number((performance.now() - started).toFixed(1));
+    const receipt = { label, utc: new Date().toISOString(), initialState: (await f.getStatus()).remoteMcp.state };
+    let checkpoint = performance.now();
+    const denied = await f.raw({ jsonrpc: '2.0', id: 'denied', method: 'ping' }, { Authorization: '' });
+    assert.equal(denied.status, 401);
+    receipt.authDenialMs = Number((performance.now() - checkpoint).toFixed(1));
+    receipt.authDenialHttp = denied.status;
+    if (ping) {
+      checkpoint = performance.now();
+      const reply = await f.raw({ jsonrpc: '2.0', id: 'probe', method: 'ping' });
+      assert.equal(reply.status, 200);
+      assert.deepEqual(await reply.json(), { jsonrpc: '2.0', id: 'probe', result: {} });
+      receipt.pingMs = Number((performance.now() - checkpoint).toFixed(1));
+      receipt.afterPing = (await f.getStatus()).remoteMcp.state;
+    }
+    checkpoint = performance.now();
+    const client = await f.client();
+    receipt.initializeMs = Number((performance.now() - checkpoint).toFixed(1));
+    checkpoint = performance.now();
+    const listing = await client.listTools();
+    assert.ok(listing.tools.some(tool => tool.name === 'read_file'));
+    receipt.discoveryMs = Number((performance.now() - checkpoint).toFixed(1));
+    checkpoint = performance.now();
+    const resources = await client.listResources();
+    assert.equal(resources.resources.length, 1);
+    const resource = await client.readResource({ uri: resources.resources[0].uri });
+    assert.match(resource.contents[0].text, /Safe fixture/);
+    receipt.resourceFetchMs = Number((performance.now() - checkpoint).toFixed(1));
+    checkpoint = performance.now();
+    const result = await client.callTool({ name: 'read_file', arguments: { echo: 'qualification' } });
+    assert.equal(result.isError, false);
+    assert.equal(JSON.parse(result.content[0].text).echo, 'qualification');
+    receipt.toolMs = Number((performance.now() - checkpoint).toFixed(1));
+    receipt.firstToolMs = elapsed();
+    receipt.firstToolSuccess = true;
+    t.diagnostic(JSON.stringify(receipt));
+    return client;
+  };
+  for (let i = 1; i <= 3; i += 1) {
+    const f = await remoteFixture(t, { slowInitialize: true, idleTimeoutMs: 1000 });
+    assert.equal((await f.getStatus()).remoteMcp.state, 'idle');
+    await round('cold-ping-' + i, f, { ping: true });
+    await round('warm-' + i, f);
+    let state;
+    for (let poll = 0; poll < 100; poll += 1) {
+      state = (await f.getStatus()).remoteMcp.state;
+      if (state === 'idle') break;
+      await new Promise(resolve => setTimeout(resolve, 25));
+    }
+    assert.equal(state, 'idle');
+    await round('after-idle-' + i, f, { ping: true });
+    // Abort one synthetic, read-only request. Its outcome is not used as a
+    // success and no write request is issued or retried.
+    const request = testFetch(f.url + '/mcp', {
+      method: 'POST', headers: HEADERS, signal: AbortSignal.timeout(25),
+      body: JSON.stringify({ jsonrpc: '2.0', id: 'interrupt', method: 'tools/call',
+        params: { name: 'read_file', arguments: { delayMs: 200 } } }),
+    });
+    await assert.rejects(request, error => error.name === 'AbortError' || error.code === 'ABORT_ERR');
+    t.diagnostic(JSON.stringify({ label: 'interrupted-read-' + i, utc: new Date().toISOString(),
+      errorCode: 'ABORT_ERR', firstToolSuccess: false, deliberate: true }));
+    await round('after-interruption-' + i, f);
+  }
+  const direct = await remoteFixture(t, { slowInitialize: true, idleTimeoutMs: 1000 });
+  await round('cold-direct', direct);
+});
