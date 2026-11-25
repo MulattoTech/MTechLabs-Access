@@ -235,3 +235,15 @@ test('stateless endpoint rejects sessions, oversized/batched input and unsupport
   assert.equal(tools.tools[0]._meta['fixture/preserve'], true);
   assert.equal((await f.getStatus()).remoteMcp.resourceSupport, false);
 });
+
+test('authenticated MCP ping checks bridge liveness without starting the workstation backend', async t => {
+  const f = await remoteFixture(t, { slowInitialize: true });
+  const request = { jsonrpc: '2.0', id: 'liveness', method: 'ping' };
+  assert.equal((await f.raw(request, { Authorization: '' })).status, 401);
+  const response = await f.raw(request);
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { jsonrpc: '2.0', id: 'liveness', result: {} });
+  assert.equal((await f.getStatus()).remoteMcp.state, 'idle');
+  const client = await f.client();
+  assert.ok((await client.listTools()).tools.length > 0);
+});

@@ -262,7 +262,12 @@ export function createRemoteMcp(config, {
       if (!body || typeof body !== 'object' || Array.isArray(body) || body.jsonrpc !== '2.0') {
         return failure(response, 400, -32600, 'A single JSON-RPC message is required.');
       }
-      const owned = await ensureBackend();
+      // Ping checks the authenticated HTTP bridge. A cold workstation
+      // gateway is only needed for discovery and actual upstream work.
+      if (body.method === 'ping') await ensureSdk();
+      const owned = body.method === 'ping'
+        ? { capabilities: {} }
+        : await ensureBackend();
       server = protocolServer(owned);
       transport = new sdk.StreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
       await server.connect(transport);
