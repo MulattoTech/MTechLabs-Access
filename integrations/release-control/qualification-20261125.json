@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-25T21:44:06.437Z",
+  "implementationCommit": "df5ed06b2d8808bc0c8da12236017a6f3f119867",
+  "implementationTree": "142ba1d38ecc2f9d7724c3ec4e53012d07e8433f",
+  "registerFile": "acceptance-register.json",
+  "registerFileSha256ObservedOnWindows": "22b7536dff8aa77260f38810305b9e0d62c42e0e4bd4d205164329bf73b40fdb",
+  "status": "PARTIAL",
+  "scope": "Development candidate, live read-only inventory, disposable HTTP and filesystem fixtures. No production activation.",
+  "localRuntime": "Node v27.0.0-alpha.0.0.0 (existing host runtime); hosted Node 24 not qualified",
+  "tests": {
+    "releaseControl": {
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 594.7967,
+      "verifiedAtExactCleanCommit": true
+    },
+    "existingRoot": {
+      "passed": 170,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 925.0084,
+      "scope": "Same candidate source content before commit"
+    },
+    "syntaxCheck": "PASS",
+    "build": "PASS",
+    "generatedContentParity": "PASS",
+    "gitDiffCheck": "PASS",
+    "hosted": "NOT_RUN",
+    "independentReview": "NOT_RUN"
+  },
+  "liveScan": {
+    "checkedAt": "2026-11-25T21:43:22.559Z",
+    "repositories": 32,
+    "active": 30,
+    "archived": 2,
+    "activeHeadsChecked": 30,
+    "unavailable": [],
+    "catalogExceptions": [],
+    "observedDeploymentReferences": [
+      {
+        "id": "MJobs",
+        "confidence": "hint",
+        "sha": "6a47f56204462da1aea5ba59ff8a5f88346d05cd"
+      }
+    ]
+  },
+  "production": {
+    "installedRevision": "577e9df23343b5efe530019a62cc4dab5d10cd8c",
+    "scheduledTask": "Running",
+    "listener": "127.0.0.1:20881",
+    "originUnauthenticatedStatus": 401,
+    "edgeUnauthenticatedStatus": 302,
+    "candidateActivated": false,
+    "productDeploymentsPerformed": 0
+  },
+  "mandatoryGates": [
+    {
+      "id": "RC-01",
+      "status": "PASS",
+      "evidence": "Live inventory: 32 repositories, 30 active, two archived, zero catalog exceptions, all 30 active source checks successful; discovery, changed archive/default branch, source-only enrollment and authenticated HTTP regression tests passed.",
+      "remaining": "Source inventory only; unresolved deployment mappings remain explicit and are covered by RC-02. Reconcile on later inventory changes.",
+      "qualifiedRevision": "df5ed06b2d8808bc0c8da12236017a6f3f119867"
+    },
+    {
+      "id": "RC-02",
+      "status": "UNVERIFIED",
+      "evidence": "Catalog contains tentative mappings; disposable HTTP adapter execution tested.",
+      "remaining": "No production adapter independently qualified; complete target mapping and per-target evidence required.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-03",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "GitHub comparison and confidence preservation tested; live MJobs image tag supplies hint only.",
+      "remaining": "Verified deployed SHA/digest, component/environment and health provenance missing for production targets; unrelated comparison requires positive evidence.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-04",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Immutable plan/policy digests, exact publisher-bound checks, resource policy and fail-closed admission exercised in fixtures.",
+      "remaining": "Actual per-repository policies and independently trusted production evidence providers not integrated.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-05",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Review/hold and refreshed exact SHA evidence work in local HTTP tests; scheduling, cancel and expiry tested in SQLite.",
+      "remaining": "Production artifact preparation/owner approval, queue integration and DST qualification outstanding.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-06",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Disposable HTTP immediate activation and due-window execution after ledger reopen passed.",
+      "remaining": "No installed execution supervisor or production target adapter.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-07",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Transactional locking, idempotency, transitions, deadline recovery and restart persistence tested.",
+      "remaining": "Host/process termination, exclusive supervisor ownership, real target reconciliation and bounded operational retention remain unqualified.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-08",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Real fixture file backup and restore hash verified; HTTP previous release restored.",
+      "remaining": "Production database/configuration backup and restore evidence missing.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-09",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Actual HTTP failure induced and previous runtime hash verified; uncertain outcomes retain locks.",
+      "remaining": "Per-target rollback and rollback-failure qualification missing.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-10",
+      "status": "UNVERIFIED",
+      "evidence": "No production migration performed.",
+      "remaining": "Database compatibility and forward/recovery fixtures required.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-11",
+      "status": "UNVERIFIED",
+      "evidence": "MTerm Live Connection preserved.",
+      "remaining": "Independent dual-connection continuity and update qualification not performed.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-12",
+      "status": "UNVERIFIED",
+      "evidence": "Existing controller remains running.",
+      "remaining": "Independent update supervisor and state migration/recovery not implemented.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-13",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "JWT, owner, audience, expiration, same-origin and unauthorized request tests passed; live unauthenticated origin 401 and edge 302.",
+      "remaining": "Independent security review, live authenticated owner, revocation/replay and all future privileged endpoints require qualification.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-14",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Discovery/enrollment and comparison integrated with dashboard candidate; activation disabled.",
+      "remaining": "Browser UX, operational queue, calendar, progress, rollback and owner hub integration incomplete.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-15",
+      "status": "BLOCKED",
+      "evidence": "Existing controller running; origin 401 and edge 302.",
+      "remaining": "Authenticated browser access unavailable in prior inspection; new candidate not deployed.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-16",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "21 Release Control tests and 170 existing root tests passed; syntax check, build and generated-content parity passed; new CI step included.",
+      "remaining": "Hosted Node 24 gates, independent adapter tests, migration, security and browser qualification outstanding.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-17",
+      "status": "UNVERIFIED",
+      "evidence": "No independent reviewer approval claimed.",
+      "remaining": "Exact-head independent review and existing repository gates required.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-18",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "Implementation and register digests recorded; source scan bounded and no additional cloud resources created.",
+      "remaining": "Complete artifact provenance, quota and resource performance measurements outstanding.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-19",
+      "status": "LOCAL_PARTIAL",
+      "evidence": "README documents candidate operations, limitations and recovery boundaries.",
+      "remaining": "Complete production recovery runbook, config templates and restoration exercises outstanding.",
+      "qualifiedRevision": null
+    },
+    {
+      "id": "RC-20",
+      "status": "BLOCKED",
+      "evidence": "Candidate source commit and qualification receipt; current production untouched.",
+      "remaining": "All mandatory gates, independent review and recoverable production delivery required.",
+      "qualifiedRevision": null
+    }
+  ],
+  "strictGateAccounting": {
+    "passed": 1,
+    "total": 20,
+    "percent": 5,
+    "meaning": "Strict fully evidenced mandatory-gate completion, not percentage of code written or production deployment readiness."
+  }
+}
