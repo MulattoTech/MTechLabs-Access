@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {verifyAccessJWT,normalizeEmail} from '../../src/security.js';
 import {createController,githubClient,ApiError} from './controller.mjs';
-import {PROJECTS} from './catalog.mjs';
+import os from 'node:os';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const prefix='/admin/releases',host='m-techlabs.com',origin='https://'+host;
 const scope={teamDomain:'broken-breeze-d0bb.cloudflareaccess.com',audiences:['07ab5d3b657038e3da3af279994f36c3e8deb8cb1c79adcc43e01e3df6ccb785']};
@@ -21,7 +21,7 @@ async function body(req){
 }
 export async function createServer({controller,verify=ownerCheck}){
  const assets=new Map(await Promise.all([['/','index.html','text/html; charset=utf-8'],['/app.js','app.js','text/javascript; charset=utf-8'],['/style.css','style.css','text/css; charset=utf-8']].map(async([route,file,type])=>[prefix+route,{data:await fs.readFile(path.join(here,file)),type}])));
- const methods=new Map([['/api/check',controller.check],['/api/prepare',controller.prepare],['/api/decision',controller.decide]]);
+ const methods=new Map([['/api/check',controller.check],['/api/prepare',controller.prepare],['/api/decision',controller.decide],['/api/discover',controller.discover],['/api/enroll',controller.enroll]]);
  return http.createServer({requestTimeout:45000,headersTimeout:10000,maxHeaderSize:32768},async(req,res)=>{
   try{
    if(req.headers.host!==host)throw new ApiError(403,'Use the owner hub.');
@@ -42,12 +42,21 @@ export async function createServer({controller,verify=ownerCheck}){
 }
 async function main(){
  const local=process.env.LOCALAPPDATA;if(!local)throw Error('Local state directory unavailable');
- const controller=await createController({stateFile:path.join(local,'MTechLabs','ReleaseControl','state.json'),github:githubClient('C:\\Program Files\\GitHub CLI\\gh.exe')});
+ const github=githubClient('C:\\Program Files\\GitHub CLI\\gh.exe');
  if(process.argv.includes('--scan')){
-  const ids=PROJECTS.filter(p=>!p.archived).map(p=>p.id);
-  for(let i=0;i<ids.length;i+=6)await controller.check({ids:ids.slice(i,i+6)});
-  const s=controller.snapshot();console.log(JSON.stringify({active:ids.length,checked:s.projects.filter(p=>p.head?.status==='ok').length,unavailable:s.projects.filter(p=>p.head?.status==='unavailable').map(p=>p.id),deployments:s.projects.filter(p=>p.head?.deployment?.sha).map(p=>({id:p.id,state:p.head.deployment.state,sha:p.head.deployment.sha}))}));return;
+  const tmp=await fs.mkdtemp(path.join(os.tmpdir(),'mtech-release-scan-'));
+  try{
+   const scan=await createController({stateFile:path.join(tmp,'state.json'),github});
+   const discovered=await scan.discover({});
+   if(discovered.inventory?.status!=='ok')throw Error('Inventory scan unavailable');
+   const ids=discovered.projects.filter(p=>!p.archived&&p.enrollment!=='discovered'&&p.inventoryStatus==='observed').map(p=>p.id);
+   for(let i=0;i<ids.length;i+=6)await scan.check({ids:ids.slice(i,i+6)});
+   const s=scan.snapshot();console.log(JSON.stringify({inventory:s.inventory,active:ids.length,checked:s.projects.filter(p=>p.head?.status==='ok').length,unavailable:s.projects.filter(p=>p.head?.status==='unavailable').map(p=>p.id),deployments:s.projects.filter(p=>p.head?.deployment?.sha).map(p=>({id:p.id,state:p.head.deployment.state,sha:p.head.deployment.sha}))}));
+   if(s.projects.some(p=>p.head?.status==='unavailable'))process.exitCode=1;
+  }finally{await fs.rm(tmp,{recursive:true,force:true});}
+  return;
  }
+ const controller=await createController({stateFile:path.join(local,'MTechLabs','ReleaseControl','state.json'),github});
  const server=await createServer({controller});
  server.on('error',()=>{console.error('Release Control listener failed');process.exitCode=1;});
  server.listen(20881,'127.0.0.1',()=>console.log('Release Control listening on loopback'));

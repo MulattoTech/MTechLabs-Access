@@ -6,6 +6,7 @@
   "description": "M-TechLabs central application authorization and deterministic Tacticus code monitor",
   "scripts": {
     "test": "node --test --test-isolation=none tests/*.test.js",
+    "test:release-control": "node --test integrations/release-control/*.test.mjs",
     "build": "node scripts/build.mjs",
     "check": "node --check src/index.js && node --check src/homepage.js && node --check src/hub-catalog.js && node --check src/mcp.js && node --check src/mcp-remote.js && node --check src/mcp-dev-edge.js && node --check src/mcp-dev-entry.js && node --check integrations/hub/app.js && node --check public/app.js && node --check public/admin.js && node --check public/mcp.js"
   },

@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "contract": "M-TechLabs Release Control — Complete Implementation and Production Qualification, sections 1–22, supplied 2026-11-25",
+  "denominatorRule": "20 mandatory top-level gates, each conjunctive with all applicable acceptance criteria and original specification. No partial credit. Do not remove, weaken, or replace gates. New mandatory gaps must be recorded within the applicable gate; evidence receipts bind source revision and environment; live changes can invalidate prior passes.",
+  "statusRule": "PASS requires complete applicable criteria, actual evidence, and exact revision. LOCAL_PARTIAL, BLOCKED, UNVERIFIED are not PASS. No deployment authority implied by acceptance status.",
+  "requirements": [
+    {
+      "id": "RC-01",
+      "title": "Repository discovery and classification",
+      "criteria": "Every currently accessible owner repository is reconciled with an authoritative registry, including archived/source-only entries and explicit unresolved mappings; new sources can be enrolled only by owner selection; branch/archive changes are surfaced and blocked.",
+      "sourcePaths": [
+        "catalog.mjs",
+        "inventory.mjs",
+        "controller.mjs",
+        "inventory.test.mjs"
+      ],
+      "verification": "Live inventory reconciliation and enrollment/auth regression tests",
+      "dependencies": []
+    },
+    {
+      "id": "RC-02",
+      "title": "All deployment targets and adapters",
+      "criteria": "Every active in-scope target/environment/component has verified identity, an explicitly typed adapter, scoped credentials, fixed reviewed operations and proven stage/activate/health/failure recovery; distinguish source-only, shared resources, Workers, Pages if present, Docker, desktop and local runtimes.",
+      "sourcePaths": [
+        "catalog.mjs",
+        "execution.mjs"
+      ],
+      "verification": "Per-target real isolated or production-equivalent qualification and live mapping receipt",
+      "dependencies": [
+        "RC-01"
+      ]
+    },
+    {
+      "id": "RC-03",
+      "title": "Accurate deployed identity and revision comparison",
+      "criteria": "Observe repo, branch, running SHA, digest, environment, runtime version, deployment timestamp, health, provenance confidence and previous good version; distinguish verified/reported/inferred/stale/unknown; compare identical/ahead/behind/diverged/unrelated/unavailable without conflating Git checkout, mutable tag or HTTP success with deployment identity.",
+      "sourcePaths": [
+        "controller.mjs",
+        "inventory.mjs"
+      ],
+      "verification": "Live target provenance and exact comparison tests including unavailable/unrelated",
+      "dependencies": [
+        "RC-01",
+        "RC-02"
+      ]
+    },
+    {
+      "id": "RC-04",
+      "title": "Authoritative release admission",
+      "criteria": "Server-owned policies enforce exact immutable target/revision/artifact, required publisher-bound CI, review/security/config/dependencies/resource/backup/recovery evidence and locks; reject missing/skipped/stale/modified/conflicting data and branch movement; revalidate before activation; preserve repository-specific gates.",
+      "sourcePaths": [
+        "admission.mjs",
+        "deployment-store.mjs"
+      ],
+      "verification": "Real provider policy/evidence integration, negative admission tests, independent security review",
+      "dependencies": [
+        "RC-02",
+        "RC-03"
+      ]
+    },
+    {
+      "id": "RC-05",
+      "title": "Exact preparation, owner approval and queue controls",
+      "criteria": "Prepare immutable artifact, show changes and evidence, authorize exact plan only with verified owner selection, hold/cancel/reschedule; UTC durable times and America/Chicago display; reject expired approvals, DST ambiguity and branch/artifact substitution.",
+      "sourcePaths": [
+        "controller.mjs",
+        "deployment-store.mjs",
+        "server.mjs",
+        "app.js"
+      ],
+      "verification": "Authenticated end-to-end preparation, approval, hold, cancellation, reschedule and DST tests",
+      "dependencies": [
+        "RC-02",
+        "RC-04"
+      ]
+    },
+    {
+      "id": "RC-06",
+      "title": "Immediate and scheduled execution",
+      "criteria": "A local supervisor executes only explicitly approved exact plans via typed target adapters; enforce windows, bounded concurrency and resources, no automatic unrelated release; durable scheduling across host restarts and missed windows.",
+      "sourcePaths": [
+        "execution.mjs",
+        "deployment-store.mjs"
+      ],
+      "verification": "Real immediate/scheduled isolated and production-equivalent activation; restart and missed-window tests",
+      "dependencies": [
+        "RC-02",
+        "RC-04",
+        "RC-05"
+      ]
+    },
+    {
+      "id": "RC-07",
+      "title": "Durable orchestration and recovery",
+      "criteria": "All specified states and legal transitions, transactions, checkpoints, correlation IDs, duplicate protection, per-target/shared-resource locks, bounded concurrency/timeouts, safe retries, cancellation and interruption reconciliation; uncertain outcomes retain locks and never replay blindly.",
+      "sourcePaths": [
+        "deployment-store.mjs",
+        "execution.mjs",
+        "deployment-store.test.mjs"
+      ],
+      "verification": "Real process/host restart, duplicate/concurrent operations, timeout and interrupted activation/rollback tests",
+      "dependencies": [
+        "RC-04",
+        "RC-06"
+      ]
+    },
+    {
+      "id": "RC-08",
+      "title": "Backup and restoration",
+      "criteria": "Verified snapshots/manifests, integrity and retention, safe recovery point, configuration and database fixtures restored and verified; no overwrites of newer production data.",
+      "sourcePaths": [
+        "execution.mjs",
+        "deployment-store.test.mjs"
+      ],
+      "verification": "Per-target backup/restore receipts and database migration fixtures",
+      "dependencies": [
+        "RC-02"
+      ]
+    },
+    {
+      "id": "RC-09",
+      "title": "Rollback where safe",
+      "criteria": "Previous immutable release retained, health-driven and explicit rollback, durable restart recovery and rollback-failure handling; prove previous runtime health and identity.",
+      "sourcePaths": [
+        "execution.mjs",
+        "deployment-store.mjs"
+      ],
+      "verification": "Each reversible adapter real activation/rollback and injected failure",
+      "dependencies": [
+        "RC-02",
+        "RC-07",
+        "RC-08"
+      ]
+    },
+    {
+      "id": "RC-10",
+      "title": "Irreversible migration recovery",
+      "criteria": "Separate migration from code activation, compatibility and recovery policy; block unsafe migration or restore; independently qualify alternate recovery strategy.",
+      "sourcePaths": [
+        "admission.mjs"
+      ],
+      "verification": "Isolated representative migrations, forward recovery and data preservation tests",
+      "dependencies": [
+        "RC-02",
+        "RC-08"
+      ]
+    },
+    {
+      "id": "RC-11",
+      "title": "MTerm independent recovery continuity",
+      "criteria": "Verify actual shared runtime/connector relationship; immutable versions, staged candidate checks, draining, recoverable activation, independent connection, backward-compatible schemas and rediscovery; never interrupt both paths or require routine reinstall.",
+      "sourcePaths": [
+        "catalog.mjs"
+      ],
+      "verification": "Actual dual-path qualification, tool schema and in-flight request continuity evidence",
+      "dependencies": [
+        "RC-02",
+        "RC-09"
+      ]
+    },
+    {
+      "id": "RC-12",
+      "title": "Controller self-update",
+      "criteria": "Independent supervisor, immutable verified releases, preflight, staged activation, versioned state migration, previous runtime retention, recovery/rollback and emergency control; qualify interruptions before live update.",
+      "sourcePaths": [
+        "execution.mjs"
+      ],
+      "verification": "Independent supervisor and isolated real update/restart/rollback qualification",
+      "dependencies": [
+        "RC-04",
+        "RC-07",
+        "RC-09"
+      ]
+    },
+    {
+      "id": "RC-13",
+      "title": "Authentication and malicious-request resistance",
+      "criteria": "Verify owner, cryptographic JWT signature/issuer/audience/time, every privileged endpoint, origin/CSRF/session/replay, strict input, no arbitrary shell, secret/log redaction, revocation, cross-account rejection and private origin exposure.",
+      "sourcePaths": [
+        "server.mjs",
+        "admission.mjs",
+        "release-control.test.mjs",
+        "inventory.test.mjs"
+      ],
+      "verification": "Negative security tests, live Access policy and route validation, independent review",
+      "dependencies": [
+        "RC-04",
+        "RC-05"
+      ]
+    },
+    {
+      "id": "RC-14",
+      "title": "Working dashboard and owner hub",
+      "criteria": "Responsive accessible overview, inventory/search/filter, update counts, exact comparison/release changes, CI/eligibility, queue/calendar/health/progress/history/rollback/settings/recovery; actual controls, honest statuses and discoverable owner hub card.",
+      "sourcePaths": [
+        "index.html",
+        "app.js",
+        "style.css"
+      ],
+      "verification": "Desktop/mobile authenticated end-to-end browser and accessibility tests",
+      "dependencies": [
+        "RC-03",
+        "RC-05",
+        "RC-06",
+        "RC-09"
+      ]
+    },
+    {
+      "id": "RC-15",
+      "title": "Authenticated production dashboard",
+      "criteria": "Recoverable deployed exact controller reachable at owner URL; genuine signed-in owner can complete advertised workflows while unauthorized access is rejected; preserve Cloudflare ingress/security.",
+      "sourcePaths": [
+        "server.mjs"
+      ],
+      "verification": "Owner browser evidence and exact deployed version/route receipt",
+      "dependencies": [
+        "RC-13",
+        "RC-14"
+      ]
+    },
+    {
+      "id": "RC-16",
+      "title": "Build, test, security and repository gates",
+      "criteria": "Comprehensive deterministic local and hosted gates for exact candidate including all spec section 18 scenarios, resource/external outage, corruption, migrations, multiple components, scheduling/DST, self-update, connection continuity and UX; no skipped/missing evidence treated as pass; quota-aware CI, no paid usage.",
+      "sourcePaths": [
+        "release-control.test.mjs",
+        "deployment-store.test.mjs",
+        "inventory.test.mjs"
+      ],
+      "verification": "Exact commit local/hosted results, security scans and test manifest",
+      "dependencies": [
+        "RC-02",
+        "RC-04",
+        "RC-06",
+        "RC-07",
+        "RC-10",
+        "RC-11",
+        "RC-12",
+        "RC-14"
+      ]
+    },
+    {
+      "id": "RC-17",
+      "title": "Independent review and findings",
+      "criteria": "Separate review of exact candidate, all acceptance-blocking findings resolved, protected branch/repository rules preserved, no fabricated approval or bypass.",
+      "sourcePaths": [
+        "README.md"
+      ],
+      "verification": "Independent review artifacts, fixes and exact-head re-review",
+      "dependencies": [
+        "RC-16"
+      ]
+    },
+    {
+      "id": "RC-18",
+      "title": "Traceable artifacts and measured resource impact",
+      "criteria": "Immutable source/artifact/digests, build receipts, bounded logs/cache, rate awareness/dedup/backoff/on-demand checks, resource admission and quantified baseline/candidate cost/resource results; no new unnecessary cloud services.",
+      "sourcePaths": [
+        "admission.mjs",
+        "deployment-store.mjs",
+        "controller.mjs"
+      ],
+      "verification": "Exact source/runtime/artifact receipts, benchmark and rate/quota evidence",
+      "dependencies": [
+        "RC-02",
+        "RC-03",
+        "RC-16"
+      ]
+    },
+    {
+      "id": "RC-19",
+      "title": "Operations and disaster recovery documentation",
+      "criteria": "Complete enrollment/release/scheduler/backup/restore/rollback/self-update/recovery instructions, configuration templates, manual independent emergency procedures, non-sensitive durable evidence and operational delivery.",
+      "sourcePaths": [
+        "README.md",
+        "acceptance-register.json"
+      ],
+      "verification": "Independent runbook walkthrough and restoration exercise",
+      "dependencies": [
+        "RC-08",
+        "RC-09",
+        "RC-12",
+        "RC-14"
+      ]
+    },
+    {
+      "id": "RC-20",
+      "title": "Final operational delivery, no mandatory blockers",
+      "criteria": "Qualified exact revision committed/reviewed/merged through authorized workflow, deployed with verified installed identity, owner auth and recovery path; all preceding mandatory gates pass, no unresolved acceptance-blocking defects or external restrictions.",
+      "sourcePaths": [
+        "acceptance-register.json"
+      ],
+      "verification": "Final immutable acceptance evaluation and deployment receipt",
+      "dependencies": [
+        "RC-01",
+        "RC-02",
+        "RC-03",
+        "RC-04",
+        "RC-05",
+        "RC-06",
+        "RC-07",
+        "RC-08",
+        "RC-09",
+        "RC-10",
+        "RC-11",
+        "RC-12",
+        "RC-13",
+        "RC-14",
+        "RC-15",
+        "RC-16",
+        "RC-17",
+        "RC-18",
+        "RC-19"
+      ]
+    }
+  ]
+}

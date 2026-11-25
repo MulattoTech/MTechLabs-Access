@@ -5,7 +5,8 @@ let state=null,working=false;
 const el=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;};
 const $=id=>document.getElementById(id);
 function link(label,url,cls){const a=el('a',cls,label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;}
-function time(s){return s?new Date(s).toLocaleString():'Not yet checked';}
+function time(s){return s?new Date(s).toLocaleString('en-US',{timeZone:'America/Chicago',timeZoneName:'short'}):'Not yet checked';}
+const canCheck=p=>!p.archived&&p.enrollment!=='discovered'&&!['not-observed','archive-changed','default-branch-changed'].includes(p.inventoryStatus);
 function short(s){return s?s.slice(0,10):'Unknown';}
 function message(s){$('message').textContent=s;}
 async function api(route,data){
@@ -17,7 +18,7 @@ function setBusy(v){working=v;$('check-all').disabled=v||!state;render();}
 async function perform(fn,start,end){if(working)return;setBusy(true);message(start);try{state=await fn();message(end);}catch(e){message(e.message||'Operation failed.');}finally{setBusy(false);}}
 function render(){
  if(!state)return;
- const ps=state.projects,active=ps.filter(p=>!p.archived);
+ const ps=state.projects,active=ps.filter(canCheck);
  $('count').textContent=active.length;$('checked').textContent=active.filter(p=>p.head?.status==='ok').length;$('changed').textContent=active.filter(p=>p.head?.sha&&p.head.previousSha&&p.head.sha!==p.head.previousSha).length;$('queued').textContent=active.filter(p=>p.plan).length;
  $('check-all').disabled=working;
  const q=$('search').value.toLowerCase(),f=$('filter').value;
@@ -26,14 +27,16 @@ function render(){
   if(![p.name,p.repo,p.target,p.kind].join(' ').toLowerCase().includes(q))continue;
   if(f==='active'&&p.archived||f==='changed'&&!(p.head?.previousSha&&p.head.sha!==p.head.previousSha)||f==='plans'&&!p.plan||f==='mapped'&&['Repository','Archived'].includes(p.kind))continue;
   const h=p.head,plan=p.plan,d=h?.deployment,row=el('article','row'),name=el('div'),head=el('div'),deploy=el('div'),act=el('div');
-  name.append(el('h3','',p.name),el('small','',p.repo),el('small','',p.kind+' · '+p.target));
+  name.append(el('h3','',p.name),el('small','',p.repo),el('small','',p.kind+' · '+p.target),el('small','',p.enrollment==='discovered'?'Discovered — source enrollment required':p.inventoryStatus==='observed'?'Inventory confirmed':('Inventory: '+(p.inventoryStatus||'not checked'))));
   head.append(el('span','pill '+(h?.status==='ok'?'ok':h?.status==='unavailable'?'warn':''),p.archived?'Archived':h?.status==='ok'?(h.previousSha&&h.sha!==h.previousSha?'New head observed':'Head checked'):h?.status==='unavailable'?'Check unavailable':'Not checked'));
   if(h?.sha)head.append(link(short(h.sha),'https://github.com/'+p.repo+'/commit/'+h.sha,'commit'));else head.append(el('span','commit','—'));
   head.append(el('small','',p.branch+' · '+time(h?.checkedAt)));
   deploy.append(el('span','pill '+(d?.state==='hint'?'warn':''),d?.state==='reported'?'Runtime label':d?.state==='hint'?'Image-tag hint':'Deployment unknown'),el('span','commit',short(d?.sha)),el('small','',d?.detail||'No enrolled deployment identity.'));
+  if(h?.comparison)deploy.append(el('small','', 'Revision comparison: '+h.comparison.status+' ('+h.comparison.confidence+')'));
   if(d?.sha&&h?.sha&&d.sha!==h.sha)deploy.append(link('Compare observed reference','https://github.com/'+p.repo+'/compare/'+d.sha+'...'+h.sha));
   const actions=el('div','actions');
-  actions.append(button('Check',()=>perform(()=>api('check',{ids:[p.id]}),'Checking '+p.name+'…','Repository check complete.'),p.archived),button('Prepare',()=>perform(()=>api('prepare',{id:p.id,sha:h.sha}),'Preparing exact revision…','Release preparation saved. Nothing deployed.'),p.archived||h?.status!=='ok'),link('GitHub','https://github.com/'+p.repo),link('Actions','https://github.com/'+p.repo+'/actions'));
+  actions.append(button('Check',()=>perform(()=>api('check',{ids:[p.id]}),'Checking '+p.name+'…','Repository check complete.'),!canCheck(p)),button('Prepare',()=>perform(()=>api('prepare',{id:p.id,sha:h.sha}),'Preparing exact revision…','Release preparation saved. Nothing deployed.'),!canCheck(p)||h?.status!=='ok'),link('GitHub','https://github.com/'+p.repo),link('Actions','https://github.com/'+p.repo+'/actions'));
+  if(p.enrollment==='discovered'&&!p.archived)actions.append(button('Enroll source',()=>perform(()=>api('enroll',{id:p.id,branch:p.branch}),'Enrolling source only…','Source enrolled. Deployment remains blocked.'),state.inventory?.status!=='ok'));
   if(p.url)actions.append(link('Service',p.url));
   act.append(actions,el('small','',plan?'Plan: '+plan.status+' · '+short(plan.sha):'No release prepared'));
   row.append(name,head,deploy,act);
@@ -55,6 +58,6 @@ function render(){
  if(!events.children.length)events.append(el('p','muted','No release activity yet.'));
 }
 $('search').addEventListener('input',render);$('filter').addEventListener('change',render);
-$('check-all').addEventListener('click',()=>perform(async()=>{let result=state;const ids=state.projects.filter(p=>!p.archived).map(p=>p.id);for(let i=0;i<ids.length;i+=6){message('Checking '+Math.min(i+6,ids.length)+' of '+ids.length+' repositories…');result=await api('check',{ids:ids.slice(i,i+6)});state=result;render();}return result;},'Checking repositories…','Check complete. Unknown deployment versions remain explicitly unknown.'));
+$('check-all').addEventListener('click',()=>perform(async()=>{let result=await api('discover',{});state=result;render();if(result.inventory?.status!=='ok')throw Error('Repository discovery unavailable. Previous observations retained.');const ids=state.projects.filter(canCheck).map(p=>p.id);for(let i=0;i<ids.length;i+=6){message('Checking '+Math.min(i+6,ids.length)+' of '+ids.length+' repositories…');result=await api('check',{ids:ids.slice(i,i+6)});state=result;render();}return result;},'Checking repositories…','Inventory and source checks complete. Unknown deployment versions remain explicitly unknown.'));
 api('status').then(s=>{state=s;message('Ready. Checks are on demand; deployments require a qualified adapter.');render();}).catch(()=>message('Release controller unavailable or owner authorization required.'));
 })();

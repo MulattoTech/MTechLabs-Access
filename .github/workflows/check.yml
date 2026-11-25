@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: '24'
       - run: npm test
+      - run: npm run test:release-control
       - run: npm run check
       - run: npm run build
       - name: Check generated UI matches its sources
