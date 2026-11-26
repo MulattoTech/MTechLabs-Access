@@ -10,7 +10,8 @@ export async function captureWindowsRuntime(roles = {}) {
   if (!roles || typeof roles !== 'object' || Array.isArray(roles) ||
       Object.keys(roles).some(key => !['production', 'development'].includes(key))) throw new Error('invalid_observation_request');
   const payload = JSON.stringify({ ...roles, currentProcessId: process.pid, currentImage: process.execPath });
-  if (Buffer.byteLength(payload) > 16384) throw new Error('runtime_observation_input_limit');
+  const payloadBytes = Buffer.byteLength(payload);
+  if (payloadBytes > 16384) throw new Error('runtime_observation_input_limit');
   return new Promise((resolve, reject) => {
     const child = execFile(WINDOWS_POWERSHELL, ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', probe], {
       windowsHide: true, encoding: 'utf8', timeout: 15000, maxBuffer: 32768,

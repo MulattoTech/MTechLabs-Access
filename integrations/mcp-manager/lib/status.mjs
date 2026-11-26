@@ -132,9 +132,13 @@ export async function collectStatus(config, startedAt = Date.now()) {
     readDeployment(config.stateDirectory),
   ]);
   const { packageVersion, installed } = packageInfo;
+  const activeInitializedClients = new Set(
+    instances
+      .filter(instance => instance.state === 'active' && instance.initialized)
+      .map(instance => instance.client)
+  );
   for (const item of inventory.entries) {
-    if (item.management === 'managed' &&
-        instances.some(instance => instance.client === item.client && instance.state === 'active' && instance.initialized)) {
+    if (item.management === 'managed' && activeInitializedClients.has(item.client)) {
       item.connection = 'connected';
     }
   }
