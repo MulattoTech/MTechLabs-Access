@@ -42,8 +42,10 @@ async function repoInspect(repo) {
 }
 
 async function codeDiagnostics(repo, signal) {
-  const diff = await git(repo, ['diff', '--check', 'HEAD', '--'], { signal, maxOutput: 9000 });
-  const changed = await git(repo, ['diff', '--name-only', '-z', 'HEAD', '--'], { signal, maxOutput: 30000 });
+  const [diff, changed] = await Promise.all([
+    git(repo, ['diff', '--check', 'HEAD', '--'], { signal, maxOutput: 9000 }),
+    git(repo, ['diff', '--name-only', '-z', 'HEAD', '--'], { signal, maxOutput: 30000 }),
+  ]);
   if (!changed.ok) throw new Error('git_diff_failed');
   const rawEntries = changed.output
     .split('\0')
@@ -51,22 +53,24 @@ async function codeDiagnostics(repo, signal) {
     .map(entry => entry.trim())
     .filter(Boolean)
     .filter(entry => !entry.startsWith('warning:'));
-  const files = [...new Set(rawEntries)].filter(f => /\.(mjs|cjs|js)$/.test(f)).slice(0, 25);
-  const syntax = [];
-  for (const file of files) {
-    const absolute = path.resolve(repo, file);
-    const relative = path.relative(repo, absolute);
-    if (relative === '..' || relative.startsWith('..' + path.sep)) continue;
-    const canonical = await fs.realpath(absolute).catch(() => null);
-    const inside = canonical && path.relative(repo, canonical);
-    if (!inside || inside === '..' || inside.startsWith('..' + path.sep) || path.isAbsolute(inside)) {
-      syntax.push({ file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' });
-      continue;
+  const uniqueFiles = [...new Set(rawEntries)].filter(f => /\.(mjs|cjs|js)$/.test(f));
+  const files = uniqueFiles.slice(0, 25);
+  const canonicalRepo = await fs.realpath(repo);
+  const syntax = await Promise.all(files.map(async file => {
+    const absolute = path.resolve(canonicalRepo, file);
+    const relative = path.relative(canonicalRepo, absolute);
+    if (relative === '..' || relative.startsWith('..' + path.sep)) {
+      return { file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' };
     }
-    const checked = await runCommand('node', ['--check', canonical], { signal, timeoutMs: 8000, maxOutput: 4000 });
-    syntax.push({ file, ...summary(checked) });
-  }
-  return { whitespace: summary(diff), syntax, moreFilesSkipped: [...new Set(rawEntries)].filter(f => /\.(mjs|cjs|js)$/.test(f)).length > 25,
+    const canonical = await fs.realpath(absolute).catch(() => null);
+    const inside = canonical && path.relative(canonicalRepo, canonical);
+    if (!inside || inside === '..' || inside.startsWith('..' + path.sep) || path.isAbsolute(inside)) {
+      return { file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' };
+    }
+    const checked = await runCommand(process.execPath, ['--check', canonical], { signal, timeoutMs: 8000, maxOutput: 4000 });
+    return { file, ...summary(checked) };
+  }));
+  return { whitespace: summary(diff), syntax, moreFilesSkipped: uniqueFiles.length > 25,
     note: 'No package scripts, tests or application modules were executed.' };
 }
 

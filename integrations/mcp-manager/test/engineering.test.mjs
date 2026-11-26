@@ -126,6 +126,10 @@ test('code diagnostics inspects syntax across changed JavaScript modules safely'
   execFileSync('git', ['-C', repoDir, 'commit', '-q', '-m', 'init'], { stdio: 'ignore' });
   await fs.writeFile(path.join(repoDir, 'index.mjs'), 'export const answer = 84;\n', 'utf8');
   const { codeOperation } = await import('../providers/code.mjs');
+  const inspected = await codeOperation('mterm_repo_inspect', { rootId: 'sample' }, repoDir, f.config);
+  assert.equal(inspected.clean, false);
+  assert.ok(inspected.modifiedFiles.some(line => line.endsWith('index.mjs')));
+  assert.equal(inspected.manifests.includes('package.json'), false);
   const diag = await codeOperation('mterm_code_diagnostics', { rootId: 'sample' }, repoDir, f.config);
   assert.equal(diag.whitespace.ok, true);
   assert.equal(diag.syntax.length, 1);
