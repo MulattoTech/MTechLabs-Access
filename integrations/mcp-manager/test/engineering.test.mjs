@@ -112,3 +112,23 @@ test('local HTTP toolkit controls require bearer and reject root/path injection'
   assert.equal(created.body.job.kind, 'vm_inventory');
   assert.equal(created.body.job.state, 'queued');
 });
+
+test('code diagnostics inspects syntax across changed JavaScript modules safely', async t => {
+  const f = await fixture(t);
+  const repoDir = path.join(f.directory, 'sample-repo');
+  await fs.mkdir(repoDir, { recursive: true });
+  const { execFileSync } = await import('node:child_process');
+  execFileSync('git', ['-C', repoDir, 'init', '-q'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'config', 'user.email', 'test@example.invalid'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'config', 'user.name', 'Test User'], { stdio: 'ignore' });
+  await fs.writeFile(path.join(repoDir, 'index.mjs'), 'export const answer = 42;\n', 'utf8');
+  execFileSync('git', ['-C', repoDir, 'add', 'index.mjs'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'commit', '-q', '-m', 'init'], { stdio: 'ignore' });
+  await fs.writeFile(path.join(repoDir, 'index.mjs'), 'export const answer = 84;\n', 'utf8');
+  const { codeOperation } = await import('../providers/code.mjs');
+  const diag = await codeOperation('mterm_code_diagnostics', { rootId: 'sample' }, repoDir, f.config);
+  assert.equal(diag.whitespace.ok, true);
+  assert.equal(diag.syntax.length, 1);
+  assert.equal(diag.syntax[0].file, 'index.mjs');
+  assert.equal(diag.syntax[0].ok, true);
+});
