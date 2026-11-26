@@ -142,7 +142,6 @@ export async function collectStatus(config, startedAt = Date.now()) {
   const lowMemoryFloorBytes = config.minimumFreeMemoryMiB * 1024 * 1024;
   const lowDiskFloorBytes = (config.minimumFreeDiskMiB ?? 10240) * 1024 * 1024;
   const processMemory = process.memoryUsage();
-  const coordinator = await readCoordinatorStatus(config.stateDirectory, { policyPath: config.policyPath });
   if (!coordinator.available) warnings.push('The shared admission coordinator is unavailable; managed tool execution fails closed.');
   return {
     schemaVersion: 1,
@@ -158,7 +157,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
     toolkit,
     toolkitJobs,
     runtime: { nodeVersion: process.version, packageVersion, installed },
-    deployment: await readDeployment(config.stateDirectory),
+    deployment,
     resources: {
       freeMemoryBytes,
       totalMemoryBytes: os.totalmem(),
