@@ -92,34 +92,46 @@ async function readInstances(stateDirectory) {
 }
 
 export async function collectStatus(config, startedAt = Date.now()) {
-  requireValidatedDevConfig(config);
-  let policy = null;
   const warnings = [];
-  try { policy = await readPolicy(config.policyPath); } catch { warnings.push('Policy is unavailable or invalid; managed tool execution fails closed.'); }
-  let toolkit = null;
-  try { toolkit = projectToolkit(await readToolkit(config)); }
-  catch { warnings.push('Engineering toolkit configuration is unavailable; specialized execution fails closed.'); }
-  let toolkitJobs = null;
-  try { toolkitJobs = await jobSummary(config); }
-  catch { warnings.push('Durable job history could not be inspected.'); }
-  let packageVersion = null;
-  let installed = false;
-  try {
-    const version = (await readBoundedJson(config.serverPackageJsonPath)).version;
-    if (typeof version === 'string' && /^\d+\.\d+\.\d+(?:[-+][a-zA-Z0-9.-]+)?$/.test(version)) packageVersion = version;
-    installed = (await fs.stat(config.serverPath)).isFile() && (await fs.stat(config.nodePath)).isFile();
-  } catch { warnings.push('The configured Desktop Commander installation could not be verified.'); }
-  let inventory;
-  try { inventory = sanitizeInventory(await readBoundedJson(config.inventoryPath)); } catch {
-    inventory = sanitizeInventory(null);
-    warnings.push('The MCP configuration inventory is unavailable.');
-  }
-  let disk = null;
-  try {
-    const stat = await fs.statfs(config.stateDirectory);
-    disk = { freeBytes: stat.bavail * stat.bsize, totalBytes: stat.blocks * stat.bsize };
-  } catch { warnings.push('Installation-volume disk availability could not be read.'); }
-  const instances = await readInstances(config.stateDirectory);
+  const [policy, toolkit, toolkitJobs, packageInfo, inventory, disk, instances, coordinator, deployment] = await Promise.all([
+    readPolicy(config.policyPath).catch(() => {
+      warnings.push('Policy is unavailable or invalid; managed tool execution fails closed.');
+      return null;
+    }),
+    readToolkit(config).then(projectToolkit).catch(() => {
+      warnings.push('Engineering toolkit configuration is unavailable; specialized execution fails closed.');
+      return null;
+    }),
+    jobSummary(config).catch(() => {
+      warnings.push('Durable job history could not be inspected.');
+      return null;
+    }),
+    (async () => {
+      let pkgVersion = null;
+      let pkgInstalled = false;
+      try {
+        const version = (await readBoundedJson(config.serverPackageJsonPath)).version;
+        if (typeof version === 'string' && /^\d+\.\d+\.\d+(?:[-+][a-zA-Z0-9.-]+)?$/.test(version)) pkgVersion = version;
+        const [serverStat, nodeStat] = await Promise.all([fs.stat(config.serverPath), fs.stat(config.nodePath)]);
+        pkgInstalled = serverStat.isFile() && nodeStat.isFile();
+      } catch {
+        warnings.push('The configured Desktop Commander installation could not be verified.');
+      }
+      return { packageVersion: pkgVersion, installed: pkgInstalled };
+    })(),
+    readBoundedJson(config.inventoryPath).then(sanitizeInventory).catch(() => {
+      warnings.push('The MCP configuration inventory is unavailable.');
+      return sanitizeInventory(null);
+    }),
+    fs.statfs(config.stateDirectory).then(stat => ({ freeBytes: stat.bavail * stat.bsize, totalBytes: stat.blocks * stat.bsize })).catch(() => {
+      warnings.push('Installation-volume disk availability could not be read.');
+      return null;
+    }),
+    readInstances(config.stateDirectory),
+    readCoordinatorStatus(config.stateDirectory, { policyPath: config.policyPath }),
+    readDeployment(config.stateDirectory),
+  ]);
+  const { packageVersion, installed } = packageInfo;
   for (const item of inventory.entries) {
     if (item.management === 'managed' &&
         instances.some(instance => instance.client === item.client && instance.state === 'active' && instance.initialized)) {
@@ -130,7 +142,6 @@ export async function collectStatus(config, startedAt = Date.now()) {
   const lowMemoryFloorBytes = config.minimumFreeMemoryMiB * 1024 * 1024;
   const lowDiskFloorBytes = (config.minimumFreeDiskMiB ?? 10240) * 1024 * 1024;
   const processMemory = process.memoryUsage();
-  const coordinator = await readCoordinatorStatus(config.stateDirectory, { policyPath: config.policyPath });
   if (!coordinator.available) warnings.push('The shared admission coordinator is unavailable; managed tool execution fails closed.');
   return {
     schemaVersion: 1,
@@ -146,7 +157,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
     toolkit,
     toolkitJobs,
     runtime: { nodeVersion: process.version, packageVersion, installed },
-    deployment: await readDeployment(config.stateDirectory),
+    deployment,
     resources: {
       freeMemoryBytes,
       totalMemoryBytes: os.totalmem(),
