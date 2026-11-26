@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "scope": "Frozen 42-group suite against exact previous main and first corrected working source",
+  "acceptedFocusedContract": true,
+  "frozenTestSha256": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee",
+  "baseline": {
+    "commit": "2a4e3fba0544bb22ff15785dcf1ae46c61891c3f",
+    "tree": "502fc1a2de54ef111316747e4bc3c096922d76c7",
+    "buildExit": 0,
+    "testExit": 1,
+    "totals": {
+      "tests": 42,
+      "pass": 0,
+      "fail": 6,
+      "cancelled": 0,
+      "skipped": 36,
+      "todo": 0
+    },
+    "capabilityGaps": [
+      {
+        "case": 1,
+        "title": "DEV edge descriptor and authorization API capability is available",
+        "kind": "missing new module, not regression"
+      },
+      {
+        "case": 2,
+        "title": "dedicated DEV entry capability exists without a scheduled production worker",
+        "kind": "missing new module, not regression"
+      }
+    ],
+    "causalRoutingRed": [
+      {
+        "case": 38,
+        "title": "Worker reserves the canonical DEV resource even when a website grant would allow its hostname",
+        "observedStatus": 200,
+        "expectedStatus": 503
+      },
+      {
+        "case": 39,
+        "title": "Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing",
+        "observedStatus": 200,
+        "expectedStatus": 404
+      },
+      {
+        "case": 40,
+        "title": "Worker reserved DEV routes do not eagerly touch a poison production DB binding",
+        "observedStatus": 500,
+        "expectedStatus": 503
+      },
+      {
+        "case": 42,
+        "title": "Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing",
+        "observedStatus": 200,
+        "expectedStatus": 404
+      }
+    ],
+    "neighborControls": "Canonical/public-origin/trailing-dot routing groups first assert successful signed legacy delegated gateway including response and enforced header; poison DB case separately observes early 500 versus required terminal 503.",
+    "skips": "36 new API/entry groups explicitly skip because the new capability is absent; no behavioral green is claimed.",
+    "receiptSha256": "d5b074101a08eb7c1f164bc7d487e7974349da4e9824249ffb4a083827861a35"
+  },
+  "candidate": {
+    "totals": {
+      "tests": 42,
+      "pass": 42,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0,
+    "inputsUnchanged": true,
+    "sourceInputs": {
+      "src/mcp-dev-edge.js": "a63b77d9f2306a8ee9b112b431d76dea54c45caf8f11a509b92a8bec55965484",
+      "src/mcp-dev-entry.js": "e1b48326d7ef159263a18de0d13edffe6c633c39907d3442941afe4a6f9eb8dd",
+      "src/index.js": "4837e23c7ab3fa8cf678f3107e8ca06f46a19fc83ac4b02f95861b9f5234af9b",
+      "src/security.js": "272c32a3f9bd0284c1ab78c0a4cf285a9a46a7c1d717c9423deebedebff88db5",
+      "src/db.js": "a92fa26b0c97b07f2dd3b4cabc83029de7e7e63f85921bc70855738ccea3b6c2",
+      "integrations/mcp-manager/lib/dev-runtime-plan.mjs": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+      "tests/mcp-dev-edge.test.js": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee"
+    },
+    "receiptSha256": "a8bd3fc229c196b52fa577e27ad06a2e8a36cf8070ddc6b50a54fcf78d6d689f"
+  },
+  "limitations": [
+    "Only source fixture behavior, no operational DEV account/profile, provider route/App/DB allocation, OAuth grant or backend activation acceptance.",
+    "All response readiness and activation flags remain false.",
+    "Test author is distinct from independent whole-source reviewer but not independent of these test assertions."
+  ]
+}

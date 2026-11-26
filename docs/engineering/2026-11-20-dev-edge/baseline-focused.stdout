@@ -1,0 +1,412 @@
+TAP version 13
+# Subtest: DEV edge descriptor and authorization API capability is available
+not ok 1 - DEV edge descriptor and authorization API capability is available
+  ---
+  duration_ms: 66.911397
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:217:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    missing module is a capability gap, not a behavioral regression
+    + actual - expected
+    
+    + Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-edge.js' imported from /workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js
+    +     at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    +     at moduleResolve (node:internal/modules/esm/resolve:879:10)
+    +     at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    +     at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    +     at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    +     at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    +     at #resolve (node:internal/modules/esm/loader:687:17)
+    +     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    +     at node:internal/modules/esm/loader:636:32
+    +     at TracingChannel.tracePromise (node:diagnostics_channel:370:14) {
+    +   code: 'ERR_MODULE_NOT_FOUND',
+    +   url: 'file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-edge.js'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot find module '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-edge.js' imported from /workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js"
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    moduleResolve (node:internal/modules/esm/resolve:879:10)
+    defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    #resolve (node:internal/modules/esm/loader:687:17)
+    ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    node:internal/modules/esm/loader:636:32
+    TracingChannel.tracePromise (node:diagnostics_channel:370:14)
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:218:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: dedicated DEV entry capability exists without a scheduled production worker
+not ok 2 - dedicated DEV entry capability exists without a scheduled production worker
+  ---
+  duration_ms: 1.40871
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:226:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    missing dedicated entry is a capability gap
+    + actual - expected
+    
+    + Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-entry.js' imported from /workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js
+    +     at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    +     at moduleResolve (node:internal/modules/esm/resolve:879:10)
+    +     at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    +     at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    +     at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    +     at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    +     at #resolve (node:internal/modules/esm/loader:687:17)
+    +     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    +     at node:internal/modules/esm/loader:636:32
+    +     at TracingChannel.tracePromise (node:diagnostics_channel:370:14) {
+    +   code: 'ERR_MODULE_NOT_FOUND',
+    +   url: 'file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-entry.js'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot find module '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/src/mcp-dev-entry.js' imported from /workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js"
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    moduleResolve (node:internal/modules/esm/resolve:879:10)
+    defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    #resolve (node:internal/modules/esm/loader:687:17)
+    ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    node:internal/modules/esm/loader:636:32
+    TracingChannel.tracePromise (node:diagnostics_channel:370:14)
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:227:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: DEV descriptor is canonically ordered deeply copied and frozen without activation
+ok 3 - DEV descriptor is canonically ordered deeply copied and frozen without activation # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.525575
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects missing unknown array null and nonplain records
+ok 4 - DEV descriptor rejects missing unknown array null and nonplain records # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.203267
+  type: 'test'
+  ...
+# Subtest: DEV descriptor refuses getters hidden keys and symbols without invoking accessors
+ok 5 - DEV descriptor refuses getters hidden keys and symbols without invoking accessors # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.094393
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects authority claims owner aliases and malformed instance identifiers
+ok 6 - DEV descriptor rejects authority claims owner aliases and malformed instance identifiers # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.061774
+  type: 'test'
+  ...
+# Subtest: DEV descriptor rejects every production or development endpoint alias and retarget
+ok 7 - DEV descriptor rejects every production or development endpoint alias and retarget # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.212852
+  type: 'test'
+  ...
+# Subtest: DEV descriptor independently separates all routing store and credential identities
+ok 8 - DEV descriptor independently separates all routing store and credential identities # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.173242
+  type: 'test'
+  ...
+# Subtest: DEV descriptor fixes credential and authorization bindings without production defaults
+ok 9 - DEV descriptor fixes credential and authorization bindings without production defaults # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.25153
+  type: 'test'
+  ...
+# Subtest: DEV descriptor binds exact manager ports and loopback Host declarations
+ok 10 - DEV descriptor binds exact manager ports and loopback Host declarations # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.173653
+  type: 'test'
+  ...
+# Subtest: DEV descriptor pins issuer and challenge metadata to canonical dedicated URLs
+ok 11 - DEV descriptor pins issuer and challenge metadata to canonical dedicated URLs # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.104619
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher proves declarations only and returns no runtime or activation authority
+ok 12 - DEV runtime matcher proves declarations only and returns no runtime or activation authority # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.127343
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher is compatible with the complete existing validated runtime plan schema
+ok 13 - DEV runtime matcher is compatible with the complete existing validated runtime plan schema # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.042724
+  type: 'test'
+  ...
+# Subtest: DEV runtime matcher rejects every mismatched routing field port and top-level binding
+ok 14 - DEV runtime matcher rejects every mismatched routing field port and top-level binding # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.077588
+  type: 'test'
+  ...
+# Subtest: DEV valid owner reaches the disabled terminal with no body backend or production work
+ok 15 - DEV valid owner reaches the disabled terminal with no body backend or production work # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.05292
+  type: 'test'
+  ...
+# Subtest: DEV rejects invalid routes before reading configuration keys database or body
+ok 16 - DEV rejects invalid routes before reading configuration keys database or body # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.199191
+  type: 'test'
+  ...
+# Subtest: DEV method and explicit Origin refusals precede all configuration and identity work
+ok 17 - DEV method and explicit Origin refusals precede all configuration and identity work # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.041213
+  type: 'test'
+  ...
+# Subtest: DEV permits only declared browser origins or absent Origin while staying disabled
+ok 18 - DEV permits only declared browser origins or absent Origin while staying disabled # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.025209
+  type: 'test'
+  ...
+# Subtest: DEV metadata remains explicitly unavailable without fabricated OAuth discovery or owner lookup
+ok 19 - DEV metadata remains explicitly unavailable without fabricated OAuth discovery or owner lookup # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.023256
+  type: 'test'
+  ...
+# Subtest: DEV config requires exact canonical JSON and rejects duplicate reordered or oversized text before authentication
+ok 20 - DEV config requires exact canonical JSON and rejects duplicate reordered or oversized text before authentication # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.021893
+  type: 'test'
+  ...
+# Subtest: DEV captures only data environment bindings and rejects relevant accessors without invoking them
+ok 21 - DEV captures only data environment bindings and rejects relevant accessors without invoking them # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.023706
+  type: 'test'
+  ...
+# Subtest: DEV bearer bytes must match their declaration and cannot reuse production credentials
+ok 22 - DEV bearer bytes must match their declaration and cannot reuse production credentials # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.083116
+  type: 'test'
+  ...
+# Subtest: DEV authorization store is mandatory distinct by handle and never falls back to production DB
+ok 23 - DEV authorization store is mandatory distinct by handle and never falls back to production DB # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.086911
+  type: 'test'
+  ...
+# Subtest: DEV ignores a poison production DB getter and does not read production bearer configuration
+ok 24 - DEV ignores a poison production DB getter and does not read production bearer configuration # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.040241
+  type: 'test'
+  ...
+# Subtest: DEV human authentication requires a real assertion rather than cookies bearer or descriptive identity
+ok 25 - DEV human authentication requires a real assertion rather than cookies bearer or descriptive identity # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.024988
+  type: 'test'
+  ...
+# Subtest: DEV signed assertions bind exact issuer signature algorithm and application token type
+ok 26 - DEV signed assertions bind exact issuer signature algorithm and application token type # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.021091
+  type: 'test'
+  ...
+# Subtest: DEV admits one exact audience and rejects production mixed duplicate or malformed audiences
+ok 27 - DEV admits one exact audience and rejects production mixed duplicate or malformed audiences # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.048364
+  type: 'test'
+  ...
+# Subtest: DEV JWT lifetime and human identity shape are checked before owner state access
+ok 28 - DEV JWT lifetime and human identity shape are checked before owner state access # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.073602
+  type: 'test'
+  ...
+# Subtest: DEV exact owner subject and normalized email must both match before database access
+ok 29 - DEV exact owner subject and normalized email must both match before database access # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.025949
+  type: 'test'
+  ...
+# Subtest: DEV owner row must be currently approved strictly typed and match the pinned owner
+ok 30 - DEV owner row must be currently approved strictly typed and match the pinned owner # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.020852
+  type: 'test'
+  ...
+# Subtest: DEV owner revocation is read on every request and equality revokes the prior token
+ok 31 - DEV owner revocation is read on every request and equality revokes the prior token # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.01978
+  type: 'test'
+  ...
+# Subtest: DEV authorization storage failure remains private and never consults grants or retries
+ok 32 - DEV authorization storage failure remains private and never consults grants or retries # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.019719
+  type: 'test'
+  ...
+# Subtest: DEV descriptor token store and prepare are captured before the first asynchronous digest
+ok 33 - DEV descriptor token store and prepare are captured before the first asynchronous digest # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.021012
+  type: 'test'
+  ...
+# Subtest: DEV pending key verification cannot retarget its captured descriptor or authorization store
+ok 34 - DEV pending key verification cannot retarget its captured descriptor or authorization store # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.020811
+  type: 'test'
+  ...
+# Subtest: DEV rechecks token expiry after the awaited owner-row lookup
+ok 35 - DEV rechecks token expiry after the awaited owner-row lookup # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.01971
+  type: 'test'
+  ...
+# Subtest: DEV request claims headers and body cannot enable activation or leak private traces
+ok 36 - DEV request claims headers and body cannot enable activation or leak private traces # SKIP Baseline DEV edge API is absent; not a passing behavioral result
+  ---
+  duration_ms: 0.40291
+  type: 'test'
+  ...
+# Subtest: dedicated DEV entry exposes only the disabled DEV surface and no production fallback
+ok 37 - dedicated DEV entry exposes only the disabled DEV surface and no production fallback # SKIP Baseline dedicated DEV entry is absent
+  ---
+  duration_ms: 0.040862
+  type: 'test'
+  ...
+# Subtest: Worker reserves the canonical DEV resource even when a website grant would allow its hostname
+not ok 38 - Worker reserves the canonical DEV resource even when a website grant would allow its hostname
+  ---
+  duration_ms: 34.289995
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:25:35'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:762:10)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing
+not ok 39 - Worker reserves the DEV origin hostname and malformed DEV paths before generic grant routing
+  ---
+  duration_ms: 7.491528
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:25:35'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 404
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 404
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:779:12)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Worker reserved DEV routes do not eagerly touch a poison production DB binding
+not ok 40 - Worker reserved DEV routes do not eagerly touch a poison production DB binding
+  ---
+  duration_ms: 1.718007
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:25:35'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    500 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:791:12)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: Worker configured DEV route authorizes only its captured DEV owner and remains activation disabled
+ok 41 - Worker configured DEV route authorizes only its captured DEV owner and remains activation disabled # SKIP Baseline dedicated DEV entry is absent
+  ---
+  duration_ms: 0.045379
+  type: 'test'
+  ...
+# Subtest: Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing
+not ok 42 - Worker terminally rejects trailing-dot DEV hostname aliases before generic grants or outbound routing
+  ---
+  duration_ms: 3.99505
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:25:35'
+  failureType: 'testCodeFailure'
+  error: |-
+    mcp-dev.m-techlabs.com.
+    
+    200 !== 404
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 404
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_edge_boundary/baseline/tests/mcp-dev-edge.test.js:820:12)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 0
+# fail 6
+# cancelled 0
+# skipped 36
+# todo 0
+# duration_ms 273.591649

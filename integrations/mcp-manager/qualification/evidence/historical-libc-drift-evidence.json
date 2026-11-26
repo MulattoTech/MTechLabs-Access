@@ -1,0 +1,322 @@
+[
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-arm",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-arm/1.3.4",
+    "metadataSha256": "7c456f32c9f363821d40c04ea55d68e068cf1da0d87dd723f2a42411af700cac",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-arm64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-arm64/1.3.4",
+    "metadataSha256": "ae6886fe1b96901cbf85c41740938dfa57dc74e1435c5ed084803086a474f9c5",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-ppc64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-ppc64/1.3.4",
+    "metadataSha256": "21de2fd0572bb7ea1ce74914c0f02dc2fb0e6a6c32c63180bc5f1ef3b96097b6",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "ppc64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-riscv64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-riscv64/1.3.4",
+    "metadataSha256": "d329438abfdebab5a24992f30e2be934048920c185d351f168f04bf1130a9c65",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "riscv64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-s390x",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-s390x/1.3.4",
+    "metadataSha256": "a1ea308ea460b724f1da6e251e0a4564415475b8e1b7a4722d4508a75269c9a5",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "s390x"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linux-x64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linux-x64/1.3.4",
+    "metadataSha256": "f88163320513e36d7dd201d0587c95d4bb4bd4a2e77901754a20647e803e7507",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "x64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linuxmusl-arm64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linuxmusl-arm64/1.3.4",
+    "metadataSha256": "4dc0d925fa4f45581f63ea6d4417d57bb58b3800cdafdc718f394ba577c96d75",
+    "registryLibc": [
+      "musl"
+    ],
+    "controlLibc": [
+      "musl"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-libvips-linuxmusl-x64",
+    "version": "1.3.4",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-libvips-linuxmusl-x64/1.3.4",
+    "metadataSha256": "8a7977500d66633080779d6712ec24246e0485f1b0025ccfd1ac2edca0cab5ad",
+    "registryLibc": [
+      "musl"
+    ],
+    "controlLibc": [
+      "musl"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "x64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-arm",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-arm/0.35.5",
+    "metadataSha256": "a43abc0feeaf57743a9dd735bc87452871556c534e6ec6e69684166399e3228f",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-arm64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-arm64/0.35.5",
+    "metadataSha256": "b93cc0f73c9f629e7a7b1afd6a824cd8a3a56d6dccdbdd1733905b2324f7763e",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-ppc64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-ppc64/0.35.5",
+    "metadataSha256": "f662290d9cf5cd2f166a4ce76ce8de6b674ab335b28a83cfeb5f553091d4c067",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "ppc64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-riscv64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-riscv64/0.35.5",
+    "metadataSha256": "eb199207319d75f77c59a52b6c0b3bf39e811d80104d6caecbd72f73b5c3d95b",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "riscv64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-s390x",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-s390x/0.35.5",
+    "metadataSha256": "44e764e8c0b6cefca50cae543c1b94a3faf95952e92f2114ea06409ffb787297",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "s390x"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linux-x64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linux-x64/0.35.5",
+    "metadataSha256": "e75ac6c6c9d9bd9a7111947f507721168f9b834ab4f762127bade2184bfb77bc",
+    "registryLibc": [
+      "glibc"
+    ],
+    "controlLibc": [
+      "glibc"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "x64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linuxmusl-arm64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linuxmusl-arm64/0.35.5",
+    "metadataSha256": "492538e6686d32d164159bec57f88063e1aad5d069d5f1f95ca1bf8a7ad5112e",
+    "registryLibc": [
+      "musl"
+    ],
+    "controlLibc": [
+      "musl"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "arm64"
+    ]
+  },
+  {
+    "path": "node_modules/@img/sharp-linuxmusl-x64",
+    "version": "0.35.5",
+    "registryUrl": "https://registry.npmjs.org/%40img%2Fsharp-linuxmusl-x64/0.35.5",
+    "metadataSha256": "6cee42e2e86d6daebcc724c23f29b267d63a066110f8afcd503a39194d5c6406",
+    "registryLibc": [
+      "musl"
+    ],
+    "controlLibc": [
+      "musl"
+    ],
+    "candidateLibc": null,
+    "registryIntegrityMatchesBoth": true,
+    "registryOs": [
+      "linux"
+    ],
+    "registryCpu": [
+      "x64"
+    ]
+  }
+]

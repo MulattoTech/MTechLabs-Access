@@ -1,9 +1,10 @@
 import http from 'node:http';
-import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
-import { loadConfig, parseArguments } from './lib/config.mjs';
+import { loadConfig, parseArguments, managerInstance } from './lib/config.mjs';
+import { loadTokenDigest } from './lib/token.mjs';
+import { validateDevIsolation, acquireDevOwnership } from './lib/dev-instance.mjs';
 import { atomicWriteJson, validatePolicy } from './lib/policy.mjs';
 import { collectStatus } from './lib/status.mjs';
 import { readJsonBody } from './lib/http-body.mjs';
@@ -18,17 +19,7 @@ const ALLOWED_HOSTS = new Set([
 const ALLOWED_ORIGINS = new Set(['https://m-techlabs.com', 'https://www.m-techlabs.com']);
 const MAX_BODY_BYTES = 4096;
 
-export async function loadTokenDigest(tokenPath) {
-  const stat = await fs.lstat(tokenPath);
-  if (!stat.isFile() || stat.isSymbolicLink() || stat.size > 1024) throw new Error('invalid_token_file');
-  const value = (await fs.readFile(tokenPath, 'utf8')).trim();
-  if (/^sha256:[a-fA-F0-9]{64}$/.test(value)) return Buffer.from(value.slice(7), 'hex');
-  if (value.length < 32 || value.length > 512 || /\s/.test(value) || value.startsWith('sha256:')) {
-    throw new Error('invalid_token_file');
-  }
-  // Compatibility only; a digest file avoids storing plaintext on this PC.
-  return createHash('sha256').update(value).digest();
-}
+export { loadTokenDigest };
 
 export function bearerMatches(request, expectedDigest) {
   const authorizationFields = request.rawHeaders.filter((_, index, all) =>
@@ -59,18 +50,25 @@ async function readPolicyBody(request) {
 }
 
 export async function createAdminServer(config, { configPath, remoteOptions } = {}) {
+  const instance = managerInstance(config);
+  if (instance) config = await validateDevIsolation(config, configPath);
   const tokenDigest = await loadTokenDigest(config.tokenPath);
   const startedAt = Date.now();
   let writeChain = Promise.resolve();
+  const hosts = instance ? new Set(['127.0.0.1:' + instance.port, 'localhost:' + instance.port]) : ALLOWED_HOSTS;
+  const origins = instance ? new Set([...hosts].map(host => 'http://' + host)) : ALLOWED_ORIGINS;
   const remote = createRemoteMcp(config, { ...remoteOptions, configPath });
+  const ownership = instance ? await acquireDevOwnership(config) : null;
+  const requests = new Set();
   const server = http.createServer({ maxHeaderSize: 8192 }, (request, response) => {
-    void (async () => {
+    const operation = (async () => {
       if (!bearerMatches(request, tokenDigest)) {
         request.resume();
         return failure(response, 401, 'unauthorized', 'Authentication is required.');
       }
-      if (!ALLOWED_HOSTS.has((request.headers.host ?? '').toLowerCase()) ||
-          (request.headers.origin !== undefined && !ALLOWED_ORIGINS.has(request.headers.origin))) {
+      const hostFields = request.rawHeaders.filter((value, index) => index % 2 === 0 && value.toLowerCase() === 'host').length;
+      if ((instance && hostFields !== 1) || !hosts.has((request.headers.host ?? '').toLowerCase()) ||
+          (request.headers.origin !== undefined && !origins.has(request.headers.origin))) {
         request.resume();
         return failure(response, 403, 'origin_rejected', 'The request origin is not allowed.');
       }
@@ -165,6 +163,8 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
       if (!response.headersSent) failure(response, 500, 'internal_error', 'The management request could not be completed.');
       else response.end();
     });
+    requests.add(operation);
+    void operation.then(() => requests.delete(operation));
   });
   server.requestTimeout = 5000;
   server.headersTimeout = 6000;
@@ -175,8 +175,39 @@ export async function createAdminServer(config, { configPath, remoteOptions } = 
   // Local lifecycle hook only. There is no HTTP endpoint that kills processes.
   server.closeManagedMcp = () => remote.close();
   let jobRunner;
+  let closing;
+  let resolveClosed, rejectClosed;
+  server.managedClosed = new Promise((resolve, reject) => { resolveClosed = resolve; rejectClosed = reject; });
+  // Event listeners cannot await cleanup. Callers can await managedClosed; keep
+  // the lease if any drain fails rather than silently permit another owner.
+  void server.managedClosed.catch(() => {});
+  const drain = () => closing ??= (async () => {
+    const runnerClosed = jobRunner?.close();
+    await Promise.all([runnerClosed, remote.close(), ...requests]);
+    await writeChain;
+    await ownership?.release();
+  })().then(resolveClosed, rejectClosed);
+  if (instance) {
+    const listen = server.listen;
+    const close = server.close;
+    let closeRequested = false;
+    let used = false;
+    server.close = function (...args) {
+      closeRequested = true;
+      return close.apply(this, args);
+    };
+    server.listen = function (...args) {
+      if (args[0] !== instance.port || args[1] !== '127.0.0.1' ||
+          args.length > 3 || (args[2] !== undefined && typeof args[2] !== 'function')) throw new Error('dev_listener_required');
+      if (used || closing || closeRequested) throw new Error('dev_listener_consumed');
+      used = true;
+      try { return listen.apply(this, args); }
+      catch (error) { void drain(); throw error; }
+    };
+    server.once('error', () => { if (!server.listening) void drain(); });
+  }
   server.once('listening', () => { try { jobRunner = startJobRunner(config); } catch { /* fail closed */ } });
-  server.once('close', () => { jobRunner?.close(); void remote.close().catch(() => {}); });
+  server.once('close', () => { void drain(); });
   return server;
 }
 
@@ -189,8 +220,9 @@ async function main() {
       process.stderr.write('MCP Manager admin could not bind its loopback port.\n');
       process.exitCode = 1;
     });
-    server.listen(19740, '127.0.0.1', () => {
-      process.stderr.write('MTerm-CLI Manager is listening on loopback port 19740.\n');
+    const port = config.instance?.port ?? 19740;
+    server.listen(port, '127.0.0.1', () => {
+      process.stderr.write(`MTerm-CLI Manager${config.instance ? ' ' + config.instance.id : ''} is listening on loopback port ${port}.\n`);
     });
     const close = () => server.close();
     process.once('SIGINT', close);

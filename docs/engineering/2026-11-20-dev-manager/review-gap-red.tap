@@ -1,0 +1,27 @@
+TAP version 13
+# Subtest: DEV cleanup revokes direct runner ownership before its first asynchronous step
+not ok 1 - DEV cleanup revokes direct runner ownership before its first asynchronous step
+  ---
+  duration_ms: 57.949083
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev34-review-red/integrations/mcp-manager/test/dev-instance.test.mjs:361:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev34-review-red/integrations/mcp-manager/test/dev-instance.test.mjs:369:12)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 221.100807

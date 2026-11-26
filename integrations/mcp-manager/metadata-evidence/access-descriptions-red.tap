@@ -1,0 +1,70 @@
+✔ description-only change preserves all 28 names, schemas, annotations and read-only membership (5.94352ms)
+✖ every description has readable plain-text sections with bounded content and no escaped formatting (1.59485ms)
+✖ known capability limitations and write permissions remain explicit in tool metadata (2.977618ms)
+✖ real gateway tools/list preserves Unicode, quotes, literal line breaks and the unchanged contract (174.157066ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 428.053239
+
+✖ failing tests:
+
+test at test/engineering-descriptions.test.mjs:23:1
+✖ every description has readable plain-text sections with bounded content and no escaped formatting (1.59485ms)
+  AssertionError [ERR_ASSERTION]: mterm_math_evaluate length
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Descriptions/integrations/mcp-manager/test/engineering-descriptions.test.mjs:27:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test/engineering-descriptions.test.mjs:37:1
+✖ known capability limitations and write permissions remain explicit in tool metadata (2.977618ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /does not select or verify production checkpoint type/. Input:
+
+  'Create a production checkpoint of a VM, never restore or remove checkpoints.'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Descriptions/integrations/mcp-manager/test/engineering-descriptions.test.mjs:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Create a production checkpoint of a VM, never restore or remove checkpoints.',
+    expected: /does not select or verify production checkpoint type/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test/engineering-descriptions.test.mjs:47:1
+✖ real gateway tools/list preserves Unicode, quotes, literal line breaks and the unchanged contract (174.157066ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /°C/. Input:
+
+  'Convert supported length, mass, time and temperature units with decimal arithmetic.'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Descriptions/integrations/mcp-manager/test/engineering-descriptions.test.mjs:57:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Convert supported length, mass, time and temperature units with decimal arithmetic.',
+    expected: /°C/,
+    operator: 'match',
+    diff: 'simple'
+  }

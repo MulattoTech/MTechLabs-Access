@@ -1,5 +1,9 @@
 # MTerm-CLI managed Desktop Commander bridge
 
+The optional [DEV manager foundation](DEV.md) provides a separate authenticated
+loopback management instance with guarded state ownership. DEV upstream
+execution remains disabled pending OS-profile and backend/App isolation.
+
 ## Implementation brief
 
 Provide a small cross-project local service for Dylan's existing AI clients,
@@ -53,11 +57,30 @@ origin. It does not create or rotate hosted accounts.
   independent native file/shell execution. Desktop Commander's allowed folders
   and command blocklist are guardrails, not OS isolation.
 
-ChatGPT and Claude.ai may use the separately protected self-hosted remote route
-after a supported connector/OAuth setup. Existing vendor-hosted connections are
-preserved and remain separate. Neither local installation nor self-hosting
+ChatGPT, Claude.ai and Gemini Web may use the separately protected self-hosted
+owner remote route after their own supported connector/OAuth setup. A historical
+Gemini Web test on 2026-11-19 verified owner OAuth, discovery of 32 read-only
+tools and a real Get File Information call. See
+[Gemini Web verification](verification-20261119-gemini-web.md); these results
+are not proof of current Gemini sign-in, tool parity or write/execute permission.
+Existing vendor-hosted connections are preserved and remain separate. Neither local installation nor self-hosting
 changes AI-model limits, client-plan availability, or the quotas of a hosted
 connection that is still in use. Browser login must be verified separately.
+
+## Owner-only Gemini diagnostics
+
+The `/admin/mcp` admin page includes Gemini-specific historical connection
+and read-only file execution evidence, plus the latest Gemini-named
+*protocol initialize* observation. It also displays up to 32 recent remote
+tool names, outcomes and durations from the upgraded origin manager. Those
+recent entries are **all-client, unattributed, memory-only diagnostics**, not
+proof that Gemini performed any particular tool call. This stateless bridge
+does not track a verified browser client identity per request.
+
+Only bounded tool metadata enters the owner-gated management status; no
+arguments, file paths, file contents, outputs or secrets are collected.
+See the [owner runbook](RUNBOOK.md#gemini-execution-evidence-and-attribution)
+and [dated Gemini verification](verification-20261119-gemini-web.md).
 
 ## Paths and installation
 
@@ -135,6 +158,13 @@ It always binds to 127.0.0.1:19740, never 0.0.0.0. Register an owner-controlled
 launcher/scheduled task through the normal Windows deployment process if desired.
 Do not run it as Administrator merely for convenience. An existing listener
 causes a clean failure; no process is killed to claim the port.
+
+The Windows shortcut launcher reuses a listener only after matching its owner PID,
+the expected executable, and the normalized absolute Windows entry/configuration
+paths from the native argument list. It requires exactly the supported entry and
+one literal `--config` pair; extra flags, lookalike paths and unavailable identity
+data are refused. This is invocation verification, not attestation of running file
+bytes or isolation from other processes under the same Windows user.
 
 The only accepted Host headers are localhost:19740, 127.0.0.1:19740, and the
 fixed mcp-origin.m-techlabs.com origin (optional :443). If an Origin header is
@@ -413,3 +443,20 @@ installation through the owner dashboard, guest-OS credentials/interactive
 Hyper-V sessions, Proxmox/VMware integrations, dependency-graph agent
 orchestration, GPU job scheduling, and operating-system-enforced isolation.
 None of these is claimed to be implemented by the capability switches.
+
+
+## Engineering tool descriptions
+
+The 28 MTerm engineering tools use static plain-text sections for purpose, inputs,
+permissions, results and limits. Their names, schemas and permission annotations
+are preserved. See [metadata evidence and deployment limits](./METADATA.md).
+
+
+## Current permissions for stored jobs
+
+Submission, explicit resumption and every new provider dispatch check current
+jobs and kind-specific capabilities. A stored job does not retain a permission
+that the owner has revoked. Denied resume preserves the previous state, evidence
+and resume count. A queued job denied before provider dispatch records a failed
+attempt with a bounded capability error; already dispatched work keeps its
+existing cancellation semantics. See [job authorization](./JOB_AUTHORIZATION.md).

@@ -1,0 +1,134 @@
+{
+  "lane": "control",
+  "version": "0.3.1",
+  "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+  "admitted": {
+    "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+    "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+    "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+    "lockSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59"
+  },
+  "stages": [
+    {
+      "name": "initialize",
+      "pass": true,
+      "durationMs": 797
+    },
+    {
+      "name": "full_tool_contract",
+      "pass": true,
+      "durationMs": 44
+    },
+    {
+      "name": "owned_configuration",
+      "pass": true,
+      "durationMs": 76
+    },
+    {
+      "name": "file_read_write_metadata",
+      "pass": true,
+      "durationMs": 792
+    },
+    {
+      "name": "manager_read_only_denial",
+      "pass": true,
+      "durationMs": 8
+    },
+    {
+      "name": "content_search_completion_and_pagination",
+      "pass": true,
+      "durationMs": 169
+    },
+    {
+      "name": "shell_blocklist",
+      "pass": true,
+      "durationMs": 12
+    },
+    {
+      "name": "owned_process_output_and_tree_cleanup",
+      "pass": true,
+      "durationMs": 2616
+    },
+    {
+      "name": "pdf_create_and_read_fidelity",
+      "pass": true,
+      "durationMs": 7949
+    },
+    {
+      "name": "admission_released",
+      "pass": true,
+      "durationMs": 4
+    }
+  ],
+  "initialized": true,
+  "childExited": true,
+  "upstreamExited": true,
+  "pass": true,
+  "gatewayPid": 2732,
+  "upstreamPid": 6460,
+  "toolCount": 53,
+  "search": {
+    "start": {
+      "isError": false,
+      "structured": false,
+      "hasSessionId": false,
+      "public": {
+        "sessionId": "search_1_1794511419711",
+        "isComplete": false,
+        "outcome": "running",
+        "totalMatches": 1,
+        "totalResults": 1,
+        "returnedCount": 1,
+        "hasMoreResults": true,
+        "markers": [
+          5
+        ]
+      }
+    },
+    "firstPage": {
+      "sessionId": "search_1_1794511419711",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": true,
+      "markers": [
+        5,
+        4
+      ]
+    },
+    "middlePage": {
+      "sessionId": "search_1_1794511419711",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": true,
+      "markers": [
+        3,
+        2
+      ]
+    },
+    "lastPage": {
+      "sessionId": "search_1_1794511419711",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": false,
+      "markers": [
+        1,
+        0
+      ]
+    }
+  },
+  "terminationTool": "force_terminate",
+  "ownedProcessTreeExited": true,
+  "pdfSha256": "700126183908d5abbdaba34a576f296ffd1d31667409acfd202374bb3b350460",
+  "pdfBytes": 19629,
+  "childExitCode": 0
+}

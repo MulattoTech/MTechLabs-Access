@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T19:28:47.581555+00:00",
+  "status": "BLOCKED_LINUX_PDF",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "pr": 24,
+  "candidateSha": "92f5579bdb8365013600fa210755f0671a23b868",
+  "candidateTree": "d150910b16ff394a6c089b78a49235f7d88be14f",
+  "candidateParent": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+  "baseSha": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "mainAtObservation": "ba4a55b7ed351f7e60928179edaa7449de00be7d",
+  "checkoutMergeSha": "ca587a109a2e2f85aa5ed39770d371273c233079",
+  "checkoutMergeTreeEqualsCandidate": true,
+  "run": {
+    "id": 43289469119,
+    "html_url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43289469119",
+    "event": "pull_request",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "jobs": [
+    {
+      "id": 131431540218,
+      "name": "test",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43289469119/job/131431540218",
+      "headSha": "92f5579bdb8365013600fa210755f0671a23b868",
+      "conclusion": "success",
+      "testCounts": {
+        "tests": 123,
+        "pass": 123,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [],
+      "sourceDiffStep": null,
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/job-131431540218.log",
+        "bytes": 49833,
+        "sha256": "190929886f167cb5b9d5fc49a5b8f127757303f69f04d3e38d4632f781702521"
+      }
+    },
+    {
+      "id": 131431540080,
+      "name": "Upstream qualification / windows-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43289469119/job/131431540080",
+      "headSha": "92f5579bdb8365013600fa210755f0671a23b868",
+      "conclusion": "success",
+      "testCounts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [],
+      "sourceDiffStep": "success",
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/job-131431540080.log",
+        "bytes": 30122,
+        "sha256": "ade30eb92508ca4b1a1d5fa97973550fa8258b4075c58c91e5500d169509f1ae"
+      }
+    },
+    {
+      "id": 131431540007,
+      "name": "Upstream qualification / ubuntu-latest / Node 24",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43289469119/job/131431540007",
+      "headSha": "92f5579bdb8365013600fa210755f0671a23b868",
+      "conclusion": "failure",
+      "testCounts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [
+        "Compare real pinned upstream packages in disposable stores"
+      ],
+      "sourceDiffStep": "success",
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/job-131431540007.log",
+        "bytes": 29971,
+        "sha256": "a428433bc600a8518d63ea0989aa14c059216b7ed1456501317d58465e6efc07"
+      }
+    },
+    {
+      "id": 131431539614,
+      "name": "managed-mcp",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43289469119/job/131431539614",
+      "headSha": "92f5579bdb8365013600fa210755f0671a23b868",
+      "conclusion": "success",
+      "testCounts": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "checkoutMergeShaObserved": true,
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "failedSteps": [],
+      "sourceDiffStep": null,
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/job-131431539614.log",
+        "bytes": 25841,
+        "sha256": "e398c241fb9b47b2facc276877319db78998668bfd6b71198adac0a5800717e2"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "artifactId": 13977145483,
+      "qualification": {
+        "schemaVersion": 1,
+        "testedAt": "2026-11-12T19:22:42.044Z",
+        "sourceSha": "ca587a109a2e2f85aa5ed39770d371273c233079",
+        "sourceTree": "d150910b16ff394a6c089b78a49235f7d88be14f",
+        "candidateSha": "92f5579bdb8365013600fa210755f0671a23b868",
+        "platform": "linux",
+        "arch": "x64",
+        "node": "v24.22.2",
+        "libuv": "1.52.1",
+        "host": "github-hosted",
+        "managerVersion": "0.4.0",
+        "sdkVersion": "1.32.2",
+        "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+        "modelCalls": 0,
+        "lanes": [
+          {
+            "lane": "control",
+            "version": "0.3.1",
+            "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+            "admitted": {
+              "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+              "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+              "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 461
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 72
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 100
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 543
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 7
+              },
+              {
+                "name": "content_search_completion_and_pagination",
+                "pass": true,
+                "durationMs": 38
+              },
+              {
+                "name": "shell_blocklist",
+                "pass": true,
+                "durationMs": 8
+              },
+              {
+                "name": "owned_process_output_and_tree_cleanup",
+                "pass": true,
+                "durationMs": 1116
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 3450,
+            "upstreamPid": 3461,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false,
+                "public": {
+                  "sessionId": "search_1_1794511374494",
+                  "isComplete": false,
+                  "outcome": "running",
+                  "totalMatches": 1,
+                  "totalResults": 1,
+                  "returnedCount": 1,
+                  "hasMoreResults": true,
+                  "markers": [
+                    2
+                  ]
+                }
+              },
+              "firstPage": {
+                "sessionId": "search_1_1794511374494",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  2,
+                  1
+                ]
+              },
+              "middlePage": {
+                "sessionId": "search_1_1794511374494",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  0,
+                  3
+                ]
+              },
+              "lastPage": {
+                "sessionId": "search_1_1794511374494",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": false,
+                "markers": [
+                  5,
+                  4
+                ]
+              }
+            },
+            "terminationTool": "force_terminate",
+            "ownedProcessTreeExited": true,
+            "failedStage": "pdf_create_and_read_fidelity",
+            "failureCode": "write_pdf_tool_error",
+            "rpcErrorCode": null,
+            "childExitCode": 0
+          },
+          {
+            "lane": "candidate",
+            "version": "0.3.3",
+            "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+            "admitted": {
+              "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/candidate/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+              "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-nBvmVo/candidate/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+              "lockSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 562
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 42
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 168
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 513
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 7
+              },
+              {
+                "name": "content_search_completion_and_pagination",
+                "pass": true,
+                "durationMs": 35
+              },
+              {
+                "name": "shell_blocklist",
+                "pass": true,
+                "durationMs": 14
+              },
+              {
+                "name": "owned_process_output_and_tree_cleanup",
+                "pass": true,
+                "durationMs": 1085
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": false,
+            "gatewayPid": 3560,
+            "upstreamPid": 3571,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false,
+                "public": {
+                  "sessionId": "search_1_1794511391629",
+                  "isComplete": false,
+                  "outcome": "running",
+                  "totalMatches": 1,
+                  "totalResults": 1,
+                  "returnedCount": 1,
+                  "hasMoreResults": true,
+                  "markers": [
+                    2
+                  ]
+                }
+              },
+              "firstPage": {
+                "sessionId": "search_1_1794511391629",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  2,
+                  1
+                ]
+              },
+              "middlePage": {
+                "sessionId": "search_1_1794511391629",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  0,
+                  3
+                ]
+              },
+              "lastPage": {
+                "sessionId": "search_1_1794511391629",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": false,
+                "markers": [
+                  5,
+                  4
+                ]
+              }
+            },
+            "terminationTool": "kill_process",
+            "ownedProcessTreeExited": true,
+            "failedStage": "pdf_create_and_read_fidelity",
+            "failureCode": "write_pdf_tool_error",
+            "rpcErrorCode": null,
+            "childExitCode": 0
+          }
+        ],
+        "pass": false,
+        "limitations": [
+          "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+          "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+          "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+          "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+        ],
+        "contractComparison": {
+          "added": [],
+          "removed": [],
+          "contractChanges": [],
+          "descriptionChanges": [
+            "kill_process"
+          ],
+          "controlSha256": "041c12fb26073a50ed871442d2e4270ea557af23266b20fd0981427ad16cdf54",
+          "candidateSha256": "2b83b6fcdfd2b402171b250effbf489531006250d1d96bcd561903f233826a69"
+        },
+        "completedAt": "2026-11-12T19:23:13.270Z"
+      }
+    },
+    {
+      "artifactId": 13975273648,
+      "qualification": {
+        "schemaVersion": 1,
+        "testedAt": "2026-11-12T19:23:16.253Z",
+        "sourceSha": "ca587a109a2e2f85aa5ed39770d371273c233079",
+        "sourceTree": "d150910b16ff394a6c089b78a49235f7d88be14f",
+        "candidateSha": "92f5579bdb8365013600fa210755f0671a23b868",
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v24.22.2",
+        "libuv": "1.52.1",
+        "host": "github-hosted",
+        "managerVersion": "0.4.0",
+        "sdkVersion": "1.32.2",
+        "launch": "managed gateway -> node dist/index.js --no-onboarding (stdio)",
+        "modelCalls": 0,
+        "lanes": [
+          {
+            "lane": "control",
+            "version": "0.3.1",
+            "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+            "admitted": {
+              "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+              "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\control\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+              "lockSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 797
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 44
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 76
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 792
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 8
+              },
+              {
+                "name": "content_search_completion_and_pagination",
+                "pass": true,
+                "durationMs": 169
+              },
+              {
+                "name": "shell_blocklist",
+                "pass": true,
+                "durationMs": 12
+              },
+              {
+                "name": "owned_process_output_and_tree_cleanup",
+                "pass": true,
+                "durationMs": 2616
+              },
+              {
+                "name": "pdf_create_and_read_fidelity",
+                "pass": true,
+                "durationMs": 7949
+              },
+              {
+                "name": "admission_released",
+                "pass": true,
+                "durationMs": 4
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": true,
+            "gatewayPid": 2732,
+            "upstreamPid": 6460,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false,
+                "public": {
+                  "sessionId": "search_1_1794511419711",
+                  "isComplete": false,
+                  "outcome": "running",
+                  "totalMatches": 1,
+                  "totalResults": 1,
+                  "returnedCount": 1,
+                  "hasMoreResults": true,
+                  "markers": [
+                    5
+                  ]
+                }
+              },
+              "firstPage": {
+                "sessionId": "search_1_1794511419711",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  5,
+                  4
+                ]
+              },
+              "middlePage": {
+                "sessionId": "search_1_1794511419711",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  3,
+                  2
+                ]
+              },
+              "lastPage": {
+                "sessionId": "search_1_1794511419711",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": false,
+                "markers": [
+                  1,
+                  0
+                ]
+              }
+            },
+            "terminationTool": "force_terminate",
+            "ownedProcessTreeExited": true,
+            "pdfSha256": "700126183908d5abbdaba34a576f296ffd1d31667409acfd202374bb3b350460",
+            "pdfBytes": 19629,
+            "childExitCode": 0
+          },
+          {
+            "lane": "candidate",
+            "version": "0.3.3",
+            "integrity": "sha512-htFuEj7ndaQ206P/eQY6mAPx/JEhMoWN5oITlWiwBgXnW8Uw698Mkx0Yydr3O17i6uVMo1pr1mDBusPsThRYBA==",
+            "admitted": {
+              "entryPath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+              "packagePath": "D:\\a\\_temp\\mterm-upstream-qualification-bFjF6t\\candidate\\install\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+              "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+              "manifestSha256": "27492b27ad4a1be8c42b7dcba5a26efc1934fa6fb0a8925f83bf967f5e08622e",
+              "lockSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480"
+            },
+            "stages": [
+              {
+                "name": "initialize",
+                "pass": true,
+                "durationMs": 750
+              },
+              {
+                "name": "full_tool_contract",
+                "pass": true,
+                "durationMs": 32
+              },
+              {
+                "name": "owned_configuration",
+                "pass": true,
+                "durationMs": 59
+              },
+              {
+                "name": "file_read_write_metadata",
+                "pass": true,
+                "durationMs": 812
+              },
+              {
+                "name": "manager_read_only_denial",
+                "pass": true,
+                "durationMs": 6
+              },
+              {
+                "name": "content_search_completion_and_pagination",
+                "pass": true,
+                "durationMs": 158
+              },
+              {
+                "name": "shell_blocklist",
+                "pass": true,
+                "durationMs": 1960
+              },
+              {
+                "name": "owned_process_output_and_tree_cleanup",
+                "pass": true,
+                "durationMs": 1124
+              },
+              {
+                "name": "pdf_create_and_read_fidelity",
+                "pass": true,
+                "durationMs": 2443
+              },
+              {
+                "name": "admission_released",
+                "pass": true,
+                "durationMs": 3
+              }
+            ],
+            "initialized": true,
+            "childExited": true,
+            "upstreamExited": true,
+            "pass": true,
+            "gatewayPid": 9164,
+            "upstreamPid": 6244,
+            "toolCount": 53,
+            "search": {
+              "start": {
+                "isError": false,
+                "structured": false,
+                "hasSessionId": false,
+                "public": {
+                  "sessionId": "search_1_1794511454753",
+                  "isComplete": false,
+                  "outcome": "running",
+                  "totalMatches": 1,
+                  "totalResults": 1,
+                  "returnedCount": 1,
+                  "hasMoreResults": true,
+                  "markers": [
+                    5
+                  ]
+                }
+              },
+              "firstPage": {
+                "sessionId": "search_1_1794511454753",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  5,
+                  4
+                ]
+              },
+              "middlePage": {
+                "sessionId": "search_1_1794511454753",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": true,
+                "markers": [
+                  3,
+                  2
+                ]
+              },
+              "lastPage": {
+                "sessionId": "search_1_1794511454753",
+                "isComplete": true,
+                "outcome": "completed",
+                "totalMatches": 6,
+                "totalResults": 6,
+                "returnedCount": 2,
+                "hasMoreResults": false,
+                "markers": [
+                  1,
+                  0
+                ]
+              }
+            },
+            "terminationTool": "kill_process",
+            "ownedProcessTreeExited": true,
+            "pdfSha256": "da1e6eac3b5650f098056761d2b7575a5de2d8c738fcb1fb616430ebf3cd3b8f",
+            "pdfBytes": 19629,
+            "childExitCode": 0
+          }
+        ],
+        "pass": true,
+        "limitations": [
+          "No production deployment, credentials, account OAuth, public remote mode, Docker or macOS qualification.",
+          "Environment redirection is not OS isolation; the fresh disposable hosted account is required.",
+          "Package installation includes prebuilt ripgrep artifacts and uses the network; upstream may discover or download Chrome.",
+          "This is a bounded compatibility qualification, not full security certification or full mission acceptance."
+        ],
+        "contractComparison": {
+          "added": [],
+          "removed": [],
+          "contractChanges": [],
+          "descriptionChanges": [
+            "kill_process"
+          ],
+          "controlSha256": "4c0b8a18fad5dd3526ce46f9369f718be34a93e63943470082371a896af28dbf",
+          "candidateSha256": "8d7cc6b45990516863e85931dd9ed0da1481291c2eb5b862c3c675cc9d051d40"
+        },
+        "completedAt": "2026-11-12T19:24:20.531Z"
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13977145483,
+      "zipSha256": "5acea300bc0aecc093bcebd69bc0969d819093cf4a9f618263a6eb1ae73a90e5",
+      "bytes": 35267,
+      "digestMatchesGitHub": true,
+      "files": [
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/candidate-install.log",
+          "bytes": 1873,
+          "sha256": "13b8d13497acadb70e90502d46bf7142bb2f4dacd00ce4c8f1ad7f19cd51faa4"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/candidate-native-prerequisites.json",
+          "bytes": 481,
+          "sha256": "fe1dc6195f3d09d0f3d03bb88a8658567b5e3f0ae64675aab0aa408926a8ab90"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/candidate-result.json",
+          "bytes": 3174,
+          "sha256": "df786ee8b536925220fa943f3f5a089f4a77222906ecd16adb04a28744a860d0"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/candidate-tools.json",
+          "bytes": 80649,
+          "sha256": "197c232374fff1abdb9a3d9ab5cf747a9f11554bffd80f865ea2c8232a74a96d"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/control-install.log",
+          "bytes": 1873,
+          "sha256": "a351f254a16c95fed5aff0a6355d150435f1b6b208390b242f3aa5197ae75196"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/control-native-prerequisites.json",
+          "bytes": 479,
+          "sha256": "d289c7bb1dfd6990b8d2cf8a255cc2f65d7f87cad33671dc2007495891826dc3"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/control-result.json",
+          "bytes": 3170,
+          "sha256": "180b4eb0859caa2890a62cf2d4d409f3ccb9d8b38bb0d4667063ec9b7eae707f"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/control-tools.json",
+          "bytes": 80358,
+          "sha256": "230b0d7fda73b6cd8eed5d2977aeb17b6378cf135cae6a29d24057c681e697bc"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/qualification.json",
+          "bytes": 8741,
+          "sha256": "0b924c4bd9753d88b2af0edc2300a3c6dc18785b516614860cd7cfc6ac312ca8"
+        },
+        {
+          "path": "mterm-upstream-qualification-nBvmVo/reports/tool-contract-comparison.json",
+          "bytes": 286,
+          "sha256": "cde600ac9defd965b95ccdd65f133ecc0dc68cfe32529f31ec3d842790a009b2"
+        }
+      ]
+    },
+    {
+      "id": 13975273648,
+      "zipSha256": "70fffe312f4092c88a24b5e51619318243c780a922a6b0caeef889524599c956",
+      "bytes": 35758,
+      "digestMatchesGitHub": true,
+      "files": [
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/candidate-install.log",
+          "bytes": 1873,
+          "sha256": "6cdce3b63eb83ea1871a694b666583501867309152cc15c09fd150a476ef6984"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/candidate-native-prerequisites.json",
+          "bytes": 482,
+          "sha256": "8f8f3854f817fafabbd3aea8f6df076dd0de6c20e404f19dc62d12f0c792f40b"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/candidate-result.json",
+          "bytes": 3353,
+          "sha256": "2e0a8038e077c4f0309cf4f91a8fe27b1682663262256af7798ef4de1a4356f6"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/candidate-tools.json",
+          "bytes": 80949,
+          "sha256": "6cee5c7decf5b48bae8dfb99fe7f03b462fda7015e4ead6fb72586cbc9f74d95"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/control-install.log",
+          "bytes": 1873,
+          "sha256": "7b73107177858fe030e6c2dcf473d185d7f7f11d38e8b811e45d0aec77f53b72"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/control-native-prerequisites.json",
+          "bytes": 480,
+          "sha256": "d5ff79b614d6e4b815e7515c82fae120290e0cb9a24d9b6bb953d8a999390ab2"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/control-result.json",
+          "bytes": 3348,
+          "sha256": "e4204c49bb5403f1916337eb6c6df227099235733f07e0bb5a62d62530bde102"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/control-tools.json",
+          "bytes": 80658,
+          "sha256": "5ce83b04f135b288d6fc2a38b3f1776f896b9425ef55009b4799f63d65854cee"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/qualification.json",
+          "bytes": 9169,
+          "sha256": "12885e78d2b6b020abbc272a1c9c99641667766cf37ac549a3f0b29a1f5d673a"
+        },
+        {
+          "path": "mterm-upstream-qualification-bFjF6t/reports/tool-contract-comparison.json",
+          "bytes": 286,
+          "sha256": "5df779e0b9200151907247a1e5b5efef83105865c0adce586ac1e44c4293ad11"
+        }
+      ]
+    }
+  ],
+  "independentArtifactChecks": [
+    {
+      "artifactId": 13977145483,
+      "platform": "linux",
+      "sourceIdentityMatches": true,
+      "toolContract": {
+        "count": 53,
+        "allNamesAndNonDescriptionFieldsEqual": true,
+        "differences": [
+          {
+            "tool": "kill_process",
+            "field": "description"
+          }
+        ]
+      },
+      "native": [
+        {
+          "receipt": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/artifact-13977145483/mterm-upstream-qualification-nBvmVo/reports/candidate-native-prerequisites.json",
+          "sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+          "exactPriorVerifiedNpmBinaryMatch": true,
+          "package": "@vscode/ripgrep-linux-x64",
+          "version": "1.18.0",
+          "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+        },
+        {
+          "receipt": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/artifact-13977145483/mterm-upstream-qualification-nBvmVo/reports/control-native-prerequisites.json",
+          "sha256": "193906679498de4d939345b937fa24e0e69a03c244bd70c859f5e41232713f21",
+          "exactPriorVerifiedNpmBinaryMatch": true,
+          "package": "@vscode/ripgrep-linux-x64",
+          "version": "1.18.0",
+          "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+        }
+      ],
+      "lanes": [
+        {
+          "lane": "control",
+          "pass": false,
+          "search": {
+            "sixUniqueMarkers": true,
+            "pageCounts": [
+              2,
+              2,
+              2
+            ],
+            "hasMoreResults": [
+              true,
+              true,
+              false
+            ],
+            "sessionIdentityConsistent": true
+          },
+          "reportedPassStages": [
+            "initialize",
+            "full_tool_contract",
+            "owned_configuration",
+            "file_read_write_metadata",
+            "manager_read_only_denial",
+            "content_search_completion_and_pagination",
+            "shell_blocklist",
+            "owned_process_output_and_tree_cleanup"
+          ],
+          "failureCode": "write_pdf_tool_error",
+          "failedStage": "pdf_create_and_read_fidelity",
+          "childExited": true,
+          "childExitCode": 0,
+          "upstreamExited": true,
+          "ownedProcessTreeExited": true,
+          "terminationTool": "force_terminate",
+          "pdfBytes": null,
+          "pdfSha256": null,
+          "pdfBytesArchived": false
+        },
+        {
+          "lane": "candidate",
+          "pass": false,
+          "search": {
+            "sixUniqueMarkers": true,
+            "pageCounts": [
+              2,
+              2,
+              2
+            ],
+            "hasMoreResults": [
+              true,
+              true,
+              false
+            ],
+            "sessionIdentityConsistent": true
+          },
+          "reportedPassStages": [
+            "initialize",
+            "full_tool_contract",
+            "owned_configuration",
+            "file_read_write_metadata",
+            "manager_read_only_denial",
+            "content_search_completion_and_pagination",
+            "shell_blocklist",
+            "owned_process_output_and_tree_cleanup"
+          ],
+          "failureCode": "write_pdf_tool_error",
+          "failedStage": "pdf_create_and_read_fidelity",
+          "childExited": true,
+          "childExitCode": 0,
+          "upstreamExited": true,
+          "ownedProcessTreeExited": true,
+          "terminationTool": "kill_process",
+          "pdfBytes": null,
+          "pdfSha256": null,
+          "pdfBytesArchived": false
+        }
+      ]
+    },
+    {
+      "artifactId": 13975273648,
+      "platform": "win32",
+      "sourceIdentityMatches": true,
+      "toolContract": {
+        "count": 53,
+        "allNamesAndNonDescriptionFieldsEqual": true,
+        "differences": [
+          {
+            "tool": "kill_process",
+            "field": "description"
+          }
+        ]
+      },
+      "native": [
+        {
+          "receipt": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/artifact-13975273648/mterm-upstream-qualification-bFjF6t/reports/candidate-native-prerequisites.json",
+          "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+          "exactPriorVerifiedNpmBinaryMatch": true,
+          "package": "@vscode/ripgrep-win32-x64",
+          "version": "1.18.0",
+          "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+        },
+        {
+          "receipt": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/artifact-13975273648/mterm-upstream-qualification-bFjF6t/reports/control-native-prerequisites.json",
+          "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+          "exactPriorVerifiedNpmBinaryMatch": true,
+          "package": "@vscode/ripgrep-win32-x64",
+          "version": "1.18.0",
+          "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+        }
+      ],
+      "lanes": [
+        {
+          "lane": "control",
+          "pass": true,
+          "search": {
+            "sixUniqueMarkers": true,
+            "pageCounts": [
+              2,
+              2,
+              2
+            ],
+            "hasMoreResults": [
+              true,
+              true,
+              false
+            ],
+            "sessionIdentityConsistent": true
+          },
+          "reportedPassStages": [
+            "initialize",
+            "full_tool_contract",
+            "owned_configuration",
+            "file_read_write_metadata",
+            "manager_read_only_denial",
+            "content_search_completion_and_pagination",
+            "shell_blocklist",
+            "owned_process_output_and_tree_cleanup",
+            "pdf_create_and_read_fidelity",
+            "admission_released"
+          ],
+          "failureCode": null,
+          "failedStage": null,
+          "childExited": true,
+          "childExitCode": 0,
+          "upstreamExited": true,
+          "ownedProcessTreeExited": true,
+          "terminationTool": "force_terminate",
+          "pdfBytes": 19629,
+          "pdfSha256": "700126183908d5abbdaba34a576f296ffd1d31667409acfd202374bb3b350460",
+          "pdfBytesArchived": false
+        },
+        {
+          "lane": "candidate",
+          "pass": true,
+          "search": {
+            "sixUniqueMarkers": true,
+            "pageCounts": [
+              2,
+              2,
+              2
+            ],
+            "hasMoreResults": [
+              true,
+              true,
+              false
+            ],
+            "sessionIdentityConsistent": true
+          },
+          "reportedPassStages": [
+            "initialize",
+            "full_tool_contract",
+            "owned_configuration",
+            "file_read_write_metadata",
+            "manager_read_only_denial",
+            "content_search_completion_and_pagination",
+            "shell_blocklist",
+            "owned_process_output_and_tree_cleanup",
+            "pdf_create_and_read_fidelity",
+            "admission_released"
+          ],
+          "failureCode": null,
+          "failedStage": null,
+          "childExited": true,
+          "childExitCode": 0,
+          "upstreamExited": true,
+          "ownedProcessTreeExited": true,
+          "terminationTool": "kill_process",
+          "pdfBytes": 19629,
+          "pdfSha256": "da1e6eac3b5650f098056761d2b7575a5de2d8c738fcb1fb616430ebf3cd3b8f",
+          "pdfBytesArchived": false
+        }
+      ]
+    }
+  ],
+  "sourceBoundProofInterpretation": {
+    "sources": [
+      {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/qualify-upstream-source.mjs",
+        "gitBlob": "efc99a454aae5e0606a787f54f0f4e9b69352fc6",
+        "sha256": "511db36b0dd61ca8a2df6bbe7119b3c8af9e4378d603db4077a245a603aa9683",
+        "exactCandidateTreeMatch": true
+      },
+      {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/verify-clients-source.mjs",
+        "gitBlob": "57a494c0cbeb87351ca8f50d433a651414d428b1",
+        "sha256": "2417a878c2171b051271efa907e28d9422a987a4be5505be688936e319cfb982",
+        "exactCandidateTreeMatch": true
+      }
+    ],
+    "blocklist": "A passing shell_blocklist stage follows a public start_process denial predicate and filesystem ENOENT check for an owned prefix marker; raw response/sentinel probe are not separately persisted.",
+    "process": "A passing owned_process_output_and_tree_cleanup stage follows fixture nonce verification, two owned PIDs live, bounded three-line tail check and both PIDs no longer live. Candidate uses kill_process; control uses force_terminate.",
+    "pdf": "A passing pdf_create_and_read_fidelity stage follows public write_pdf success, %PDF- bytes, length greater than1000, and public read_file text matching MTERM PDF FIXTURE. Windows saves PDF size/hash; original PDF bytes and readback text are not archived.",
+    "eof": "ConfiguredStdioTransport.close only ends the owned child stdin, without signals. Harness waits completed; all4 lanes record childExited true/exit0/upstreamExited true/ownedProcessTreeExited true. Overall pass additionally requires !closed.signaled.",
+    "admission": "Only Windows reaches admission_released, whose assertion checks available true and inflight, queued, uncertain all0."
+  },
+  "lockByteReconciliation": [
+    {
+      "lane": "control",
+      "canonicalLfSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813",
+      "windowsCrlfSha256": "d51395afaa0143942f9f836074f82dd13ea57c1ff7feed41090d186db3d22b59",
+      "reportedHashesExactlyMatch": true
+    },
+    {
+      "lane": "candidate",
+      "canonicalLfSha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143",
+      "windowsCrlfSha256": "9cd6feaaed314b39cd44a93da8203d26a55d9e0acd1d402be7ba18e94b85a480",
+      "reportedHashesExactlyMatch": true
+    }
+  ],
+  "unchangedPackageAndStaticEvidence": {
+    "candidateSha": "92f5579bdb8365013600fa210755f0671a23b868",
+    "candidateTree": "d150910b16ff394a6c089b78a49235f7d88be14f",
+    "previousCandidate": "1123952bfb1dee0c74d418ecd0833c1e9e34018d",
+    "allCheckedUnchanged": true,
+    "entries": [
+      {
+        "path": "integrations/mcp-manager/package-lock.json",
+        "oldBlob": "a62e98f1abac52268bb67fdbc5d21c73cd5a7a5a",
+        "newBlob": "a62e98f1abac52268bb67fdbc5d21c73cd5a7a5a",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/package.json",
+        "oldBlob": "989f247eea87bf13cccda9b2fb8161ba0afdb99a",
+        "newBlob": "989f247eea87bf13cccda9b2fb8161ba0afdb99a",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package-lock.json",
+        "oldBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92",
+        "newBlob": "a33ce717dafe46ac9af17e89fa0bbefcccd07b92",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/control-package.json",
+        "oldBlob": "e4283b1edc780ccbe8d91afd1ceabf6361d756aa",
+        "newBlob": "e4283b1edc780ccbe8d91afd1ceabf6361d756aa",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/0.3.1-attestation-payloads.json",
+        "oldBlob": "cd327d141e4d605163256a59b17bc277e21cc4da",
+        "newBlob": "cd327d141e4d605163256a59b17bc277e21cc4da",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/0.3.3-attestation-payloads.json",
+        "oldBlob": "f3c668122b3de7b8bbfa4a30e72919ae1afbdafb",
+        "newBlob": "f3c668122b3de7b8bbfa4a30e72919ae1afbdafb",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/FILE-SHA256.json",
+        "oldBlob": "3002f1f15bf83473fa0e74d5d8e916541ca32f4b",
+        "newBlob": "3002f1f15bf83473fa0e74d5d8e916541ca32f4b",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/README.md",
+        "oldBlob": "c27ff8444860654d614a77ab4d8086160ee9acc2",
+        "newBlob": "c27ff8444860654d614a77ab4d8086160ee9acc2",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/SHIPPED-NOTICES.md",
+        "oldBlob": "667a59596c9207ea339a8d78c07feb6fe9913e31",
+        "newBlob": "667a59596c9207ea339a8d78c07feb6fe9913e31",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/artifact-SHA256SUMS.txt",
+        "oldBlob": "660ad9a4c21b5c48584321ad7ca8d9919d7fb402",
+        "newBlob": "660ad9a4c21b5c48584321ad7ca8d9919d7fb402",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/lock-extension-report.json",
+        "oldBlob": "0b272cbf54692354380e591d883e4f6b1c95d732",
+        "newBlob": "0b272cbf54692354380e591d883e4f6b1c95d732",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/lock-extension-report.md",
+        "oldBlob": "ab1d1cc02c09781411c0c1b2586f101dfcddb999",
+        "newBlob": "ab1d1cc02c09781411c0c1b2586f101dfcddb999",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/registry-metadata-evidence.json",
+        "oldBlob": "f3a814071cfddb41b8d65c8869715ee09c2bd0f6",
+        "newBlob": "f3a814071cfddb41b8d65c8869715ee09c2bd0f6",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/added-dependencies/source-manifest-evidence.json",
+        "oldBlob": "593127c6cfa8095f3f94c2175917c87de5cdfdba",
+        "newBlob": "593127c6cfa8095f3f94c2175917c87de5cdfdba",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/artifact-review.json",
+        "oldBlob": "f6e9d94fed0611203a57a38efe7c6243f1e08672",
+        "newBlob": "f6e9d94fed0611203a57a38efe7c6243f1e08672",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/artifact-review.md",
+        "oldBlob": "ebff474db12fa96d35e96ac6624204ca7c531d85",
+        "newBlob": "ebff474db12fa96d35e96ac6624204ca7c531d85",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/dist_server.js.patch",
+        "oldBlob": "21b913feef56eb521a45c50cfc442ea7b0d5ac67",
+        "newBlob": "21b913feef56eb521a45c50cfc442ea7b0d5ac67",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-drift-evidence.json",
+        "oldBlob": "bd42803a6c117ee4264f338bc121b61ce94cc57f",
+        "newBlob": "bd42803a6c117ee4264f338bc121b61ce94cc57f",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/libc-repair-receipt.json",
+        "oldBlob": "c2840139a3883065f76c3dc9d1193755523fdb4b",
+        "newBlob": "c2840139a3883065f76c3dc9d1193755523fdb4b",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/lock-audit/mqtt-lock-closure.json",
+        "oldBlob": "8c7ae7dbcd3680282f3b49ab87e8f01f4fd58847",
+        "newBlob": "8c7ae7dbcd3680282f3b49ab87e8f01f4fd58847",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/notices/desktop-commander-LICENSE.txt",
+        "oldBlob": "cc6ce4fa68f26cd5db3dc1ff83c8163094f28451",
+        "newBlob": "cc6ce4fa68f26cd5db3dc1ff83c8163094f28451",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/release-version-deltas.json",
+        "oldBlob": "d89a169825c3a93c3443d8f757df2fce68a76cc7",
+        "newBlob": "d89a169825c3a93c3443d8f757df2fce68a76cc7",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/qualification/evidence/upstream/source-and-provenance-summary.json",
+        "oldBlob": "43949deb74dc6fb7d44b21d71e8bf299c88418ff",
+        "newBlob": "43949deb74dc6fb7d44b21d71e8bf299c88418ff",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package-lock.json",
+        "oldBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d",
+        "newBlob": "cfda8deced19bf449f2b6c169d6cd4ec25f2251d",
+        "unchanged": true
+      },
+      {
+        "path": "integrations/mcp-manager/upstream-package.json",
+        "oldBlob": "cb60ea060938e6ac6f45e7909efa7b0b3e34ccae",
+        "newBlob": "cb60ea060938e6ac6f45e7909efa7b0b3e34ccae",
+        "unchanged": true
+      },
+      {
+        "path": "package.json",
+        "oldBlob": "cefd87aa1b733f23c5139d88f59109e3bdf38dc8",
+        "newBlob": "cefd87aa1b733f23c5139d88f59109e3bdf38dc8",
+        "unchanged": true
+      }
+    ],
+    "changedPaths": [
+      "docs/engineering/2026-11-12-upstream-033.json",
+      "integrations/mcp-manager/lib/upstream-qualification.mjs",
+      "integrations/mcp-manager/qualification/README.md",
+      "integrations/mcp-manager/qualification/evidence/access-public-wire-diagnosis-e7a4e434.json",
+      "integrations/mcp-manager/qualification/evidence/access-public-wire-diagnosis-e7a4e434.md",
+      "integrations/mcp-manager/qualification/evidence/access-public-wire-final.tap",
+      "integrations/mcp-manager/qualification/evidence/access-public-wire-red.tap",
+      "integrations/mcp-manager/qualification/evidence/access-wire-review-red.tap",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/candidate-native-prerequisites.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/candidate-result.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/control-native-prerequisites.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/control-result.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/qualification.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/linux/tool-contract-comparison.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/native-rg-digest-receipt.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows-lock-line-ending-reconciliation.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/candidate-native-prerequisites.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/candidate-result.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/control-native-prerequisites.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/control-result.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/qualification.json",
+      "integrations/mcp-manager/qualification/evidence/failed-1123952b/windows/tool-contract-comparison.json",
+      "integrations/mcp-manager/qualification/evidence/peer-access24-1123952b-receipt.json",
+      "integrations/mcp-manager/qualification/evidence/peer-access24-1123952b-receipt.md",
+      "integrations/mcp-manager/qualify-upstream.mjs",
+      "integrations/mcp-manager/test/gateway.test.mjs",
+      "integrations/mcp-manager/test/upstream-qualification.test.mjs"
+    ]
+  },
+  "remainingFailures": [
+    {
+      "scope": "Linux control and candidate",
+      "failedStage": "pdf_create_and_read_fidelity",
+      "failureCode": "write_pdf_tool_error",
+      "rpcErrorCode": null,
+      "underlyingToolErrorDetailsPersisted": false,
+      "pdfFidelityQualified": false,
+      "admissionReleasedStageReached": false
+    }
+  ],
+  "reviewerActions": {
+    "retriedJobs": false,
+    "changedSource": false,
+    "changedGithub": false,
+    "executedUpstreamLocally": false,
+    "productionAction": false
+  },
+  "limitations": [
+    "Windows success is bounded to these fixtures, exact packages, Node24 and hosted Windows environment.",
+    "Linux PDF failure has no underlying error text/class/binary path in the retained report, so its cause remains unestablished here.",
+    "Persisted search observations and native hashes can be independently checked; blocklist/process/PDF/EOF outcomes also rely on the exact reviewed harness assertions and its recorded completion flags.",
+    "Original PDFs, raw process output and raw blocklist response/sentinel observations are not archived. This limits independent reproduction from artifacts without invalidating the source-bound assertions.",
+    "No complete cross-platform qualification, merge approval or production rollout is asserted."
+  ],
+  "additionalIndependentProofReview": {
+    "file": "/workspace/scratch/a92a3aacdca1/peer-access24-92f5579b-evidence/independent-hosted-proof-review.json",
+    "sha256": "83cf778c7088c803d0cc9549e29e83e7119724e3bde5c42f464afa3a66861417"
+  }
+}

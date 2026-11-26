@@ -1,0 +1,223 @@
+▶ resume rechecks jobs and every kind capability without clearing previous evidence
+  ✖ vm_inventory / vmRead (87.587054ms)
+  ✖ repo_diagnostics / codeRead (56.966537ms)
+  ✖ run_tests / codeRead (48.506823ms)
+  ✖ run_tests / testRun (46.038708ms)
+  ✖ vm_inventory / jobs (50.689226ms)
+✖ resume rechecks jobs and every kind capability without clearing previous evidence (294.962646ms)
+▶ initial and resumed queued repository work observes capability revocation before provider dispatch
+  ✖ repo_diagnostics / codeRead / initial (61.770866ms)
+  ✖ run_tests / codeRead / initial (71.801975ms)
+  ✖ run_tests / testRun / initial (62.720034ms)
+  ✖ run_tests / testRun / resumed (140.849732ms)
+✖ initial and resumed queued repository work observes capability revocation before provider dispatch (344.826367ms)
+✔ allowed jobs still execute and terminal states resume once with explicit confirmation (148.868578ms)
+✖ MCP resume reaches the shared kind check while status and logs stay readable with jobs disabled (167.990071ms)
+✖ malformed settings and invalid persisted kinds or commands cannot requeue a stored job (47.948005ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 1
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1263.144649
+
+✖ failing tests:
+
+test at test/job-authorization.test.mjs:69:14
+✖ vm_inventory / vmRead (87.587054ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:74:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:69:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'vm_read_disabled' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:69:14
+✖ repo_diagnostics / codeRead (56.966537ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:74:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:69:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'code_read_disabled' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:69:14
+✖ run_tests / codeRead (48.506823ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:74:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:69:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'code_read_disabled' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:69:14
+✖ run_tests / testRun (46.038708ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:74:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:69:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'test_execution_disabled' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:69:14
+✖ vm_inventory / jobs (50.689226ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:74:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:69:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'job_submission_disabled' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:85:14
+✖ repo_diagnostics / codeRead / initial (61.770866ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'succeeded'
+  - 'failed'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:92:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:85:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'succeeded',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:85:14
+✖ run_tests / codeRead / initial (71.801975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'succeeded'
+  - 'failed'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:92:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:85:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'succeeded',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:85:14
+✖ run_tests / testRun / initial (62.720034ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'succeeded'
+  - 'failed'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:92:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:85:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'succeeded',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:85:14
+✖ run_tests / testRun / resumed (140.849732ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'succeeded'
+  - 'failed'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:92:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:85:6)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'succeeded',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:121:1
+✖ MCP resume reaches the shared kind check while status and logs stay readable with jobs disabled (167.990071ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - true
+
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:127:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/job-authorization.test.mjs:136:1
+✖ malformed settings and invalid persisted kinds or commands cannot requeue a stored job (47.948005ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Jobs/integrations/mcp-manager/test/job-authorization.test.mjs:141:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /invalid_toolkit/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

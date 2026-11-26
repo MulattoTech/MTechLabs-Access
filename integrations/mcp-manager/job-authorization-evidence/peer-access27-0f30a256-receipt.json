@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-12T20:06:06.721968+00:00",
+  "status": "INITIAL_CANDIDATE_THREE_CHECKS_PASSED",
+  "repo": "MulattoTech/MTechLabs-Access",
+  "pr": 27,
+  "candidateSha": "0f30a256a56d951595be4abf9791f74f30cb251a",
+  "candidateTree": "7d523197fe2356667513271bd2ab14acf2628a18",
+  "candidateParents": [
+    "499255adf0c3988558eb4b1dd04ee95ad3c7da33"
+  ],
+  "qualificationBase": "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+  "actualMainAtFinalRead": "ef8dce0e1863e63958c4421e8506c9bdb5e881e0",
+  "prHeadAtFinalRead": "0f30a256a56d951595be4abf9791f74f30cb251a",
+  "prBaseAtFinalRead": "499255adf0c3988558eb4b1dd04ee95ad3c7da33",
+  "prState": "open",
+  "prDraft": true,
+  "checkoutMergeSha": "b2136d3c078ca87f3a8d2ff643a50bf1f63ab391",
+  "checkoutTreeEqualsCandidate": true,
+  "run": {
+    "id": 43296210578,
+    "html_url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43296210578",
+    "event": "pull_request",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "checks": [
+    {
+      "id": 131455101056,
+      "name": "managed-mcp",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43296210578/job/131455101056",
+      "conclusion": "success",
+      "headSha": "0f30a256a56d951595be4abf9791f74f30cb251a",
+      "checkoutShaObserved": "b2136d3c078ca87f3a8d2ff643a50bf1f63ab391",
+      "counts": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access27-0f30a256-evidence/job-131455101056.log",
+        "bytes": 25333,
+        "sha256": "1d4dda108075f89aaed2011d14678701c97273fc0f713d517caeb9e036d0408e"
+      }
+    },
+    {
+      "id": 131455101732,
+      "name": "test",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43296210578/job/131455101732",
+      "conclusion": "success",
+      "headSha": "0f30a256a56d951595be4abf9791f74f30cb251a",
+      "checkoutShaObserved": "b2136d3c078ca87f3a8d2ff643a50bf1f63ab391",
+      "counts": {
+        "tests": 123,
+        "pass": 123,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access27-0f30a256-evidence/job-131455101732.log",
+        "bytes": 49829,
+        "sha256": "fcf807adcaa169e71391292f5b896b0505c40b79c71d252e7cafa2a2023f096c"
+      }
+    },
+    {
+      "id": 131455101841,
+      "name": "managed-mcp-windows",
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/actions/runs/43296210578/job/131455101841",
+      "conclusion": "success",
+      "headSha": "0f30a256a56d951595be4abf9791f74f30cb251a",
+      "checkoutShaObserved": "b2136d3c078ca87f3a8d2ff643a50bf1f63ab391",
+      "counts": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "node": "v24.22.2",
+      "npm": "11.19.1",
+      "log": {
+        "file": "/workspace/scratch/a92a3aacdca1/peer-access27-0f30a256-evidence/job-131455101841.log",
+        "bytes": 25141,
+        "sha256": "e654892930d6d1532f34acd5c2d4ad94b425567e3b6f69671e87a00bc189477b"
+      }
+    }
+  ],
+  "priorStaticReviewBinding": [
+    {
+      "path": "integrations/mcp-manager/lib/jobs.mjs",
+      "sha256": "081f49980fbe4fc7b9cf541f283dec7b7b0af480e26a71f00e397f6e724c7366",
+      "gitBlob": "b758ae56d8a0be269bd2ac4614f6f1fd248e354f",
+      "publishedSourceMatchesPriorFrozenReview": true
+    },
+    {
+      "path": "integrations/mcp-manager/test/job-authorization.test.mjs",
+      "sha256": "40f4678dbf1afab76238dced5aef51247c677acf33db93d27b072c7d2ab0311a",
+      "gitBlob": "a28e0f08bc834cd71d1420962285361ef9ebbdb0",
+      "publishedSourceMatchesPriorFrozenReview": true
+    }
+  ],
+  "priorStaticReviewFile": "/workspace/scratch/a92a3aacdca1/peer-job-reauthorization-patch-review-20261112/peer-job-reauthorization-patch-review.json",
+  "scope": "Three source-test jobs for this initial jobs-authorization candidate based on main 499255ad. A subsequent integration with upstream main requires its own new candidate checks.",
+  "reviewerActions": {
+    "sourceMutation": false,
+    "githubMutation": false,
+    "rerun": false,
+    "localUpstreamExecution": false,
+    "productionAction": false
+  },
+  "limitations": [
+    "No merge or production deployment is established by this receipt.",
+    "Prior static review has no concrete in-scope findings but was a manual review, not a completed formal security scan. This receipt binds the two changed runtime/regression files to that reviewed snapshot.",
+    "No upstream real-lane behavior is inferred from these three jobs."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "issue": 38,
+  "kind": "read-only current plugin metadata and selected connection declarations",
+  "observedOnUtcDate": "2026-11-20",
+  "plugin": {
+    "plugin_id": "plugins_6aed1a85300481919559498b458ed278",
+    "name": "m-techlabs-desktop",
+    "description": "MTerm-CLI private owner-managed workstation connector with remote tool controls, connection recovery, and secure release downloads.",
+    "version": "0.2.3",
+    "current_release_id": "pluginrel_6af62cc94f208191ae197a1a9ae7aa65",
+    "scope": "USER",
+    "discoverability": "PRIVATE"
+  },
+  "appBindings": {
+    "apps": {
+      "dev-6af0c8a4c2b08191bf5c00d3b4f18dbb": {
+        "id": "asdk_app_6af0c8a4c2b08191bf5c00d3b4f18dbb"
+      }
+    }
+  },
+  "mcpConnection": {
+    "mcpServers": {
+      "m-techlabs-desktop": {
+        "type": "streamable-http",
+        "url": "https://mcp.m-techlabs.com/mcp",
+        "headers": {},
+        "extensions": {
+          "com.openai": {
+            "auth": {
+              "type": "oauth",
+              "client": {
+                "mode": "dcr"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "observedToolAppId": "asdk_app_6af0c8a4c2b08191bf5c00d3b4f18dbb",
+  "canonicalPluginAndLiveConnectionEnabledTogether": true,
+  "sharedBackendApp": true,
+  "canonicalOnlyGrantVerified": false,
+  "devAppId": null,
+  "devGrantIds": null,
+  "mutations": 0,
+  "omitted": "Author email and unrelated interface prose are not needed for connection-identity evidence."
+}

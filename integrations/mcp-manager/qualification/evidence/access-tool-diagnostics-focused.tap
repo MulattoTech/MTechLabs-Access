@@ -1,0 +1,29 @@
+✔ hosted tool failures retain fixed diagnostic signals and hashes without raw error payloads (21.005895ms)
+✔ qualification reads actual public text-only search receipts after upstream strips internal facts (1.698918ms)
+✔ public search accepts one running match and rejects inconsistent count grammar (1.367223ms)
+✔ every completed search page proves full count and range; later pages must remain complete (0.72294ms)
+✔ public search parsing refuses partial completion, duplicate or outside rows, stale IDs and oversized pages (1.268219ms)
+✔ public blocklist proof accepts the two published wire forms without internal structured fields (0.496092ms)
+✔ command-not-found and an executed marker cannot masquerade as pre-execution blocklist denial (0.373942ms)
+✔ configuration proof validates returned ownership and policy fields, not only an object (0.610674ms)
+✔ tail proof rejects a full buffer or oversized output that happens to contain the last marker (1.966224ms)
+✔ import is inert and the real entry refuses local execution before mutation (1.968763ms)
+✔ targeted upstream bump preserves every existing unrelated dependency and native platform selector (40.237212ms)
+✔ real qualification requires explicit disposable hosted Linux/Windows Node24 context (0.679947ms)
+✔ new owned workspaces canonicalize ordinary temporary names and separate stores from source (9.889957ms)
+✔ overlapping or linked runner roots fail before creating a qualification store (6.272509ms)
+✔ replacement directory or owner marker cannot be reused as the admitted workspace (6.060627ms)
+✔ environment preserves Windows runtime essentials while removing credentials and preload hooks (5.975319ms)
+✔ feature flags cannot redirect qualification to arbitrary or authenticated endpoints (7.070964ms)
+✔ installed entry admission binds exact name, version, lock pin, integrity and owned path (27.156174ms)
+✔ retargeted package bin, linked entry and replaced install directory are rejected (14.656501ms)
+✔ contract comparison covers each name, input schema and annotation independent of list order (11.187922ms)
+✔ description changes are recorded without weakening contract checks (0.876901ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 673.484903

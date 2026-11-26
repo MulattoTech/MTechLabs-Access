@@ -1,5 +1,14 @@
 # M-TechLabs Access Control and Tacticus Code Watch
 
+Managed desktop MCP dependency work has its own
+[source qualification contract](integrations/mcp-manager/qualification/README.md).
+The proposed upstream upgrade is separate from the deployed Worker and live
+desktop runtime.
+
+The independent [DEV edge boundary](DEV-EDGE.md) validates dedicated routing
+declarations and owner authorization. Its source entry remains disabled for
+backend dispatch; declaration checks do not establish live deployment readiness.
+
 A deployed Cloudflare Worker and D1 database provide an owner access dashboard,
 application authorization gates, and a deterministic Tacticus code tracker for
 **Warhammer 40,000: Tacticus players**. Normal operation makes no OpenAI, Codex, Claude, Gemini or other

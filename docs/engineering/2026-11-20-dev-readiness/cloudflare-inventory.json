@@ -1,0 +1,1133 @@
+{
+  "schemaVersion": 1,
+  "issue": 38,
+  "kind": "read-only Cloudflare provider declaration inventory",
+  "observer": "/root/runtime_review",
+  "observedFromUtc": "2026-11-20T07:55:14.140Z",
+  "observedThroughUtc": "2026-11-20T08:00:49.384Z",
+  "accountId": "9e18ebcb3c1a920c9ef58a3d61b8d6b6",
+  "zone": {
+    "id": "8bd58c3aba1973a88d32ae09ccca9595",
+    "name": "m-techlabs.com"
+  },
+  "scope": {
+    "apiMethod": "GET",
+    "providerRequests": 29,
+    "mutations": 0,
+    "hostCalls": 0,
+    "endpointLivenessRequests": 0,
+    "dnsResolutionProbes": 0,
+    "secretValuesReturnedOrPersisted": false,
+    "policySelectorValuesPersisted": false,
+    "permissionFailures": [],
+    "repositoryEdits": false
+  },
+  "observations": [
+    {
+      "key": "cf_accounts_zone",
+      "startedAt": "2026-11-20T07:55:14.140Z",
+      "completedAt": "2026-11-20T07:55:14.553Z",
+      "observations": [
+        {
+          "source": {
+            "name": "accounts",
+            "path": "/accounts",
+            "query": {
+              "page": 1,
+              "per_page": 50
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 50,
+            "total_pages": 1,
+            "count": 1,
+            "total_count": 1
+          },
+          "items": [
+            {
+              "id": "9e18ebcb3c1a920c9ef58a3d61b8d6b6"
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "zone",
+            "path": "/zones",
+            "query": {
+              "name": "m-techlabs.com",
+              "page": 1,
+              "per_page": 50
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 50,
+            "total_pages": 1,
+            "count": 1,
+            "total_count": 1
+          },
+          "items": [
+            {
+              "id": "8bd58c3aba1973a88d32ae09ccca9595",
+              "name": "m-techlabs.com",
+              "status": "active",
+              "accountId": "9e18ebcb3c1a920c9ef58a3d61b8d6b6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cf_inventory",
+      "startedAt": "2026-11-20T07:55:44.730Z",
+      "completedAt": "2026-11-20T07:55:45.326Z",
+      "observations": [
+        {
+          "source": {
+            "name": "workerRoutes",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/workers/routes"
+          },
+          "success": true,
+          "unfilteredCount": 11,
+          "matchedMcpRoutes": [
+            {
+              "id": "4cfbfe6eb7b144da8f5316f0e32c773e",
+              "pattern": "www.m-techlabs.com/admin/mcp*",
+              "script": "mtechlabs-access-codes"
+            },
+            {
+              "id": "45b65966f6144c08a741c5df5371911e",
+              "pattern": "m-techlabs.com/admin/mcp*",
+              "script": "mtechlabs-access-codes"
+            },
+            {
+              "id": "50342583c2e247d98d072f7b0278cd15",
+              "pattern": "mcp.m-techlabs.com/*",
+              "script": "mtechlabs-access-codes"
+            }
+          ],
+          "otherRouteCount": 8
+        },
+        {
+          "source": {
+            "name": "mcpDns",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/dns_records",
+            "query": {
+              "name.startswith": "mcp",
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 3,
+            "total_count": 3,
+            "total_pages": 1
+          },
+          "unfilteredCount": 3,
+          "items": [
+            {
+              "id": "afb0c50ee39a8f103cb99dcd1dcd318e",
+              "name": "mcp.m-techlabs.com",
+              "type": "CNAME",
+              "proxied": true,
+              "ttl": 1,
+              "content": "27c6a2b0-4565-4372-b9fb-32e393a9b3fd.cfargotunnel.com"
+            },
+            {
+              "id": "42a8bdd5de982b4f4598f58a539df5e3",
+              "name": "mcp-origin.m-techlabs.com",
+              "type": "CNAME",
+              "proxied": true,
+              "ttl": 1,
+              "content": "27c6a2b0-4565-4372-b9fb-32e393a9b3fd.cfargotunnel.com"
+            },
+            {
+              "id": "381027d9b05ba4e1ee2dc62d5a812e9b",
+              "name": "mcp-staging.m-techlabs.com",
+              "type": "AAAA",
+              "proxied": true,
+              "ttl": 1,
+              "content": "100::"
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "workers",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts"
+          },
+          "success": true,
+          "unfilteredCount": 9,
+          "items": [
+            {
+              "id": "mtechlabs-access-codes",
+              "created_on": "2026-10-31T01:19:09.1316Z",
+              "modified_on": "2026-11-19T21:42:04.865399Z"
+            },
+            {
+              "id": "mterm-gateway-staging",
+              "created_on": "2026-11-02T00:47:06.764854Z",
+              "modified_on": "2026-11-09T16:02:10.025895Z"
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "accessApps",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps",
+            "query": {
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 17,
+            "total_count": 17,
+            "total_pages": 1
+          },
+          "unfilteredCount": 17,
+          "items": [
+            {
+              "id": "1cadb445-7786-4f0c-bc5b-3ba175643ec9",
+              "name": "M-TechLabs Personal Desktop MCP",
+              "domain": "mcp.m-techlabs.com",
+              "type": "self_hosted",
+              "aud": "612c93cbe84d09d5060064f94b20a19cfdabed8aae39f8a7fbe89bbc831fe569",
+              "session_duration": "12h",
+              "self_hosted_domains": [
+                "mcp.m-techlabs.com"
+              ],
+              "destinations": [
+                {
+                  "type": "public",
+                  "uri": "mcp.m-techlabs.com"
+                }
+              ],
+              "allowed_idps": [
+                "7ce61789-b506-4480-bf8d-7138a1765165"
+              ],
+              "auto_redirect_to_identity": true,
+              "app_launcher_visible": false,
+              "policyRefs": [
+                {
+                  "id": "85c32d77-3364-467a-b73b-61ddc73f4194",
+                  "name": "Owner-only allow policy [name minimized]",
+                  "decision": "allow",
+                  "reusable": true
+                }
+              ]
+            },
+            {
+              "id": "598ab343-fa9c-40d7-8308-b1fa24b55d81",
+              "name": "MTerm Staging \u2014 Private Device Management",
+              "domain": "mterm-staging.m-techlabs.com",
+              "type": "self_hosted",
+              "aud": "9533396534dbc90c78bae02791ecdd0fab21f775876ed7164ed3b57bf54e1563",
+              "session_duration": "1h",
+              "self_hosted_domains": [
+                "mterm-staging.m-techlabs.com"
+              ],
+              "destinations": [
+                {
+                  "type": "public",
+                  "uri": "mterm-staging.m-techlabs.com"
+                }
+              ],
+              "allowed_idps": [
+                "7ce61789-b506-4480-bf8d-7138a1765165"
+              ],
+              "auto_redirect_to_identity": true,
+              "app_launcher_visible": false,
+              "policyRefs": [
+                {
+                  "id": "278aac2d-13d9-424f-845b-dd7c27d43662",
+                  "name": "MTerm owner sign-in",
+                  "decision": "allow",
+                  "reusable": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "tunnels",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/cfd_tunnel",
+            "query": {
+              "is_deleted": false,
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 6,
+            "total_count": 6
+          },
+          "unfilteredCount": 6,
+          "items": [
+            {
+              "id": "27c6a2b0-4565-4372-b9fb-32e393a9b3fd",
+              "name": "fleet-control-hub-mulattotechbox",
+              "status": "healthy",
+              "config_src": "cloudflare",
+              "remote_config": true,
+              "created_at": "2026-10-28T16:01:33.488224Z",
+              "deleted_at": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cf_details",
+      "startedAt": "2026-11-20T07:56:41.628Z",
+      "completedAt": "2026-11-20T07:56:42.205Z",
+      "observations": [
+        {
+          "source": {
+            "name": "productionWorkerSettings",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mtechlabs-access-codes/settings"
+          },
+          "success": true,
+          "data": {
+            "compatibility_date": "2026-10-30",
+            "compatibility_flags": [],
+            "bindings": [
+              {
+                "name": "ACCESS_TEAM",
+                "type": "plain_text",
+                "present": true,
+                "text": "broken-breeze-d0bb.cloudflareaccess.com"
+              },
+              {
+                "name": "ACCOUNT_ID",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "CODE_HOST",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "DB",
+                "type": "d1",
+                "present": true,
+                "id": "ec35af84-1df1-4559-ace8-1db42f3b1b5c"
+              },
+              {
+                "name": "EVALUATION_PRIVATE_JWK",
+                "type": "secret_text",
+                "present": true
+              },
+              {
+                "name": "HUB_HOST",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "MCP_ACCESS_AUD",
+                "type": "plain_text",
+                "present": true,
+                "text": "612c93cbe84d09d5060064f94b20a19cfdabed8aae39f8a7fbe89bbc831fe569"
+              },
+              {
+                "name": "MCP_MANAGER_ORIGIN",
+                "type": "plain_text",
+                "present": true,
+                "text": "https://mcp-origin.m-techlabs.com"
+              },
+              {
+                "name": "MCP_MANAGER_TOKEN",
+                "type": "secret_text",
+                "present": true
+              },
+              {
+                "name": "OWNER_EMAIL",
+                "type": "plain_text",
+                "present": true
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "name": "stagingWorkerSettings",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mterm-gateway-staging/settings"
+          },
+          "success": true,
+          "data": {
+            "compatibility_date": "2026-11-01",
+            "compatibility_flags": [
+              "enable_request_signal"
+            ],
+            "bindings": [
+              {
+                "name": "ACCESS_AUDIENCE",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "ACCESS_ISSUER",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "ALLOWED_EMAILS",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "BUILD_SHA",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "DASHBOARD_ORIGIN",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "ENVIRONMENT",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "MCP_ENABLED",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "PUBLIC_ORIGIN",
+                "type": "plain_text",
+                "present": true
+              },
+              {
+                "name": "REGISTRY",
+                "type": "durable_object_namespace",
+                "present": true,
+                "namespace_id": "b66edc2d536e474093e1a18d0e88a24d",
+                "class_name": "MTermRegistry"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "name": "productionAccessPolicyStructure",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps/1cadb445-7786-4f0c-bc5b-3ba175643ec9/policies",
+            "query": {
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 1,
+            "total_count": 1,
+            "total_pages": 1
+          },
+          "data": [
+            {
+              "id": "85c32d77-3364-467a-b73b-61ddc73f4194",
+              "name": "Owner-only allow policy [name minimized]",
+              "decision": "allow",
+              "precedence": 1,
+              "reusable": true,
+              "include": {
+                "count": 1,
+                "types": [
+                  "email"
+                ]
+              },
+              "require": {
+                "count": 1,
+                "types": [
+                  "login_method"
+                ]
+              },
+              "exclude": {
+                "count": 0,
+                "types": []
+              }
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "stagingAccessPolicyStructure",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps/598ab343-fa9c-40d7-8308-b1fa24b55d81/policies",
+            "query": {
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 1,
+            "total_count": 1,
+            "total_pages": 1
+          },
+          "data": [
+            {
+              "id": "278aac2d-13d9-424f-845b-dd7c27d43662",
+              "name": "MTerm owner sign-in",
+              "decision": "allow",
+              "precedence": 1,
+              "reusable": false,
+              "session_duration": "1h",
+              "include": {
+                "count": 1,
+                "types": [
+                  "email"
+                ]
+              },
+              "require": {
+                "count": 0,
+                "types": []
+              },
+              "exclude": {
+                "count": 0,
+                "types": []
+              }
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "originTunnelConfiguration",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/cfd_tunnel/27c6a2b0-4565-4372-b9fb-32e393a9b3fd/configurations"
+          },
+          "success": true,
+          "data": {
+            "tunnel_id": "27c6a2b0-4565-4372-b9fb-32e393a9b3fd",
+            "version": 2,
+            "source": "cloudflare",
+            "created_at": "2026-11-05T23:37:40.741467Z",
+            "ingressRuleCount": 3,
+            "ingress": [
+              {
+                "hostname": "mcp-origin.m-techlabs.com",
+                "service": "http://127.0.0.1:19740",
+                "originRequest": {
+                  "httpHostHeader": "mcp-origin.m-techlabs.com"
+                }
+              },
+              {
+                "service": "http_status:404"
+              }
+            ]
+          }
+        },
+        {
+          "source": {
+            "name": "mtermDns",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/dns_records",
+            "query": {
+              "name.startswith": "mterm",
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 1,
+            "total_count": 1,
+            "total_pages": 1
+          },
+          "data": [
+            {
+              "id": "411f475788dd5a7bc625879c28a729a7",
+              "name": "mterm-staging.m-techlabs.com",
+              "type": "AAAA",
+              "proxied": true,
+              "ttl": 1,
+              "content": "100::"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cf_staging_deployments",
+      "startedAt": "2026-11-20T07:57:09.136Z",
+      "completedAt": "2026-11-20T07:57:09.500Z",
+      "observations": [
+        {
+          "source": {
+            "name": "mtermWorkerDomains",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/domains",
+            "query": {
+              "zone_id": "8bd58c3aba1973a88d32ae09ccca9595"
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 10,
+            "count": 10,
+            "total_count": 10
+          },
+          "data": [
+            {
+              "id": "f1e24383d5eebf50641c68e43dbcb1ab8ffa1845",
+              "hostname": "mcp-staging.m-techlabs.com",
+              "service": "mterm-gateway-staging",
+              "environment": "production",
+              "zone_id": "8bd58c3aba1973a88d32ae09ccca9595",
+              "enabled": true,
+              "previews_enabled": false
+            },
+            {
+              "id": "0220776ec7c4bc3981b18329f8c288e554b7c3a9",
+              "hostname": "mterm-staging.m-techlabs.com",
+              "service": "mterm-gateway-staging",
+              "environment": "production",
+              "zone_id": "8bd58c3aba1973a88d32ae09ccca9595",
+              "enabled": true,
+              "previews_enabled": false
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "stagingPublicSettings",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mterm-gateway-staging/settings"
+          },
+          "success": true,
+          "data": [
+            {
+              "name": "ACCESS_AUDIENCE",
+              "type": "plain_text",
+              "text": "9533396534dbc90c78bae02791ecdd0fab21f775876ed7164ed3b57bf54e1563"
+            },
+            {
+              "name": "ACCESS_ISSUER",
+              "type": "plain_text",
+              "text": "https://broken-breeze-d0bb.cloudflareaccess.com"
+            },
+            {
+              "name": "BUILD_SHA",
+              "type": "plain_text",
+              "text": "9e2d6633294e22ff63053564bad1ebeda2dd4059"
+            },
+            {
+              "name": "DASHBOARD_ORIGIN",
+              "type": "plain_text",
+              "text": "https://mterm-staging.m-techlabs.com"
+            },
+            {
+              "name": "ENVIRONMENT",
+              "type": "plain_text",
+              "text": "staging"
+            },
+            {
+              "name": "MCP_ENABLED",
+              "type": "plain_text",
+              "text": "true"
+            },
+            {
+              "name": "PUBLIC_ORIGIN",
+              "type": "plain_text",
+              "text": "https://mcp-staging.m-techlabs.com"
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "productionDeployments",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mtechlabs-access-codes/deployments",
+            "query": {
+              "page": 1,
+              "per_page": 3
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 3,
+            "count": 3,
+            "total_count": 24,
+            "total_pages": 8
+          },
+          "data": [
+            {
+              "id": "8f36f1df-4e66-447e-ba4f-8eae0251f261",
+              "created_on": "2026-11-19T21:43:03.143043Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "480ce68f-b43b-401b-afbd-7f22055c31f1",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/message",
+                "workers/triggered_by"
+              ]
+            },
+            {
+              "id": "81525283-4581-43c8-a7b1-878545b4dc21",
+              "created_on": "2026-11-19T20:56:30.680817Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "241f2e23-d7bd-47e3-a840-eb47967de427",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/message",
+                "workers/triggered_by"
+              ]
+            },
+            {
+              "id": "2faad84b-3c30-44e4-a596-c77544b8f70d",
+              "created_on": "2026-11-19T20:54:17.490957Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "a65ed883-30be-4bca-8d5a-697786ffd87a",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/message",
+                "workers/triggered_by"
+              ]
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "stagingDeployments",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mterm-gateway-staging/deployments",
+            "query": {
+              "page": 1,
+              "per_page": 3
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 3,
+            "count": 3,
+            "total_count": 10,
+            "total_pages": 4
+          },
+          "data": [
+            {
+              "id": "e9b702fb-c6c0-4b15-b101-a9c8307a654f",
+              "created_on": "2026-11-09T16:02:10.025895Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "88e1a5ff-ac1e-4b9a-a4c2-31ba32d6221e",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/message",
+                "workers/triggered_by"
+              ]
+            },
+            {
+              "id": "5a0ff21c-6341-4e73-b4af-169e98b76db2",
+              "created_on": "2026-11-02T01:35:34.597039Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "af4fd06e-c4a3-4545-ad22-31d0ae956215",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/message",
+                "workers/triggered_by"
+              ]
+            },
+            {
+              "id": "87c53f0b-16f4-4d53-973f-4e6bc69de28d",
+              "created_on": "2026-11-02T01:33:47.6215Z",
+              "source": "api",
+              "strategy": "percentage",
+              "versions": [
+                {
+                  "version_id": "4b726ec9-4389-4ba8-ada3-5758a3889c27",
+                  "percentage": 100
+                }
+              ],
+              "annotationKeys": [
+                "workers/triggered_by"
+              ]
+            }
+          ]
+        },
+        {
+          "source": {
+            "name": "productionSubdomainFlags",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mtechlabs-access-codes/subdomain"
+          },
+          "success": true,
+          "data": {
+            "enabled": false,
+            "previews_enabled": false
+          }
+        },
+        {
+          "source": {
+            "name": "stagingSubdomainFlags",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/scripts/mterm-gateway-staging/subdomain"
+          },
+          "success": true,
+          "data": {
+            "enabled": false,
+            "previews_enabled": false
+          }
+        }
+      ]
+    },
+    {
+      "key": "cf_oauth",
+      "startedAt": "2026-11-20T07:58:19.220Z",
+      "completedAt": "2026-11-20T07:58:19.881Z",
+      "observations": [
+        {
+          "source": {
+            "name": "productionAccessOAuth",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps/1cadb445-7786-4f0c-bc5b-3ba175643ec9"
+          },
+          "success": true,
+          "data": {
+            "id": "1cadb445-7786-4f0c-bc5b-3ba175643ec9",
+            "name": "M-TechLabs Personal Desktop MCP",
+            "domain": "mcp.m-techlabs.com",
+            "type": "self_hosted",
+            "aud": "612c93cbe84d09d5060064f94b20a19cfdabed8aae39f8a7fbe89bbc831fe569",
+            "oauthConfigurationPresent": true,
+            "oauth_configuration": {
+              "enabled": true,
+              "dynamic_client_registration": {
+                "enabled": true,
+                "allow_any_on_localhost": false,
+                "allow_any_on_loopback": false,
+                "allowed_uris": [
+                  "https://chatgpt.com/connector_platform_oauth_redirect",
+                  "https://chatgpt.com/connector/oauth/*",
+                  "https://claude.ai/api/mcp/auth_callback"
+                ],
+                "originalAllowedUriCount": 4,
+                "redactedAllowedUris": [
+                  {
+                    "provider": "Google",
+                    "origin": "https://oauth-redirect.googleusercontent.com",
+                    "pathPattern": "/r/user_bound_*",
+                    "personalRegistrationIdentifierOmitted": true
+                  }
+                ]
+              },
+              "grant": {
+                "access_token_lifetime": "5m",
+                "session_duration": "168h"
+              }
+            }
+          }
+        },
+        {
+          "source": {
+            "name": "stagingAccessOAuth",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps/598ab343-fa9c-40d7-8308-b1fa24b55d81"
+          },
+          "success": true,
+          "data": {
+            "id": "598ab343-fa9c-40d7-8308-b1fa24b55d81",
+            "name": "MTerm Staging \u2014 Private Device Management",
+            "domain": "mterm-staging.m-techlabs.com",
+            "type": "self_hosted",
+            "aud": "9533396534dbc90c78bae02791ecdd0fab21f775876ed7164ed3b57bf54e1563",
+            "oauthConfigurationPresent": false
+          }
+        }
+      ]
+    },
+    {
+      "key": "cf_dev_collisions",
+      "startedAt": "2026-11-20T07:59:01.154Z",
+      "completedAt": "2026-11-20T07:59:01.646Z",
+      "observations": [
+        {
+          "source": {
+            "name": "dns:mcp-dev.m-techlabs.com",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/dns_records",
+            "query": {
+              "name": "mcp-dev.m-techlabs.com",
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 0,
+            "total_count": 0,
+            "total_pages": 1
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "workerDomain:mcp-dev.m-techlabs.com",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/domains",
+            "query": {
+              "hostname": "mcp-dev.m-techlabs.com"
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 0,
+            "count": 0,
+            "total_count": 0
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "accessApp:mcp-dev.m-techlabs.com",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps",
+            "query": {
+              "domain": "mcp-dev.m-techlabs.com",
+              "exact": true,
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 0,
+            "total_count": 0,
+            "total_pages": 0
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "dns:mcp-dev-origin.m-techlabs.com",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/dns_records",
+            "query": {
+              "name": "mcp-dev-origin.m-techlabs.com",
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 0,
+            "total_count": 0,
+            "total_pages": 1
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "workerDomain:mcp-dev-origin.m-techlabs.com",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/workers/domains",
+            "query": {
+              "hostname": "mcp-dev-origin.m-techlabs.com"
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 0,
+            "count": 0,
+            "total_count": 0
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "accessApp:mcp-dev-origin.m-techlabs.com",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps",
+            "query": {
+              "domain": "mcp-dev-origin.m-techlabs.com",
+              "exact": true,
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 0,
+            "total_count": 0,
+            "total_pages": 0
+          },
+          "count": 0,
+          "items": []
+        },
+        {
+          "source": {
+            "name": "zoneWildcardDns",
+            "path": "/zones/8bd58c3aba1973a88d32ae09ccca9595/dns_records",
+            "query": {
+              "name": "*.m-techlabs.com",
+              "page": 1,
+              "per_page": 100
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 100,
+            "count": 0,
+            "total_count": 0,
+            "total_pages": 1
+          },
+          "count": 0,
+          "items": []
+        }
+      ]
+    },
+    {
+      "key": "cf_access_wildcards",
+      "startedAt": "2026-11-20T08:00:47.527Z",
+      "completedAt": "2026-11-20T08:00:49.384Z",
+      "observations": [
+        {
+          "source": {
+            "name": "relevantAccessWildcardCheck",
+            "path": "/accounts/9e18ebcb3c1a920c9ef58a3d61b8d6b6/access/apps",
+            "query": {
+              "page": 1,
+              "per_page": 1000
+            }
+          },
+          "success": true,
+          "page": {
+            "page": 1,
+            "per_page": 1000,
+            "count": 17,
+            "total_count": 17,
+            "total_pages": 1
+          },
+          "unfilteredCount": 17,
+          "items": []
+        }
+      ]
+    }
+  ],
+  "conclusions": [
+    {
+      "kind": "observed-provider-config",
+      "claim": "Production mcp.m-techlabs.com/* maps to mtechlabs-access-codes; its MCP_MANAGER_ORIGIN is https://mcp-origin.m-techlabs.com and MCP_ACCESS_AUD equals the public Access app AUD."
+    },
+    {
+      "kind": "observed-provider-config",
+      "claim": "Origin tunnel 27c6a2b0-4565-4372-b9fb-32e393a9b3fd configuration version2 maps mcp-origin.m-techlabs.com to http://127.0.0.1:19740 with httpHostHeader mcp-origin.m-techlabs.com."
+    },
+    {
+      "kind": "source-contract-finding",
+      "claim": "The initial inspector's universal loopback Host declaration cannot represent current legitimate production. Narrow production-only acceptance of its declared origin hostname is needed; DEV must keep exact loopback Host rewriting. Do not change production routing to satisfy the initial schema."
+    },
+    {
+      "kind": "observed-provider-config",
+      "claim": "Existing mterm-gateway-staging custom domains mcp-staging.m-techlabs.com and mterm-staging.m-techlabs.com are enabled. MCP_ENABLED=true is only a binding declaration. Staging uses MTermRegistry Durable Objects and a separate Access app at the dashboard hostname; this is not proof of the newly designed DEV manager."
+    },
+    {
+      "kind": "observed-provider-config",
+      "claim": "Production managed OAuth and dynamic registration are enabled with explicit ChatGPT, Claude and one Google redirect allowlist. Localhost/loopback DCR allowances are false. Existing staging dashboard Access app returns no oauth_configuration."
+    },
+    {
+      "kind": "observed-provider-absence",
+      "claim": "At 2026-11-20T07:59:01Z no exact DNS record, Worker custom domain or Access app was returned for mcp-dev.m-techlabs.com or mcp-dev-origin.m-techlabs.com. No *.m-techlabs.com DNS record was returned. Relevant Worker/route inventory has no corresponding DEV resource. This is an availability snapshot, not a reservation."
+    },
+    {
+      "kind": "limits",
+      "claim": "Provider metadata is not loaded-source, host listener, OAuth grant or end-to-end route proof. No client grant/tokens were read, created or tested. Tunnel healthy status is edge connectivity, not origin reachability proof."
+    }
+  ],
+  "proposedDevTargets": {
+    "status": "proposed-unprovisioned",
+    "resource": "https://mcp-dev.m-techlabs.com/mcp",
+    "origin": "https://mcp-dev-origin.m-techlabs.com/mcp",
+    "originServiceIfPort19741Selected": "http://127.0.0.1:19741",
+    "originHostHeaderIfPort19741Selected": "127.0.0.1:19741",
+    "accessAppId": null,
+    "audience": null,
+    "connectorAppId": null,
+    "backendId": null,
+    "managerCredential": null,
+    "notes": [
+      "Access App/AUD and connector App/grants must be newly identified and qualified; do not substitute production or existing staging identities.",
+      "Use a separately configured Worker/backend and independent credential/storage boundary; local production source currently hardcodes production hostname and origin, so DNS/vars alone cannot make a DEV route.",
+      "Sharing Cloudflare account or tunnel is not categorically prohibited, but the exact service/Host binding and trust boundary require qualification. No decision or mutation made here.",
+      "Recheck collisions before any later provisioning; prepare reusable DEV policy without modifying the existing production policy.",
+      "Do not claim compatibility from configured redirect URIs alone; qualify each target client with its intended resource/App/AUD and negative cross-environment tests."
+    ]
+  },
+  "officialReferences": [
+    {
+      "url": "https://developers.cloudflare.com/tunnel/reference/origin-parameters/",
+      "claim": "httpHostHeader sets the Host header forwarded to the local service; originRequest Access validation is a separately configurable control."
+    },
+    {
+      "url": "https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/",
+      "claim": "Validate Access signature, expected issuer, destination App AUD and token lifetime; every Access application receives its own AUD."
+    },
+    {
+      "url": "https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/managed-oauth/",
+      "claim": "Managed OAuth supports Access-protected self-hosted/MCP apps and RFC8707 clients; configuration is not evidence that a fresh client grant completed."
+    },
+    {
+      "url": "https://developers.cloudflare.com/cloudflare-one/access-controls/policies/policy-management/",
+      "claim": "New applications can attach reusable policies; legacy app-scoped policies cannot simply be attached to new apps, and changing a shared reusable policy affects associated apps."
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/configuration/environment-variables/",
+      "claim": "Environment-specific variables must be specified independently; plaintext vars are configuration, secrets belong in secret bindings."
+    }
+  ],
+  "sanitization": {
+    "originalObservationSha256": "66eb95629f231acd07aee93c5172998dce8b498eb8835d136771332e47cd81f8",
+    "redactions": [
+      "Personal Google callback omitted from allowed_uris; original count and provider/origin/path shape retained as descriptive metadata, not a deployable URI",
+      "Two owner policy display names"
+    ],
+    "secretValuesPresent": false
+  }
+}

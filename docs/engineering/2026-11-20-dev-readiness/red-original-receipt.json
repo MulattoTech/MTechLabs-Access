@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "phase": "original-main-red",
+  "startedAt": "2026-11-20T08:00:30.518825+00:00",
+  "baseCommit": "65f7c2ce59653fe905244fc8c2476f15157ca235",
+  "baseTree": "f2b1d75728a4801831fdc280c16090cdedf56723",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/dev-runtime-production-route.test.mjs"
+  ],
+  "cwd": "/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager",
+  "testPath": "integrations/mcp-manager/test/dev-runtime-production-route.test.mjs",
+  "testSha256": "22ba217c175238b11e1352a5fe45771ca83f38c4a9186e95603f74c8f14aced7",
+  "sourcePath": "integrations/mcp-manager/lib/dev-runtime-plan.mjs",
+  "sourceSha256": "713bc11196c9e0f705bf765f8a3d4b4940838dbadc5edcc324ccb22f43c701cf",
+  "sourceMatchesExactMain": true,
+  "scope": "Pure declarations and synthetic observations; no live accounts, files, listeners or routes queried or changed.",
+  "finishedAt": "2026-11-20T08:00:30.770240+00:00",
+  "exitCode": 1,
+  "stdoutSha256": "e7789d168fb32d8780bf6cca0a6fa014cc197f1a08bde385ae0cd815a7d7ed1a",
+  "stdoutBytes": 5894,
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrBytes": 0,
+  "sourceUnchangedAfter": true,
+  "testUnchangedAfter": true
+}

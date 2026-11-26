@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "accepted": false,
+  "scope": "Independent candidate2 Windows log and committed-fixture failure classification",
+  "observedAt": "2026-11-20T09:21:25.197801+00:00",
+  "runId": 44709484865,
+  "headSha": "0439847839c5c28de084ac270fbad4c1b29bd6ed",
+  "sourceSha": "8f9d43a719f18742868aed353aa8e5f721c316ad",
+  "treeSha": "7774671515c6dd1e499fc2740c9503f58e4a94f3",
+  "localSourceCommit": "c311657446a9bda6d34bd6dd62a3fb70b17b0248",
+  "jobs": [
+    {
+      "jobId": 136197237609,
+      "log": "/workspace/scratch/86162842804d/dev_production_reference_40/second-candidate/candidate-job-136197237609.log",
+      "logSha256": "f4e4a0a5f72af578fbc0de87610a3fb6bc30ec7757e4124255a32a65f929243d",
+      "logBytes": 97278,
+      "checkout": "8f9d43a719f18742868aed353aa8e5f721c316ad",
+      "totals": {
+        "tests": 442,
+        "pass": 434,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "failedNativeTitles": [
+        "restricted reference consumer reads no production paths and requests no production native role",
+        "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+        "restricted consumer refuses local retargeting after exchange before following substituted controls",
+        "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+        "restricted reference errors omit callback secrets and have no direct-read fallback",
+        "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+      ],
+      "allSixFailuresAtUnmodifiedControlPrivacyAssertion": true,
+      "completedRegisteredAuthorityCases": [
+        "registered reference handles privately pin deep copied configs and plan without writer authority",
+        "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+        "registered authority refuses actual DEV control drift across production native observation",
+        "registered authority compares actual digest-only credentials and never returns credential values",
+        "registered reference binds differing declared and canonical config spellings to the same actual file identity"
+      ],
+      "completedNativeCases": 5,
+      "completedRealNativeCases": 0,
+      "sevenNativeSourcesBound": {
+        "lib/dev-runtime-reference.mjs": {
+          "sha256": "71566adffbf9d627af35853002767c43fd812f93feecb008caee1f15d24f9409",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-files.mjs": {
+          "sha256": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "form": "LF-to-CRLF"
+        },
+        "lib/dev-runtime.mjs": {
+          "sha256": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "form": "LF-to-CRLF"
+        },
+        "lib/production-reference.mjs": {
+          "sha256": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-identity.mjs": {
+          "sha256": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "form": "LF-to-CRLF"
+        },
+        "test/dev-runtime-reference.test.mjs": {
+          "sha256": "a77f78984a07414f8da759f864f3e695495ccef4d379d1fff911fce53bb02c44",
+          "form": "LF-to-CRLF"
+        },
+        "windows-runtime-probe.ps1": {
+          "sha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+          "form": "LF-to-CRLF"
+        }
+      },
+      "all49ProtocolAnd10RouteCasesPassExactlyOnce": true
+    },
+    {
+      "jobId": 136197238211,
+      "log": "/workspace/scratch/86162842804d/dev_production_reference_40/second-candidate/candidate-job-136197238211.log",
+      "logSha256": "0bf61c816c2f9742758af9fa470ef7c187a9e58d0a099ff0cdb43f8ccf79670b",
+      "logBytes": 99735,
+      "checkout": "8f9d43a719f18742868aed353aa8e5f721c316ad",
+      "totals": {
+        "tests": 442,
+        "pass": 434,
+        "fail": 6,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "failedNativeTitles": [
+        "restricted reference consumer reads no production paths and requests no production native role",
+        "restricted reference treats wrong-account OS profiles as data without looking up production profile paths",
+        "restricted consumer refuses local retargeting after exchange before following substituted controls",
+        "restricted reference inputs reject profile junctions and shared entry or control identities before exchange",
+        "restricted reference errors omit callback secrets and have no direct-read fallback",
+        "native restricted reference inspects its own caller and owned DEV listener without production observation or writes"
+      ],
+      "allSixFailuresAtUnmodifiedControlPrivacyAssertion": true,
+      "completedRegisteredAuthorityCases": [
+        "registered reference handles privately pin deep copied configs and plan without writer authority",
+        "registered authority refuses config retargeting after its first config comparison without reading replacement paths",
+        "registered authority refuses actual DEV control drift across production native observation",
+        "registered authority compares actual digest-only credentials and never returns credential values",
+        "registered reference binds differing declared and canonical config spellings to the same actual file identity"
+      ],
+      "completedNativeCases": 5,
+      "completedRealNativeCases": 0,
+      "sevenNativeSourcesBound": {
+        "lib/dev-runtime-reference.mjs": {
+          "sha256": "71566adffbf9d627af35853002767c43fd812f93feecb008caee1f15d24f9409",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-files.mjs": {
+          "sha256": "710a710c98f6bf0ee4e84be2e6dc75945f386029ad6b9cbde49e7a6348269f56",
+          "form": "LF-to-CRLF"
+        },
+        "lib/dev-runtime.mjs": {
+          "sha256": "532418885c4d96f382644750cd4ba8958c460fdeab859546ac61cb18567552b3",
+          "form": "LF-to-CRLF"
+        },
+        "lib/production-reference.mjs": {
+          "sha256": "0b4f81564b50c48cd1852ea8e699430b732da5fd4a5704066c4176ba3c15b838",
+          "form": "LF-to-CRLF"
+        },
+        "lib/runtime-identity.mjs": {
+          "sha256": "3005df4ebeb0fe2587b46858d57a43e133b794c4d012bcda3d91b16aa7d2e951",
+          "form": "LF-to-CRLF"
+        },
+        "test/dev-runtime-reference.test.mjs": {
+          "sha256": "a77f78984a07414f8da759f864f3e695495ccef4d379d1fff911fce53bb02c44",
+          "form": "LF-to-CRLF"
+        },
+        "windows-runtime-probe.ps1": {
+          "sha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+          "form": "LF-to-CRLF"
+        }
+      },
+      "all49ProtocolAnd10RouteCasesPassExactlyOnce": true
+    }
+  ],
+  "classification": {
+    "kind": "synthetic fixture fingerprint collides with a private-value sentinel",
+    "evidence": "The frozen syntheticAuthority returns productionConfigSha256 and productionObservationSha256 as the same 64 lowercase a characters used by the private production audience fixture. The inspector intentionally returns those authenticated fingerprint fields. privateReport searches serialized output for the private audience, so each synthetic-authority unmodified control deterministically flags the legitimate synthetic fingerprint.",
+    "fixtureCollisionExplainsAllSixReportedAssertions": true,
+    "productPrivacyLeakEstablished": false,
+    "nativeAcceptanceEstablished": false,
+    "privacyAssertionMustRemain": true,
+    "requiredFixtureRepair": "Use distinct domain-separated synthetic fact hashes while retaining the private-value assertion and positive controls."
+  },
+  "separateSourceBlocker": {
+    "id": "SRC40-003",
+    "status": "blocking",
+    "description": "Canonical control reserved-name/direct-child restrictions remain required; hosted success alone cannot clear this source finding."
+  },
+  "sourceBindings": {
+    "test/dev-runtime-reference.test.mjs": "fc7d56653aefa2e72f3c8e870e73ebbe06a26e6e057c57ebac932cde37ec0d27",
+    "test/fixtures/runtime-inputs.mjs": "28e116999d6dde04c94cffd50088a7ac4b69539e3531d19ac87870b784c99c82",
+    "lib/dev-runtime-reference.mjs": "22f885d3b3f2baa65d9b7165c4582d636bad8c165e939a3e8980d9ebc6d3ffee"
+  },
+  "limits": [
+    "No product/test source was executed or edited in this review.",
+    "This is not full successful workflow/artifact acceptance.",
+    "Waiting for stable author handoff before verifier updates and final local gates."
+  ]
+}

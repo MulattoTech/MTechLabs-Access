@@ -1,0 +1,142 @@
+{
+  "lane": "control",
+  "version": "0.3.1",
+  "integrity": "sha512-cx7KTscLF951adHmDLVCDIVTqJ/Bg1LtdRILZoo5wa/UMeyOfMAuOJOEBulNMKBKb5Xd3nHDQnB9aXroN9Fw5A==",
+  "admitted": {
+    "entryPath": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad/control/install/node_modules/@wonderwhy-er/desktop-commander/dist/index.js",
+    "packagePath": "/home/runner/work/_temp/mterm-upstream-qualification-51C0ad/control/install/node_modules/@wonderwhy-er/desktop-commander/package.json",
+    "entrySha256": "7e58b9d5d64732ff8cd77cd477de30751feb6b59bc2353dfaa78825f015b2f2b",
+    "manifestSha256": "478981a544106e2529c53d43134b6033689bddc3d4cadee0ebb94be914089657",
+    "lockSha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+  },
+  "stages": [
+    {
+      "name": "initialize",
+      "pass": true,
+      "durationMs": 399
+    },
+    {
+      "name": "full_tool_contract",
+      "pass": true,
+      "durationMs": 47
+    },
+    {
+      "name": "owned_configuration",
+      "pass": true,
+      "durationMs": 566
+    },
+    {
+      "name": "file_read_write_metadata",
+      "pass": true,
+      "durationMs": 19
+    },
+    {
+      "name": "manager_read_only_denial",
+      "pass": true,
+      "durationMs": 34
+    },
+    {
+      "name": "content_search_completion_and_pagination",
+      "pass": true,
+      "durationMs": 55
+    },
+    {
+      "name": "shell_blocklist",
+      "pass": true,
+      "durationMs": 5
+    },
+    {
+      "name": "owned_process_output_and_tree_cleanup",
+      "pass": true,
+      "durationMs": 1271
+    }
+  ],
+  "initialized": true,
+  "childExited": true,
+  "upstreamExited": true,
+  "pass": false,
+  "gatewayPid": 2907,
+  "upstreamPid": 2918,
+  "toolCount": 53,
+  "search": {
+    "start": {
+      "isError": false,
+      "structured": false,
+      "hasSessionId": false,
+      "public": {
+        "sessionId": "search_1_1794512685268",
+        "isComplete": false,
+        "outcome": "running",
+        "totalMatches": 1,
+        "totalResults": 1,
+        "returnedCount": 1,
+        "hasMoreResults": true,
+        "markers": [
+          2
+        ]
+      }
+    },
+    "firstPage": {
+      "sessionId": "search_1_1794512685268",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": true,
+      "markers": [
+        2,
+        1
+      ]
+    },
+    "middlePage": {
+      "sessionId": "search_1_1794512685268",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": true,
+      "markers": [
+        0,
+        3
+      ]
+    },
+    "lastPage": {
+      "sessionId": "search_1_1794512685268",
+      "isComplete": true,
+      "outcome": "completed",
+      "totalMatches": 6,
+      "totalResults": 6,
+      "returnedCount": 2,
+      "hasMoreResults": false,
+      "markers": [
+        5,
+        4
+      ]
+    }
+  },
+  "terminationTool": "force_terminate",
+  "ownedProcessTreeExited": true,
+  "pdfFailure": {
+    "tool": "write_pdf",
+    "stage": "pdf_create_and_read_fidelity",
+    "fixture": "owned-fixed-markdown-v1",
+    "isError": true,
+    "malformed": false,
+    "textEncoding": "utf-8",
+    "textBytes": 693,
+    "textSha256": "72f9739fce4c3e201b5497f617b306a275570c399a0a2dda1691ea3b580f8d57",
+    "inspectedCharacters": 693,
+    "inspectionTruncated": false,
+    "signals": [
+      "browser_launch",
+      "filesystem_missing"
+    ],
+    "errorCodes": []
+  },
+  "failedStage": "pdf_create_and_read_fidelity",
+  "failureCode": "write_pdf_tool_error",
+  "rpcErrorCode": null,
+  "childExitCode": 0
+}

@@ -1,5 +1,11 @@
 {
-  "version": "0.2.1",
-  "file": "mterm-chatgpt-v0.2.1.tar.gz",
-  "sha256": "7e16f9c807394a92cc992249bce1479848c8ac3d3a8cf2f8bb305505a6ccfaf6"
+  "version": "0.2.3",
+  "file": "mterm-chatgpt-v0.2.3.tar.gz",
+  "sha256": "0cdfdda4c1f2b861c2e9e369923efebdca245aa431cc63ca9d71b0344d4322ef",
+  "provenance": {
+    "kind": "verified-source-equivalent-repack",
+    "canonicalRelease": "pluginrel_6af62cc94f208191ae197a1a9ae7aa65",
+    "sourceDirectory": "integrations/m-techlabs-desktop",
+    "exactCompressedCreatorArchive": false
+  }
 }

@@ -1,0 +1,44 @@
+✖ targeted upstream bump preserves every existing unrelated dependency and native platform selector (48.289766ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 709.164284
+
+✖ failing tests:
+
+test at test/upstream-qualification.test.mjs:23:1
+✖ targeted upstream bump preserves every existing unrelated dependency and native platform selector (48.289766ms)
+  AssertionError [ERR_ASSERTION]: node_modules/@img/sharp-libvips-linux-arm must keep its reviewed version, integrity and platform restrictions
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      cpu: [
+        'arm'
+      ],
+      funding: {
+  ...
+      integrity: 'sha512-LmRtTsOHuvM2+wlO2Db37dx5MiZhB0FvSunciw48YjdOkZz9KAiRbm8ujeMOA1INqmei5NapFxYEK1D1ZSidmw==',
+  -   libc: [
+  -     'glibc'
+  -   ],
+      license: 'LGPL-3.0-or-later',
+      optional: true,
+      os: [
+        'linux'
+      ],
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:29:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { version: '1.3.4', resolved: 'https://registry.npmjs.org/@img/sharp-libvips-linux-arm/-/sharp-libvips-linux-arm-1.3.4.tgz', integrity: 'sha512-LmRtTsOHuvM2+wlO2Db37dx5MiZhB0FvSunciw48YjdOkZz9KAiRbm8ujeMOA1INqmei5NapFxYEK1D1ZSidmw==', cpu: [ 'arm' ], license: 'LGPL-3.0-or-later', optional: true, os: [ 'linux' ], funding: { url: 'https://opencollective.com/libvips' } },
+    expected: { version: '1.3.4', resolved: 'https://registry.npmjs.org/@img/sharp-libvips-linux-arm/-/sharp-libvips-linux-arm-1.3.4.tgz', integrity: 'sha512-LmRtTsOHuvM2+wlO2Db37dx5MiZhB0FvSunciw48YjdOkZz9KAiRbm8ujeMOA1INqmei5NapFxYEK1D1ZSidmw==', cpu: [ 'arm' ], libc: [ 'glibc' ], license: 'LGPL-3.0-or-later', optional: true, os: [ 'linux' ], funding: { url: 'https://opencollective.com/libvips' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

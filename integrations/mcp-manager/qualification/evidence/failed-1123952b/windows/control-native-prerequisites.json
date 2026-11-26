@@ -1,0 +1,7 @@
+{
+  "package": "@vscode/ripgrep-win32-x64",
+  "version": "1.18.0",
+  "executable": "D:\\a\\_temp\\mterm-upstream-qualification-9hx2Cu\\control\\install\\node_modules\\@vscode\\ripgrep-win32-x64\\bin\\rg.exe",
+  "sha256": "f9dde63498b3193f098355dbec97af99dc4f6b8fa0df5ed04114a03012c042cb",
+  "versionOutput": "ripgrep 15.0.0 (rev 3a612f88b8)\n\nfeatures:+pcre2\nsimd(compile):+SSE2,-SSSE3,-AVX2\nsimd(runtime):+SSE2,+SSSE3,+AVX2\n\nPCRE2 10.45 is available (JIT is available)\n"
+}

@@ -1,5 +1,14 @@
 # MTerm-CLI Desktop Bridge — owner runbook
 
+## Source candidate and deployed runtime
+
+The November 12 engineering branch proposes Desktop Commander **0.3.3** with a
+separate disposable-hosted qualification harness. The observed live installation
+remains **0.3.1**, and no production restart or deployment is part of that source
+change. See [the qualification contract](qualification/README.md) before using
+the candidate manifests. The production instructions below remain a separate
+operational record; they are not an instruction to deploy this candidate.
+
 ## Daily use
 
 Open https://m-techlabs.com/admin/mcp, or the **MTerm-CLI Manager** desktop
@@ -42,8 +51,18 @@ Remote endpoint: `https://mcp.m-techlabs.com/mcp`
 - Claude: **Customize → Connectors → Add custom connector**. Enter the endpoint,
   select sign-in/OAuth and **Register automatically**, then authorize using the
   owner Google account. Enable the connector for the conversation.
+- Gemini Web: open [Gemini connectors](https://gemini.google.com/customize/connectors),
+  add a custom MCP connector called **MTerm CLI Desktop Bridge**, and use the endpoint above.
+  Prefer automatic OAuth client registration. If manual setup is necessary, use the
+  Gemini-specific, already registered **public OAuth client with PKCE and no client secret**
+  and its exact approved redirect, rather than a generic client ID or a new wildcard.
+  Complete Cloudflare Access owner authorization and select the connector for a
+  read-only test. On **2026-11-19**, Gemini displayed **32 read-only tools** and
+  successfully invoked **Get File Information**; this is historical evidence,
+  not current session health or write/process-execution parity.
+  See [Gemini verification record](verification-20261119-gemini-web.md).
 - Do not select “No authentication” and do not paste the origin service token.
-  It stays server-side and is not required for either client.
+  It stays server-side and is not required for any browser client.
 - Ask the client to list the managed tools and read the harmless installation
   file `H:\MTechLabs\MCP\package.json` first. Enable editing only when needed.
 
@@ -52,7 +71,7 @@ authorization. A healthy backend does not prove either personal account has
 finished its OAuth consent. Leave the original hosted connector installed until
 the new connection has passed a real task in each client.
 
-The private ChatGPT package is version 0.2.0, ID
+The historical 2026-11-08 private ChatGPT package version was 0.2.0; the owner later verified the same private plugin at v0.2.3 (2026-11-12). The website recovery download for 0.2.3 is prepared as a source-equivalent archive and must be independently deployed and verified. Original plugin ID:
 `plugins_6aed1a85300481919559498b458ed278`, with published release
 `pluginrel_6aeead9219788191b50e40e9cc1c3e37`. It is private to the owner's
 account, not a public app listing. Package publication, account installation,
@@ -62,6 +81,40 @@ On 2026-11-08 the package existed, but ChatGPT permission inspection returned
 reported an unavailable originating browser context, so account installation
 and a real ChatGPT tool call could not be completed in that session. See
 [the verification record](verification-20261108.md).
+
+## Gemini execution evidence and attribution
+
+The owner-only `/admin/mcp` page has a **Gemini Web / execution evidence**
+panel. It includes the dated 2026-11-19 Gemini `Get File Information`
+result (3,041 bytes, last-modified `2026-10-05T21:13:14.048Z`), historical
+Cloudflare OAuth authorization and discovery of 32 read-only tools.
+These are historical owner-verified facts, **not** a current Gemini tool-call
+health indicator.
+
+After the **origin manager runtime** is updated and safely restarted, its
+`remoteMcp.recentToolCalls` status includes at most 32 completed tool calls
+for this stateless remote bridge (timestamp, tool name, outcome and elapsed
+milliseconds). The data is in memory only: it resets when the manager restarts,
+and past calls cannot be reconstructed from that feed. It never retains or
+relays arguments, local paths, file contents, command output or OAuth tokens.
+The Worker projects only allowlisted fields to the existing owner-gated page.
+
+**Important attribution limit:** the remote HTTP transport uses a separate
+stateless MCP server for each request. A `Gemini` label on `initialize` is
+a client-supplied version observation, not a verified authenticated identity.
+Subsequent `tools/call` requests cannot be reliably assigned to Gemini,
+ChatGPT or Claude by that label. Accordingly, the recent-call table is
+explicitly **all clients / unattributed**; it must never be used to assert
+Gemini-specific file activity. A future authenticated per-client audit trail
+requires verified OAuth client context and deliberate session correlation.
+Do not infer attribution from timestamps, source IP, User-Agent or missing
+connection labels.
+
+Deploy the Worker and origin manager separately under their established
+release paths. With an older origin manager, the new page displays that
+recent-call logging is unavailable, not a fabricated empty or successful
+history. Preserve running jobs, active connections and the existing release
+rollback points before restarting a manager.
 
 ## Local clients
 
@@ -81,6 +134,13 @@ The PC must remain on, signed in, and online for remote tools. No power/sleep
 setting was changed.
 
 The launcher is idempotent and will not stop another process to claim the port:
+
+The source launcher now checks the listener's returned owner PID and exact
+supported Node invocation, including the selected manager configuration. It does
+not treat an entry-path substring in another command as ownership. Unknown or
+unsupported invocation metadata fails closed without printing the other process's
+arguments. This source repair must follow the separate deployment procedure before
+it changes an installed launcher; see [the qualification record](../../docs/engineering/2026-11-20-launcher-identity/README.md).
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy RemoteSigned -File "H:\MTechLabs\MCP\runtime\manage.ps1" -Action Status

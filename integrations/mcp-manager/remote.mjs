@@ -3,9 +3,11 @@ import { fileURLToPath } from 'node:url';
 import { readJsonBody } from './lib/http-body.mjs';
 import { ManagedStdioTransport } from './lib/managed-transport.mjs';
 import { MANAGER_VERSION } from './lib/status.mjs';
+import { managerInstance } from './lib/config.mjs';
 
 const MAX_HTTP_REQUESTS = 64;
 const MAX_BODY_BYTES = 1024 * 1024;
+const MAX_RECENT_TOOL_CALLS = 32;
 const MAY_START_BACKGROUND_WORK = new Set(['start_process', 'start_search', 'interact_with_process']);
 const POLICY_DENIALS = new Map([
   [-32010, 'Managed tools are paused. This request was not executed.'],
@@ -52,7 +54,10 @@ export function createRemoteMcp(config, {
   sdkLoader = loadSdk,
 } = {}) {
   if (!Number.isInteger(maxHttpRequests) || maxHttpRequests < 1 || maxHttpRequests > MAX_HTTP_REQUESTS) throw new Error('invalid_http_concurrency');
-  const configured = typeof configPath === 'string' && path.isAbsolute(configPath);
+  // DEV management is source-qualified independently; real upstream execution
+  // requires a separately qualified OS-user profile and backend/App routing.
+  const instance = managerInstance(config);
+  const configured = !instance && typeof configPath === 'string' && path.isAbsolute(configPath);
   const gatewayPath = fileURLToPath(new URL('./gateway.mjs', import.meta.url));
   let sdk;
   let sdkPromise;
@@ -69,10 +74,12 @@ export function createRemoteMcp(config, {
   let lastSuccessfulRequestAt = null;
   let lastSuccessfulToolAt = null;
   const observedClients = new Map();
+  const recentToolCalls = []; // In-memory, bounded; intentionally no arguments, file paths, outputs or client claims.
 
   function status() {
     return {
       transport: 'streamable-http', endpoint: '/mcp', state, sdkLoaded: Boolean(sdk),
+      ...(instance ? { unavailableReason: 'dev_upstream_disabled' } : {}),
       sharedBackend: true, activeHttpRequests, activeUpstreamRequests,
       maxHttpRequests, idleTimeoutSeconds: idleTimeoutMs / 1000,
       idleTeardownDeferred: mayHaveDetachedJobs,
@@ -81,6 +88,7 @@ export function createRemoteMcp(config, {
       resourceSupport: backend ? Boolean(backend.capabilities.resources) : null,
       promptSupport: backend ? Boolean(backend.capabilities.prompts) : null,
       observedClients: [...observedClients.values()],
+      recentToolCalls: [...recentToolCalls],
     };
   }
 
@@ -168,17 +176,26 @@ export function createRemoteMcp(config, {
   }
 
   async function invoke(operation, { toolName } = {}) {
+    const startedAt = performance.now();
+    let outcome = 'unverified';
     activeUpstreamRequests += 1;
     try {
       const result = await operation();
+      outcome = result?.isError === true ? 'tool-error' : 'succeeded';
       lastSuccessfulRequestAt = new Date().toISOString();
-      if (toolName && result?.isError !== true) lastSuccessfulToolAt = lastSuccessfulRequestAt;
+      if (toolName && outcome === 'succeeded') lastSuccessfulToolAt = lastSuccessfulRequestAt;
       if (MAY_START_BACKGROUND_WORK.has(toolName)) mayHaveDetachedJobs = true;
       return result;
     } catch (cause) {
+      outcome = POLICY_DENIALS.has(cause?.code) ? 'denied' : 'unverified';
       if (MAY_START_BACKGROUND_WORK.has(toolName) && !POLICY_DENIALS.has(cause?.code)) mayHaveDetachedJobs = true;
       throw safeUpstreamError(cause);
     } finally {
+      if (typeof toolName === 'string' && /^[a-zA-Z0-9_.:-]{1,100}$/.test(toolName)) {
+        recentToolCalls.unshift({ time: new Date().toISOString(), toolName, outcome,
+          durationMs: Math.max(0, Math.round(performance.now() - startedAt)), clientAttribution: 'unknown' });
+        if (recentToolCalls.length > MAX_RECENT_TOOL_CALLS) recentToolCalls.length = MAX_RECENT_TOOL_CALLS;
+      }
       activeUpstreamRequests -= 1;
       scheduleIdleClose();
     }

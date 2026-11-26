@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: production route retains the exact loopback Host declaration
+ok 1 - production route retains the exact loopback Host declaration
+  ---
+  duration_ms: 3.133935
+  type: 'test'
+  ...
+# Subtest: production route accepts the exact hostname of its declared origin
+not ok 2 - production route accepts the exact hostname of its declared origin
+  ---
+  duration_ms: 0.577322
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:100:1'
+  failureType: 'testCodeFailure'
+  error: 'invalid_dev_runtime_plan'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:3:28)
+    role (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:48:71)
+    validateRuntimePlan (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:56:22)
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:103:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: production hostname allowance follows the selected origin instead of a fixed hostname
+not ok 3 - production hostname allowance follows the selected origin instead of a fixed hostname
+  ---
+  duration_ms: 0.703373
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:109:1'
+  failureType: 'testCodeFailure'
+  error: 'invalid_dev_runtime_plan'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:3:28)
+    role (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:48:71)
+    validateRuntimePlan (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:56:22)
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:115:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: production Host rejects resource, DEV and lookalike hostnames
+ok 4 - production Host rejects resource, DEV and lookalike hostnames
+  ---
+  duration_ms: 1.058089
+  type: 'test'
+  ...
+# Subtest: production Host rejects ports, URL syntax and credential-bearing forms
+ok 5 - production Host rejects ports, URL syntax and credential-bearing forms
+  ---
+  duration_ms: 1.222427
+  type: 'test'
+  ...
+# Subtest: production Host rejects whitespace, header injection and non-string values
+ok 6 - production Host rejects whitespace, header injection and non-string values
+  ---
+  duration_ms: 1.512556
+  type: 'test'
+  ...
+# Subtest: DEV Host remains exactly the loopback address and configured DEV port
+ok 7 - DEV Host remains exactly the loopback address and configured DEV port
+  ---
+  duration_ms: 4.349843
+  type: 'test'
+  ...
+# Subtest: production hostname support preserves the strict origin URL contract
+ok 8 - production hostname support preserves the strict origin URL contract
+  ---
+  duration_ms: 1.027443
+  type: 'test'
+  ...
+# Subtest: accepted production hostname declarations never qualify live routing or activation
+not ok 9 - accepted production hostname declarations never qualify live routing or activation
+  ---
+  duration_ms: 0.584503
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:186:1'
+  failureType: 'testCodeFailure'
+  error: 'invalid_dev_runtime_plan'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:3:28)
+    role (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:48:71)
+    validateRuntimePlan (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:56:22)
+    evaluateRuntime (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/lib/dev-runtime-plan.mjs:85:16)
+    assertUnqualifiedReport (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:60:18)
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/MTechLabs-Access/integrations/mcp-manager/test/dev-runtime-production-route.test.mjs:189:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+  ...
+# Subtest: accepted production loopback declarations retain unqualified private reports
+ok 10 - accepted production loopback declarations retain unqualified private reports
+  ---
+  duration_ms: 1.113273
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 7
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 146.99082

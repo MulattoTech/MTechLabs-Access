@@ -1,0 +1,318 @@
+TAP version 13
+# Subtest: production reference protocol capability is available with the agreed public API
+not ok 1 - production reference protocol capability is available with the agreed public API
+  ---
+  duration_ms: 2.894161
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_production_reference_40/baseline-capability/test/production-reference.test.mjs:99:1'
+  failureType: 'testCodeFailure'
+  error: 'production-reference API unavailable: ERR_MODULE_NOT_FOUND'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    api (file:///workspace/scratch/86162842804d/dev_production_reference_40/baseline-capability/test/production-reference.test.mjs:35:10)
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_production_reference_40/baseline-capability/test/production-reference.test.mjs:99:98)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: control commitment binds the exact nonce and private control snapshot with domain separation
+ok 2 - control commitment binds the exact nonce and private control snapshot with domain separation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.374225
+  type: 'test'
+  ...
+# Subtest: authority and client require correctly typed Ed25519 KeyObjects
+ok 3 - authority and client require correctly typed Ed25519 KeyObjects # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 1.36352
+  type: 'test'
+  ...
+# Subtest: trusted factory options reject unknown fields, invalid registrations, instance aliases and accessors
+ok 4 - trusted factory options reject unknown fields, invalid registrations, instance aliases and accessors # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.102224
+  type: 'test'
+  ...
+# Subtest: a valid exchange returns opaque, private and independently verifiable production facts
+ok 5 - a valid exchange returns opaque, private and independently verifiable production facts # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.116496
+  type: 'test'
+  ...
+# Subtest: default clocks support a real immediate round trip without fixture time overrides
+ok 6 - default clocks support a real immediate round trip without fixture time overrides # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.111448
+  type: 'test'
+  ...
+# Subtest: separate requests use fresh nonces and commitments even with identical private snapshots
+ok 7 - separate requests use fresh nonces and commitments even with identical private snapshots # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.101674
+  type: 'test'
+  ...
+# Subtest: opaque clients and proofs cannot be forged, cloned or revived by serialization
+ok 8 - opaque clients and proofs cannot be forged, cloned or revived by serialization # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.154283
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the matched production listener observation
+ok 9 - reference facts preserve the matched production listener observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.291611
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the mismatched production listener observation
+ok 10 - reference facts preserve the mismatched production listener observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.360215
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the absent production listener observation
+ok 11 - reference facts preserve the absent production listener observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.255326
+  type: 'test'
+  ...
+# Subtest: reference facts preserve the unverified production listener observation
+ok 12 - reference facts preserve the unverified production listener observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.124648
+  type: 'test'
+  ...
+# Subtest: authority rejects a request object instead of canonical text before observation
+ok 13 - authority rejects a request object instead of canonical text before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.090407
+  type: 'test'
+  ...
+# Subtest: authority rejects leading whitespace before observation
+ok 14 - authority rejects leading whitespace before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.091228
+  type: 'test'
+  ...
+# Subtest: authority rejects trailing newline before observation
+ok 15 - authority rejects trailing newline before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.089375
+  type: 'test'
+  ...
+# Subtest: authority rejects reordered JSON keys before observation
+ok 16 - authority rejects reordered JSON keys before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.088875
+  type: 'test'
+  ...
+# Subtest: authority rejects duplicate schema keys before observation
+ok 17 - authority rejects duplicate schema keys before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.071879
+  type: 'test'
+  ...
+# Subtest: authority rejects alternate Unicode encoding before observation
+ok 18 - authority rejects alternate Unicode encoding before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.123507
+  type: 'test'
+  ...
+# Subtest: authority rejects arbitrary filesystem paths before observation
+ok 19 - authority rejects arbitrary filesystem paths before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.117928
+  type: 'test'
+  ...
+# Subtest: authority rejects arbitrary commands before observation
+ok 20 - authority rejects arbitrary commands before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.086361
+  type: 'test'
+  ...
+# Subtest: authority rejects caller-selected algorithms before observation
+ok 21 - authority rejects caller-selected algorithms before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.090747
+  type: 'test'
+  ...
+# Subtest: authority rejects oversized input before observation
+ok 22 - authority rejects oversized input before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.074733
+  type: 'test'
+  ...
+# Subtest: authority rejects malformed request fields and unknown registration bindings before observation
+ok 23 - authority rejects malformed request fields and unknown registration bindings before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.090417
+  type: 'test'
+  ...
+# Subtest: authority rejects future, expired and excessive request windows before observation
+ok 24 - authority rejects future, expired and excessive request windows before observation # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.147302
+  type: 'test'
+  ...
+# Subtest: request inputs remain exact, private data fields and never admit caller readiness claims
+ok 25 - request inputs remain exact, private data fields and never admit caller readiness claims # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.078339
+  type: 'test'
+  ...
+# Subtest: consumer rejects unknown envelope keys
+ok 26 - consumer rejects unknown envelope keys # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.101814
+  type: 'test'
+  ...
+# Subtest: consumer rejects a padded payload encoding
+ok 27 - consumer rejects a padded payload encoding # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.075564
+  type: 'test'
+  ...
+# Subtest: consumer rejects a padded signature encoding
+ok 28 - consumer rejects a padded signature encoding # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.087532
+  type: 'test'
+  ...
+# Subtest: consumer rejects a truncated signature
+ok 29 - consumer rejects a truncated signature # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.191189
+  type: 'test'
+  ...
+# Subtest: consumer rejects an unsupported envelope version
+ok 30 - consumer rejects an unsupported envelope version # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.153722
+  type: 'test'
+  ...
+# Subtest: consumer refuses noncanonical, duplicated and oversized envelope text
+ok 31 - consumer refuses noncanonical, duplicated and oversized envelope text # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.09255
+  type: 'test'
+  ...
+# Subtest: consumer rejects wrong signing keys, modified signed facts and the wrong signature domain
+ok 32 - consumer rejects wrong signing keys, modified signed facts and the wrong signature domain # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.068533
+  type: 'test'
+  ...
+# Subtest: a valid signature cannot bypass strict payload and fact schemas
+ok 33 - a valid signature cannot bypass strict payload and fact schemas # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.070777
+  type: 'test'
+  ...
+# Subtest: consumer binds trusted signed responses to the exact registration and request bytes
+ok 34 - consumer binds trusted signed responses to the exact registration and request bytes # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.084347
+  type: 'test'
+  ...
+# Subtest: consumer refuses authenticated observation windows outside the pending request
+ok 35 - consumer refuses authenticated observation windows outside the pending request # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.103577
+  type: 'test'
+  ...
+# Subtest: old responses cannot be reused for a new nonce or a changed control snapshot
+ok 36 - old responses cannot be reused for a new nonce or a changed control snapshot # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.104457
+  type: 'test'
+  ...
+# Subtest: exchange failures have no retry and redact private callback errors
+ok 37 - exchange failures have no retry and redact private callback errors # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.208485
+  type: 'test'
+  ...
+# Subtest: observer failures and malformed facts are sanitized and consume the reserved nonce
+ok 38 - observer failures and malformed facts are sanitized and consume the reserved nonce # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.090066
+  type: 'test'
+  ...
+# Subtest: authority reserves a nonce before awaiting observation and rejects concurrent replay
+ok 39 - authority reserves a nonce before awaiting observation and rejects concurrent replay # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.070166
+  type: 'test'
+  ...
+# Subtest: authority rejects already-aborted calls without observing or reserving the nonce
+ok 40 - authority rejects already-aborted calls without observing or reserving the nonce # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.078408
+  type: 'test'
+  ...
+# Subtest: authority bounds eight observations and retains aborted work until actual settlement
+ok 41 - authority bounds eight observations and retains aborted work until actual settlement # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.083346
+  type: 'test'
+  ...
+# Subtest: authority retains all sixty-four nonce reservations without evicting live or failed entries
+ok 42 - authority retains all sixty-four nonce reservations without evicting live or failed entries # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.062034
+  type: 'test'
+  ...
+# Subtest: client bounds eight independent exchanges and releases capacity only after settlement
+ok 43 - client bounds eight independent exchanges and releases capacity only after settlement # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.314295
+  type: 'test'
+  ...
+# Subtest: client deadline aborts exchanges without freeing ignored-abort capacity or retrying
+ok 44 - client deadline aborts exchanges without freeing ignored-abort capacity or retrying # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.115895
+  type: 'test'
+  ...
+# Subtest: late observer or exchange completion cannot authenticate an expired request
+ok 45 - late observer or exchange completion cannot authenticate an expired request # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.083546
+  type: 'test'
+  ...
+# Subtest: proof expiry is enforced at the exact wall deadline and cannot be rolled back
+ok 46 - proof expiry is enforced at the exact wall deadline and cannot be rolled back # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.135344
+  type: 'test'
+  ...
+# Subtest: monotonic expiry and backwards clocks independently invalidate proofs permanently
+ok 47 - monotonic expiry and backwards clocks independently invalidate proofs permanently # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.089445
+  type: 'test'
+  ...
+# Subtest: invalid or overflowing clocks reject without private callback execution
+ok 48 - invalid or overflowing clocks reject without private callback execution # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.177659
+  type: 'test'
+  ...
+# Subtest: clock callback failures are sanitized and invalidate an existing proof
+ok 49 - clock callback failures are sanitized and invalidate an existing proof # SKIP Baseline API absent; the availability test must fail.
+  ---
+  duration_ms: 0.078699
+  type: 'test'
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 48
+# todo 0
+# duration_ms 201.334199

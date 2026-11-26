@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "phase": "exact-main-baseline",
+  "sourceCommit": "2a4e3fba0544bb22ff15785dcf1ae46c61891c3f",
+  "sourceTree": "502fc1a2de54ef111316747e4bc3c096922d76c7",
+  "frozenTestSha256": "8306c91554ac98cbeb00735efcd9b13937d427d1f470c9700a2ced7288d1fdee",
+  "node": "v24.22.3",
+  "steps": [
+    {
+      "label": "baseline-build",
+      "command": [
+        "node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline",
+      "startedAt": "2026-11-20T10:08:31.150063+00:00",
+      "exitCode": 0,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline-build.stdout",
+        "sha256": "cbe582381b8cdcd7581a44edd7e5972d74a081f953014bf7aa3f7fbe8fbc979e",
+        "bytes": 45
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline-build.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "label": "baseline-focused",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/mcp-dev-edge.test.js"
+      ],
+      "cwd": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline",
+      "startedAt": "2026-11-20T10:08:31.264500+00:00",
+      "exitCode": 1,
+      "stdout": {
+        "path": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline-focused.stdout",
+        "sha256": "110fcfe3b5469f740a5696e3c0ecf2803b3e083128b8cb528ea54ea3c9b57360",
+        "bytes": 20609
+      },
+      "stderr": {
+        "path": "/workspace/scratch/86162842804d/dev_edge_boundary/baseline-focused.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ],
+  "classification": "Pending independent log inspection; absent module is a capability gap, not a behavioral regression."
+}

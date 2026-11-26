@@ -1,0 +1,710 @@
+{
+  "schemaVersion": 1,
+  "issue": 38,
+  "kind": "point-in-time read-only owner-host observations",
+  "observedFromUtc": "2026-11-20T07:56:49.3145557Z",
+  "observedThroughUtc": "2026-11-20T08:04:00.1988457Z",
+  "machine": "MULATTOTECHBOX",
+  "scope": {
+    "toolPath": "mterm-cli-live-connection",
+    "authenticatedMetadataProbe": true,
+    "productionConfigurationMutations": 0,
+    "accountOrAclMutations": 0,
+    "serviceOrStartupMutations": 0,
+    "credentialValuesReturned": false,
+    "rawCommandLinesReturned": false,
+    "ownerCheckoutEdits": 0,
+    "modelWorkerCalls": 0,
+    "osTemporaryOrCompilerCacheActivityNotExcluded": true
+  },
+  "production": {
+    "invocationExpected": {
+      "nodePath": "C:\\Program Files\\nodejs\\node.exe",
+      "entryPath": "H:\\MTechLabs\\MCP\\runtime\\admin.mjs",
+      "configPath": "H:\\MTechLabs\\MCP\\state\\manager.json",
+      "port": 19740
+    },
+    "listenerSnapshotAtUtc": "2026-11-20T07:56:49.3145557Z",
+    "listener": {
+      "localAddress": "127.0.0.1",
+      "localPort": 19740,
+      "remotePort": 0,
+      "processId": 33108,
+      "state": "Listen",
+      "rawState": 2
+    },
+    "nativeObservation": {
+      "observedAtUtc": "2026-11-20T08:03:07.0977837Z",
+      "observerSourceCommit": "65f7c2ce59653fe905244fc8c2476f15157ca235",
+      "observerSourceSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+      "loadMode": "qualified-function-definitions-inline",
+      "invocationMatched": true,
+      "creationFileTime": "134396026240664531",
+      "pid": 33108,
+      "profileDirectory": "C:\\Users\\Dylan",
+      "status": "observed",
+      "sid": "S-1-5-21-718057717-4102196015-3829296543-1001"
+    },
+    "installedConfigSnapshot": {
+      "schemaVersion": 1,
+      "nodePath": "C:\\Program Files\\nodejs\\node.exe",
+      "serverPath": "H:\\MTechLabs\\MCP\\node_modules\\@wonderwhy-er\\desktop-commander\\dist\\index.js",
+      "serverPackageJsonPath": "H:\\MTechLabs\\MCP\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+      "stateDirectory": "H:\\MTechLabs\\MCP\\state",
+      "policyPath": "H:\\MTechLabs\\MCP\\state\\policy.json",
+      "tokenPath": "H:\\MTechLabs\\MCP\\state\\admin-token",
+      "inventoryPath": "H:\\MTechLabs\\MCP\\state\\inventory.json",
+      "minimumFreeMemoryMiB": 4096,
+      "minimumFreeDiskMiB": 10240,
+      "hasInstanceDescriptor": false
+    },
+    "tokenStorage": {
+      "observed": true,
+      "digestOnly": true,
+      "valueReturned": false
+    },
+    "packages": [
+      {
+        "path": "H:\\MTechLabs\\MCP\\runtime\\package.json",
+        "name": "m-techlabs-mcp-manager",
+        "version": "0.4.0"
+      },
+      {
+        "path": "H:\\MTechLabs\\MCP\\node_modules\\@wonderwhy-er\\desktop-commander\\package.json",
+        "name": "@wonderwhy-er/desktop-commander",
+        "version": "0.3.1"
+      }
+    ],
+    "installedFiles": [
+      {
+        "relativePath": "admin.mjs",
+        "exists": true,
+        "size": 10365,
+        "sha256": "7fbb711d1de79c72330c36bce78ca497a86bbc3c4ece2ce1f9545856eabe0d36"
+      },
+      {
+        "relativePath": "gateway.mjs",
+        "exists": true,
+        "size": 20124,
+        "sha256": "ea8fafb530d4881c1493aa78d0502058e266493d94e0453e51ea8f756ec18aa4"
+      },
+      {
+        "relativePath": "remote.mjs",
+        "exists": true,
+        "size": 14222,
+        "sha256": "bfd7dcf5a8396e7b1bd46c3be01a7d4cd2c171e24749ca92b950149b580e53fe"
+      },
+      {
+        "relativePath": "manage.ps1",
+        "exists": true,
+        "size": 3453,
+        "sha256": "84e15abea0d25ff9b9eb3c930b11277b920a70e7177a594256fe2d20dd46c5cf"
+      },
+      {
+        "relativePath": "install-windows-startup.ps1",
+        "exists": true,
+        "size": 3024,
+        "sha256": "a94be1f56a01657b5b1ce5a61f8cf2dc7b0ce8780aab50fb93162be3976dbbab"
+      },
+      {
+        "relativePath": "lib\\config.mjs",
+        "exists": true,
+        "size": 2739,
+        "sha256": "6aed8ff1969e4554cea43a0ca1ad9098cb613ddee278155ab10ffeb48c3a372c"
+      },
+      {
+        "relativePath": "inspect-dev-runtime.mjs",
+        "observed": false
+      },
+      {
+        "relativePath": "windows-runtime-probe.ps1",
+        "observed": false
+      },
+      {
+        "relativePath": "manage-dev.ps1",
+        "observed": false
+      },
+      {
+        "relativePath": "lib\\dev-instance.mjs",
+        "observed": false
+      },
+      {
+        "relativePath": "lib\\dev-runtime.mjs",
+        "observed": false
+      }
+    ],
+    "deploymentRecord": {
+      "sourceCommit": "9373fadc00689dd782143ab5e49664536f460b8b",
+      "recordOnly": true,
+      "completionTimeNotObserved": true
+    },
+    "runningSourceVerified": false,
+    "limitations": [
+      "Exact process invocation and current installed-file hashes do not prove the source bytes loaded by an already running process.",
+      "Installed file observed:false does not distinguish absent from unreadable; the follow-up that would distinguish them returned an internal connector error.",
+      "The deployment JSON is a stored declaration, not running-source attestation."
+    ]
+  },
+  "dev": {
+    "proposedAccountObservation": {
+      "name": "MTermDev",
+      "observed": false,
+      "queryMessageCode": "UserNotFound,Microsoft.PowerShell.Commands.GetLocalUserCommand"
+    },
+    "proposedPathObservations": [
+      {
+        "path": "H:\\MTechLabs\\MCP-DEV",
+        "exists": false
+      },
+      {
+        "path": "C:\\Users\\MTermDev",
+        "exists": false
+      }
+    ],
+    "port19741": {
+      "listenerCandidateObserved": false,
+      "observationAtUtc": "2026-11-20T07:56:49.3145557Z",
+      "reserved": false
+    }
+  },
+  "acls": {
+    "observedAtUtc": "2026-11-20T07:59:57.5534913Z",
+    "entries": [
+      {
+        "path": "H:\\MTechLabs",
+        "owner": "MULATTOTECHBOX\\Dylan",
+        "inheritanceProtected": false,
+        "rules": [
+          {
+            "identity": "BUILTIN\\Administrators",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "BUILTIN\\Administrators",
+            "type": "Allow",
+            "rights": "268435456",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "268435456",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "NT AUTHORITY\\Authenticated Users",
+            "type": "Allow",
+            "rights": "Modify, Synchronize",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "NT AUTHORITY\\Authenticated Users",
+            "type": "Allow",
+            "rights": "-536805376",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "BUILTIN\\Users",
+            "type": "Allow",
+            "rights": "ReadAndExecute, Synchronize",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "BUILTIN\\Users",
+            "type": "Allow",
+            "rights": "-1610612736",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          }
+        ]
+      },
+      {
+        "path": "H:\\MTechLabs\\MCP",
+        "owner": "MULATTOTECHBOX\\Dylan",
+        "inheritanceProtected": false,
+        "rules": [
+          {
+            "identity": "BUILTIN\\Administrators",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "BUILTIN\\Administrators",
+            "type": "Allow",
+            "rights": "268435456",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "268435456",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "NT AUTHORITY\\Authenticated Users",
+            "type": "Allow",
+            "rights": "Modify, Synchronize",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "NT AUTHORITY\\Authenticated Users",
+            "type": "Allow",
+            "rights": "-536805376",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          },
+          {
+            "identity": "BUILTIN\\Users",
+            "type": "Allow",
+            "rights": "ReadAndExecute, Synchronize",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "BUILTIN\\Users",
+            "type": "Allow",
+            "rights": "-1610612736",
+            "inherited": true,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "InheritOnly"
+          }
+        ]
+      },
+      {
+        "path": "H:\\MTechLabs\\MCP\\state",
+        "owner": "MULATTOTECHBOX\\Dylan",
+        "inheritanceProtected": true,
+        "rules": [
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          },
+          {
+            "identity": "MULATTOTECHBOX\\Dylan",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          }
+        ]
+      },
+      {
+        "path": "H:\\MTechLabs\\MCP\\state\\manager.json",
+        "owner": "MULATTOTECHBOX\\Dylan",
+        "inheritanceProtected": false,
+        "rules": [
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "MULATTOTECHBOX\\Dylan",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          }
+        ]
+      },
+      {
+        "path": "H:\\MTechLabs\\MCP\\state\\admin-token",
+        "owner": "MULATTOTECHBOX\\Dylan",
+        "inheritanceProtected": false,
+        "rules": [
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          },
+          {
+            "identity": "MULATTOTECHBOX\\Dylan",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": true,
+            "inheritance": "None",
+            "propagation": "None"
+          }
+        ]
+      },
+      {
+        "path": "C:\\Users\\Dylan",
+        "owner": "NT AUTHORITY\\SYSTEM",
+        "inheritanceProtected": true,
+        "rules": [
+          {
+            "identity": "NT AUTHORITY\\SYSTEM",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          },
+          {
+            "identity": "BUILTIN\\Administrators",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          },
+          {
+            "identity": "MULATTOTECHBOX\\Dylan",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          },
+          {
+            "identity": "MULATTOTECHBOX\\Developer",
+            "type": "Allow",
+            "rights": "FullControl",
+            "inherited": false,
+            "inheritance": "ContainerInherit, ObjectInherit",
+            "propagation": "None"
+          },
+          {
+            "identity": "application-capability SID [redacted]",
+            "type": "Allow",
+            "rights": "ExecuteFile, Synchronize",
+            "inherited": false,
+            "inheritance": "None",
+            "propagation": "None"
+          }
+        ]
+      }
+    ],
+    "localAdministrators": [
+      {
+        "Name": "MULATTOTECHBOX\\Administrator",
+        "SID": "S-1-5-21-718057717-4102196015-3829296543-500",
+        "ObjectClass": "User"
+      },
+      {
+        "Name": "MULATTOTECHBOX\\Dylan",
+        "SID": "S-1-5-21-718057717-4102196015-3829296543-1001",
+        "ObjectClass": "User"
+      }
+    ],
+    "effectiveCrossAccountDenialTested": false,
+    "driveRootAclObserved": false
+  },
+  "otherListener": {
+    "localAddress": "127.0.0.1",
+    "localPort": 4320,
+    "remotePort": 0,
+    "processId": 22448,
+    "state": "Listen",
+    "rawState": 2,
+    "processMetadata": {
+      "pid": 22448,
+      "hasCimRow": true,
+      "fleetMentioned": true,
+      "mtermMentioned": false
+    },
+    "httpObservation": {
+      "observedAtUtc": "2026-11-20T08:04:00.1988457Z",
+      "statusCode": 200,
+      "title": "Fleet Control � Overview",
+      "contentType": "text/html; charset=utf-8",
+      "scriptExecution": false
+    },
+    "classification": "Fleet Control title and process-name mention; not a DEV manager identity"
+  },
+  "startup": {
+    "queryScope": "Task/service names matching mterm|mcp only",
+    "matchingTaskCount": 1,
+    "productionRootMentioned": false,
+    "matchingServiceCount": 1,
+    "activeMtermStartupMechanismVerified": false
+  },
+  "upstreamSourceScan": {
+    "observedAtUtc": "2026-11-20T08:04:00.1988457Z",
+    "version": "0.3.1",
+    "sourceFilesVisited": 137,
+    "byteScanLimit": 2097152,
+    "hitLimit": 65,
+    "hits": [
+      {
+        "file": "config.js",
+        "line": 4,
+        "sourceExcerpt": "export const USER_HOME = os.homedir();"
+      },
+      {
+        "file": "setup-claude-server.js",
+        "line": 496,
+        "sourceExcerpt": "claudeConfigPath = join(process.env.APPDATA, 'Claude', 'claude_desktop_config.json');"
+      },
+      {
+        "file": "uninstall-claude-server.js",
+        "line": 379,
+        "sourceExcerpt": "claudeConfigPath = join(process.env.APPDATA, 'Claude', 'claude_desktop_config.json');"
+      },
+      {
+        "file": "handlers\\filesystem-handlers.js",
+        "line": 15,
+        "sourceExcerpt": "return path.join(os.homedir(), filePath.slice(1));"
+      },
+      {
+        "file": "remote-device\\device.js",
+        "line": 34,
+        "sourceExcerpt": "return path.join(os.homedir(), '.desktop-commander-device', 'device.json');"
+      },
+      {
+        "file": "remote-device\\diagnostics\\device-log.js",
+        "line": 8,
+        "sourceExcerpt": "* The remote device log: ~/.desktop-commander-device/remote-<day>.log, the"
+      },
+      {
+        "file": "remote-device\\diagnostics\\device-log.js",
+        "line": 33,
+        "sourceExcerpt": "export function getDeviceLogDir() {"
+      },
+      {
+        "file": "remote-device\\diagnostics\\device-log.js",
+        "line": 34,
+        "sourceExcerpt": "return path.join(os.homedir(), '.desktop-commander-device');"
+      },
+      {
+        "file": "remote-device\\diagnostics\\device-log.js",
+        "line": 107,
+        "sourceExcerpt": "this.dir = options.dir ?? getDeviceLogDir();"
+      },
+      {
+        "file": "remote-device\\diagnostics\\redact.js",
+        "line": 49,
+        "sourceExcerpt": "return os.userInfo().username;"
+      },
+      {
+        "file": "remote-device\\diagnostics\\redact.js",
+        "line": 57,
+        "sourceExcerpt": "const home = homePattern(os.homedir());"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 13,
+        "sourceExcerpt": "import { deviceLogNames, getDeviceLogDir, cleanLine } from './device-log.js';"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 407,
+        "sourceExcerpt": "const file = path.join(home, '.desktop-commander-device', 'device.json');"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 522,
+        "sourceExcerpt": "const home = os.homedir();"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 543,
+        "sourceExcerpt": "const log = deviceLog(getDeviceLogDir());"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 705,
+        "sourceExcerpt": "const file = zipName(os.homedir(), new Date(report.createdAt));"
+      },
+      {
+        "file": "remote-device\\diagnostics\\report.js",
+        "line": 740,
+        "sourceExcerpt": "const id = await uploadReport(zip, { diagnosticsUrl, userId: savedUserId(os.homedir()), deviceId: report.device.id });"
+      },
+      {
+        "file": "remote-device\\diagnostics\\upload.js",
+        "line": 19,
+        "sourceExcerpt": "/** The signed-in user's id from ~/.desktop-commander-device/device.json, or null. */"
+      },
+      {
+        "file": "remote-device\\diagnostics\\upload.js",
+        "line": 22,
+        "sourceExcerpt": "const config = JSON.parse(fs.readFileSync(path.join(home, '.desktop-commander-device', 'device.json'), 'utf8'));"
+      },
+      {
+        "file": "tools\\filesystem.js",
+        "line": 109,
+        "sourceExcerpt": "os.homedir() // User's home directory"
+      },
+      {
+        "file": "tools\\filesystem.js",
+        "line": 128,
+        "sourceExcerpt": "return path.join(os.homedir(), filepath.slice(1));"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 264,
+        "sourceExcerpt": "...(env.LOCALAPPDATA ? [join(env.LOCALAPPDATA, 'Google', 'Chrome', 'Application', 'chrome.exe')] : []),"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 297,
+        "sourceExcerpt": "* resolves that directory under %USERPROFILE%\\AppData\\Local and fails if the"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 298,
+        "sourceExcerpt": "* folder is missing, so when Desktop Commander runs with USERPROFILE pointing"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 318,
+        "sourceExcerpt": "const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => name.toUpperCase() !== 'USERPROFILE'));"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 319,
+        "sourceExcerpt": "return { ...env, USERPROFILE: profileDir };"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 328,
+        "sourceExcerpt": "* whole server down. Puppeteer leaves a userDataDir it was given alone."
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 337,
+        "sourceExcerpt": "* Chrome gets the folder as an argument rather than as Puppeteer's userDataDir"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 344,
+        "sourceExcerpt": "const userDataDirArg = `--user-data-dir=${resolve(dir)}`;"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 350,
+        "sourceExcerpt": "if (child.spawnargs?.includes(userDataDirArg)) {"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 357,
+        "sourceExcerpt": "arg: userDataDirArg,"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 704,
+        "sourceExcerpt": "// (launch_options.args is dropped by resolveRender; userDataDir is overridden here)"
+      },
+      {
+        "file": "tools\\pdf\\markdown.js",
+        "line": 705,
+        "sourceExcerpt": "userDataDir: undefined,"
+      },
+      {
+        "file": "utils\\fuzzySearchLogger.js",
+        "line": 8,
+        "sourceExcerpt": "const logDir = path.join(os.homedir(), '.claude-server-commander-logs');"
+      },
+      {
+        "file": "utils\\fuzzySearchLogger.js",
+        "line": 9,
+        "sourceExcerpt": "this.logPath = path.join(logDir, 'fuzzy-search.log');"
+      },
+      {
+        "file": "utils\\fuzzySearchLogger.js",
+        "line": 16,
+        "sourceExcerpt": "const logDir = path.dirname(this.logPath);"
+      },
+      {
+        "file": "utils\\fuzzySearchLogger.js",
+        "line": 17,
+        "sourceExcerpt": "await fs.mkdir(logDir, { recursive: true });"
+      },
+      {
+        "file": "utils\\ripgrep-resolver.js",
+        "line": 45,
+        "sourceExcerpt": "commonPaths.push(path.join(process.env.ProgramFiles ?? 'C:\\\\Program Files', 'Ripgrep', 'rg.exe'), path.join(process.env['ProgramFiles(x86)'] ?? 'C:\\\\Program Files (x86)', 'Ripgrep', 'rg.exe'), path.join(os.homedir(), 'scoop', 'apps', 'ripgrep', 'current', 'rg."
+      },
+      {
+        "file": "utils\\ripgrep-resolver.js",
+        "line": 48,
+        "sourceExcerpt": "commonPaths.push('/usr/local/bin/rg', '/usr/bin/rg', path.join(os.homedir(), '.cargo', 'bin', 'rg'), '/opt/homebrew/bin/rg' // Apple Silicon Homebrew"
+      },
+      {
+        "file": "utils\\toolHistory.js",
+        "line": 48,
+        "sourceExcerpt": "const historyDir = path.join(os.homedir(), '.claude-server-commander');"
+      },
+      {
+        "file": "utils\\trackTools.js",
+        "line": 6,
+        "sourceExcerpt": "const logDir = path.dirname(TOOL_CALL_FILE);"
+      },
+      {
+        "file": "utils\\trackTools.js",
+        "line": 7,
+        "sourceExcerpt": "await fs.promises.mkdir(logDir, { recursive: true });"
+      }
+    ],
+    "actualProfileFileContentsRead": false,
+    "limitations": [
+      "Bounded installed 0.3.1 source scan, not full override enumeration or runtime write attribution.",
+      "No production profile file contents were read. 0.3.3 installed behavior remains a separate future qualification."
+    ]
+  },
+  "optionalFollowup": {
+    "purpose": "Deployment completion time, exact source-file absence, H: root ACL, more upstream excerpts and existing startup shortcut metadata",
+    "result": "connector internal error",
+    "executionOutcome": "not observed",
+    "retried": false
+  },
+  "qualified": false,
+  "upstreamEnabled": false,
+  "liveDevRoutingVerified": false,
+  "oauthDevGrantsVerified": false
+}

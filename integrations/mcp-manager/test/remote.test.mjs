@@ -108,6 +108,12 @@ test('real SDK HTTP initialize/list/call forwards actual tools, resources, promp
   assert.equal(status.remoteMcp.clientIdentityTracked, false);
   assert.equal(status.remoteMcp.resourceSupport, true);
   assert.ok(status.remoteMcp.lastSuccessfulToolAt);
+  assert.ok(Array.isArray(status.remoteMcp.recentToolCalls));
+  assert.equal(status.remoteMcp.recentToolCalls[0].toolName,'read_file');
+  assert.equal(status.remoteMcp.recentToolCalls[0].outcome,'succeeded');
+  assert.equal(status.remoteMcp.recentToolCalls[0].clientAttribution,'unknown');
+  assert.equal(typeof status.remoteMcp.recentToolCalls[0].durationMs,'number');
+  assert.equal(JSON.stringify(status.remoteMcp.recentToolCalls).includes('hello'),false);
   assert.equal(status.remoteMcp.observedClients.length, 1);
   assert.equal(status.remoteMcp.observedClients[0].name, 'integration-test');
   assert.equal(status.remoteMcp.observedClients[0].evidence, 'protocol-initialize');
@@ -125,6 +131,11 @@ test('remote calls preserve read-only and pause policy; protocol discovery remai
   await fs.writeFile(f.config.policyPath, JSON.stringify({ enabled: false, readOnly: true, maxInflight: 1 }));
   await assert.rejects(client.callTool({ name: 'read_file', arguments: {} }), error => error.code === -32010);
   assert.equal((await client.listTools()).tools.length, 2 + ENGINEERING_TOOLS.length);
+  const entries=(await f.getStatus()).remoteMcp.recentToolCalls;
+  assert.ok(entries.some(item=>item.toolName==='start_process'&&item.outcome==='denied'));
+  assert.ok(entries.some(item=>item.toolName==='read_file'&&item.outcome==='succeeded'));
+  assert.ok(entries.some(item=>item.toolName==='read_file'&&item.outcome==='denied'));
+  assert.ok(entries.every(item=>!('arguments' in item)&&!('output' in item)&&item.clientAttribution==='unknown'));
 });
 
 test('concurrent cold-start clients wait for the same complete upstream initialization', async t => {

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "kind": "preliminary independent Access38 source and privacy review",
+  "reviewer": "/root/runtime_review",
+  "baseCommit": "65f7c2ce59653fe905244fc8c2476f15157ca235",
+  "baseSourceSha256": "713bc11196c9e0f705bf765f8a3d4b4940838dbadc5edcc324ccb22f43c701cf",
+  "reviewedSourceSha256": "aac34a2488e7c46e914ce89252a6bdcb20973ff5a3ce7e4f03b8693db89ad8cb",
+  "frozenRegressionTestSha256": "22ba217c175238b11e1352a5fe45771ca83f38c4a9186e95603f74c8f14aced7",
+  "baseline": {
+    "exitCode": 1,
+    "tests": 10,
+    "pass": 7,
+    "fail": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "failures": [
+      "not ok 2 - production route accepts the exact hostname of its declared origin",
+      "not ok 3 - production hostname allowance follows the selected origin instead of a fixed hostname",
+      "not ok 9 - accepted production hostname declarations never qualify live routing or activation"
+    ],
+    "outputSha256": "6939e04ebc27754d3d870934c2e5e5bccdafe21d8b485b648c633775d5a77143"
+  },
+  "currentFocused": {
+    "exitCode": 0,
+    "tests": 151,
+    "pass": 151,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "outputSha256": "829665ba47c2300e423d5a092585886fa1512172c30853e5b4dd17b77d4b98af"
+  },
+  "decision": "NO_BLOCKING_NARROW_SOURCE_FINDING; immutable full-plan review pending",
+  "repositoryEdits": false,
+  "newProviderOrHostCalls": 0,
+  "privacyAdvice": {
+    "requiredGeneralization": "/observations/4/observations/0/data/oauth_configuration/dynamic_client_registration/allowed_uris/3 contains a personal user-bound Google redirect registration identifier. Preserve presence, hostname, path shape and allowlist count; omit the identifier from committed evidence.",
+    "optionalPolicyNameGeneralizations": [
+      "/observations/1/observations/3/items/0/policyRefs/0/name",
+      "/observations/2/observations/2/data/0/name"
+    ],
+    "secretValuesDetected": false,
+    "credentialBindingNamesAndPresenceAreSafe": true,
+    "nonsecretProviderIdsAreRelevantEvidence": true
+  },
+  "edgeSourceSha256": {
+    "src/index.js": "ddc1d03091e5f4715cb8e8903f808def42eb98632184be720b1791c7a65b1c6d",
+    "src/mcp-remote.js": "cbca88fff09ab676d5e956a761232e4d1268803b471ffdac44bf9b0f4f7c19ae",
+    "src/mcp.js": "deb9b0a912abc588036a551a08d66d211ead53bf180d4c29e65c9424ac67c66d"
+  }
+}

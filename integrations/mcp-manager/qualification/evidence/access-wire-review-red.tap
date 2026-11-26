@@ -1,0 +1,60 @@
+✔ qualification reads actual public text-only search receipts after upstream strips internal facts (5.383266ms)
+✖ public search accepts one running match and rejects inconsistent count grammar (0.76981ms)
+✖ every completed search page proves full count and range; later pages must remain complete (1.914588ms)
+✔ public search parsing refuses partial completion, duplicate or outside rows, stale IDs and oversized pages (2.915081ms)
+✔ public blocklist proof accepts the two published wire forms without internal structured fields (1.084505ms)
+✔ command-not-found and an executed marker cannot masquerade as pre-execution blocklist denial (0.313426ms)
+✔ configuration proof validates returned ownership and policy fields, not only an object (0.736691ms)
+✔ tail proof rejects a full buffer or oversized output that happens to contain the last marker (2.00181ms)
+✔ import is inert and the real entry refuses local execution before mutation (0.921996ms)
+✔ targeted upstream bump preserves every existing unrelated dependency and native platform selector (48.30858ms)
+✔ real qualification requires explicit disposable hosted Linux/Windows Node24 context (0.752104ms)
+✔ new owned workspaces canonicalize ordinary temporary names and separate stores from source (11.825022ms)
+✔ overlapping or linked runner roots fail before creating a qualification store (7.181602ms)
+✔ replacement directory or owner marker cannot be reused as the admitted workspace (6.313301ms)
+✔ environment preserves Windows runtime essentials while removing credentials and preload hooks (5.344094ms)
+✔ feature flags cannot redirect qualification to arbitrary or authenticated endpoints (5.533017ms)
+✔ installed entry admission binds exact name, version, lock pin, integrity and owned path (23.848116ms)
+✔ retargeted package bin, linked entry and replaced install directory are rejected (16.310564ms)
+✔ contract comparison covers each name, input schema and annotation independent of list order (10.647895ms)
+✔ description changes are recorded without weakening contract checks (0.966802ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 18
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 739.763837
+
+✖ failing tests:
+
+test at test/upstream-qualification.test.mjs:36:1
+✖ public search accepts one running match and rejects inconsistent count grammar (0.76981ms)
+  Error: qualification_search_header
+      at parseSearchProbe (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/lib/upstream-qualification.mjs:20:22)
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:39:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at test/upstream-qualification.test.mjs:47:1
+✖ every completed search page proves full count and range; later pages must remain complete (1.914588ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/a92a3aacdca1/MTechLabs-Access-Candidate/integrations/mcp-manager/test/upstream-qualification.test.mjs:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /qualification_search_completed_count|qualification_search_page_bounds/,
+    operator: 'throws',
+    diff: 'simple'
+  }
