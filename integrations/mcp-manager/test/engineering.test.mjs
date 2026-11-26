@@ -135,4 +135,36 @@ test('code diagnostics inspects syntax across changed JavaScript modules safely'
   assert.equal(diag.syntax.length, 1);
   assert.equal(diag.syntax[0].file, 'index.mjs');
   assert.equal(diag.syntax[0].ok, true);
+
+  const review = await codeOperation('mterm_code_review_diff', { rootId: 'sample', base: 'HEAD' }, repoDir, f.config);
+  assert.equal(review.base, 'HEAD');
+  assert.equal(review.whitespace.ok, true);
+  assert.match(review.statistics.output, /index\.mjs/);
+  assert.match(review.patch.output, /\+export const answer = 84;/);
+  await assert.rejects(
+    codeOperation('mterm_code_review_diff', { rootId: 'sample', base: '--evil' }, repoDir, f.config),
+    /invalid_base_ref/,
+  );
+
+  const symbols = await codeOperation('mterm_code_symbols', { rootId: 'sample', query: 'answer' }, repoDir, f.config);
+  assert.equal(symbols.identifier, 'answer');
+  assert.ok(symbols.matches.some(line => line.includes('index.mjs:1:')));
+  await assert.rejects(
+    codeOperation('mterm_code_symbols', { rootId: 'sample', query: 'bad;cmd' }, repoDir, f.config),
+    /invalid_identifier/,
+  );
+
+  const refs = await codeOperation('mterm_code_references', { rootId: 'sample', symbol: 'answer' }, repoDir, f.config);
+  assert.equal(refs.identifier, 'answer');
+  assert.ok(refs.matches.some(line => line.includes('index.mjs:1:')));
+
+  await assert.rejects(
+    codeOperation('mterm_patch_apply_checked', {
+      rootId: 'sample',
+      expectedHead: '0'.repeat(40),
+      patch: 'diff --git a/index.mjs b/index.mjs\n',
+      apply: false,
+    }, repoDir, f.config),
+    /head_changed_reinspect_before_editing/,
+  );
 });
