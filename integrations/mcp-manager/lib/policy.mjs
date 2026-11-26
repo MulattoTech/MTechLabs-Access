@@ -6,6 +6,11 @@ import { readBoundedJson } from './config.mjs';
 
 export const MIN_INFLIGHT = 1;
 export const MAX_INFLIGHT = 64;
+export function clampInflightLimit(value, fallback = 2) {
+  if (typeof value !== "number" || !Number.isInteger(value)) return fallback;
+  return Math.min(16, Math.max(1, value));
+}
+
 export const QUEUE_CAPACITY = 64;
 export const MAX_PENDING_REQUESTS = 128;
 export const READ_ONLY_TOOLS = new Set([

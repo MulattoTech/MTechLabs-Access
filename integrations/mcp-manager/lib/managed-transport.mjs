@@ -75,3 +75,7 @@ export class ManagedStdioTransport {
     // in closing state if an upstream process does not exit on EOF.
   }
 }
+
+export function isValidJsonRpcMethod(method) {
+  return typeof method === "string" && method.length > 0 && method.length <= 128 && !/\s/.test(method);
+}

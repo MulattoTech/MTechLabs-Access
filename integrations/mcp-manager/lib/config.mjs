@@ -7,6 +7,11 @@ const REQUIRED_PATHS = [
 ];
 const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB', 'minimumFreeDiskMiB', 'instance']);
 
+export function normalizePortNumber(value, fallback = 19740) {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 1024 || value > 65535) return fallback;
+  return value;
+}
+
 export function managerInstance(config) {
   if (!Object.hasOwn(config, 'instance')) return null;
   const value = config.instance;

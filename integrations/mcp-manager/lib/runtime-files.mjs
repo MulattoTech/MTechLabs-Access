@@ -48,3 +48,7 @@ export async function stableFileSnapshot(filename, maximum) {
   if (JSON.stringify(identity) !== JSON.stringify(after)) throw new Error('runtime_file_unverified');
   return { ...value, identity, sha256: createHash('sha256').update(value.bytes).digest('hex') };
 }
+
+export function isValidSha256Hex(value) {
+  return typeof value === "string" && /^[a-f0-9]{64}$/i.test(value);
+}

@@ -40,3 +40,7 @@ export async function mathOperation(name, args, config, options = {}) {
   if (payload.ok !== true || !payload.result) throw new Error('invalid_math_result');
   return payload.result;
 }
+
+export function isBoundedMathInput(input) {
+  return typeof input === "string" && input.trim().length > 0 && input.length <= 500;
+}
