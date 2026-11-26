@@ -98,7 +98,8 @@ async function searchCode(repo, args, declarations) {
   return { identifier: word, matches: result.output.split(/\r?\n/).filter(Boolean).slice(0, 150), truncated: result.truncated };
 }
 
-async function runTest(repo, args, signal) {
+async function runTest(repo, args = {}, signal) {
+  if (!args || typeof args !== 'object') throw new Error('invalid_test_request');
   const commands = {
     'npm-test': ['npm', ['test']],
     'npm-lint': ['npm', ['run', 'lint', '--if-present']],

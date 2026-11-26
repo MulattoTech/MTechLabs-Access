@@ -92,6 +92,8 @@ async function readInstances(stateDirectory) {
 }
 
 export async function collectStatus(config, startedAt = Date.now()) {
+  if (!config || typeof config !== 'object') throw new Error('invalid_status_config');
+  const safeStartedAt = typeof startedAt === 'number' && Number.isFinite(startedAt) ? startedAt : Date.now();
   const warnings = [];
   const [policy, toolkit, toolkitJobs, packageInfo, inventory, disk, instances, coordinator, deployment] = await Promise.all([
     readPolicy(config.policyPath).catch(() => {
@@ -153,7 +155,7 @@ export async function collectStatus(config, startedAt = Date.now()) {
       name: config.instance ? 'MTerm-CLI Manager DEV' : 'MTerm-CLI Manager',
       version: MANAGER_VERSION,
       state: 'running',
-      uptimeSeconds: Math.max(0, Math.floor((Date.now() - startedAt) / 1000)),
+      uptimeSeconds: Math.max(0, Math.floor((Date.now() - safeStartedAt) / 1000)),
       ...(config.instance ? { instance: { kind: 'dev', id: config.instance.id, port: config.instance.port, upstreamEnabled: false } } : {}),
     },
     policy,

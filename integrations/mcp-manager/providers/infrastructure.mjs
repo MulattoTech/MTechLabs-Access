@@ -13,21 +13,22 @@ async function ps(script, timeoutMs = 16000) {
 }
 
 function vmName(args) {
-  if (typeof args.name !== 'string' || !/^[a-zA-Z0-9_. ()-]{1,80}$/.test(args.name)) {
+  if (typeof safeArgs.name !== 'string' || !/^[a-zA-Z0-9_. ()-]{1,80}$/.test(safeArgs.name)) {
     throw new Error('invalid_vm_name');
   }
   // The name cannot contain PowerShell quotation characters.
-  return "'" + args.name + "'";
+  return "'" + safeArgs.name + "'";
 }
 
 const json = script => `& { ${script} } | ConvertTo-Json -Depth 6 -Compress`;
 
-export async function vmOperation(name, args) {
+export async function vmOperation(name, args = {}) {
+  const safeArgs = args && typeof args === 'object' ? args : {};
   if (name === 'mterm_vm_list') return ps(json('Get-VM | Select-Object Name,State,Generation,ProcessorCount,MemoryStartup,MemoryAssigned,Uptime'));
   if (name === 'mterm_vm_network_map') return ps(json('[pscustomobject]@{ switches=@(Get-VMSwitch | Select-Object Name,SwitchType,NetAdapterInterfaceDescription); adapters=@(Get-VMNetworkAdapter -All | Select-Object VMName,Name,SwitchName,MacAddress,Status,IPAddresses) }'));
   if (name === 'mterm_vm_disk_health') return ps(json('@(Get-VMHardDiskDrive -VMName (Get-VM).Name | ForEach-Object { $d=$_; $v=Get-VHD -Path $d.Path -ErrorAction Stop; [pscustomobject]@{vm=$d.VMName;path=$d.Path;size=$v.Size;fileSize=$v.FileSize;type=$v.VhdType} })'));
   if (name === 'mterm_vm_diagnostics') {
-    const hours = args.hours === undefined ? 24 : args.hours;
+    const hours = safeArgs.hours === undefined ? 24 : safeArgs.hours;
     if (!Number.isInteger(hours) || hours < 1 || hours > 168) throw new Error('invalid_hours');
     return ps(json(`Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-Hyper-V-VMMS-Admin';StartTime=(Get-Date).AddHours(-${hours});Level=2,3} -MaxEvents 40 -ErrorAction SilentlyContinue | Select-Object TimeCreated,Id,LevelDisplayName,Message`));
   }
@@ -36,14 +37,14 @@ export async function vmOperation(name, args) {
     return ps(json(`[pscustomobject]@{ vm=(Get-VM -Name ${nameLiteral} | Select-Object Name,State,Generation,ProcessorCount,MemoryStartup,MemoryAssigned,AutomaticStartAction,AutomaticStopAction); adapters=@(Get-VMNetworkAdapter -VMName ${nameLiteral} | Select-Object Name,SwitchName,MacAddress,Status,IPAddresses); disks=@(Get-VMHardDiskDrive -VMName ${nameLiteral} | Select-Object ControllerType,ControllerNumber,ControllerLocation,Path); checkpoints=@(Get-VMSnapshot -VMName ${nameLiteral} | Select-Object Name,CreationTime,SnapshotType) }`));
   }
   if (name === 'mterm_vm_change_plan') {
-    if (!['start', 'shutdown', 'checkpoint'].includes(args.action)) throw new Error('invalid_vm_action');
+    if (!['start', 'shutdown', 'checkpoint'].includes(safeArgs.action)) throw new Error('invalid_vm_action');
     const inspected = await ps(json(`Get-VM -Name ${nameLiteral} | Select-Object Name,State`));
-    return { previewOnly: true, vm: inspected, action: args.action,
-      risk: args.action === 'checkpoint' ? 'Check available space on each attached disk volume; checkpoints may grow significantly.' :
-        args.action === 'shutdown' ? 'A graceful shutdown can interrupt services running inside the guest.' : 'Starting a VM consumes host resources.',
+    return { previewOnly: true, vm: inspected, action: safeArgs.action,
+      risk: safeArgs.action === 'checkpoint' ? 'Check available space on each attached disk volume; checkpoints may grow significantly.' :
+        safeArgs.action === 'shutdown' ? 'A graceful shutdown can interrupt services running inside the guest.' : 'Starting a VM consumes host resources.',
       prerequisites: ['Global managed policy must allow writes.', 'VM power capability must be explicitly enabled.', 'The exact VM name must be confirmed.'] };
   }
-  if (args.confirmName !== args.name) throw new Error('vm_confirmation_mismatch');
+  if (safeArgs.confirmName !== safeArgs.name) throw new Error('vm_confirmation_mismatch');
   if (name === 'mterm_vm_start') return ps(json(`Start-VM -Name ${nameLiteral} -Passthru | Select-Object Name,State`), 30000);
   if (name === 'mterm_vm_shutdown') return ps(json(`Stop-VM -Name ${nameLiteral} -Shutdown -Passthru | Select-Object Name,State`), 30000);
   if (name === 'mterm_vm_checkpoint_create') {
