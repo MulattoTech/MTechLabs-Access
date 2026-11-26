@@ -1,4 +1,6 @@
 export function createLineFramer({ maxBytes, onLine, onError }) {
+  if (!Number.isInteger(maxBytes) || maxBytes < 1) throw new Error('invalid_max_bytes');
+  if (typeof onLine !== 'function') throw new Error('invalid_on_line');
   let pieces = [];
   let size = 0;
   let discarded = false;
@@ -13,11 +15,12 @@ export function createLineFramer({ maxBytes, onLine, onError }) {
     pieces.push(piece);
     size += piece.length;
   }
-  function complete() {
+  function complete(isExplicitNewline) {
     if (discarded) {
-      onError('frame_too_large');
+      onError?.('frame_too_large');
     } else if (size) {
-      const value = Buffer.concat(pieces, size).toString('utf8').replace(/\r$/, '');
+      let value = Buffer.concat(pieces, size).toString('utf8');
+      if (isExplicitNewline && value.endsWith('\r')) value = value.slice(0, -1);
       if (value.trim()) onLine(value);
     }
     pieces = [];
@@ -35,12 +38,12 @@ export function createLineFramer({ maxBytes, onLine, onError }) {
           break;
         }
         append(chunk.subarray(start, newline));
-        complete();
+        complete(true);
         start = newline + 1;
       }
     },
     end() {
-      complete();
+      complete(false);
     },
   };
 }
