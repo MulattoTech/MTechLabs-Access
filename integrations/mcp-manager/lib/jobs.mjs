@@ -221,15 +221,18 @@ export function startJobRunner(config) {
       const db = await database(config);
       try {
         if (closed) return;
-        for (const row of db.prepare("SELECT id FROM jobs WHERE state='running' AND cancel_requested=1").all()) {
+        const cancelRows = db.prepare("SELECT id FROM jobs WHERE state='running' AND cancel_requested=1").all();
+        for (const row of cancelRows) {
           active.get(row.id)?.abort();
         }
         if (!settings.capabilities.jobs || !policy.enabled || policy.readOnly) return;
         const limit = Math.max(0, settings.maxConcurrentJobs - active.size);
+        if (limit === 0) return;
         const rows = db.prepare("SELECT * FROM jobs WHERE state='queued' ORDER BY created_at,id LIMIT ?").all(limit);
+        const markRunning = db.prepare("UPDATE jobs SET state='running',started_at=?,updated_at=? WHERE id=? AND state='queued'");
         for (const row of rows) {
-          const changed = db.prepare("UPDATE jobs SET state='running',started_at=?,updated_at=? WHERE id=? AND state='queued'")
-            .run(now(), now(), row.id).changes;
+          const ts = now();
+          const changed = markRunning.run(ts, ts, row.id).changes;
           if (changed) track(run(row));
         }
       } finally { db.close(); }
