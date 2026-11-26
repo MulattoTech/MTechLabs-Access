@@ -3,8 +3,9 @@ import { runCommand } from '../lib/command-runner.mjs';
 
 async function ps(script, timeoutMs = 16000) {
   if (process.platform !== 'win32') throw new Error('windows_host_required');
-  const result = await runCommand('pwsh.exe', ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command',
-    "$ErrorActionPreference='Stop'; " + script], { timeoutMs, maxOutput: 36000 });
+  const encoded = Buffer.from("$ErrorActionPreference='Stop'; " + script, 'utf16le').toString('base64');
+  const result = await runCommand('pwsh.exe', ['-NoLogo', '-NoProfile', '-NonInteractive', '-EncodedCommand', encoded],
+    { timeoutMs, maxOutput: 36000 });
   if (result.timedOut) throw new Error('powershell_timeout');
   if (!result.ok || result.truncated) throw new Error('infrastructure_command_failed');
   try { return JSON.parse(result.output.trim() || 'null'); }

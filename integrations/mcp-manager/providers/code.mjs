@@ -19,22 +19,22 @@ function summary(result) {
 }
 
 async function repoInspect(repo) {
-  const [branch, head, status] = await Promise.all([
+  const [branch, head, status, files, manifestRaw] = await Promise.all([
     git(repo, ['branch', '--show-current'], { maxOutput: 200 }),
     git(repo, ['rev-parse', 'HEAD'], { maxOutput: 100 }),
     git(repo, ['status', '--short', '-uno'], { maxOutput: 14000 }),
+    fs.readdir(repo).then(entries => entries.slice(0, 100)).catch(() => []),
+    fs.readFile(path.join(repo, 'package.json'), 'utf8').catch(() => null),
   ]);
-  let files = [];
-  try { files = (await fs.readdir(repo)).slice(0, 100); } catch { /* non-fatal */ }
   let scripts = {};
-  try {
-    const contents = await fs.readFile(path.join(repo, 'package.json'), 'utf8');
-    if (contents.length < 65536) {
-      const parsed = JSON.parse(contents);
-      if (parsed.scripts && typeof parsed.scripts === 'object') scripts = Object.fromEntries(
-        Object.keys(parsed.scripts).slice(0, 50).map(k => [k, '<defined>']));
-    }
-  } catch { /* repositories without a package.json are normal */ }
+  if (typeof manifestRaw === 'string' && manifestRaw.length < 65536) {
+    try {
+      const parsed = JSON.parse(manifestRaw);
+      if (parsed.scripts && typeof parsed.scripts === 'object') {
+        scripts = Object.fromEntries(Object.keys(parsed.scripts).slice(0, 50).map(k => [k, '<defined>']));
+      }
+    } catch { /* repositories without valid JSON package.json are normal */ }
+  }
   return { branch: branch.output.trim(), head: head.output.trim(),
     clean: status.ok && !status.output.trim(), modifiedFiles: status.output.split(/\r?\n/).filter(Boolean).slice(0, 200),
     statusTruncated: status.truncated, manifests: files.filter(f =>
@@ -42,25 +42,35 @@ async function repoInspect(repo) {
 }
 
 async function codeDiagnostics(repo, signal) {
-  const diff = await git(repo, ['diff', '--check', 'HEAD', '--'], { signal, maxOutput: 9000 });
-  const changed = await git(repo, ['diff', '--name-only', '-z', 'HEAD', '--'], { signal, maxOutput: 30000 });
+  const [diff, changed] = await Promise.all([
+    git(repo, ['diff', '--check', 'HEAD', '--'], { signal, maxOutput: 9000 }),
+    git(repo, ['diff', '--name-only', '-z', 'HEAD', '--'], { signal, maxOutput: 30000 }),
+  ]);
   if (!changed.ok) throw new Error('git_diff_failed');
-  const files = changed.output.split('\0').filter(Boolean).filter(f => /\.(mjs|cjs|js)$/.test(f)).slice(0, 25);
-  const syntax = [];
-  for (const file of files) {
-    const absolute = path.resolve(repo, file);
-    const relative = path.relative(repo, absolute);
-    if (relative === '..' || relative.startsWith('..' + path.sep)) continue;
-    const canonical = await fs.realpath(absolute).catch(() => null);
-    const inside = canonical && path.relative(repo, canonical);
-    if (!inside || inside === '..' || inside.startsWith('..' + path.sep) || path.isAbsolute(inside)) {
-      syntax.push({ file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' });
-      continue;
+  const rawEntries = changed.output
+    .split('\0')
+    .flatMap(entry => entry.split(/\r?\n/))
+    .map(entry => entry.trim())
+    .filter(Boolean)
+    .filter(entry => !entry.startsWith('warning:'));
+  const uniqueFiles = [...new Set(rawEntries)].filter(f => /\.(mjs|cjs|js)$/.test(f));
+  const files = uniqueFiles.slice(0, 25);
+  const canonicalRepo = await fs.realpath(repo);
+  const syntax = await Promise.all(files.map(async file => {
+    const absolute = path.resolve(canonicalRepo, file);
+    const relative = path.relative(canonicalRepo, absolute);
+    if (relative === '..' || relative.startsWith('..' + path.sep)) {
+      return { file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' };
     }
-    const checked = await runCommand('node', ['--check', canonical], { signal, timeoutMs: 8000, maxOutput: 4000 });
-    syntax.push({ file, ...summary(checked) });
-  }
-  return { whitespace: summary(diff), syntax, moreFilesSkipped: changed.output.split('\0').filter(f => /\.(mjs|cjs|js)$/.test(f)).length > 25,
+    const canonical = await fs.realpath(absolute).catch(() => null);
+    const inside = canonical && path.relative(canonicalRepo, canonical);
+    if (!inside || inside === '..' || inside.startsWith('..' + path.sep) || path.isAbsolute(inside)) {
+      return { file, ok: false, error: 'file_resolves_outside_repository_or_is_missing' };
+    }
+    const checked = await runCommand(process.execPath, ['--check', canonical], { signal, timeoutMs: 8000, maxOutput: 4000 });
+    return { file, ...summary(checked) };
+  }));
+  return { whitespace: summary(diff), syntax, moreFilesSkipped: uniqueFiles.length > 25,
     note: 'No package scripts, tests or application modules were executed.' };
 }
 

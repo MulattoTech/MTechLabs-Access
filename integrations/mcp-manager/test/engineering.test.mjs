@@ -112,3 +112,59 @@ test('local HTTP toolkit controls require bearer and reject root/path injection'
   assert.equal(created.body.job.kind, 'vm_inventory');
   assert.equal(created.body.job.state, 'queued');
 });
+
+test('code diagnostics inspects syntax across changed JavaScript modules safely', async t => {
+  const f = await fixture(t);
+  const repoDir = path.join(f.directory, 'sample-repo');
+  await fs.mkdir(repoDir, { recursive: true });
+  const { execFileSync } = await import('node:child_process');
+  execFileSync('git', ['-C', repoDir, 'init', '-q'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'config', 'user.email', 'test@example.invalid'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'config', 'user.name', 'Test User'], { stdio: 'ignore' });
+  await fs.writeFile(path.join(repoDir, 'index.mjs'), 'export const answer = 42;\n', 'utf8');
+  execFileSync('git', ['-C', repoDir, 'add', 'index.mjs'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', repoDir, 'commit', '-q', '-m', 'init'], { stdio: 'ignore' });
+  await fs.writeFile(path.join(repoDir, 'index.mjs'), 'export const answer = 84;\n', 'utf8');
+  const { codeOperation } = await import('../providers/code.mjs');
+  const inspected = await codeOperation('mterm_repo_inspect', { rootId: 'sample' }, repoDir, f.config);
+  assert.equal(inspected.clean, false);
+  assert.ok(inspected.modifiedFiles.some(line => line.endsWith('index.mjs')));
+  assert.equal(inspected.manifests.includes('package.json'), false);
+  const diag = await codeOperation('mterm_code_diagnostics', { rootId: 'sample' }, repoDir, f.config);
+  assert.equal(diag.whitespace.ok, true);
+  assert.equal(diag.syntax.length, 1);
+  assert.equal(diag.syntax[0].file, 'index.mjs');
+  assert.equal(diag.syntax[0].ok, true);
+
+  const review = await codeOperation('mterm_code_review_diff', { rootId: 'sample', base: 'HEAD' }, repoDir, f.config);
+  assert.equal(review.base, 'HEAD');
+  assert.equal(review.whitespace.ok, true);
+  assert.match(review.statistics.output, /index\.mjs/);
+  assert.match(review.patch.output, /\+export const answer = 84;/);
+  await assert.rejects(
+    codeOperation('mterm_code_review_diff', { rootId: 'sample', base: '--evil' }, repoDir, f.config),
+    /invalid_base_ref/,
+  );
+
+  const symbols = await codeOperation('mterm_code_symbols', { rootId: 'sample', query: 'answer' }, repoDir, f.config);
+  assert.equal(symbols.identifier, 'answer');
+  assert.ok(symbols.matches.some(line => line.includes('index.mjs:1:')));
+  await assert.rejects(
+    codeOperation('mterm_code_symbols', { rootId: 'sample', query: 'bad;cmd' }, repoDir, f.config),
+    /invalid_identifier/,
+  );
+
+  const refs = await codeOperation('mterm_code_references', { rootId: 'sample', symbol: 'answer' }, repoDir, f.config);
+  assert.equal(refs.identifier, 'answer');
+  assert.ok(refs.matches.some(line => line.includes('index.mjs:1:')));
+
+  await assert.rejects(
+    codeOperation('mterm_patch_apply_checked', {
+      rootId: 'sample',
+      expectedHead: '0'.repeat(40),
+      patch: 'diff --git a/index.mjs b/index.mjs\n',
+      apply: false,
+    }, repoDir, f.config),
+    /head_changed_reinspect_before_editing/,
+  );
+});
