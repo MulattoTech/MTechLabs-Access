@@ -155,3 +155,10 @@ export function allowsMutation(policy) {
   if (!isPlainObject(policy)) return false;
   return normalizeBooleanFlag(policy.enabled, false) && !normalizeBooleanFlag(policy.readOnly, true);
 }
+
+export function describePolicyMode(policy) {
+  if (!isPlainObject(policy)) return "invalid";
+  if (!normalizeBooleanFlag(policy.enabled, false)) return "paused";
+  if (normalizeBooleanFlag(policy.readOnly, true)) return "read-only";
+  return "active";
+}

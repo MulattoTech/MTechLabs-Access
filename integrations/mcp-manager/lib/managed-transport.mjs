@@ -100,3 +100,7 @@ export function isJsonRpcRequest(msg) {
 export function hasJsonRpc2Version(msg) {
   return isPlainObject(msg) && msg.jsonrpc === "2.0";
 }
+
+export function isJsonRpcResultResponse(msg) {
+  return isPlainObject(msg) && Object.hasOwn(msg, "result") && hasValidJsonRpcId(msg.id);
+}

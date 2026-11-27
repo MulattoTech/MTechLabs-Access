@@ -187,3 +187,9 @@ export function safeBasename(targetPath) {
   if (typeof targetPath !== "string" || !targetPath.trim()) return "";
   return path.basename(targetPath.trim());
 }
+
+export function hasAllowedExtension(filePath, extensions = [".js", ".mjs", ".cjs", ".ts", ".tsx", ".py"]) {
+  if (typeof filePath !== "string" || !filePath.trim() || !Array.isArray(extensions)) return false;
+  const ext = path.extname(filePath.trim()).toLowerCase();
+  return extensions.some(allowed => typeof allowed === "string" && allowed.toLowerCase() === ext);
+}

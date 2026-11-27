@@ -113,3 +113,19 @@ export function isValidLoopbackHost(host) {
 export function isIntInRange(value, min, max) {
   return typeof value === "number" && Number.isInteger(value) && value >= min && value <= max;
 }
+
+export function dedupeStrings(values, maxItems = 64) {
+  if (!Array.isArray(values)) return [];
+  const limit = typeof maxItems === "number" && Number.isInteger(maxItems) && maxItems >= 0 ? maxItems : 64;
+  const seen = new Set();
+  const out = [];
+  for (const item of values) {
+    if (typeof item !== "string") continue;
+    const trimmed = item.trim();
+    if (!trimmed || seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    out.push(trimmed);
+    if (out.length >= limit) break;
+  }
+  return out;
+}

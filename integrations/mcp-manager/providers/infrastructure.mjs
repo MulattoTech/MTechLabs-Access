@@ -100,3 +100,11 @@ export function normalizeNonNegativeInt(value, fallback = 0) {
   if (typeof value !== "number" || !Number.isInteger(value) || value < 0) return fallback;
   return value;
 }
+
+export function classifyMemoryPressure(freeBytes, totalBytes) {
+  if (typeof freeBytes !== "number" || typeof totalBytes !== "number" || !Number.isFinite(freeBytes) || !Number.isFinite(totalBytes) || totalBytes <= 0) return "unknown";
+  const ratio = freeBytes / totalBytes;
+  if (ratio < 0.1) return "critical";
+  if (ratio < 0.25) return "elevated";
+  return "normal";
+}

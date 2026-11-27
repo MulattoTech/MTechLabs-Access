@@ -78,3 +78,8 @@ export function splitLinesNormalized(text) {
   if (typeof text !== "string" || !text) return [];
   return text.replace(/^\uFEFF/, "").split(/\r?\n/);
 }
+
+export function countLinesNormalized(text) {
+  if (typeof text !== "string" || !text) return 0;
+  return splitLinesNormalized(text).length;
+}
