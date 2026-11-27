@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-20T12:22:35.567846+00:00",
+  "accepted": false,
+  "runId": 44734494406,
+  "attempt": 1,
+  "head": "1b1bb9a57cd008e0e48cc54cbe112b3ae389a94f",
+  "localCommit": "7aa902f1fa4792e8a5a5cfb95f07ff56fb54f9db",
+  "tree": "0c257e78c7a876f8e5ce8bcff6b5b57e419cf601",
+  "manifestSha256": "316fd195382f628626148541f9332b36c569e26579e52cdf005eb3d42ae6e2f3",
+  "preservedFiles": [
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/reference-transport-native.ps1",
+      "sha256": "c2fce8f0346904d9e76ade462e68a293449dcf515b4cca5b8deddad53d445d26",
+      "bytes": 70813
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/reference-transport-native.test.mjs",
+      "sha256": "dfe43ec2ecd5cef110f7c63928d088dea745846aa35c1a7ca262638853920ce2",
+      "bytes": 10935
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/reference-transport-child.mjs",
+      "sha256": "d1c1ced00467a59fc63cb49dfb47797bcb2c624f534d0a05685b1a5d47865fab",
+      "bytes": 20309
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/review_hosted.py",
+      "sha256": "5040504d6b98b272522ff56bb349c015c90a8a745230ea5f308fda931911f6f0",
+      "bytes": 67598
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/module-path-r3-frozen-inputs.json",
+      "sha256": "5b3cb79f25795dfa59c6da9aba97c082f0e825921f95cb454e926d1b489c2a6f",
+      "bytes": 4050
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/module-path-r3-freeze.json",
+      "sha256": "8cfb273a163fe6341e951bc313ca02882bf09ead75ea1aada4d5b877cdd4a249",
+      "bytes": 4840
+    }
+  ],
+  "verifier": {
+    "command": [
+      "python",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/frozen-before-child-diagnostics/review_hosted.py",
+      "--manifest",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-module-path-r3/candidate-verification-input.json"
+    ],
+    "exitCode": 1,
+    "stdoutSha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "stderrBytes": 0,
+    "verdict": {
+      "schemaVersion": 1,
+      "accepted": false,
+      "pending": false,
+      "error": "Rejected:run_success"
+    }
+  },
+  "windows": [
+    {
+      "jobId": 136282341934,
+      "report": "windows-manager-observed-report.json",
+      "sha256": "796feaf21d00783d6ad9fc503e5926cbb4ff6d73ad75e055c08707b3721c0912",
+      "elapsedMilliseconds": 43605,
+      "failedStage": "real_identity_controls",
+      "failure": "fixture_child_exit_wrong",
+      "failureDiagnostic": {
+        "line": 48,
+        "exceptionChain": [
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.RuntimeException"
+          }
+        ],
+        "stage": "real_identity_controls",
+        "errorId": "fixture_child_exit_wrong",
+        "lastRecordedOperation": "journal_write",
+        "category": "OperationStopped",
+        "command": "unknown_command",
+        "errorIdSha256": "ccbb587b4767b3868e29e854f54d83ab0f6e3de9b308f5daaa1d716ecada085a"
+      },
+      "setupProgress": {
+        "exclusiveRootCreated": true,
+        "initialJournalSaved": true,
+        "sourceTreeGuarded": true,
+        "rootAclApplied": true,
+        "nodeCopied": true,
+        "sourceFilesCopied": 19
+      },
+      "effectiveModulePathObservation": {
+        "includesPowerShellCoreModules": false,
+        "sha256": "b2533d3b413c391ffc6f32f121109e516f223bed56475425fdbfb5ba2c1c7963",
+        "entryCount": 1,
+        "includesWindowsPowerShellSystemModules": true
+      },
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null,
+      "completedNativeCases": 0,
+      "sourceBindings": "all 21 observed source/helper hashes verified against reviewed LF bytes or exact LF-to-CRLF checkout transform"
+    },
+    {
+      "jobId": 136282341853,
+      "report": "windows-upstream-observed-report.json",
+      "sha256": "4c409cee51d76705755382bb917782b406166c3982c77212edde715c48f465bf",
+      "elapsedMilliseconds": 44379,
+      "failedStage": "real_identity_controls",
+      "failure": "fixture_child_exit_wrong",
+      "failureDiagnostic": {
+        "line": 48,
+        "exceptionChain": [
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.RuntimeException"
+          }
+        ],
+        "stage": "real_identity_controls",
+        "errorId": "fixture_child_exit_wrong",
+        "lastRecordedOperation": "journal_write",
+        "category": "OperationStopped",
+        "command": "unknown_command",
+        "errorIdSha256": "ccbb587b4767b3868e29e854f54d83ab0f6e3de9b308f5daaa1d716ecada085a"
+      },
+      "setupProgress": {
+        "exclusiveRootCreated": true,
+        "initialJournalSaved": true,
+        "sourceTreeGuarded": true,
+        "rootAclApplied": true,
+        "nodeCopied": true,
+        "sourceFilesCopied": 19
+      },
+      "effectiveModulePathObservation": {
+        "includesPowerShellCoreModules": false,
+        "sha256": "b2533d3b413c391ffc6f32f121109e516f223bed56475425fdbfb5ba2c1c7963",
+        "entryCount": 1,
+        "includesWindowsPowerShellSystemModules": true
+      },
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null,
+      "completedNativeCases": 0,
+      "sourceBindings": "all 21 observed source/helper hashes verified against reviewed LF bytes or exact LF-to-CRLF checkout transform"
+    }
+  ],
+  "conclusions": [
+    "System-only Desktop module path is observed in both controllers; setup now reaches protected source copying and owned-account provisioning.",
+    "Both runs fail during the first identity-control group before it completes; this does not establish any of the18 native case acceptances.",
+    "Every natural cleanup flag is true, forced cleanup is0, and no emergency recovery was invoked.",
+    "The report does not identify the failing child role/mode/exit/result; a further bounded diagnostic revision is required before claiming a cause or changing behavior."
+  ],
+  "nextChange": "Additive per-child bounded diagnostics only; no speculative product or fixture-behavior fix."
+}

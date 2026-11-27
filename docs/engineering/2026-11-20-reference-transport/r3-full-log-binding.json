@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "head": "1b1bb9a57cd008e0e48cc54cbe112b3ae389a94f",
+  "source": "0cc85cefcc6f1a9af9261f7806fa76e08f66051b",
+  "tree": "0c257e78c7a876f8e5ce8bcff6b5b57e419cf601",
+  "runId": 44734494406,
+  "windowsLogBindings": [
+    {
+      "jobId": 136282341934,
+      "fullLogSha256": "caf222bc7b5157325a2d55f07f86bc993491e2184ca33f0b9712bf59dea87add",
+      "observedReportSha256": "796feaf21d00783d6ad9fc503e5926cbb4ff6d73ad75e055c08707b3721c0912",
+      "payloadEquality": true
+    },
+    {
+      "jobId": 136282341853,
+      "fullLogSha256": "e646792d32aff942dd560261ab269bab38da3b9a39ed2297d5630a4860d8d96b",
+      "observedReportSha256": "4c409cee51d76705755382bb917782b406166c3982c77212edde715c48f465bf",
+      "payloadEquality": true
+    }
+  ],
+  "accepted": false
+}

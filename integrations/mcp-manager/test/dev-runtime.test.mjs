@@ -126,7 +126,7 @@ test('DEV launcher refuses activation and Node preload before executing its supp
   await assert.rejects(fs.stat(marker), { code: 'ENOENT' });
 });
 
-test('DEV launcher Inspect and Status return bounded diagnostics without activation', native, async t => {
+test('DEV launcher Inspect and Status refuse missing protected reference trust without fallback', native, async t => {
   const f = await runtimeInputs(t);
   const before = await Promise.all([directorySnapshot(f.prod.directory), directorySnapshot(f.dev.directory)]);
   for (const action of ['Inspect', 'Status']) {
@@ -134,9 +134,11 @@ test('DEV launcher Inspect and Status return bounded diagnostics without activat
       '-Action', action, '-NodePath', process.execPath, '-ConfigPath', f.dev.configPath, '-PlanPath', f.planPath], {
       windowsHide: true, encoding: 'utf8', timeout: 25000, maxBuffer: 8192, env: cleanEnvironment(),
     });
-    assert.ifError(child.error); assert.equal(child.status, 0, child.stderr); assert.equal(child.stderr, '');
-    const report = JSON.parse(child.stdout);
-    assert.equal(report.mode, 'read-only'); assert.equal(report.qualified, false); assert.equal(report.upstreamEnabled, false);
+    assert.ifError(child.error); assert.equal(child.status, 1); assert.equal(child.stdout, '');
+    const report = JSON.parse(child.stderr);
+    assert.equal(report.error, 'runtime_reference_bootstrap_untrusted');
+    assert.equal(report.qualified, false); assert.equal(report.upstreamEnabled, false);
+    assert.equal(child.stderr.includes(f.prod.directory), false); assert.equal(child.stderr.includes(f.dev.directory), false);
   }
   assert.deepEqual(await Promise.all([directorySnapshot(f.prod.directory), directorySnapshot(f.dev.directory)]), before);
 });

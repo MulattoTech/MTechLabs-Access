@@ -1,0 +1,232 @@
+TAP version 13
+# Subtest: protected reference bootstrap capability exposes the agreed validator and opaque loader
+not ok 1 - protected reference bootstrap capability exposes the agreed validator and opaque loader
+  ---
+  duration_ms: 2.860008
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs:75:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    missing module is a new capability gap
+    + actual - expected
+    
+    + Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-bootstrap.mjs' imported from /workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs
+    +     at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    +     at moduleResolve (node:internal/modules/esm/resolve:879:10)
+    +     at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    +     at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    +     at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    +     at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    +     at #resolve (node:internal/modules/esm/loader:687:17)
+    +     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    +     at node:internal/modules/esm/loader:636:32
+    +     at TracingChannel.tracePromise (node:diagnostics_channel:370:14) {
+    +   code: 'ERR_MODULE_NOT_FOUND',
+    +   url: 'file:///workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-bootstrap.mjs'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot find module '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-bootstrap.mjs' imported from /workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs"
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    moduleResolve (node:internal/modules/esm/resolve:879:10)
+    defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    #resolve (node:internal/modules/esm/loader:687:17)
+    ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    node:internal/modules/esm/loader:636:32
+    TracingChannel.tracePromise (node:diagnostics_channel:370:14)
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs:76:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories
+not ok 2 - authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories
+  ---
+  duration_ms: 0.521076
+  type: 'test'
+  location: '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs:85:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    missing module is a new capability gap
+    + actual - expected
+    
+    + Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-transport.mjs' imported from /workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs
+    +     at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    +     at moduleResolve (node:internal/modules/esm/resolve:879:10)
+    +     at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    +     at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    +     at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    +     at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    +     at #resolve (node:internal/modules/esm/loader:687:17)
+    +     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    +     at node:internal/modules/esm/loader:636:32
+    +     at TracingChannel.tracePromise (node:diagnostics_channel:370:14) {
+    +   code: 'ERR_MODULE_NOT_FOUND',
+    +   url: 'file:///workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-transport.mjs'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: "Cannot find module '/workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/lib/reference-transport.mjs' imported from /workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs"
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:272:11)
+    moduleResolve (node:internal/modules/esm/resolve:879:10)
+    defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    #resolve (node:internal/modules/esm/loader:687:17)
+    ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    node:internal/modules/esm/loader:636:32
+    TracingChannel.tracePromise (node:diagnostics_channel:370:14)
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/86162842804d/dev_reference_transport/baseline/integrations/mcp-manager/test/reference-transport.test.mjs:86:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: protected trust declaration is canonically ordered deeply copied and frozen without granting authority
+ok 3 - protected trust declaration is canonically ordered deeply copied and frozen without granting authority # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.207964
+  type: 'test'
+  ...
+# Subtest: protected trust requires every field and rejects unknown readiness targets or private material
+ok 4 - protected trust requires every field and rejects unknown readiness targets or private material # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.173862
+  type: 'test'
+  ...
+# Subtest: protected trust rejects nonrecord array class and inherited-data schemas
+ok 5 - protected trust rejects nonrecord array class and inherited-data schemas # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.131659
+  type: 'test'
+  ...
+# Subtest: protected trust rejects accessors symbols and hidden fields without invoking getters
+ok 6 - protected trust rejects accessors symbols and hidden fields without invoking getters # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.148745
+  type: 'test'
+  ...
+# Subtest: protected trust pins schema version and positive safe integer generation
+ok 7 - protected trust pins schema version and positive safe integer generation # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.144949
+  type: 'test'
+  ...
+# Subtest: protected trust accepts only bounded canonical DEV instance identifiers
+ok 8 - protected trust accepts only bounded canonical DEV instance identifiers # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.129826
+  type: 'test'
+  ...
+# Subtest: protected trust requires distinct canonical user SID declarations with DWORD components
+ok 9 - protected trust requires distinct canonical user SID declarations with DWORD components # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.134544
+  type: 'test'
+  ...
+# Subtest: protected trust accepts an Ed25519 public SPKI and rejects private or alternate key types
+ok 10 - protected trust accepts an Ed25519 public SPKI and rejects private or alternate key types # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.222536
+  type: 'test'
+  ...
+# Subtest: protected trust refuses alternate or malformed public-key encodings
+ok 11 - protected trust refuses alternate or malformed public-key encodings # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 4.302235
+  type: 'test'
+  ...
+# Subtest: protected trust digests require lowercase exact-length hex without whitespace aliases
+ok 12 - protected trust digests require lowercase exact-length hex without whitespace aliases # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.166692
+  type: 'test'
+  ...
+# Subtest: protected trust source pins require exactly the complete fixed dependency set
+ok 13 - protected trust source pins require exactly the complete fixed dependency set # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.048012
+  type: 'test'
+  ...
+# Subtest: protected trust source pins reject record inheritance and digest control characters
+ok 14 - protected trust source pins reject record inheritance and digest control characters # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.03327
+  type: 'test'
+  ...
+# Subtest: protected trust keeps ordinary Windows declarations without pretending to resolve filesystem aliases
+ok 15 - protected trust keeps ordinary Windows declarations without pretending to resolve filesystem aliases # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.070306
+  type: 'test'
+  ...
+# Subtest: protected trust refuses remote relative device and alternate-stream path declarations
+ok 16 - protected trust refuses remote relative device and alternate-stream path declarations # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.160792
+  type: 'test'
+  ...
+# Subtest: protected trust declaration validation performs no filesystem process or network operations
+ok 17 - protected trust declaration validation performs no filesystem process or network operations # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.084938
+  type: 'test'
+  ...
+# Subtest: plain validated cloned or caller-claimed bootstrap handles cannot open an exchange
+ok 18 - plain validated cloned or caller-claimed bootstrap handles cannot open an exchange # SKIP Baseline authenticated reference transport is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.345181
+  type: 'test'
+  ...
+# Subtest: caller-claimed authority bootstrap cannot start a privileged callback or native helper
+ok 19 - caller-claimed authority bootstrap cannot start a privileged callback or native helper # SKIP Baseline authenticated reference transport is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.081583
+  type: 'test'
+  ...
+# Subtest: registered authority construction refuses fake bootstrap without opening a key registration or production file
+ok 20 - registered authority construction refuses fake bootstrap without opening a key registration or production file # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.130547
+  type: 'test'
+  ...
+# Subtest: protected bootstrap refuses Node preload before invoking a native helper on Windows
+ok 21 - protected bootstrap refuses Node preload before invoking a native helper on Windows # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.088153
+  type: 'test'
+  ...
+# Subtest: unsupported platform refuses protected bootstrap before file or native access
+ok 22 - unsupported platform refuses protected bootstrap before file or native access # SKIP Baseline protected bootstrap capability is absent; no behavioral pass claimed
+  ---
+  duration_ms: 0.08622
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 20
+# todo 0
+# duration_ms 176.408167

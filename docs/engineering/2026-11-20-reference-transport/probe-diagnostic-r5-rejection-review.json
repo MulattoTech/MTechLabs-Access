@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-20T12:56:07.445668+00:00",
+  "accepted": false,
+  "runId": 44739251279,
+  "attempt": 1,
+  "head": "81288c3da846a40d65bef8d6c864293acaf37896",
+  "sourceSha": "f8aac531793cf3d95f3be6aefd87ba8a0274192c",
+  "tree": "9c3123794164b8cfce501cb7a51756486feca0df",
+  "localCommit": "6ca717b2b6414c866cb7dd9e124b119b5ef8ea85",
+  "manifestSha256": "c4084d4d7c2bf661829e6495f903755fab9b938ee6ee5ebdce9a1e8435e64ea3",
+  "preservedFiles": [
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/reference-transport-native.ps1",
+      "sha256": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+      "bytes": 85083
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/reference-transport-child.mjs",
+      "sha256": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+      "bytes": 38682
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/reference-transport-native.test.mjs",
+      "sha256": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+      "bytes": 12155
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/review_hosted.py",
+      "sha256": "1a3ee64ccaee06ee6e8d556ae44f92c8f97457ac9b4c48f56a55a0216d26a16b",
+      "bytes": 74711
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/probe-diagnostic-r5-frozen-inputs.json",
+      "sha256": "103dfd34af686b319676a63b872d6f8bfd5bc9388d9a034729f057e7a7dcde1c",
+      "bytes": 4050
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/probe-diagnostic-r5-freeze.json",
+      "sha256": "7654f5a711575343149a98f933623c1bb91632f251e5d25197ee09c478bac12a",
+      "bytes": 6439
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/probe-diagnostic-r5-transform.json",
+      "sha256": "a704848227c67eee45ebffa95ef96199812ead672ce8cc17d1cfdbe8246d549f",
+      "bytes": 911
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/probe-diagnostic-r5-stage-map.json",
+      "sha256": "d65651ad3fa685e71c263d1b9bfbd282b68f9977a6f75ef8a05ae1e4993907a4",
+      "bytes": 2847
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/probe-diagnostic-r5-derived.ps1",
+      "sha256": "4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1",
+      "bytes": 12913
+    }
+  ],
+  "verifierExecution": {
+    "argv": [
+      "python",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/frozen-before-initialization-markers/review_hosted.py",
+      "--manifest",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-diagnostic-r5/candidate-verification-input.json"
+    ],
+    "exitCode": 1,
+    "stdoutSha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "stderrBytes": 0,
+    "verdict": {
+      "schemaVersion": 1,
+      "accepted": false,
+      "pending": false,
+      "error": "Rejected:run_success"
+    }
+  },
+  "windows": [
+    {
+      "jobId": 136298393390,
+      "fullLogSha256": "4ca479ca552aa279d0426037ef2b90ef6c78426cfda7ab20d8404ab32a5a2c8d",
+      "boundedReportFile": "windows-manager-observed-report.json",
+      "boundedReportSha256": "297881128d6a5d289ca3186e270788ea03c18cb0c348323ab7a99f9029893c6f",
+      "payloadEqualsIndependentReport": true,
+      "all21SourceBindingsVerified": true,
+      "primaryCapture": {
+        "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "killed": true,
+        "signal": "SIGTERM",
+        "stdoutDecodedBytes": 0,
+        "phase": "native_capture",
+        "stderrDecodedBytes": 0,
+        "elapsedMilliseconds": 15021,
+        "systemError": {
+          "code": null,
+          "syscall": null,
+          "errno": null
+        },
+        "failed": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        }
+      },
+      "separateFailureOnlyDerivative": {
+        "traceOverflow": false,
+        "rolesEmpty": true,
+        "originalSourceAfterSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "acceptanceEvidence": false,
+        "sameNodeParent": true,
+        "outcome": {
+          "stderrDecodedSha256": "f1c58060131c01c43e342f389891e9089b29da94d4e3c589f8a8d1f14890de95",
+          "killed": true,
+          "signal": "SIGTERM",
+          "stdoutDecodedBytes": 0,
+          "stderrDecodedBytes": 27,
+          "elapsedMilliseconds": 15158,
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "failed": true,
+          "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "anchorsMatched": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        },
+        "stages": [
+          {
+            "id": 1,
+            "elapsedMilliseconds": 6
+          }
+        ],
+        "anchorCount": 27,
+        "originalSourceUnchanged": true,
+        "originalSourceSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "deadlineMilliseconds": 15000,
+        "temporaryFileCreated": true,
+        "kind": "failure-only-instrumented-probe",
+        "normalizedSourceSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+        "temporaryFileRemoved": true,
+        "failureCode": null,
+        "invocations": 1,
+        "otherStderrLines": 0,
+        "malformedTrace": false,
+        "derivativeSourceSha256": "4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1",
+        "sourceNormalization": "CRLF-to-LF"
+      },
+      "derivativeStderrExactlyReconstructedFromSafeStages": true,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null
+    },
+    {
+      "jobId": 136298393411,
+      "fullLogSha256": "c06c95ec4d9da84d55dc1eb761044e1424e2aaad29d6b85f04b0298c8bcbf8a0",
+      "boundedReportFile": "windows-upstream-observed-report.json",
+      "boundedReportSha256": "51729fed3e44ade60ad468756d7f8527e3bf8a09c67e1c03ba7447c41ca72a40",
+      "payloadEqualsIndependentReport": true,
+      "all21SourceBindingsVerified": true,
+      "primaryCapture": {
+        "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "killed": true,
+        "signal": "SIGTERM",
+        "stdoutDecodedBytes": 0,
+        "phase": "native_capture",
+        "stderrDecodedBytes": 0,
+        "elapsedMilliseconds": 15027,
+        "systemError": {
+          "code": null,
+          "syscall": null,
+          "errno": null
+        },
+        "failed": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        }
+      },
+      "separateFailureOnlyDerivative": {
+        "traceOverflow": false,
+        "rolesEmpty": true,
+        "originalSourceAfterSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "acceptanceEvidence": false,
+        "sameNodeParent": true,
+        "outcome": {
+          "stderrDecodedSha256": "cab9fd26038375dd8bc7232f17f20a77af97406a2033961fbbbcbc6a147a7601",
+          "killed": true,
+          "signal": "SIGTERM",
+          "stdoutDecodedBytes": 0,
+          "stderrDecodedBytes": 27,
+          "elapsedMilliseconds": 15015,
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "failed": true,
+          "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "anchorsMatched": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        },
+        "stages": [
+          {
+            "id": 1,
+            "elapsedMilliseconds": 8
+          }
+        ],
+        "anchorCount": 27,
+        "originalSourceUnchanged": true,
+        "originalSourceSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "deadlineMilliseconds": 15000,
+        "temporaryFileCreated": true,
+        "kind": "failure-only-instrumented-probe",
+        "normalizedSourceSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+        "temporaryFileRemoved": true,
+        "failureCode": null,
+        "invocations": 1,
+        "otherStderrLines": 0,
+        "malformedTrace": false,
+        "derivativeSourceSha256": "4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1",
+        "sourceNormalization": "CRLF-to-LF"
+      },
+      "derivativeStderrExactlyReconstructedFromSafeStages": true,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null
+    }
+  ],
+  "classification": {
+    "observed": "The original identity capture still times out with no output. Each sole failure-only derivative reaches stage1 then emits no further marker before its own15-second deadline.",
+    "derivativeInterval": "After script entry and before the marker preceding the stdin loop: function declarations and main initialization (Console.InputEncoding, Console.OutputEncoding, New-Object char[] and length initialization).",
+    "notReached": [
+      "bounded stdin loop marker",
+      "JSON parse",
+      "CIM",
+      "Add-Type",
+      "native process snapshot"
+    ],
+    "limits": [
+      "The derivative interval does not prove the original invocation stalled in the identical operation.",
+      "No individual initialization statement has been identified yet.",
+      "Stdin finish/close with no error does not establish payload consumption or EOF.",
+      "No timeout, identity, ACL or success-case change is justified."
+    ],
+    "nextStep": "Add fixed before/after markers around the existing initialization statements in the same single failure-only derivative; preserve every prior marker and all original qualification requirements."
+  },
+  "activationAuthorized": false,
+  "qualified": false,
+  "upstreamEnabled": false
+}

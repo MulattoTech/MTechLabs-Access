@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "status": "REJECTED_LINUX_UPSTREAM_CONTROL_PDF",
+  "reviewer": "root evidence classification; not independent whole-source review",
+  "run": 44740386851,
+  "job": 136302296697,
+  "attempt": 1,
+  "head": "9d29623f45a079eb3430466eceb44aac864becd9",
+  "source": "b14c7a2f6d76a2079959a9354273cd3c46c655ca",
+  "tree": "6596c7eae39e1af8cabe70d05c2e5b807df7a5f8",
+  "archive": {
+    "artifactId": 14630209019,
+    "file": "candidate-14630209019.zip",
+    "bytes": 45948,
+    "sha256": "5729a0f88bc1664f1911b2a3565f373858c620d78e41b9a383bfc6d2c5fe700a"
+  },
+  "archiveEntries": {
+    "qualification.json": {
+      "archiveEntry": "mterm-q-kZ9W4Y/reports/qualification.json",
+      "bytes": 9385,
+      "sha256": "0c3ff87fa87e51de42da7906260c3051b97a9567130917458b1bf7f864d32afa"
+    },
+    "control-result.json": {
+      "archiveEntry": "mterm-q-kZ9W4Y/reports/control-result.json",
+      "bytes": 3571,
+      "sha256": "fa8ac7f7e95f643bf570b2bf26a321ce57e1a8a10b7f5126c37bc26b62f8dff2"
+    },
+    "candidate-result.json": {
+      "archiveEntry": "mterm-q-kZ9W4Y/reports/candidate-result.json",
+      "bytes": 3317,
+      "sha256": "f15505ddac3dc4fd30dee8ddc8acdc66d74636bd17be50a6e7522a7f313895cd"
+    },
+    "tool-contract-comparison.json": {
+      "archiveEntry": "mterm-q-kZ9W4Y/reports/tool-contract-comparison.json",
+      "bytes": 286,
+      "sha256": "8ea468652063f0b534c58c68a87262bb05af847b8a56fe11a14806a517a3a7bc"
+    }
+  },
+  "individualReportsEqualAggregate": true,
+  "sourceFilesUnchangedFromRevision5": {
+    ".github/workflows/check.yml": {
+      "bytes": 3191,
+      "sha256": "57d513da584bee4d8a074691beb510c0f64f22d06a6c28ace71cdf0649f9235e"
+    },
+    "integrations/mcp-manager/qualify-upstream.mjs": {
+      "bytes": 23557,
+      "sha256": "1f4dd1e08a784e98b34b3644b73618a5588130ce7f0bdf17b46df17ed066fab6"
+    },
+    "integrations/mcp-manager/lib/upstream-qualification.mjs": {
+      "bytes": 17419,
+      "sha256": "09742f7104cee024ed5274a094a8ddc756f70707bad4f79a4b0e430e30006e84"
+    },
+    "integrations/mcp-manager/verify-clients.mjs": {
+      "bytes": 20371,
+      "sha256": "2417a878c2171b051271efa907e28d9422a987a4be5505be688936e319cfb982"
+    },
+    "integrations/mcp-manager/qualification/control-package.json": {
+      "bytes": 243,
+      "sha256": "af4f183d2fa4fe814fdc78f8201ebc7b704a8c89b3c2ef9e981dc6ef8c1d82e5"
+    },
+    "integrations/mcp-manager/qualification/control-package-lock.json": {
+      "bytes": 317405,
+      "sha256": "aebd4d167353bb2a5c46865df019ffdc9d95ef904419e7fa695f5df7642aa813"
+    },
+    "integrations/mcp-manager/upstream-package.json": {
+      "bytes": 243,
+      "sha256": "757440e3022b02150b1b0bf8e17e0337de6059ea948977ecda7fc7b1dbe36bc6"
+    },
+    "integrations/mcp-manager/upstream-package-lock.json": {
+      "bytes": 330771,
+      "sha256": "1d28de913c330ce071735b594367e110c5752cec5a476d6da8bd327f6f52c143"
+    }
+  },
+  "control": {
+    "version": "0.3.1",
+    "completedPassingStages": 8,
+    "failedStage": "pdf_create_and_read_fidelity",
+    "failureCode": "write_pdf_tool_error",
+    "rpcErrorCode": null,
+    "pdfFailure": {
+      "tool": "write_pdf",
+      "stage": "pdf_create_and_read_fidelity",
+      "fixture": "owned-fixed-markdown-v1",
+      "isError": true,
+      "malformed": false,
+      "textEncoding": "utf-8",
+      "textBytes": 90,
+      "textSha256": "507ef8b2a699963ab7ea18f03af845cd35c625ab3ab41d708dd4f46945c422ba",
+      "inspectedCharacters": 90,
+      "inspectionTruncated": false,
+      "signals": [
+        "timeout"
+      ],
+      "errorCodes": []
+    }
+  },
+  "candidate": {
+    "version": "0.3.3",
+    "completedPassingStages": 10,
+    "pdfBytes": 13242,
+    "pdfSha256": "8bc06a9fc523eae0f1be4a699228ca70adbff232aba5952d006bb30e305033b5",
+    "pdfStageDurationMs": 23312
+  },
+  "bothLanes": {
+    "toolsPerLane": 53,
+    "exitCode": 0,
+    "gatewayAndUpstreamAndOwnedProcessCleanup": true,
+    "modelCalls": 0
+  },
+  "decision": {
+    "accepted": false,
+    "retryPerformed": false,
+    "changesMade": false,
+    "timeoutRelaxed": false
+  },
+  "limits": [
+    "The bounded public error records a timeout signal, not its exact operation, duration, browser process or root cause.",
+    "Raw public error text and PDF bytes are not in the archive; no reconstruction is attempted.",
+    "Earlier successful exact source runs do not turn this failed control lane into acceptance.",
+    "No causal source correction is established; the next genuinely changed Windows candidate must still pass this unchanged upstream gate."
+  ]
+}

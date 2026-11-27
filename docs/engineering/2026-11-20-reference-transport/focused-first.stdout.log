@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: production reference idle-drain capability is available without replacing the original protocol
+ok 1 - production reference idle-drain capability is available without replacing the original protocol
+  ---
+  duration_ms: 1.64718
+  type: 'test'
+  ...
+# Subtest: authority idle wait rejects forged cloned and noncore handles synchronously without invoking them
+ok 2 - authority idle wait rejects forged cloned and noncore handles synchronously without invoking them
+  ---
+  duration_ms: 3.311395
+  type: 'test'
+  ...
+# Subtest: idle authority resolves without creating requests or invoking an observer
+ok 3 - idle authority resolves without creating requests or invoking an observer
+  ---
+  duration_ms: 4.927426
+  type: 'test'
+  ...
+# Subtest: active authority shares one pending idle promise and releases every waiter only at actual settlement
+ok 4 - active authority shares one pending idle promise and releases every waiter only at actual settlement
+  ---
+  duration_ms: 10.666241
+  type: 'test'
+  ...
+# Subtest: an aborted public authority call cannot release idle while its ignored-abort observer is still running
+ok 5 - an aborted public authority call cannot release idle while its ignored-abort observer is still running
+  ---
+  duration_ms: 2.287557
+  type: 'test'
+  ...
+# Subtest: observer rejection after caller cancellation still releases idle only when the observer actually rejects
+ok 6 - observer rejection after caller cancellation still releases idle only when the observer actually rejects
+  ---
+  duration_ms: 2.712169
+  type: 'test'
+  ...
+# Subtest: idle waits for every concurrent observer rather than the first completion
+ok 7 - idle waits for every concurrent observer rather than the first completion
+  ---
+  duration_ms: 3.854105
+  type: 'test'
+  ...
+# Subtest: a new observer cycle obtains a fresh pending drain after an earlier idle wait completed
+ok 8 - a new observer cycle obtains a fresh pending drain after an earlier idle wait completed
+  ---
+  duration_ms: 3.045583
+  type: 'test'
+  ...
+# Subtest: malformed or already-aborted requests cannot leave phantom authority work for idle waiters
+ok 9 - malformed or already-aborted requests cannot leave phantom authority work for idle waiters
+  ---
+  duration_ms: 1.959742
+  type: 'test'
+  ...
+# Subtest: protected reference bootstrap capability exposes the agreed validator and opaque loader
+ok 10 - protected reference bootstrap capability exposes the agreed validator and opaque loader
+  ---
+  duration_ms: 2.720902
+  type: 'test'
+  ...
+# Subtest: authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories
+ok 11 - authenticated reference transport capability exposes fixed bootstrap-bound server and exchange factories
+  ---
+  duration_ms: 0.279542
+  type: 'test'
+  ...
+# Subtest: protected trust declaration is canonically ordered deeply copied and frozen without granting authority
+ok 12 - protected trust declaration is canonically ordered deeply copied and frozen without granting authority
+  ---
+  duration_ms: 4.335192
+  type: 'test'
+  ...
+# Subtest: protected trust requires every field and rejects unknown readiness targets or private material
+ok 13 - protected trust requires every field and rejects unknown readiness targets or private material
+  ---
+  duration_ms: 17.596475
+  type: 'test'
+  ...
+# Subtest: protected trust rejects nonrecord array class and inherited-data schemas
+ok 14 - protected trust rejects nonrecord array class and inherited-data schemas
+  ---
+  duration_ms: 0.866289
+  type: 'test'
+  ...
+# Subtest: protected trust rejects accessors symbols and hidden fields without invoking getters
+ok 15 - protected trust rejects accessors symbols and hidden fields without invoking getters
+  ---
+  duration_ms: 2.42169
+  type: 'test'
+  ...
+# Subtest: protected trust pins schema version and positive safe integer generation
+ok 16 - protected trust pins schema version and positive safe integer generation
+  ---
+  duration_ms: 6.192199
+  type: 'test'
+  ...
+# Subtest: protected trust accepts only bounded canonical DEV instance identifiers
+ok 17 - protected trust accepts only bounded canonical DEV instance identifiers
+  ---
+  duration_ms: 7.513305
+  type: 'test'
+  ...
+# Subtest: protected trust requires distinct canonical user SID declarations with DWORD components
+ok 18 - protected trust requires distinct canonical user SID declarations with DWORD components
+  ---
+  duration_ms: 6.192759
+  type: 'test'
+  ...
+# Subtest: protected trust accepts an Ed25519 public SPKI and rejects private or alternate key types
+ok 19 - protected trust accepts an Ed25519 public SPKI and rejects private or alternate key types
+  ---
+  duration_ms: 51.703361
+  type: 'test'
+  ...
+# Subtest: protected trust refuses alternate or malformed public-key encodings
+ok 20 - protected trust refuses alternate or malformed public-key encodings
+  ---
+  duration_ms: 5.629208
+  type: 'test'
+  ...
+# Subtest: protected trust digests require lowercase exact-length hex without whitespace aliases
+ok 21 - protected trust digests require lowercase exact-length hex without whitespace aliases
+  ---
+  duration_ms: 10.022447
+  type: 'test'
+  ...
+# Subtest: protected trust source pins require exactly the complete fixed dependency set
+ok 22 - protected trust source pins require exactly the complete fixed dependency set
+  ---
+  duration_ms: 13.916552
+  type: 'test'
+  ...
+# Subtest: protected trust source pins reject record inheritance and digest control characters
+ok 23 - protected trust source pins reject record inheritance and digest control characters
+  ---
+  duration_ms: 4.600703
+  type: 'test'
+  ...
+# Subtest: protected trust keeps ordinary Windows declarations without pretending to resolve filesystem aliases
+ok 24 - protected trust keeps ordinary Windows declarations without pretending to resolve filesystem aliases
+  ---
+  duration_ms: 0.586977
+  type: 'test'
+  ...
+# Subtest: protected trust refuses remote relative device and alternate-stream path declarations
+ok 25 - protected trust refuses remote relative device and alternate-stream path declarations
+  ---
+  duration_ms: 11.874596
+  type: 'test'
+  ...
+# Subtest: protected trust declaration validation performs no filesystem process or network operations
+ok 26 - protected trust declaration validation performs no filesystem process or network operations
+  ---
+  duration_ms: 2.412857
+  type: 'test'
+  ...
+# Subtest: plain validated cloned or caller-claimed bootstrap handles cannot open an exchange
+ok 27 - plain validated cloned or caller-claimed bootstrap handles cannot open an exchange
+  ---
+  duration_ms: 0.815602
+  type: 'test'
+  ...
+# Subtest: caller-claimed authority bootstrap cannot start a privileged callback or native helper
+ok 28 - caller-claimed authority bootstrap cannot start a privileged callback or native helper
+  ---
+  duration_ms: 1.060923
+  type: 'test'
+  ...
+# Subtest: registered authority construction refuses fake bootstrap without opening a key registration or production file
+ok 29 - registered authority construction refuses fake bootstrap without opening a key registration or production file
+  ---
+  duration_ms: 0.896595
+  type: 'test'
+  ...
+# Subtest: protected bootstrap refuses Node preload before invoking a native helper on Windows
+ok 30 - protected bootstrap refuses Node preload before invoking a native helper on Windows # SKIP Requires Windows ordering; Linux refuses the unsupported platform first
+  ---
+  duration_ms: 0.191219
+  type: 'test'
+  ...
+# Subtest: unsupported platform refuses protected bootstrap before file or native access
+ok 31 - unsupported platform refuses protected bootstrap before file or native access
+  ---
+  duration_ms: 1.599788
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 355.433832

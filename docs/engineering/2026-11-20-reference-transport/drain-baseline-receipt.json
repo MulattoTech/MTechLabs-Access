@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "classification": "New idle API capability gap; no causal regression claim",
+  "baselineCommit": "15e851b11984592803d37599b639772e51e5c8c0",
+  "frozenTestSha256": "bd010cf14556becdc87f6ae31150d6037ec299bf3c0c1ead53fc172059db603b",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test/production-reference-drain.test.mjs"
+  ],
+  "exitCode": 1,
+  "totals": {
+    "tests": 9,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 8,
+    "todo": 0
+  },
+  "stdoutSha256": "6209a7b68ed06112ddd64def9936750b2fb329eb7cd0f03909db44090f371ae1",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrBytes": 0
+}

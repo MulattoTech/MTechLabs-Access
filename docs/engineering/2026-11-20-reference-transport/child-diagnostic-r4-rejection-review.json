@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-20T12:38:00.033866+00:00",
+  "accepted": false,
+  "runId": 44736652736,
+  "attempt": 1,
+  "head": "ed57e8368355c4984b4f2466e62594240d16edd6",
+  "sourceSha": "830a3d0a96c09690168bad9c03ee952c4a9b24fb",
+  "tree": "93a19e8edc0abfbf8705f33d168ec902db1d17a7",
+  "localCommit": "3719483dc24b5d21e0f98b58964fc05629e72a9e",
+  "manifestSha256": "7536f48a7953a741f06230557120ae5f3f7a88aa56cb92c4053cc4be8fcb3a5d",
+  "preservedFiles": [
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/reference-transport-native.ps1",
+      "sha256": "11bcbd66475bc599ef4fed093a200b28c937db1c55f0a98b74d5926a34f5e123",
+      "bytes": 79983
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/reference-transport-child.mjs",
+      "sha256": "691f2618b62fe3fd70fabdbbe45ad8c442cc84725fdff76a236e243fdf56ee6b",
+      "bytes": 24151
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/reference-transport-native.test.mjs",
+      "sha256": "674e3fec0bfa77fce4a2fd78b4801c1ab6019eff050523677bbc5fa92c64d3e7",
+      "bytes": 12052
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/review_hosted.py",
+      "sha256": "967e127a917a4262485524869aec4d8e28cd80387345e7610b44cff59d0064d7",
+      "bytes": 74207
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/child-diagnostic-r4-frozen-inputs.json",
+      "sha256": "3b778ebe78b283861b0dc978d8be48f9bc5c3492552876f12110c852556109a7",
+      "bytes": 4050
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/child-diagnostic-r4-freeze.json",
+      "sha256": "deeb69afc4eed04b63f9e3714d73913d39f876f0c1307038c98760aead3843f5",
+      "bytes": 5145
+    }
+  ],
+  "verifierExecution": {
+    "argv": [
+      "python",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/frozen-before-native-diagnosis/review_hosted.py",
+      "--manifest",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-child-diagnostic-r4/candidate-verification-input.json"
+    ],
+    "exitCode": 1,
+    "stdoutSha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "stderrBytes": 0,
+    "verdict": {
+      "schemaVersion": 1,
+      "accepted": false,
+      "pending": false,
+      "error": "Rejected:run_success"
+    }
+  },
+  "windows": [
+    {
+      "jobId": 136289614662,
+      "fullLogSha256": "ef2b7e387c8c98bbfddc5f09e8b1b63c6b78a204e81b6ab6952aa338cc39fbd9",
+      "boundedReportFile": "windows-manager-observed-report.json",
+      "boundedReportSha256": "f8cd96541eb3d864fa86a698aa02a43d0c093c1d4c0225eee504a341dc7f098b",
+      "fullLogPayloadEqualsIndependentReport": true,
+      "sourceBinding": "all21 source/helper hashes verified against LF source or exact LF-to-CRLF checkout transform",
+      "identityProgress": {
+        "authority": {
+          "profile": true,
+          "token": false,
+          "identity": false
+        },
+        "unauthorized": {
+          "profile": false,
+          "token": false,
+          "identity": false
+        },
+        "development": {
+          "profile": false,
+          "token": false,
+          "identity": false
+        }
+      },
+      "childDiagnostics": [
+        {
+          "messageCount": 1,
+          "stdoutDecodedBytes": 254,
+          "reportedOk": true,
+          "elapsedMilliseconds": 79,
+          "stdoutTruncated": false,
+          "stdoutDecodedSha256": "0a480ccec61b7876da0d6249fad5804b9fdd274eeef8db7dbf49a7aeed5ff910",
+          "stderrErrorIdentifier": null,
+          "identityDiagnostic": null,
+          "expectedStderrEmpty": true,
+          "diagnosticInvalid": false,
+          "elapsedClamped": false,
+          "sequence": 1,
+          "errorIdentifier": null,
+          "actualExit": 0,
+          "stage": "real_identity_controls",
+          "expectedExit": 0,
+          "stderrComplete": true,
+          "mode": "node-profile",
+          "stderrDecodedBytes": 0,
+          "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "role": "authority",
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          }
+        },
+        {
+          "messageCount": 1,
+          "stdoutDecodedBytes": 713,
+          "reportedOk": false,
+          "elapsedMilliseconds": 15093,
+          "stdoutTruncated": false,
+          "stdoutDecodedSha256": "459fe0f0403dcaa947a54d2c33a99b73cf6c84b9af682501f195a7b715d3b0b3",
+          "stderrErrorIdentifier": null,
+          "identityDiagnostic": {
+            "nativeStatus": null,
+            "administratorProbeCompleted": false,
+            "nativeInvocationOverflow": false,
+            "nativeInvocations": [
+              {
+                "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "killed": true,
+                "signal": "SIGTERM",
+                "stdoutDecodedBytes": 0,
+                "phase": "native_capture",
+                "stderrDecodedBytes": 0,
+                "elapsedMilliseconds": 15023,
+                "systemError": {
+                  "code": null,
+                  "syscall": null,
+                  "errno": null
+                },
+                "failed": true,
+                "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            ],
+            "administrator": null,
+            "phase": "native_capture",
+            "profileMatched": null,
+            "pidMatched": null
+          },
+          "expectedStderrEmpty": true,
+          "diagnosticInvalid": false,
+          "elapsedClamped": false,
+          "sequence": 2,
+          "errorIdentifier": "runtime_observation_unavailable",
+          "actualExit": 1,
+          "stage": "real_identity_controls",
+          "expectedExit": 0,
+          "stderrComplete": true,
+          "mode": "node-identity",
+          "stderrDecodedBytes": 0,
+          "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "role": "authority",
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          }
+        }
+      ],
+      "nativeRuntime": {
+        "is64BitProcess": true,
+        "powerShellVersion": "5.1.26100.33822",
+        "platform": "Win32NT",
+        "powerShellEdition": "Desktop"
+      },
+      "elapsedMilliseconds": 48245,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "emergencyCleanup": null
+    },
+    {
+      "jobId": 136289615101,
+      "fullLogSha256": "43bac02cc2b70c91f6625247035f53ba96bc9ef56aeb3f1352d3ad6b34ee6c34",
+      "boundedReportFile": "windows-upstream-observed-report.json",
+      "boundedReportSha256": "dfbc943b8e46a63cebe6f96b15225d3cc8e61c141e742f9d417cdd7fb01e61f1",
+      "fullLogPayloadEqualsIndependentReport": true,
+      "sourceBinding": "all21 source/helper hashes verified against LF source or exact LF-to-CRLF checkout transform",
+      "identityProgress": {
+        "authority": {
+          "profile": true,
+          "token": false,
+          "identity": false
+        },
+        "unauthorized": {
+          "profile": false,
+          "token": false,
+          "identity": false
+        },
+        "development": {
+          "profile": false,
+          "token": false,
+          "identity": false
+        }
+      },
+      "childDiagnostics": [
+        {
+          "messageCount": 1,
+          "stdoutDecodedBytes": 254,
+          "reportedOk": true,
+          "elapsedMilliseconds": 91,
+          "stdoutTruncated": false,
+          "stdoutDecodedSha256": "eccd556cf3d49c597ad82b26ff7b14a7c3790b432dd921dfd6707c87b1f7885c",
+          "stderrErrorIdentifier": null,
+          "identityDiagnostic": null,
+          "expectedStderrEmpty": true,
+          "diagnosticInvalid": false,
+          "elapsedClamped": false,
+          "sequence": 1,
+          "errorIdentifier": null,
+          "actualExit": 0,
+          "stage": "real_identity_controls",
+          "expectedExit": 0,
+          "stderrComplete": true,
+          "mode": "node-profile",
+          "stderrDecodedBytes": 0,
+          "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "role": "authority",
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          }
+        },
+        {
+          "messageCount": 1,
+          "stdoutDecodedBytes": 713,
+          "reportedOk": false,
+          "elapsedMilliseconds": 15097,
+          "stdoutTruncated": false,
+          "stdoutDecodedSha256": "0607d04d7be02909e5afc07947e0c68f6c106d65070446fa4989f873396eab40",
+          "stderrErrorIdentifier": null,
+          "identityDiagnostic": {
+            "nativeStatus": null,
+            "administratorProbeCompleted": false,
+            "nativeInvocationOverflow": false,
+            "nativeInvocations": [
+              {
+                "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "killed": true,
+                "signal": "SIGTERM",
+                "stdoutDecodedBytes": 0,
+                "phase": "native_capture",
+                "stderrDecodedBytes": 0,
+                "elapsedMilliseconds": 15022,
+                "systemError": {
+                  "code": null,
+                  "syscall": null,
+                  "errno": null
+                },
+                "failed": true,
+                "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            ],
+            "administrator": null,
+            "phase": "native_capture",
+            "profileMatched": null,
+            "pidMatched": null
+          },
+          "expectedStderrEmpty": true,
+          "diagnosticInvalid": false,
+          "elapsedClamped": false,
+          "sequence": 2,
+          "errorIdentifier": "runtime_observation_unavailable",
+          "actualExit": 1,
+          "stage": "real_identity_controls",
+          "expectedExit": 0,
+          "stderrComplete": true,
+          "mode": "node-identity",
+          "stderrDecodedBytes": 0,
+          "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "role": "authority",
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          }
+        }
+      ],
+      "nativeRuntime": {
+        "is64BitProcess": true,
+        "powerShellVersion": "5.1.26100.33822",
+        "platform": "Win32NT",
+        "powerShellEdition": "Desktop"
+      },
+      "elapsedMilliseconds": 40100,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "emergencyCleanup": null
+    }
+  ],
+  "classification": {
+    "observed": "The first authority-account profile child succeeds. Its identity child invokes the existing native runtime capture once; that subprocess returns no stdout or stderr and is killed by its existing15-second deadline. The adapter maps the failed native invocation to runtime_observation_unavailable.",
+    "notReached": [
+      "administrator probe",
+      "native current PID comparison",
+      "native profile comparison",
+      "raw standard-token control",
+      "all18 completed native case groups"
+    ],
+    "limits": [
+      "The observed timeout does not identify the internal PowerShell/native stage that stalled.",
+      "No timeout increase, identity downgrade, ACL weakening or skipped case is justified.",
+      "This evidence establishes a native probe timeout under the real owned authority logon; it does not yet distinguish a fixture environment defect from a product startup/probe defect.",
+      "Complete natural cleanup is observed in both runs; no emergency cleanup or forced child termination by the controller was needed."
+    ],
+    "implementationOwnerNotified": true,
+    "nextStep": "Implementation reviewer traces native startup; retain any further stage diagnostics separately before proposing a causal correction."
+  },
+  "activationAuthorized": false,
+  "qualified": false,
+  "upstreamEnabled": false
+}

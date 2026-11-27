@@ -1,12 +1,12 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArguments } from './lib/config.mjs';
-import { inspectDevRuntime } from './lib/dev-runtime.mjs';
+import { inspectRegisteredDevRuntime } from './lib/reference-bootstrap.mjs';
 
 export async function inspect(argv = process.argv.slice(2)) {
   const args = parseArguments(argv, ['config', 'plan']);
   if (!args.plan || !path.isAbsolute(args.plan) || args.plan.includes('\0')) throw new Error('absolute_runtime_plan_required');
-  return inspectDevRuntime(args.config, args.plan);
+  return inspectRegisteredDevRuntime({ configPath: args.config, planPath: args.plan });
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "scope": "Frozen additive hosted evidence verifier for Access44; no hosted acceptance yet",
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "50e3fb344f8fc2057ab69b4ceb6ddac824b72581be44c9b9150e84050d6bb3d6",
+    "bytes": 66165
+  },
+  "predecessor": {
+    "file": "../dev_edge_boundary/review_hosted.py",
+    "sha256": "dec1086982be0f19ba3c4663f7ea97a252bd2c9b1e433e57a7c5e902620c9dde",
+    "preserved": true
+  },
+  "sourceFixtures": "native-fixture-freeze.json",
+  "sourceFixtureFreezeSha256": "4128975ce5f1ddad3bf80c24b9b9f2cdda8f384d35739f0d6f0215c65b306e3f",
+  "preservedGates": [
+    "five distinct successful jobs and every step",
+    "exact checkout/head/tree and metadata",
+    "old native54 and production26 decisions",
+    "real current PID and Unicode owned listener",
+    "reference native11 strict role/control/stage matrix",
+    "protocol49 and production-route10 exact PASS",
+    "fixture privacy regression",
+    "edge root42 exact PASS",
+    "two archive digests/size/ZIP integrity and bounds",
+    "each upstream version0.3.1/0.3.3 ten stages,53 tools,owned cleanup and zero models",
+    "cross-phase distinct runs/jobs/artifacts and same tree"
+  ],
+  "addedGates": [
+    "portable22 exact titles with one exact platform skip",
+    "idle-drain9 exact PASS",
+    "approved wrapper migration exact Windows PASS/Linux skip",
+    "native parent plus18 groups mandatory PASS on both Windows jobs, no opt-in or privilege skip escape",
+    "all21 native source/helper/test hashes bound to Git bytes or proven LF-to-CRLF conversion",
+    "three actual standard-account token/profile and cleanup facts",
+    "real registered signed/reference path plus actual operational Authority/Inspect/Status",
+    "strict counters and negative-stage evidence for protected ACLs, namespace,remote neighbor,pin substitution,framing,cancellation,deadlines,eight-operation drain",
+    "full native evidence retained with bounded scope and private values absent",
+    "candidate head,synthetic checkout and actual-main commit identities distinct"
+  ],
+  "validation": {
+    "pythonCompilation": true,
+    "frozenFixtureHashAndTitleValidation": true,
+    "actualLocalLinuxLogReadOnlyGates": true,
+    "nativeWindowsEvidence": "pending",
+    "hostedEvidence": "pending",
+    "productOrTestsExecutedByVerifier": false
+  },
+  "localLinuxEvidence": {
+    "gateReceipt": "local-first-gates.json",
+    "sha256": "0189cb0c7f2a25428965bbe4eb8e5415c57015992daea49bd9deea484752c265",
+    "totals": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    }
+  },
+  "authorship": "repository_baseline authored new independent portable/drain/native fixtures and this verifier; separate whole-source reviewer is startup_mutations.",
+  "limitations": [
+    "Windows totals493/490/3 are derived frozen expectations, not an observed result.",
+    "No native reports or hosted metadata have been fabricated or accepted.",
+    "Per-case scope distinguishes registered proof, operational launcher, synthetic callbacks, and native/compiler filesystem activity.",
+    "Malformed frame connection counts mean actual DEV token/kernel-DACL connections; malformed input may reject before impersonation authentication.",
+    "Operational in-flight shutdown, mapped-network-drive behavior, real production deployment and live routing/grants remain unqualified."
+  ]
+}

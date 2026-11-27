@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-20T13:05:50.421689+00:00",
+  "accepted": false,
+  "runId": 44740386851,
+  "attempt": 1,
+  "head": "9d29623f45a079eb3430466eceb44aac864becd9",
+  "sourceSha": "b14c7a2f6d76a2079959a9354273cd3c46c655ca",
+  "tree": "6596c7eae39e1af8cabe70d05c2e5b807df7a5f8",
+  "localCommit": "b6c365b34d62af86d6c027cb2e935a1a2e2cc74c",
+  "manifestSha256": "3c02b2648c52efaf3ed0c4a44adc60ba76347402a24ded96b0ada694f4198e48",
+  "preservedFiles": [
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/reference-transport-native.ps1",
+      "sha256": "045d81cf525bf6189bbfdc2b2cff569a165e90b6bd5c06895e39ad21d4565dcb",
+      "bytes": 85119
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/reference-transport-child.mjs",
+      "sha256": "21c26b4fa12fe0dd2cf170196957fe6b90109f6ae8c3fc3a2c24d3a8b4348483",
+      "bytes": 39831
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/reference-transport-native.test.mjs",
+      "sha256": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+      "bytes": 12155
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/review_hosted.py",
+      "sha256": "8b7b4b7803240077c615797ecc6984256d7539c941452d3514f12dc20775bd07",
+      "bytes": 74711
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/probe-initialization-r6-frozen-inputs.json",
+      "sha256": "3dc3323b0ff7c326808cd2f264e2c46403e4f45d427a70488030dd6b96f52c5d",
+      "bytes": 4050
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/probe-initialization-r6-freeze.json",
+      "sha256": "e4183528e700f69c25bfc77255d496a7ff93daebb2f6df138777616a7ae1b13a",
+      "bytes": 6006
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/probe-initialization-r6-transform.json",
+      "sha256": "bc21f6f996418fb0645f6cfa68c541ee761e85e69b6b74a4fca9d623f1028d4f",
+      "bytes": 1044
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/probe-initialization-r6-stage-map.json",
+      "sha256": "5678747e472f3a09bf58955dc28760adc236fcbebfde543a9d0199fb459cc7cc",
+      "bytes": 3836
+    },
+    {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/probe-initialization-r6-derived.ps1",
+      "sha256": "cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4",
+      "bytes": 13407
+    }
+  ],
+  "verifierExecution": {
+    "argv": [
+      "python",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/frozen-before-newobject-diagnosis/review_hosted.py",
+      "--manifest",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-probe-initialization-r6/candidate-verification-input.json"
+    ],
+    "exitCode": 1,
+    "stdoutSha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "stderrBytes": 0,
+    "verdict": {
+      "schemaVersion": 1,
+      "accepted": false,
+      "pending": false,
+      "error": "Rejected:run_success"
+    }
+  },
+  "windows": [
+    {
+      "jobId": 136302296679,
+      "fullLogSha256": "744bd5acd0adc8b6ffc402473c27482a9c1678cb12d559594e3d5c3bcdc727db",
+      "boundedReportFile": "windows-manager-observed-report.json",
+      "boundedReportSha256": "ed19468dfcf1b1ae31a9b86beee6bffbe138fecbd0e6e6942d2441700d3a36c8",
+      "payloadEquality": true,
+      "all21SourceBindingsVerified": true,
+      "primaryCapture": {
+        "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "killed": true,
+        "signal": "SIGTERM",
+        "stdoutDecodedBytes": 0,
+        "phase": "native_capture",
+        "stderrDecodedBytes": 0,
+        "elapsedMilliseconds": 15023,
+        "systemError": {
+          "code": null,
+          "syscall": null,
+          "errno": null
+        },
+        "failed": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        }
+      },
+      "separateFailureOnlyDerivative": {
+        "traceOverflow": false,
+        "rolesEmpty": true,
+        "originalSourceAfterSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "acceptanceEvidence": false,
+        "sameNodeParent": true,
+        "outcome": {
+          "stderrDecodedSha256": "671818353c286a6c398d52ce29ecafc79c4fd10a3dccbdccfaba1a07d285e45d",
+          "killed": true,
+          "signal": "SIGTERM",
+          "stdoutDecodedBytes": 0,
+          "stderrDecodedBytes": 288,
+          "elapsedMilliseconds": 15023,
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "failed": true,
+          "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "anchorsMatched": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        },
+        "stages": [
+          {
+            "id": 1,
+            "elapsedMilliseconds": 7
+          },
+          {
+            "id": 70,
+            "elapsedMilliseconds": 30
+          },
+          {
+            "id": 71,
+            "elapsedMilliseconds": 33
+          },
+          {
+            "id": 72,
+            "elapsedMilliseconds": 33
+          },
+          {
+            "id": 73,
+            "elapsedMilliseconds": 35
+          },
+          {
+            "id": 74,
+            "elapsedMilliseconds": 35
+          },
+          {
+            "id": 75,
+            "elapsedMilliseconds": 38
+          },
+          {
+            "id": 76,
+            "elapsedMilliseconds": 39
+          },
+          {
+            "id": 77,
+            "elapsedMilliseconds": 40
+          },
+          {
+            "id": 78,
+            "elapsedMilliseconds": 40
+          }
+        ],
+        "anchorCount": 31,
+        "originalSourceUnchanged": true,
+        "originalSourceSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "deadlineMilliseconds": 15000,
+        "temporaryFileCreated": true,
+        "kind": "failure-only-instrumented-probe",
+        "normalizedSourceSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+        "temporaryFileRemoved": true,
+        "failureCode": null,
+        "invocations": 1,
+        "otherStderrLines": 0,
+        "malformedTrace": false,
+        "derivativeSourceSha256": "cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4",
+        "sourceNormalization": "CRLF-to-LF"
+      },
+      "derivativeStderrExactlyReconstructedFromSafeStages": true,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null
+    },
+    {
+      "jobId": 136302296741,
+      "fullLogSha256": "ea52795736943a6127a64dc04a0a331a299565b7000a6ebee03252383616cf31",
+      "boundedReportFile": "windows-upstream-observed-report.json",
+      "boundedReportSha256": "db557eb27956e17e8693e21e8d26bae67d1bb8cb18d036ec6d93b4e04b6d88b2",
+      "payloadEquality": true,
+      "all21SourceBindingsVerified": true,
+      "primaryCapture": {
+        "stderrDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "killed": true,
+        "signal": "SIGTERM",
+        "stdoutDecodedBytes": 0,
+        "phase": "native_capture",
+        "stderrDecodedBytes": 0,
+        "elapsedMilliseconds": 15026,
+        "systemError": {
+          "code": null,
+          "syscall": null,
+          "errno": null
+        },
+        "failed": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        }
+      },
+      "separateFailureOnlyDerivative": {
+        "traceOverflow": false,
+        "rolesEmpty": true,
+        "originalSourceAfterSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "acceptanceEvidence": false,
+        "sameNodeParent": true,
+        "outcome": {
+          "stderrDecodedSha256": "78de125deb69d5b882d51aeded4eebf5f3aa4731b9900d85a5cbab75aa0cc336",
+          "killed": true,
+          "signal": "SIGTERM",
+          "stdoutDecodedBytes": 0,
+          "stderrDecodedBytes": 288,
+          "elapsedMilliseconds": 15015,
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "failed": true,
+          "stdoutDecodedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "anchorsMatched": true,
+        "stdin": {
+          "systemError": {
+            "code": null,
+            "syscall": null,
+            "errno": null
+          },
+          "finished": true,
+          "errored": false,
+          "closed": true
+        },
+        "stages": [
+          {
+            "id": 1,
+            "elapsedMilliseconds": 7
+          },
+          {
+            "id": 70,
+            "elapsedMilliseconds": 29
+          },
+          {
+            "id": 71,
+            "elapsedMilliseconds": 32
+          },
+          {
+            "id": 72,
+            "elapsedMilliseconds": 33
+          },
+          {
+            "id": 73,
+            "elapsedMilliseconds": 34
+          },
+          {
+            "id": 74,
+            "elapsedMilliseconds": 34
+          },
+          {
+            "id": 75,
+            "elapsedMilliseconds": 37
+          },
+          {
+            "id": 76,
+            "elapsedMilliseconds": 37
+          },
+          {
+            "id": 77,
+            "elapsedMilliseconds": 39
+          },
+          {
+            "id": 78,
+            "elapsedMilliseconds": 39
+          }
+        ],
+        "anchorCount": 31,
+        "originalSourceUnchanged": true,
+        "originalSourceSha256": "f288c56bc06647c920ee4de335d0df368e98ff426469a8e44af896214995b64d",
+        "deadlineMilliseconds": 15000,
+        "temporaryFileCreated": true,
+        "kind": "failure-only-instrumented-probe",
+        "normalizedSourceSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+        "temporaryFileRemoved": true,
+        "failureCode": null,
+        "invocations": 1,
+        "otherStderrLines": 0,
+        "malformedTrace": false,
+        "derivativeSourceSha256": "cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4",
+        "sourceNormalization": "CRLF-to-LF"
+      },
+      "derivativeStderrExactlyReconstructedFromSafeStages": true,
+      "completedNativeCases": 0,
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": true,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "emergencyCleanup": null
+    }
+  ],
+  "separateLinuxUpstreamFailure": {
+    "jobId": 136302296697,
+    "logSha256": "1239a83ab2c7134dcb9b0ad84dd509d3a62be43c7865cc99391e501d93dfa6f1",
+    "guardTests": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "skipped": 27
+    },
+    "qualification": {
+      "sourceSha": "b14c7a2f6d76a2079959a9354273cd3c46c655ca",
+      "platform": "linux",
+      "pass": false,
+      "lanes": [
+        {
+          "lane": "control",
+          "pass": false,
+          "failedStage": "pdf_create_and_read_fidelity"
+        },
+        {
+          "lane": "candidate",
+          "pass": true
+        }
+      ]
+    },
+    "artifactCauseReview": "Root separately owns exact raw archive review; no cause or flakiness claim made here."
+  },
+  "classification": {
+    "observed": "Both diagnostic derivatives complete both original UTF8Encoding constructors and both same-object Console property assignments within40ms. The final emitted marker is78 immediately before New-Object char[]16385;79 is absent before the existing15-second deadline.",
+    "measuredInterval": "The New-Object command invocation, including command resolution/autoload and character-array allocation.",
+    "counterevidence": "These derivative observations do not support blaming either Console encoding constructor or property assignment. No Console setter correction is justified by this report.",
+    "notReached": [
+      "successful New-Object return",
+      "length initialization",
+      "stdin loop",
+      "JSON parse",
+      "CIM",
+      "Add-Type",
+      "native process snapshot"
+    ],
+    "limits": [
+      "The derivative interval does not prove the original invocation stopped in the identical operation.",
+      "The trace does not distinguish New-Object command discovery/module loading from allocation internals.",
+      "No timeout extension, ACL/identity downgrade or skipped case is justified.",
+      "Linux upstream has a separate failing control PDF stage and also blocks acceptance."
+    ],
+    "nextStep": "Read-only implementation diagnosis of New-Object/module resolution; any correction requires a bounded design and fresh frozen source/evidence."
+  },
+  "activationAuthorized": false,
+  "qualified": false,
+  "upstreamEnabled": false
+}

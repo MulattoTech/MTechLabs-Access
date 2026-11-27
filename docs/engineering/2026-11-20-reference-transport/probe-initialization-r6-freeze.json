@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "revision": 6,
+  "frozenAt": "2026-11-20T12:58:25.751154+00:00",
+  "scope": "Twelve additional initialization stage markers within the same sole failure-only diagnostic derivative",
+  "parentReviewedLocalCommit": "6ca717b2b6414c866cb7dd9e124b119b5ef8ea85",
+  "priorCandidateHead": "81288c3da846a40d65bef8d6c864293acaf37896",
+  "priorRunId": 44739251279,
+  "observedInterval": "Both r5 diagnostic derivatives emit only script-entry stage1 before their15-second deadline; no stdin-loop stage2 is emitted. The internal initialization operation is not yet established.",
+  "changes": [
+    "Preserve all27 prior counted splices and every prior stage marker.",
+    "Add four counted splices covering the two encoding expressions, character-buffer allocation and length initialization.",
+    "Only in the derivative, separate each original UTF8Encoding constructor from the Console property assignment using a unique fixture-local variable and that same object; no extra constructor or setter call.",
+    "Add stage IDs70\u201381 to both bounded diagnostic filters; pin the exact new31-splice derivative hash.",
+    "Update only the two changed fixture hash pins in the verifier."
+  ],
+  "unchanged": [
+    "All17 product source files and all29 other frozen inputs",
+    "Node wrapper and every native case/control/success requirement",
+    "One failure-only derivative maximum, original error preservation and absence on every passing identity",
+    "All native/message/work/cleanup limits, ACL/account/cleanup rules",
+    "All160 verifier require expressions remain byte-for-byte equivalent as AST calls"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "priorSha256": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+      "sha256": "21c26b4fa12fe0dd2cf170196957fe6b90109f6ae8c3fc3a2c24d3a8b4348483",
+      "bytes": 39831
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+      "sha256": "045d81cf525bf6189bbfdc2b2cff569a165e90b6bd5c06895e39ad21d4565dcb",
+      "bytes": 85119
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputCount": 31,
+  "frozenInputs": {
+    "file": "probe-initialization-r6-frozen-inputs.json",
+    "sha256": "3dc3323b0ff7c326808cd2f264e2c46403e4f45d427a70488030dd6b96f52c5d"
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "8b7b4b7803240077c615797ecc6984256d7539c941452d3514f12dc20775bd07",
+    "bytes": 74711,
+    "priorSha256": "1a3ee64ccaee06ee6e8d556ae44f92c8f97457ac9b4c48f56a55a0216d26a16b",
+    "priorPreserved": "candidate-probe-diagnostic-r5/frozen-before-initialization-markers/review_hosted.py",
+    "priorRequireCalls": 160,
+    "currentRequireCalls": 160,
+    "removedPriorRequireCalls": 0
+  },
+  "derivative": {
+    "file": "probe-initialization-r6-derived.ps1",
+    "sha256": "cbf13a01d47e8befe726623feebc78e46aa342e43aabb17bde53e79787d359c4",
+    "bytes": 13407,
+    "normalizedOriginalSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "anchorCount": 31,
+    "previous27AnchorsRetained": true,
+    "lfCrLfSameDerivative": true,
+    "transformReceipt": {
+      "file": "probe-initialization-r6-transform.json",
+      "sha256": "bc21f6f996418fb0645f6cfa68c541ee761e85e69b6b74a4fca9d623f1028d4f"
+    },
+    "stageMap": {
+      "file": "probe-initialization-r6-stage-map.json",
+      "sha256": "5678747e472f3a09bf58955dc28760adc236fcbebfde543a9d0199fb459cc7cc"
+    }
+  },
+  "causalLimits": [
+    "Read emission order; IDs can repeat and are not numerically monotonic.",
+    "A missing end marker followed by a rejection/catch marker denotes a failed condition or thrown operation, not necessarily a stall.",
+    "The last observed stage localizes only this later instrumented derivative, not the original invocation.",
+    "Derivative timing, cache state and instrumentation differ from the original.",
+    "Stdin finish records writable completion only; it is not proof of payload consumption or EOF.",
+    "No derivative observation may substitute for the original identity proof.",
+    "The derivative separates each encoding expression into one original constructor assigned to a unique local, then the original property assignment using the same object. No extra constructor or setter call is introduced.",
+    "Assignment markers do not instrument the property setter internal Win32 operations."
+  ],
+  "validation": {
+    "nodeChildAndWrapperSyntax": true,
+    "pythonVerifierSyntax": true,
+    "gitDiffCheck": true,
+    "frozenTitlesAndHashes": true,
+    "readOnlyPriorLinuxTitleChecks": true,
+    "pureDeterministicDerivativeConstruction": true,
+    "newProductExecution": false,
+    "newNativeExecution": false,
+    "nativePowerShellOrCSharpCompilationAvailableLocally": false
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "priorEvidence": [
+    {
+      "file": "candidate-probe-diagnostic-r5/probe-diagnostic-r5-rejection-review.json",
+      "sha256": "7ae634438e4465c7bd900e0d189dc7ff1b55676054959b87ab64f434b93781f4"
+    },
+    {
+      "file": "probe-diagnostic-r5-freeze.json",
+      "sha256": "7654f5a711575343149a98f933623c1bb91632f251e5d25197ee09c478bac12a"
+    }
+  ],
+  "acceptance": {
+    "nativeRequalificationPending": true,
+    "candidateAccepted": false,
+    "activationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "authorRole": "Test/fixture author and evidence verifier; independent product/source review is separate."
+}

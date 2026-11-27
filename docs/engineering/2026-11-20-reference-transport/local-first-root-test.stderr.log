@@ -1,0 +1,28 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+Access identity verification wrong_token_scope
+Access identity verification wrong_token_scope
+{"event":"mterm_mcp_request","requestId":"1ec06604-2c43-47a2-8f77-aef22d5ac5fa","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"3b5e54f6-f173-4e0d-b45d-51ed6d195a21","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"d99e49a7-3fd7-4d7b-a775-5c30d0ecab7e","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"256ae0f2-886a-4b82-9b8f-d1045776000b","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"f5ecb123-7892-4799-bc02-5584a94b7701","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"95fb030d-3ff4-4362-bc92-6b3c7433ad09","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"10bb0626-ea83-4652-8fb4-cf66e35e963c","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"eae9699c-8fee-4a54-ac7f-2ddae7f9adb5","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"c2f0325f-5bde-468e-a48d-63cb63b3a002","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"343ed859-a654-4c11-ba45-255e4c93b9c0","phase":"configuration","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"cf6db823-8ed6-4e23-be2f-6be165262a13","phase":"owner-authorization","rpcMethod":"unparsed","status":503,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"44113d5a-8eaa-470d-9561-8215ed1a8726","phase":"origin-response","rpcMethod":"notifications/initialized","status":502,"originStatus":202,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"7e3b658a-cecf-459c-9af0-8261ddf598a8","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":302,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"ad8e3423-56ab-4057-899c-17be6c4e89ae","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":401,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"50fa4720-42d4-4eb6-b6ea-c99a6fac352f","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":403,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"954e32f7-38cd-4d07-8165-5bdc5f40d998","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"8208eeb9-3a9f-4af0-9892-7ceabc013f20","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"b372d9a6-b82d-4c79-acba-63cf617e11d0","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"7ea26bc0-5097-44f9-a097-26442b2d090e","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"b16a86ef-4c98-43e5-ac39-7f24d8e74e1f","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"830798d9-c181-4897-9f0b-e14aee26fb3b","phase":"origin-dispatch","rpcMethod":"tools/list","status":502,"originStatus":null,"durationMs":0}
+{"event":"mterm_mcp_request","requestId":"efd8534c-baaf-4f99-805b-e46d5441c3d4","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"36df54a7-fcbf-4e56-b48d-e6197894c5d6","phase":"origin-response","rpcMethod":"tools/list","status":502,"originStatus":200,"durationMs":170}
+{"event":"mterm_mcp_request","requestId":"0c080723-f3db-4e82-84b0-af3b54839583","phase":"origin-dispatch","rpcMethod":"tools/list","status":504,"originStatus":null,"durationMs":1}
+{"event":"mterm_mcp_request","requestId":"2ea2da7c-9abe-4486-a185-500fd557bb7b","phase":"origin-response","rpcMethod":"tools/list","status":504,"originStatus":200,"durationMs":1}

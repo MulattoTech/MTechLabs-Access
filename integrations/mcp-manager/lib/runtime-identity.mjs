@@ -14,6 +14,7 @@ export async function captureWindowsRuntime(roles = {}) {
   return new Promise((resolve, reject) => {
     const child = execFile(WINDOWS_POWERSHELL, ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', probe], {
       windowsHide: true, encoding: 'utf8', timeout: 15000, maxBuffer: 32768,
+      env: { ...process.env, PSModulePath: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\Modules' },
     }, (error, stdout, stderr) => {
       try {
         if (error || stderr.trim()) throw new Error('runtime_observation_unavailable');

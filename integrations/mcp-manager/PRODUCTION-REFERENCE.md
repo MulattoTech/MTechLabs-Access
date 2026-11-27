@@ -6,11 +6,14 @@ protected config, token or profile. It remains a read-only diagnostic. It never
 enrolls a config in the manager's validated/owned writer capabilities, opens a
 jobs database, starts an upstream or enables activation.
 
-This source API has no HTTP/IPC listener, registration editor, key-file loader,
-CLI key override or automatic fallback. An integrator supplies trusted bootstrap
-objects and an exchange callback. The existing `manage-dev.ps1` / direct inspector
-continue to use their original permissions and behavior. A restricted operational
-entry point needs separately qualified bootstrap, transport and OS protections.
+The core remains transport-independent. The separate
+[protected Windows transport](REFERENCE-TRANSPORT.md) now supplies a fixed
+registration/key loader, authenticated local pipe, and restricted
+`manage-dev.ps1` Inspect/Status entry. There is no CLI key/endpoint override,
+registration editor, HTTP listener, or direct-production fallback. Trusted
+in-process integrations may still supply bootstrap objects and an exchange
+callback. Operational installation and effective OS protections require their
+own qualification; source delivery does not install or activate this service.
 
 ## Trust and registration
 
@@ -187,6 +190,14 @@ identity/profile/listener failures and the unresolved operational prerequisites
 remain visible. The report grants no writer capability, manager ownership or
 permission to start work. Errors expose fixed categories rather than private
 callback, path or crypto diagnostics.
+
+`waitForProductionReferenceAuthorityIdle(authority)` is an additive lifecycle
+API. A forged function is refused with `runtime_reference_required`. While
+observers are active, callers share one pending promise that settles only when
+the actual observer callbacks settle, including work whose public call already
+timed out or was cancelled. This is idle-at-observation: stop admission and
+drain the transport callbacks before obtaining the operational shutdown barrier.
+An already-resolved idle promise cannot account for work admitted later.
 
 Pure protocol tests exercise real ephemeral Ed25519 fixtures, strict wire and key
 validation, signature/binding failures, freshness/replay, cancellation and bounded

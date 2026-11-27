@@ -11,6 +11,7 @@ const HASH = /^[a-f0-9]{64}$/;
 const NONCE = /^[A-Za-z0-9_-]{43}$/;
 const clients = new WeakMap();
 const proofs = new WeakMap();
+const authorities = new WeakMap();
 const ERROR_CODES = new Set(['invalid_production_reference', 'runtime_reference_required',
   'runtime_reference_untrusted', 'runtime_reference_mismatch', 'runtime_reference_expired',
   'runtime_reference_replayed', 'runtime_reference_busy', 'runtime_reference_unavailable',
@@ -168,7 +169,8 @@ export function createProductionReferenceAuthority(options) {
   const observe = options.observe, clock = clockFrom(options.clock);
   const nonces = new Map();
   let active = 0;
-  return async function authority(input, requestOptions = {}) {
+  let idlePromise, resolveIdle;
+  const authority = async function authority(input, requestOptions = {}) {
     const externalSignal = signalOption(requestOptions);
     const request = validateRequest(input);
     if (request.registrationSha256 !== registrationSha256 || request.instanceId !== instanceId) {
@@ -189,7 +191,12 @@ export function createProductionReferenceAuthority(options) {
     active++;
     try {
       const result = await boundedCall(signal => observe(request, { signal }), request.expiresAt - start.wall,
-        externalSignal, () => { entry.pending = false; active--; });
+        externalSignal, () => {
+          entry.pending = false; active--;
+          if (active === 0 && resolveIdle) {
+            const resolve = resolveIdle; resolveIdle = undefined; idlePromise = undefined; resolve();
+          }
+        });
       const observation = facts(result);
       const end = fresh(clock, start, request.expiresAt);
       const payload = JSON.stringify({ schemaVersion: 1, purpose: 'mterm-dev-production-observation',
@@ -201,6 +208,20 @@ export function createProductionReferenceAuthority(options) {
       return JSON.stringify({ schemaVersion: 1, payload: bytes.toString('base64url'), signature: signature.toString('base64url') });
     } catch (error) { throw safe(error); }
   };
+  authorities.set(authority, () => {
+    if (active === 0) return Promise.resolve();
+    if (!idlePromise) idlePromise = new Promise(resolve => { resolveIdle = resolve; });
+    return idlePromise;
+  });
+  return authority;
+}
+
+// This observes current idle state; callers must close admission first when
+// using it as a shutdown barrier. Public abort/timeout does not settle observe.
+export function waitForProductionReferenceAuthorityIdle(authority) {
+  const idle = authorities.get(authority);
+  if (!idle) fail('runtime_reference_required');
+  return idle();
 }
 
 export function createProductionReferenceClient(options) {

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "revision": 4,
+  "frozenAt": "2026-11-20T12:30:25.910329+00:00",
+  "scope": "Bounded child-completion and existing identity-invocation diagnostics; no behavioral correction for the unlocalized r3 identity failure",
+  "parentReviewedLocalCommit": "7aa902f1fa4792e8a5a5cfb95f07ff56fb54f9db",
+  "priorCandidateHead": "1b1bb9a57cd008e0e48cc54cbe112b3ae389a94f",
+  "priorRunId": 44734494406,
+  "causeEstablished": false,
+  "causeStatus": "Both r3 controllers complete setup then throw fixture_child_exit_wrong during real_identity_controls. The existing report loses the child role/mode/exit/result, so no further product or fixture-behavior cause is claimed.",
+  "changes": [
+    "Record every controller-started child using fixed role/mode/stage, actual versus expected exit, bounded elapsed time, safe result/error identifiers and allowlisted Node code/errno/syscall.",
+    "Record consumed stdout as decoded UTF-8 with LF line delimiters and normalized decoded stderr, with counts/digests and explicit completeness limits; never emit output text, messages, paths, arguments or stacks.",
+    "Record each role completing existing profile, native identity and raw-token controls.",
+    "Record identity capture/admin/comparison phases and the same existing PID/profile comparisons. A fixture-only transparent execFile callback observer preserves the original call/options/output/error and performs no additional native invocation or retry.",
+    "Require finite typed diagnostics, successful existing identity stages and complete child completion alongside every original native case; diagnostics alone never establish acceptance."
+  ],
+  "unchanged": [
+    "All17 product source files",
+    "All18 native case registrations/control counts and every original success requirement",
+    "ACL and account provisioning rules, cleanup operations, no-retry policy and timeouts",
+    "Portable22/drain9/original49, prior native54/26/reference11, route10 and edge42 regressions",
+    "All143 previous verifier require expressions"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "priorSha256": "d1c1ced00467a59fc63cb49dfb47797bcb2c624f534d0a05685b1a5d47865fab",
+      "sha256": "691f2618b62fe3fd70fabdbbe45ad8c442cc84725fdff76a236e243fdf56ee6b",
+      "bytes": 24151
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "c2fce8f0346904d9e76ade462e68a293449dcf515b4cca5b8deddad53d445d26",
+      "sha256": "11bcbd66475bc599ef4fed093a200b28c937db1c55f0a98b74d5926a34f5e123",
+      "bytes": 79983
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "priorSha256": "dfe43ec2ecd5cef110f7c63928d088dea745846aa35c1a7ca262638853920ce2",
+      "sha256": "674e3fec0bfa77fce4a2fd78b4801c1ab6019eff050523677bbc5fa92c64d3e7",
+      "bytes": 12052
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputCount": 31,
+  "frozenInputs": {
+    "file": "child-diagnostic-r4-frozen-inputs.json",
+    "sha256": "3b778ebe78b283861b0dc978d8be48f9bc5c3492552876f12110c852556109a7"
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "967e127a917a4262485524869aec4d8e28cd80387345e7610b44cff59d0064d7",
+    "bytes": 74207,
+    "priorSha256": "5040504d6b98b272522ff56bb349c015c90a8a745230ea5f308fda931911f6f0",
+    "priorPreserved": "candidate-module-path-r3/frozen-before-child-diagnostics/review_hosted.py",
+    "priorRequireCalls": 143,
+    "currentRequireCalls": 158,
+    "removedPriorRequireCalls": 0
+  },
+  "validation": {
+    "nodeChildAndWrapperSyntax": true,
+    "pythonVerifierSyntax": true,
+    "gitDiffCheck": true,
+    "frozenTitlesAndHashes": true,
+    "readOnlyPriorLinuxTitleChecks": true,
+    "newProductExecution": false,
+    "newNativeExecution": false,
+    "nativePowerShellSyntaxExecutionAvailableLocally": false
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "priorEvidence": [
+    {
+      "file": "candidate-module-path-r3/module-path-r3-rejection-review.json",
+      "sha256": "c44c76b6a88301b3fc11f02f85c93ac8f2ca05b731b40b6adccde0bbf6acb1b4"
+    },
+    {
+      "file": "candidate-module-path-r3/r3-full-log-binding.json",
+      "sha256": "76d8445f8ae8666aa98c96d7610db2ec450c75629eca7304be667cf59f2235a2"
+    },
+    {
+      "file": "module-path-r3-freeze.json",
+      "sha256": "8cfb273a163fe6341e951bc313ca02882bf09ead75ea1aada4d5b877cdd4a249"
+    }
+  ],
+  "acceptance": {
+    "nativeRequalificationPending": true,
+    "candidateAccepted": false,
+    "activationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "authorRole": "Test/fixture author and hosted-evidence verifier; independent product/source approval is separate."
+}

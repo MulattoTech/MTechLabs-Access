@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-20T12:14:13.144313+00:00",
+  "accepted": false,
+  "runId": 44733564597,
+  "runAttempt": 1,
+  "head": "a1b7c01c28d947a6be92ad98266e0b18bdf19420",
+  "sourceSha": "5c8d0e7a200c1149b801a517aced1a4f8b7ad837",
+  "localCommit": "7471f441ca45cf181deca26667b67b200855ed44",
+  "tree": "5c0fca212d932d9bb382578cad06594639b812a5",
+  "frozenFiles": {
+    "controller": {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/reference-transport-native.ps1",
+      "sha256": "3f41e4cdff9077088e529023f506076c2a6b6e7a4b248848f7192c5417791c76",
+      "bytes": 70065
+    },
+    "wrapper": {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/reference-transport-native.test.mjs",
+      "sha256": "0728ac95fcfad89050c1f6c84e9c8de62d75e3c1bacbe98160e9fcf8e061f75a",
+      "bytes": 10687
+    },
+    "verifier": {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/review_hosted.py",
+      "sha256": "1b785e2cdee28a00a414e757d1cc514bbbc53ab41cdce54c43f5d5ee19c1fb9b",
+      "bytes": 67253
+    },
+    "frozenInputs": {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/diagnostic-r2-frozen-inputs.json",
+      "sha256": "1bf381197dbc3a872c2336e02c9b253515a1c6f3e29385aa520226b162c278c7",
+      "bytes": 4050
+    },
+    "freeze": {
+      "file": "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/diagnostic-r2-freeze.json",
+      "sha256": "b7c2848eb0bf26527d18c53ca5ec7574695ca3cc6c70fb5e851a342f80d15bde",
+      "bytes": 3607
+    }
+  },
+  "manifestSha256": "a9a9566a181c483b0f91e6a306fb182e46ece600ca00117e0987833773dc074c",
+  "verifierExecution": {
+    "argv": [
+      "python",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/frozen-before-module-path-fix/review_hosted.py",
+      "--manifest",
+      "/workspace/scratch/86162842804d/dev_reference_transport/candidate-diagnostic-r2/candidate-verification-input.json"
+    ],
+    "exitCode": 1,
+    "stdoutSha256": "1eb564c2e1312be98fda37796ac0156f1588df6d91d0fb09e182b52af3b5f7e3",
+    "stderrBytes": 0,
+    "verdict": {
+      "schemaVersion": 1,
+      "accepted": false,
+      "pending": false,
+      "error": "Rejected:run_success"
+    }
+  },
+  "windows": [
+    {
+      "jobId": 136279161989,
+      "logSha256": "9ee32340322a8918da1d83312f92de95081704e69a2f4065740061da3ec02b07",
+      "observedControllerSha256": "fda0a87b92a16da2caea5a28f7c405551750e222591dc91e2cd11707f709bde9",
+      "observedWrapperSha256": "a45aa49ad60da7f207664545a34d9859f14236b9c68c138e77f2634c58409cea",
+      "sourceEncodingBinding": "committed LF -> observed checkout CRLF verified",
+      "nativeRuntime": {
+        "is64BitProcess": true,
+        "powerShellVersion": "5.1.26100.33822",
+        "platform": "Win32NT",
+        "powerShellEdition": "Desktop"
+      },
+      "setupProgress": {
+        "exclusiveRootCreated": true,
+        "initialJournalSaved": false,
+        "sourceTreeGuarded": false,
+        "rootAclApplied": false,
+        "nodeCopied": false,
+        "sourceFilesCopied": 0
+      },
+      "failureDiagnostic": {
+        "line": 140,
+        "exceptionChain": [
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.CommandNotFoundException"
+          },
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.CmdletInvocationException"
+          },
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.RuntimeException"
+          }
+        ],
+        "stage": "protect_fixture_root",
+        "errorId": "CouldNotAutoloadMatchingModule",
+        "lastRecordedOperation": "acl_apply",
+        "category": "ObjectNotFound",
+        "command": "unknown_command",
+        "errorIdSha256": "29a4d4dbc3be03c69963ff6bd840ab06e7dadc9350f5684556e0527c049edbde"
+      },
+      "cleanupDiagnostics": [
+        {
+          "line": 400,
+          "exceptionChain": [
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.MethodInvocationException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2147024894,
+              "type": "System.IO.FileNotFoundException"
+            }
+          ],
+          "stage": "protect_fixture_root",
+          "errorId": "FileNotFoundException",
+          "lastRecordedOperation": "acl_apply",
+          "category": "NotSpecified",
+          "command": "unknown_command",
+          "errorIdSha256": "48b6127ce6a437e739fc863100197cef95d6d0aa1ebd0720f60eb12a4e41b91b"
+        }
+      ],
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": false,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "cleanupErrors": [
+        "fixture_tree_cleanup_failed",
+        "fixture_cleanup_incomplete"
+      ],
+      "emergencyCleanup": {
+        "emergencyCleanup": true,
+        "schemaVersion": 1,
+        "failure": "fixture_emergency_cleanup_failed",
+        "failureDiagnostic": {
+          "line": 418,
+          "exceptionChain": [
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.CommandNotFoundException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.CmdletInvocationException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.RuntimeException"
+            }
+          ],
+          "stage": "emergency_cleanup",
+          "errorId": "CouldNotAutoloadMatchingModule",
+          "lastRecordedOperation": "emergency_root_owner",
+          "category": "ObjectNotFound",
+          "command": "unknown_command",
+          "errorIdSha256": "29a4d4dbc3be03c69963ff6bd840ab06e7dadc9350f5684556e0527c049edbde"
+        },
+        "exitCode": 1,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inheritedModulePathObservation": {
+        "includesPowerShellCoreModules": true,
+        "sha256": "fd4d6623b1d2dd83d73c5c7d52bb5ec06cb61fd63ad5f1e4d174e19a4d6391d5",
+        "entryCount": 8,
+        "includesWindowsPowerShellSystemModules": true
+      },
+      "completedNativeCases": 0,
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "jobId": 136279162253,
+      "logSha256": "a8b5cdca535e6c5ec0b9b4189bb93bff2dbec96ea174df22535fcc9fd4ac73da",
+      "observedControllerSha256": "fda0a87b92a16da2caea5a28f7c405551750e222591dc91e2cd11707f709bde9",
+      "observedWrapperSha256": "a45aa49ad60da7f207664545a34d9859f14236b9c68c138e77f2634c58409cea",
+      "sourceEncodingBinding": "committed LF -> observed checkout CRLF verified",
+      "nativeRuntime": {
+        "is64BitProcess": true,
+        "powerShellVersion": "5.1.26100.33648",
+        "platform": "Win32NT",
+        "powerShellEdition": "Desktop"
+      },
+      "setupProgress": {
+        "exclusiveRootCreated": true,
+        "initialJournalSaved": false,
+        "sourceTreeGuarded": false,
+        "rootAclApplied": false,
+        "nodeCopied": false,
+        "sourceFilesCopied": 0
+      },
+      "failureDiagnostic": {
+        "line": 140,
+        "exceptionChain": [
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.CommandNotFoundException"
+          },
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.CmdletInvocationException"
+          },
+          {
+            "nativeErrorCode": null,
+            "hresult": -2146233087,
+            "type": "System.Management.Automation.RuntimeException"
+          }
+        ],
+        "stage": "protect_fixture_root",
+        "errorId": "CouldNotAutoloadMatchingModule",
+        "lastRecordedOperation": "acl_apply",
+        "category": "ObjectNotFound",
+        "command": "unknown_command",
+        "errorIdSha256": "29a4d4dbc3be03c69963ff6bd840ab06e7dadc9350f5684556e0527c049edbde"
+      },
+      "cleanupDiagnostics": [
+        {
+          "line": 400,
+          "exceptionChain": [
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.MethodInvocationException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2147024894,
+              "type": "System.IO.FileNotFoundException"
+            }
+          ],
+          "stage": "protect_fixture_root",
+          "errorId": "FileNotFoundException",
+          "lastRecordedOperation": "acl_apply",
+          "category": "NotSpecified",
+          "command": "unknown_command",
+          "errorIdSha256": "48b6127ce6a437e739fc863100197cef95d6d0aa1ebd0720f60eb12a4e41b91b"
+        }
+      ],
+      "cleanup": {
+        "ownedAccountProcessesExited": true,
+        "accountsRemoved": true,
+        "profileDirectoriesRemoved": true,
+        "ownedChildrenExited": true,
+        "fixtureTreeRemoved": false,
+        "forcedChildCleanup": 0,
+        "profilesRemoved": true,
+        "serviceRestored": true
+      },
+      "cleanupErrors": [
+        "fixture_tree_cleanup_failed",
+        "fixture_cleanup_incomplete"
+      ],
+      "emergencyCleanup": {
+        "emergencyCleanup": true,
+        "schemaVersion": 1,
+        "failure": "fixture_emergency_cleanup_failed",
+        "failureDiagnostic": {
+          "line": 418,
+          "exceptionChain": [
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.CommandNotFoundException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.CmdletInvocationException"
+            },
+            {
+              "nativeErrorCode": null,
+              "hresult": -2146233087,
+              "type": "System.Management.Automation.RuntimeException"
+            }
+          ],
+          "stage": "emergency_cleanup",
+          "errorId": "CouldNotAutoloadMatchingModule",
+          "lastRecordedOperation": "emergency_root_owner",
+          "category": "ObjectNotFound",
+          "command": "unknown_command",
+          "errorIdSha256": "29a4d4dbc3be03c69963ff6bd840ab06e7dadc9350f5684556e0527c049edbde"
+        },
+        "exitCode": 1,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inheritedModulePathObservation": {
+        "includesPowerShellCoreModules": true,
+        "sha256": "fd4d6623b1d2dd83d73c5c7d52bb5ec06cb61fd63ad5f1e4d174e19a4d6391d5",
+        "entryCount": 8,
+        "includesWindowsPowerShellSystemModules": true
+      },
+      "completedNativeCases": 0,
+      "controller": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "overflow": false,
+        "spawnError": false,
+        "privacyViolation": false,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "classification": {
+    "observed": "Desktop PowerShell ACL cmdlet autoload failure in controller setup and emergency cleanup before source copy or owned-account creation",
+    "supportedCause": "Fixture inherited a mixed Core/Desktop PSModulePath; the first ACL command and recovery ACL command both fail matching-module autoload. This identifies a fixture command-resolution failure, not product authorization behavior.",
+    "limits": [
+      "The bounded reports do not reveal the failed module internal exception text or exact chosen module file.",
+      "A system-only Desktop module-path correction is unqualified until a fresh native run.",
+      "No new native transport, account isolation, ACL enforcement or cleanup success is established.",
+      "Root and Linux successes do not substitute for both failed Windows lanes."
+    ]
+  },
+  "proposedNarrowCorrection": "Pin PSModulePath to the fixed Desktop system module directory before controller/recovery setup; retain inherited digest metadata and pin Start-Child default while preserving the explicit hostile-path fixture override."
+}

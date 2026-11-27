@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "comments": [
+    {
+      "key": "diagnostic_r2_review_and_rejection",
+      "id": 7039364752,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039364752",
+      "characters": 38845,
+      "exactReadback": true
+    },
+    {
+      "key": "module_path_r3_source_review",
+      "id": 7039365187,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039365187",
+      "characters": 32421,
+      "exactReadback": true
+    }
+  ],
+  "sourceReportBindings": {
+    "diagnostic-r2-independent-review.json": {
+      "bytes": 20873,
+      "sha256": "74ce4646cd0cbfc8633baec8df29b2bfebb457a2de3cccb5345069cc258dacf4"
+    },
+    "diagnostic-r2-independent-review.md": {
+      "bytes": 3972,
+      "sha256": "c55f7ecb32a9ceadcc3f3c77542a1288a37dfaf0a3dcea93b87c09312ac3487a"
+    },
+    "candidate-diagnostic-r2/diagnostic-r2-rejection-review.json": {
+      "bytes": 13335,
+      "sha256": "0b73dc6550f248c0e8da51bba75ea171a7594d8a8a20816ec281deb9f6244f3f"
+    },
+    "module-path-r3-independent-review.json": {
+      "bytes": 27638,
+      "sha256": "f5e607ca41eaf437025c20596db063b7eaba628286d14bf6e3b6b6d7bd4ecd18"
+    },
+    "module-path-r3-independent-review.md": {
+      "bytes": 4260,
+      "sha256": "fb9282a3dc07bbde0316cf1bb608bcb5856fefe2ebeda4d2ebe1ef3d3ade0829"
+    }
+  }
+}

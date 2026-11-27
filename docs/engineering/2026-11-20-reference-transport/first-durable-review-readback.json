@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "issue": 44,
+  "repository": "MulattoTech/MTechLabs-Access",
+  "comments": [
+    {
+      "key": "source_review_markdown",
+      "id": 7039071452,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039071452",
+      "exactBodyReadback": true,
+      "characters": 12230
+    },
+    {
+      "key": "source_review_json_1",
+      "id": 7039071730,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039071730",
+      "exactBodyReadback": true,
+      "characters": 50468
+    },
+    {
+      "key": "source_review_json_2",
+      "id": 7039072036,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039072036",
+      "exactBodyReadback": true,
+      "characters": 50385
+    },
+    {
+      "key": "first_hosted_rejected",
+      "id": 7039072325,
+      "url": "https://github.com/MulattoTech/MTechLabs-Access/issues/44#issuecomment-7039072325",
+      "exactBodyReadback": true,
+      "characters": 32179
+    }
+  ],
+  "sourceReviewJsonSha256": "55aadad1e9fb3d347bd055a6e76e7e1aed8bc3311f6ce817058741554e6fbf73",
+  "statusAddendumSha256": "44e91e5238a3f2c0134d1cd868032032dc747dfd1c4eba95cfc0f7995e4bc9b7",
+  "firstCandidateAccepted": false,
+  "fullSourceJsonReassemblyMatches": true
+}

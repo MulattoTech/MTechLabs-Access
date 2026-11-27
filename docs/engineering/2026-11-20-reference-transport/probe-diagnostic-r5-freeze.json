@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "revision": 5,
+  "frozenAt": "2026-11-20T12:49:49.272466+00:00",
+  "scope": "One failure-only instrumented derivative of the unchanged runtime probe; no product correction or acceptance fallback",
+  "parentReviewedLocalCommit": "3719483dc24b5d21e0f98b58964fc05629e72a9e",
+  "priorCandidateHead": "ed57e8368355c4984b4f2466e62594240d16edd6",
+  "priorRunId": 44736652736,
+  "observedCause": "Both r4 authority profile children succeed, then the original native_capture subprocess returns zero stdout/stderr and is killed by its existing15-second deadline. The internal stalled interval remains unknown.",
+  "changes": [
+    "Observe existing stdin finish/close/error events without changing arguments, writes, limits or callback values. These are typed facts only; no universal finish=true requirement.",
+    "After the original sole native_capture callback fails, run at most one separately recorded diagnostic derivative using the captured original execFile, the same ordinary account/Node parent, roles{} payload and15-second timeout.",
+    "Derive only from fixed installed windows-runtime-probe.ps1 with pinned normalized source hash,27 exact counted splices and a pinned derivative hash. Preserve raw original hash, explicit CRLF-to-LF operation and unchanged original readback.",
+    "Emit only fixed numeric stage IDs and bounded elapsed values. Keep private stdout/stderr as decoded counts/digests; discard other stderr text and bound trace count.",
+    "Create the derivative exclusively in the already-owned fixture working directory; remove only the successfully created file.",
+    "Rethrow the original error regardless of diagnostic outcome. Every passing identity must have failureProbeDiagnostic:null; no derivative result enters original nativeInvocations or identity acceptance."
+  ],
+  "unchanged": [
+    "All17 product source files",
+    "All18 native cases/control counts and original success requirements",
+    "Original15-second native limit,40-second message budget,360-second work budget and60-second cleanup budget",
+    "ACL/account/cleanup rules and absence of operational retries or fallback",
+    "Portable22/drain9/original49 and prior native54/26/reference11/route10/edge42 requirements",
+    "All158 prior verifier require expressions"
+  ],
+  "changedFiles": {
+    "integrations/mcp-manager/test/fixtures/reference-transport-child.mjs": {
+      "priorSha256": "691f2618b62fe3fd70fabdbbe45ad8c442cc84725fdff76a236e243fdf56ee6b",
+      "sha256": "d94db17824949609faa72c8ed51dee80c9b3be4b2578da3e8c9d5646c188ac20",
+      "bytes": 38682
+    },
+    "integrations/mcp-manager/test/fixtures/reference-transport-native.ps1": {
+      "priorSha256": "11bcbd66475bc599ef4fed093a200b28c937db1c55f0a98b74d5926a34f5e123",
+      "sha256": "d3ac2c3ef21041398d059e5109b0e9bf7224be401a0a6259219dae0cdd6eda00",
+      "bytes": 85083
+    },
+    "integrations/mcp-manager/test/reference-transport-native.test.mjs": {
+      "priorSha256": "674e3fec0bfa77fce4a2fd78b4801c1ab6019eff050523677bbc5fa92c64d3e7",
+      "sha256": "787586271608985159d7356c7c1e892db68e775035b87b6b5a51ebb80f6fe79c",
+      "bytes": 12155
+    }
+  },
+  "allOtherFrozenInputsUnchanged": true,
+  "frozenInputCount": 31,
+  "frozenInputs": {
+    "file": "probe-diagnostic-r5-frozen-inputs.json",
+    "sha256": "103dfd34af686b319676a63b872d6f8bfd5bc9388d9a034729f057e7a7dcde1c"
+  },
+  "verifier": {
+    "file": "review_hosted.py",
+    "sha256": "1a3ee64ccaee06ee6e8d556ae44f92c8f97457ac9b4c48f56a55a0216d26a16b",
+    "bytes": 74711,
+    "priorSha256": "967e127a917a4262485524869aec4d8e28cd80387345e7610b44cff59d0064d7",
+    "priorPreserved": "candidate-child-diagnostic-r4/frozen-before-native-diagnosis/review_hosted.py",
+    "priorRequireCalls": 158,
+    "currentRequireCalls": 160,
+    "removedPriorRequireCalls": 0
+  },
+  "derivative": {
+    "file": "probe-diagnostic-r5-derived.ps1",
+    "sha256": "4006e9cc03366f60484cbb9972ce1ec95705904b29d8dd6b396f4d6147475ce1",
+    "bytes": 12913,
+    "normalizedOriginalSha256": "7dc933d63876199fdfce8cdbf856f914163a9ff30d85b03f5c0fbc6be5bca0ca",
+    "anchorCount": 27,
+    "lfCrLfSameDerivative": true,
+    "transformReceipt": {
+      "file": "probe-diagnostic-r5-transform.json",
+      "sha256": "a704848227c67eee45ebffa95ef96199812ead672ce8cc17d1cfdbe8246d549f"
+    },
+    "stageMap": {
+      "file": "probe-diagnostic-r5-stage-map.json",
+      "sha256": "d65651ad3fa685e71c263d1b9bfbd282b68f9977a6f75ef8a05ae1e4993907a4"
+    }
+  },
+  "causalLimits": [
+    "The derivative runs later and adds instrumentation, so its timing/cache state differ.",
+    "Its last marker localizes the derivative interval only; it cannot prove the original stopped at the same location.",
+    "Derivative success after original failure remains a rejected qualification.",
+    "Stdin finish proves writable completion, not payload consumption or EOF.",
+    "Sparse/repeated stage IDs must be read in emission order using the bound map."
+  ],
+  "validation": {
+    "nodeChildAndWrapperSyntax": true,
+    "pythonVerifierSyntax": true,
+    "gitDiffCheck": true,
+    "frozenTitlesAndHashes": true,
+    "readOnlyPriorLinuxTitleChecks": true,
+    "pureDeterministicDerivativeConstruction": true,
+    "newProductExecution": false,
+    "newNativeExecution": false,
+    "nativePowerShellOrCSharpCompilationAvailableLocally": false
+  },
+  "expectedTotals": {
+    "root": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "linux": {
+      "tests": 396,
+      "pass": 369,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 27,
+      "todo": 0
+    },
+    "windows": {
+      "tests": 493,
+      "pass": 490,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 3,
+      "todo": 0
+    }
+  },
+  "priorEvidence": [
+    {
+      "file": "candidate-child-diagnostic-r4/child-diagnostic-r4-rejection-review.json",
+      "sha256": "534a473e86788cf0f23bec71ed7f72b24b36ceb7335ecb22779f32bf0dad4ff9"
+    },
+    {
+      "file": "child-diagnostic-r4-freeze.json",
+      "sha256": "deeb69afc4eed04b63f9e3714d73913d39f876f0c1307038c98760aead3843f5"
+    }
+  ],
+  "acceptance": {
+    "nativeRequalificationPending": true,
+    "candidateAccepted": false,
+    "activationAuthorized": false,
+    "qualified": false,
+    "upstreamEnabled": false
+  },
+  "authorRole": "Test/fixture author and evidence verifier; independent product/source review is separate."
+}
