@@ -162,3 +162,7 @@ export function describePolicyMode(policy) {
   if (normalizeBooleanFlag(policy.readOnly, true)) return "read-only";
   return "active";
 }
+
+export function isValidConcurrencyLimit(value, max = 16) {
+  return typeof value === "number" && Number.isInteger(value) && value >= 1 && value <= max;
+}

@@ -104,3 +104,12 @@ export function hasJsonRpc2Version(msg) {
 export function isJsonRpcResultResponse(msg) {
   return isPlainObject(msg) && Object.hasOwn(msg, "result") && hasValidJsonRpcId(msg.id);
 }
+
+export function classifyJsonRpcMessage(msg) {
+  if (!hasJsonRpc2Version(msg)) return "invalid";
+  if (isJsonRpcErrorResponse(msg)) return "error";
+  if (isJsonRpcResultResponse(msg)) return "result";
+  if (isJsonRpcRequest(msg)) return "request";
+  if (isJsonRpcNotification(msg)) return "notification";
+  return "unknown";
+}

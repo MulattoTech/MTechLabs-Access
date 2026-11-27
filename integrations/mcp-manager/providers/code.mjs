@@ -193,3 +193,8 @@ export function hasAllowedExtension(filePath, extensions = [".js", ".mjs", ".cjs
   const ext = path.extname(filePath.trim()).toLowerCase();
   return extensions.some(allowed => typeof allowed === "string" && allowed.toLowerCase() === ext);
 }
+
+export function normalizePosixRelative(relPath) {
+  if (typeof relPath !== "string" || !relPath.trim()) return "";
+  return relPath.trim().replace(/\\+/g, "/").replace(/^\.\//, "");
+}

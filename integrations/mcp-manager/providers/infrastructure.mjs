@@ -108,3 +108,7 @@ export function classifyMemoryPressure(freeBytes, totalBytes) {
   if (ratio < 0.25) return "elevated";
   return "normal";
 }
+
+export function isPositiveSafeInt(value) {
+  return typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+}

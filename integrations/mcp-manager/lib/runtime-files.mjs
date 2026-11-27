@@ -83,3 +83,7 @@ export function countLinesNormalized(text) {
   if (typeof text !== "string" || !text) return 0;
   return splitLinesNormalized(text).length;
 }
+
+export function hasBoundedNonEmptyText(text, maxChars = 4096) {
+  return typeof text === "string" && text.trim().length > 0 && text.length <= maxChars;
+}

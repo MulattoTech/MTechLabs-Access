@@ -129,3 +129,7 @@ export function dedupeStrings(values, maxItems = 64) {
   }
   return out;
 }
+
+export function isNonNegativeSafeInt(value) {
+  return typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
+}
