@@ -96,3 +96,7 @@ export function isJsonRpcErrorResponse(msg) {
 export function isJsonRpcRequest(msg) {
   return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && hasValidJsonRpcId(msg.id);
 }
+
+export function hasJsonRpc2Version(msg) {
+  return isPlainObject(msg) && msg.jsonrpc === "2.0";
+}

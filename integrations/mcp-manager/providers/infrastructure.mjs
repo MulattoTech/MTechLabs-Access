@@ -95,3 +95,8 @@ export function mibToBytes(mib) {
   if (typeof mib !== "number" || !Number.isFinite(mib) || mib < 0) return 0;
   return Math.floor(mib * 1024 * 1024);
 }
+
+export function normalizeNonNegativeInt(value, fallback = 0) {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 0) return fallback;
+  return value;
+}

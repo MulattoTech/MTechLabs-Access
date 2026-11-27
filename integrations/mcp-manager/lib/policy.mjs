@@ -150,3 +150,8 @@ export function summarizePolicyFlags(policy) {
     maxInflight: clampInflightLimit(policy.maxInflight, 1),
   };
 }
+
+export function allowsMutation(policy) {
+  if (!isPlainObject(policy)) return false;
+  return normalizeBooleanFlag(policy.enabled, false) && !normalizeBooleanFlag(policy.readOnly, true);
+}

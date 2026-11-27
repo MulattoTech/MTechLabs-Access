@@ -182,3 +182,8 @@ export function firstLineSummary(text, maxLen = 120) {
   const first = text.split(/\r?\n/).map(l => l.trim()).find(Boolean) ?? "";
   return first.length <= maxLen ? first : first.slice(0, maxLen);
 }
+
+export function safeBasename(targetPath) {
+  if (typeof targetPath !== "string" || !targetPath.trim()) return "";
+  return path.basename(targetPath.trim());
+}

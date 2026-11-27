@@ -109,3 +109,7 @@ export function isValidLoopbackHost(host) {
   const trimmed = host.trim().toLowerCase();
   return trimmed === "127.0.0.1" || trimmed === "localhost" || trimmed === "::1";
 }
+
+export function isIntInRange(value, min, max) {
+  return typeof value === "number" && Number.isInteger(value) && value >= min && value <= max;
+}

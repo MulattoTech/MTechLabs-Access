@@ -73,3 +73,8 @@ export function normalizeLfLines(text) {
   if (typeof text !== "string") return "";
   return text.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
 }
+
+export function splitLinesNormalized(text) {
+  if (typeof text !== "string" || !text) return [];
+  return text.replace(/^\uFEFF/, "").split(/\r?\n/);
+}
