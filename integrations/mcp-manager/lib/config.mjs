@@ -103,3 +103,9 @@ export function sanitizeStringList(values, maxItems = 32, maxLen = 128) {
   const limit = typeof maxItems === "number" && Number.isInteger(maxItems) && maxItems >= 0 ? maxItems : 32;
   return values.filter(v => typeof v === "string" && v.trim().length > 0 && v.length <= maxLen).map(v => v.trim()).slice(0, limit);
 }
+
+export function isValidLoopbackHost(host) {
+  if (typeof host !== "string") return false;
+  const trimmed = host.trim().toLowerCase();
+  return trimmed === "127.0.0.1" || trimmed === "localhost" || trimmed === "::1";
+}

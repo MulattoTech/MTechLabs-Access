@@ -176,3 +176,9 @@ export function countNonEmptyLines(text) {
   if (typeof text !== "string" || !text) return 0;
   return text.split(/\r?\n/).map(line => line.trim()).filter(Boolean).length;
 }
+
+export function firstLineSummary(text, maxLen = 120) {
+  if (typeof text !== "string" || !text.trim()) return "";
+  const first = text.split(/\r?\n/).map(l => l.trim()).find(Boolean) ?? "";
+  return first.length <= maxLen ? first : first.slice(0, maxLen);
+}

@@ -92,3 +92,7 @@ export function isJsonRpcNotification(msg) {
 export function isJsonRpcErrorResponse(msg) {
   return isPlainObject(msg) && isPlainObject(msg.error) && typeof msg.error.code === "number" && Number.isFinite(msg.error.code);
 }
+
+export function isJsonRpcRequest(msg) {
+  return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && hasValidJsonRpcId(msg.id);
+}

@@ -90,3 +90,8 @@ export function formatPercent(part, whole, decimals = 1) {
   const places = typeof decimals === "number" && Number.isInteger(decimals) && decimals >= 0 && decimals <= 4 ? decimals : 1;
   return Number(((part / whole) * 100).toFixed(places));
 }
+
+export function mibToBytes(mib) {
+  if (typeof mib !== "number" || !Number.isFinite(mib) || mib < 0) return 0;
+  return Math.floor(mib * 1024 * 1024);
+}

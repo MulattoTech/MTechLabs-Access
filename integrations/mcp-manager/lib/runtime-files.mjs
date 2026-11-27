@@ -68,3 +68,8 @@ export function parseJsonOrNull(text) {
   if (typeof text !== "string" || !text.trim()) return null;
   try { return JSON.parse(text.replace(/^\uFEFF/, "")); } catch { return null; }
 }
+
+export function normalizeLfLines(text) {
+  if (typeof text !== "string") return "";
+  return text.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
+}

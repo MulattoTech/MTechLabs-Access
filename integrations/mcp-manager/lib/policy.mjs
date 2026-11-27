@@ -141,3 +141,12 @@ export function normalizeRatio(value, fallback = 0) {
   if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
   return Math.min(1, Math.max(0, value));
 }
+
+export function summarizePolicyFlags(policy) {
+  if (!isPlainObject(policy)) return { enabled: false, readOnly: true, maxInflight: 1 };
+  return {
+    enabled: normalizeBooleanFlag(policy.enabled, false),
+    readOnly: normalizeBooleanFlag(policy.readOnly, true),
+    maxInflight: clampInflightLimit(policy.maxInflight, 1),
+  };
+}
