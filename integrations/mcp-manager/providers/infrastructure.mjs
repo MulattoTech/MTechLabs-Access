@@ -84,3 +84,9 @@ export function formatDurationSeconds(ms) {
   if (typeof ms !== "number" || !Number.isFinite(ms) || ms < 0) return 0;
   return Math.floor(ms / 1000);
 }
+
+export function formatPercent(part, whole, decimals = 1) {
+  if (typeof part !== "number" || typeof whole !== "number" || !Number.isFinite(part) || !Number.isFinite(whole) || whole <= 0 || part < 0) return 0;
+  const places = typeof decimals === "number" && Number.isInteger(decimals) && decimals >= 0 && decimals <= 4 ? decimals : 1;
+  return Number(((part / whole) * 100).toFixed(places));
+}

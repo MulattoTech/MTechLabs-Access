@@ -88,3 +88,7 @@ export function hasValidJsonRpcId(id) {
 export function isJsonRpcNotification(msg) {
   return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && !Object.hasOwn(msg, "id");
 }
+
+export function isJsonRpcErrorResponse(msg) {
+  return isPlainObject(msg) && isPlainObject(msg.error) && typeof msg.error.code === "number" && Number.isFinite(msg.error.code);
+}

@@ -171,3 +171,8 @@ export function isPathInsideRoot(rootDir, targetPath) {
   const rel = path.relative(resolvedRoot, resolvedTarget);
   return rel !== "" && rel !== ".." && !rel.startsWith(".." + path.sep) && !path.isAbsolute(rel);
 }
+
+export function countNonEmptyLines(text) {
+  if (typeof text !== "string" || !text) return 0;
+  return text.split(/\r?\n/).map(line => line.trim()).filter(Boolean).length;
+}

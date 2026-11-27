@@ -97,3 +97,9 @@ export function clampPositiveInt(value, fallback, min = 1, max = 1000000) {
   if (typeof value !== "number" || !Number.isInteger(value)) return fallback;
   return Math.min(max, Math.max(min, value));
 }
+
+export function sanitizeStringList(values, maxItems = 32, maxLen = 128) {
+  if (!Array.isArray(values)) return [];
+  const limit = typeof maxItems === "number" && Number.isInteger(maxItems) && maxItems >= 0 ? maxItems : 32;
+  return values.filter(v => typeof v === "string" && v.trim().length > 0 && v.length <= maxLen).map(v => v.trim()).slice(0, limit);
+}

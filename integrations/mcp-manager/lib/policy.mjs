@@ -136,3 +136,8 @@ export function normalizeBooleanFlag(value, fallback = false) {
 export function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
+
+export function normalizeRatio(value, fallback = 0) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.min(1, Math.max(0, value));
+}

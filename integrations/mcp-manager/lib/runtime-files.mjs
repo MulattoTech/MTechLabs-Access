@@ -63,3 +63,8 @@ export function truncateUtf8Preview(text, maxChars = 256) {
   const limit = typeof maxChars === "number" && Number.isInteger(maxChars) && maxChars >= 0 ? maxChars : 256;
   return text.length <= limit ? text : text.slice(0, limit);
 }
+
+export function parseJsonOrNull(text) {
+  if (typeof text !== "string" || !text.trim()) return null;
+  try { return JSON.parse(text.replace(/^\uFEFF/, "")); } catch { return null; }
+}
