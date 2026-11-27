@@ -128,3 +128,7 @@ export async function atomicWriteJson(filePath, value) {
     throw error;
   }
 }
+
+export function normalizeBooleanFlag(value, fallback = false) {
+  return typeof value === "boolean" ? value : fallback;
+}

@@ -73,3 +73,9 @@ export async function systemOperation(name) {
   }
   throw new Error('unknown_system_operation');
 }
+
+export function bytesToGib(bytes, decimals = 2) {
+  if (typeof bytes !== "number" || !Number.isFinite(bytes) || bytes < 0) return 0;
+  const places = typeof decimals === "number" && Number.isInteger(decimals) && decimals >= 0 && decimals <= 4 ? decimals : 2;
+  return Number((bytes / (1024 ** 3)).toFixed(places));
+}

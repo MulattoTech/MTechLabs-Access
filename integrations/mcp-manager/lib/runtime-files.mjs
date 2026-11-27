@@ -52,3 +52,8 @@ export async function stableFileSnapshot(filename, maximum) {
 export function isValidSha256Hex(value) {
   return typeof value === "string" && /^[a-f0-9]{64}$/i.test(value);
 }
+
+export function formatByteCount(bytes) {
+  if (typeof bytes !== "number" || !Number.isFinite(bytes) || bytes < 0) return "0 B";
+  return `${Math.floor(bytes)} B`;
+}

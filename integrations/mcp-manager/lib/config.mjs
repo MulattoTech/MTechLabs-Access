@@ -88,3 +88,7 @@ export function validateConfig(input) {
   const instance = managerInstance(input);
   return Object.freeze({ ...input, minimumFreeMemoryMiB, minimumFreeDiskMiB, ...(instance ? { instance } : {}) });
 }
+
+export function isNonEmptyString(value, maxLen = 1024) {
+  return typeof value === "string" && value.trim().length > 0 && value.length <= maxLen;
+}

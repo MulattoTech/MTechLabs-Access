@@ -79,3 +79,7 @@ export class ManagedStdioTransport {
 export function isValidJsonRpcMethod(method) {
   return typeof method === "string" && method.length > 0 && method.length <= 128 && !/\s/.test(method);
 }
+
+export function hasValidJsonRpcId(id) {
+  return typeof id === "string" || (typeof id === "number" && Number.isFinite(id));
+}

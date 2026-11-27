@@ -159,3 +159,7 @@ export async function codeOperation(name, args, repo, config, signal) {
     default: throw new Error('unknown_code_operation');
   }
 }
+
+export function isSafeGitRefName(refName) {
+  return typeof refName === "string" && /^[a-zA-Z0-9_./-]{1,120}$/.test(refName) && !refName.startsWith("-") && !refName.includes("..");
+}
