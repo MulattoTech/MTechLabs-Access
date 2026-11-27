@@ -132,3 +132,7 @@ export async function atomicWriteJson(filePath, value) {
 export function normalizeBooleanFlag(value, fallback = false) {
   return typeof value === "boolean" ? value : fallback;
 }
+
+export function isPlainObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}

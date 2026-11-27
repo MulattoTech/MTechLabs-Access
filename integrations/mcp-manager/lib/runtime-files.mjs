@@ -57,3 +57,9 @@ export function formatByteCount(bytes) {
   if (typeof bytes !== "number" || !Number.isFinite(bytes) || bytes < 0) return "0 B";
   return `${Math.floor(bytes)} B`;
 }
+
+export function truncateUtf8Preview(text, maxChars = 256) {
+  if (typeof text !== "string") return "";
+  const limit = typeof maxChars === "number" && Number.isInteger(maxChars) && maxChars >= 0 ? maxChars : 256;
+  return text.length <= limit ? text : text.slice(0, limit);
+}

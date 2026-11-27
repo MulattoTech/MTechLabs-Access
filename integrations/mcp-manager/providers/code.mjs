@@ -163,3 +163,11 @@ export async function codeOperation(name, args, repo, config, signal) {
 export function isSafeGitRefName(refName) {
   return typeof refName === "string" && /^[a-zA-Z0-9_./-]{1,120}$/.test(refName) && !refName.startsWith("-") && !refName.includes("..");
 }
+
+export function isPathInsideRoot(rootDir, targetPath) {
+  if (typeof rootDir !== "string" || typeof targetPath !== "string" || !rootDir || !targetPath) return false;
+  const resolvedRoot = path.resolve(rootDir);
+  const resolvedTarget = path.resolve(resolvedRoot, targetPath);
+  const rel = path.relative(resolvedRoot, resolvedTarget);
+  return rel !== "" && rel !== ".." && !rel.startsWith(".." + path.sep) && !path.isAbsolute(rel);
+}

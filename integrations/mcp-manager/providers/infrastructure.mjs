@@ -79,3 +79,8 @@ export function bytesToGib(bytes, decimals = 2) {
   const places = typeof decimals === "number" && Number.isInteger(decimals) && decimals >= 0 && decimals <= 4 ? decimals : 2;
   return Number((bytes / (1024 ** 3)).toFixed(places));
 }
+
+export function formatDurationSeconds(ms) {
+  if (typeof ms !== "number" || !Number.isFinite(ms) || ms < 0) return 0;
+  return Math.floor(ms / 1000);
+}

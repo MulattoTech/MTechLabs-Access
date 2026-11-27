@@ -92,3 +92,8 @@ export function validateConfig(input) {
 export function isNonEmptyString(value, maxLen = 1024) {
   return typeof value === "string" && value.trim().length > 0 && value.length <= maxLen;
 }
+
+export function clampPositiveInt(value, fallback, min = 1, max = 1000000) {
+  if (typeof value !== "number" || !Number.isInteger(value)) return fallback;
+  return Math.min(max, Math.max(min, value));
+}

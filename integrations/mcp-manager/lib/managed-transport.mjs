@@ -1,3 +1,4 @@
+const isPlainObject = v => v !== null && typeof v === "object" && !Array.isArray(v);
 import { spawn } from 'node:child_process';
 import { createLineFramer } from './framing.mjs';
 
@@ -82,4 +83,8 @@ export function isValidJsonRpcMethod(method) {
 
 export function hasValidJsonRpcId(id) {
   return typeof id === "string" || (typeof id === "number" && Number.isFinite(id));
+}
+
+export function isJsonRpcNotification(msg) {
+  return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && !Object.hasOwn(msg, "id");
 }
