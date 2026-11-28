@@ -1,4 +1,6 @@
 export function createLineFramer({ maxBytes, onLine, onError }) {
+  if (!Number.isInteger(maxBytes) || maxBytes < 1) throw new Error('invalid_max_bytes');
+  if (typeof onLine !== 'function') throw new Error('invalid_on_line');
   let pieces = [];
   let size = 0;
   let discarded = false;

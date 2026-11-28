@@ -36,6 +36,31 @@ test('gateway preserves initialization and fragmented concurrent JSON-RPC reques
   assert.equal(status.limits.detachedJobsCapped, false);
 });
 
+test('readJsonBody handles BOM, invalid maxBytes, and early socket close safely', async () => {
+  const { readJsonBody } = await import('../lib/http-body.mjs');
+  const { EventEmitter } = await import('node:events');
+
+  await assert.rejects(
+    readJsonBody({ headers: { 'content-type': 'application/json' } }, 0),
+    /invalid_max_bytes/,
+  );
+
+  const bomReq = new EventEmitter();
+  bomReq.headers = { 'content-type': 'application/json; charset=utf-8' };
+  const bomPromise = readJsonBody(bomReq, 1024);
+  bomReq.emit('data', Buffer.from('\uFEFF{"ok":true}', 'utf8'));
+  bomReq.emit('end');
+  assert.deepEqual(await bomPromise, { ok: true });
+
+  const closedReq = new EventEmitter();
+  closedReq.headers = { 'content-type': 'application/json' };
+  closedReq.readableEnded = false;
+  closedReq.resume = () => {};
+  const closedPromise = readJsonBody(closedReq, 1024);
+  closedReq.emit('close');
+  await assert.rejects(closedPromise, /aborted/);
+});
+
 test('policy changes are read on each call and read-only blocks writes, config and process launch', async t => {
   const f = await gatewayFixture(t);
   f.send(1, 'write_file');
