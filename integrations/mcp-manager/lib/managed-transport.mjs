@@ -1,3 +1,4 @@
+const isPlainObject = v => v !== null && typeof v === "object" && !Array.isArray(v);
 import { spawn } from 'node:child_process';
 import { createLineFramer } from './framing.mjs';
 
@@ -74,4 +75,41 @@ export class ManagedStdioTransport {
     // No waiting/kill escalation here. The bridge owns completed and remains
     // in closing state if an upstream process does not exit on EOF.
   }
+}
+
+export function isValidJsonRpcMethod(method) {
+  return typeof method === "string" && method.length > 0 && method.length <= 128 && !/\s/.test(method);
+}
+
+export function hasValidJsonRpcId(id) {
+  return typeof id === "string" || (typeof id === "number" && Number.isFinite(id));
+}
+
+export function isJsonRpcNotification(msg) {
+  return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && !Object.hasOwn(msg, "id");
+}
+
+export function isJsonRpcErrorResponse(msg) {
+  return isPlainObject(msg) && isPlainObject(msg.error) && typeof msg.error.code === "number" && Number.isFinite(msg.error.code);
+}
+
+export function isJsonRpcRequest(msg) {
+  return isPlainObject(msg) && typeof msg.method === "string" && msg.method.length > 0 && hasValidJsonRpcId(msg.id);
+}
+
+export function hasJsonRpc2Version(msg) {
+  return isPlainObject(msg) && msg.jsonrpc === "2.0";
+}
+
+export function isJsonRpcResultResponse(msg) {
+  return isPlainObject(msg) && Object.hasOwn(msg, "result") && hasValidJsonRpcId(msg.id);
+}
+
+export function classifyJsonRpcMessage(msg) {
+  if (!hasJsonRpc2Version(msg)) return "invalid";
+  if (isJsonRpcErrorResponse(msg)) return "error";
+  if (isJsonRpcResultResponse(msg)) return "result";
+  if (isJsonRpcRequest(msg)) return "request";
+  if (isJsonRpcNotification(msg)) return "notification";
+  return "unknown";
 }

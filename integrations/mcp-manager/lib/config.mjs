@@ -7,6 +7,11 @@ const REQUIRED_PATHS = [
 ];
 const ALLOWED_KEYS = new Set(['schemaVersion', ...REQUIRED_PATHS, 'minimumFreeMemoryMiB', 'minimumFreeDiskMiB', 'instance']);
 
+export function normalizePortNumber(value, fallback = 19740) {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 1024 || value > 65535) return fallback;
+  return value;
+}
+
 export function managerInstance(config) {
   if (!Object.hasOwn(config, 'instance')) return null;
   const value = config.instance;
@@ -82,4 +87,49 @@ export function validateConfig(input) {
   }
   const instance = managerInstance(input);
   return Object.freeze({ ...input, minimumFreeMemoryMiB, minimumFreeDiskMiB, ...(instance ? { instance } : {}) });
+}
+
+export function isNonEmptyString(value, maxLen = 1024) {
+  return typeof value === "string" && value.trim().length > 0 && value.length <= maxLen;
+}
+
+export function clampPositiveInt(value, fallback, min = 1, max = 1000000) {
+  if (typeof value !== "number" || !Number.isInteger(value)) return fallback;
+  return Math.min(max, Math.max(min, value));
+}
+
+export function sanitizeStringList(values, maxItems = 32, maxLen = 128) {
+  if (!Array.isArray(values)) return [];
+  const limit = typeof maxItems === "number" && Number.isInteger(maxItems) && maxItems >= 0 ? maxItems : 32;
+  return values.filter(v => typeof v === "string" && v.trim().length > 0 && v.length <= maxLen).map(v => v.trim()).slice(0, limit);
+}
+
+export function isValidLoopbackHost(host) {
+  if (typeof host !== "string") return false;
+  const trimmed = host.trim().toLowerCase();
+  return trimmed === "127.0.0.1" || trimmed === "localhost" || trimmed === "::1";
+}
+
+export function isIntInRange(value, min, max) {
+  return typeof value === "number" && Number.isInteger(value) && value >= min && value <= max;
+}
+
+export function dedupeStrings(values, maxItems = 64) {
+  if (!Array.isArray(values)) return [];
+  const limit = typeof maxItems === "number" && Number.isInteger(maxItems) && maxItems >= 0 ? maxItems : 64;
+  const seen = new Set();
+  const out = [];
+  for (const item of values) {
+    if (typeof item !== "string") continue;
+    const trimmed = item.trim();
+    if (!trimmed || seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    out.push(trimmed);
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
+export function isNonNegativeSafeInt(value) {
+  return typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
 }

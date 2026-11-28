@@ -98,7 +98,8 @@ async function searchCode(repo, args, declarations) {
   return { identifier: word, matches: result.output.split(/\r?\n/).filter(Boolean).slice(0, 150), truncated: result.truncated };
 }
 
-async function runTest(repo, args, signal) {
+async function runTest(repo, args = {}, signal) {
+  if (!args || typeof args !== 'object') throw new Error('invalid_test_request');
   const commands = {
     'npm-test': ['npm', ['test']],
     'npm-lint': ['npm', ['run', 'lint', '--if-present']],
@@ -157,4 +158,43 @@ export async function codeOperation(name, args, repo, config, signal) {
     case 'mterm_git_worktree_create': return createWorktree(repo, args, config);
     default: throw new Error('unknown_code_operation');
   }
+}
+
+export function isSafeGitRefName(refName) {
+  return typeof refName === "string" && /^[a-zA-Z0-9_./-]{1,120}$/.test(refName) && !refName.startsWith("-") && !refName.includes("..");
+}
+
+export function isPathInsideRoot(rootDir, targetPath) {
+  if (typeof rootDir !== "string" || typeof targetPath !== "string" || !rootDir || !targetPath) return false;
+  const resolvedRoot = path.resolve(rootDir);
+  const resolvedTarget = path.resolve(resolvedRoot, targetPath);
+  const rel = path.relative(resolvedRoot, resolvedTarget);
+  return rel !== "" && rel !== ".." && !rel.startsWith(".." + path.sep) && !path.isAbsolute(rel);
+}
+
+export function countNonEmptyLines(text) {
+  if (typeof text !== "string" || !text) return 0;
+  return text.split(/\r?\n/).map(line => line.trim()).filter(Boolean).length;
+}
+
+export function firstLineSummary(text, maxLen = 120) {
+  if (typeof text !== "string" || !text.trim()) return "";
+  const first = text.split(/\r?\n/).map(l => l.trim()).find(Boolean) ?? "";
+  return first.length <= maxLen ? first : first.slice(0, maxLen);
+}
+
+export function safeBasename(targetPath) {
+  if (typeof targetPath !== "string" || !targetPath.trim()) return "";
+  return path.basename(targetPath.trim());
+}
+
+export function hasAllowedExtension(filePath, extensions = [".js", ".mjs", ".cjs", ".ts", ".tsx", ".py"]) {
+  if (typeof filePath !== "string" || !filePath.trim() || !Array.isArray(extensions)) return false;
+  const ext = path.extname(filePath.trim()).toLowerCase();
+  return extensions.some(allowed => typeof allowed === "string" && allowed.toLowerCase() === ext);
+}
+
+export function normalizePosixRelative(relPath) {
+  if (typeof relPath !== "string" || !relPath.trim()) return "";
+  return relPath.trim().replace(/\\+/g, "/").replace(/^\.\//, "");
 }

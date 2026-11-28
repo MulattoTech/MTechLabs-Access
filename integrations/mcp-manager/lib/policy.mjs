@@ -6,6 +6,11 @@ import { readBoundedJson } from './config.mjs';
 
 export const MIN_INFLIGHT = 1;
 export const MAX_INFLIGHT = 64;
+export function clampInflightLimit(value, fallback = 2) {
+  if (typeof value !== "number" || !Number.isInteger(value)) return fallback;
+  return Math.min(16, Math.max(1, value));
+}
+
 export const QUEUE_CAPACITY = 64;
 export const MAX_PENDING_REQUESTS = 128;
 export const READ_ONLY_TOOLS = new Set([
@@ -122,4 +127,42 @@ export async function atomicWriteJson(filePath, value) {
     await fs.unlink(temporaryPath).catch(() => {});
     throw error;
   }
+}
+
+export function normalizeBooleanFlag(value, fallback = false) {
+  return typeof value === "boolean" ? value : fallback;
+}
+
+export function isPlainObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+export function normalizeRatio(value, fallback = 0) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.min(1, Math.max(0, value));
+}
+
+export function summarizePolicyFlags(policy) {
+  if (!isPlainObject(policy)) return { enabled: false, readOnly: true, maxInflight: 1 };
+  return {
+    enabled: normalizeBooleanFlag(policy.enabled, false),
+    readOnly: normalizeBooleanFlag(policy.readOnly, true),
+    maxInflight: clampInflightLimit(policy.maxInflight, 1),
+  };
+}
+
+export function allowsMutation(policy) {
+  if (!isPlainObject(policy)) return false;
+  return normalizeBooleanFlag(policy.enabled, false) && !normalizeBooleanFlag(policy.readOnly, true);
+}
+
+export function describePolicyMode(policy) {
+  if (!isPlainObject(policy)) return "invalid";
+  if (!normalizeBooleanFlag(policy.enabled, false)) return "paused";
+  if (normalizeBooleanFlag(policy.readOnly, true)) return "read-only";
+  return "active";
+}
+
+export function isValidConcurrencyLimit(value, max = 16) {
+  return typeof value === "number" && Number.isInteger(value) && value >= 1 && value <= max;
 }

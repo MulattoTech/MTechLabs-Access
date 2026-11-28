@@ -48,3 +48,42 @@ export async function stableFileSnapshot(filename, maximum) {
   if (JSON.stringify(identity) !== JSON.stringify(after)) throw new Error('runtime_file_unverified');
   return { ...value, identity, sha256: createHash('sha256').update(value.bytes).digest('hex') };
 }
+
+export function isValidSha256Hex(value) {
+  return typeof value === "string" && /^[a-f0-9]{64}$/i.test(value);
+}
+
+export function formatByteCount(bytes) {
+  if (typeof bytes !== "number" || !Number.isFinite(bytes) || bytes < 0) return "0 B";
+  return `${Math.floor(bytes)} B`;
+}
+
+export function truncateUtf8Preview(text, maxChars = 256) {
+  if (typeof text !== "string") return "";
+  const limit = typeof maxChars === "number" && Number.isInteger(maxChars) && maxChars >= 0 ? maxChars : 256;
+  return text.length <= limit ? text : text.slice(0, limit);
+}
+
+export function parseJsonOrNull(text) {
+  if (typeof text !== "string" || !text.trim()) return null;
+  try { return JSON.parse(text.replace(/^\uFEFF/, "")); } catch { return null; }
+}
+
+export function normalizeLfLines(text) {
+  if (typeof text !== "string") return "";
+  return text.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n");
+}
+
+export function splitLinesNormalized(text) {
+  if (typeof text !== "string" || !text) return [];
+  return text.replace(/^\uFEFF/, "").split(/\r?\n/);
+}
+
+export function countLinesNormalized(text) {
+  if (typeof text !== "string" || !text) return 0;
+  return splitLinesNormalized(text).length;
+}
+
+export function hasBoundedNonEmptyText(text, maxChars = 4096) {
+  return typeof text === "string" && text.trim().length > 0 && text.length <= maxChars;
+}

@@ -18,3 +18,12 @@ export function hasConfigurationObject(result) {
   }
   return false;
 }
+
+export function extractTextBlocks(result) {
+  if (!isObject(result) || !Array.isArray(result.content)) return [];
+  return result.content.filter(b => b?.type === "text" && typeof b.text === "string").map(b => b.text);
+}
+
+export function hasErrorFlag(result) {
+  return isObject(result) && result.isError === true;
+}
